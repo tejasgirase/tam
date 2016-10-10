@@ -1,0 +1,343 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row" id="population_health_tab">
+  <div class="tab_box">
+    <div class="panel panel-default">
+      <div class="panel-heading">Population Health Management</div>
+      <div class="col-md-12 col-sm-12 col-xs-12 paddside mrg-top5">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="row ChoiceWrapper">
+            <div class="col-md-4 ChoiceText ChoiceTextActive" id="daily_dashboard_health_management">Daily Dashboard</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div class="col-md-4 ChoiceText" id="executive_dashboard_health_management">Executive Dashboard</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div class="col-md-4 ChoiceText" id="medication_switches_from_to">Medication Switches From &amp; To</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div class="col-md-4 ChoiceText" id="patient_statistics">Patient Statistics</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div class="col-md-4 ChoiceText" id="campaign_dashboard">Campaign Dashboard</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active check-show" id="daily_dashboard_list_tab" style="border:none;">
+          <div class="col-lg-12">
+            <div class="row" style="margin: 15px 0px 5px;">
+              <div class="col-lg-3 phm_dashboard_parent">
+                  <span class="phm_daily_dahsboard" id="patinet_scheduled_online">0</span>
+                  <span style="font-weight: bold;">Patient Scheduled Online</span>
+              </div>
+              <div class="col-lg-1"></div>
+              <div class="col-lg-3 phm_dashboard_parent">
+                  <span class="phm_daily_dahsboard" id="patient_cancellations">0</span>
+                  <span style="font-weight: bold;">Patient Cancellation</span>
+              </div>
+              <div class="col-lg-1"></div>
+              <div class="col-lg-3 phm_dashboard_parent">
+                  <span class="phm_daily_dahsboard" id="patient_no_show">0</span>
+                  <span style="font-weight: bold;">Patient No-Show</span>
+              </div>
+            </div>
+            <div class="row" style="margin: 15px 0px 5px;">
+              <div class="col-lg-2"></div>
+              <div class="col-lg-3 phm_dashboard_parent">
+                  <span class="phm_daily_dahsboard" id="total_patient_seen">0</span>
+                  <span style="font-weight: bold;">Total Patient Seen</span>
+              </div>
+              <div class="col-lg-1"></div>
+              <div class="col-lg-3 phm_dashboard_parent">
+                  <span class="phm_daily_dahsboard" id="Walkin_patients">0</span>
+                  <span style="font-weight: bold;">Walkin patient</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane active check-show" id="executive_dashboard_list_tab" style="border:none;">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-1"><span id="executive_total_patient_seen" class="executive-lbls"></span></div>
+              <div class="col-lg-2"><span id="executive_cancellation_rates" class="executive-lbls"></span></div>
+            </div>
+            <div class=row ng-show="false">
+              <div class=col-lg-12>
+                <div style="width:90%; margin: 0 auto;">
+                  <div id=diabetes class=problemStyle>
+                    <svg id=visualisation0></svg>
+                  </div>
+                  <div id=cholesterol class=problemStyle>
+                    <svg id=visualisation1></svg>
+                  </div>
+                  <div id=hypertension class=problemStyle>
+                    <svg id=visualisation2></svg>
+                  </div>
+                  <div id=heartfailure class=problemStyle>
+                    <svg id=visualisation3></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style=width:100% ng-show="false">
+              <div style="width:50%; margin: 0 auto;" id=legendContainer></div>
+            </div>
+            <div class=row id=trends_parent ng-show="false">
+              <h1 class=center>Trends(1w/1m/1qtr/1yr)</h1>
+              <div class=col-lg-6>
+                <h2>Most Diagnosed</h2>
+                <div id=mostdiagnosed></div>
+              </div>
+              <div class=col-lg-6>
+                <h2>Most Recommended Rx</h2>
+                <div id=mostrecommendedrx></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-2">
+                <span>Choose Range::</span>
+              </div>
+              <div class="col-lg-8">
+                <input class="form-control" type="text" id="pmh_executive_patient_range">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-10">
+                <div id="dailyChart">
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div>
+                  Daily Patient breakup by visiting process.
+                </div>
+                <div id="series_labels"></div>
+                <!-- <svg width="170"> -->
+                  <!-- <rect y="20" x="0" height="80" width="160" fill="yellow" />
+                  <text y="40" x="5" fill="black">Patients Visited</text>
+                  <rect y="28" x="135" height="20" width="20" fill="#1f77b4" />
+                  <text y="65" x="5" fill="black">Noshow Patients</text>
+                  <rect y="52" x="135" height="20" width="20" fill="#ff7f0e" />
+                  <text y="90" x="5" fill="black">Cancelled Patients</text>
+                  <rect y="76" x="135" height="20" width="20" fill="#2ca02c" /> -->
+                <!-- </svg> -->
+              </div>
+            </div>
+            <div class="row mrgtop20">
+              <!-- <div class=col-lg-9></div> -->
+              <div class=col-lg-4>
+                <div style=width:300px;text-align:center;>Paients breakup by PinCode</div>
+                <svg id=demographics></svg>
+              </div>
+              <!-- <div class=col-lg-4>
+                <div style=width:400px;text-align:center;>Walkin vs Online Booking</div>
+                <svg id=dataset1></svg>
+              </div> -->
+            </div>
+            <!-- <div class="row">
+              <div class="col-lg-10">
+                <div id="patientBreakupByVisitType">
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div>
+                  Patients breakup by their Visit.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-10">
+                <div id="revenueBreakupPatientType">
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div>
+                  Revenue breakup by patient type.
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="tab-pane active check-show" id="medication_switch_from_to_tab" style="border:none;">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-3">Choose Medication</div>
+              <div class="col-lg-6">
+                <select class="form-control" id="medication_switch">
+                </select>
+              </div>
+            </div>
+            <div class="row mrgtop20" id="switching_medication_label_parent" style="display:none;">
+              <div class="col-lg-4 theme-color text-center">Switch from others to <span class="switching_medication_label"></span></div>
+              <div class="col-lg-2 theme-color"></div>
+              <div class="col-lg-4 theme-color text-center">Switch from <span class="switching_medication_label"></span> to others</div>
+              <div class="col-lg-2 theme-color text-center"></div>
+            </div>
+            <div class="row mrgtop20">
+              <div class="col-lg-12" id="medication_switch_graph">
+              </div>
+            </div>            
+          </div>
+        </div>
+        <div class="tab-pane active check-show" id="patient_statistics_tab" style="border:none;">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class=col-lg-7 id=monthChart></div>
+              <div class=col-lg-5>
+                <div id=percentContainer></div>
+                <div>This visualization is how many patients are suffering from each wrt to the total number of patients in the hospital.</div>
+              </div>
+            </div>
+            <div class="row mrgtop20">
+              <div class="col-lg-4" id="patient_bmi_statistics_parent" style="margin-top:50px;">
+                <div style="width:200px;text-align:center;">BMI</div>
+                <svg id=patient_bmi_statistics></svg>
+              </div>
+              <div class="col-lg-3" id="patient_gender_statistics_parent" style="margin-top:50px;">
+                <div style="width:200px;text-align:center;">Gender</div>
+                <svg id=patient_gender_statistics></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="border: medium none; display: inline-block;" id="campaign_dashboard_tab" class="tab-pane active check-show">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-3">Search By Campaign ID</div>
+              <div class="col-lg-5">
+                <input type="text" placeholder="e.g SHS-CWC11111111" class="form-control" id="search_by_campaign_id">
+              </div>
+            </div>
+            <div class="row mrgtop20 no-display" id="campaign_details_parent">
+              <div class="col-lg-12">
+                <div class="col-lg-12 campaign-details-parent">
+                  <div class="row campaign-header">
+                    <div class="col-lg-4 campaign-id-parent" id="campaign_id_parent">
+                      Campaign ID::<b class="theme-green">SHS-123456789</b>
+                    </div>
+                    <div class="col-lg-3 theme-green campaign-name" id="campaign_name">Health Dashboard</div>
+                    <div class="col-lg-2 campaign-host"><span style="visibility:hidden;">Tops Technology</span></div>
+                    <div class="col-lg-3 pull-right theme-green campaign-host" id="company_host">Tops Technology</div>
+                  </div>
+
+                  <div class="row padding5">
+                    <div class="col-lg-3">
+                      <h1>
+                        <span class="label label-warning">Wellness Index Summary</span>
+                      </h1>
+                    </div>
+                    <div class="col-lg-1 paddside text-center">
+                      <h1 class="mrgbottom1">
+                        <span class="label label-default pointer" id="total_signups">149</span>
+                      </h1>
+                      <span class="theme-green">
+                        <small>Total Signups</small>
+                      </span>
+                    </div>
+                    <div class="col-lg-1 paddside text-center">
+                      <h1 class="mrgbottom1">
+                        <span class="label label-default" id="average_age">42</span>
+                      </h1>
+                      <span class="theme-green">
+                        <small>Avg. Age</small>
+                      </span>
+                    </div>
+                    <div class="col-lg-1 paddside text-center no-display">
+                      <h1 class="mrgbottom1">
+                        <span class="label label-default">149</span>
+                      </h1>
+                      <span class="theme-green">
+                        <small>Avg. Score</small>
+                      </span>
+                    </div>
+                    <div class="col-lg-1 paddside cuswidth40 no-display">
+                      <h5 class="campaign-min-age">
+                        <span class="label label-danger">65</span>
+                      </h5>
+                      <span class="theme-green">
+                        <small class="paddleft3">Min</small>
+                      </span>
+                    </div>
+                    <div class="col-lg-1 paddside cuswidth40 no-display">
+                      <h5 class="campaign-max-age">
+                        <span class="label label-success">83</span>
+                      </h5>
+                      <span class="theme-green">
+                        <small class="paddleft1">Max</small>
+                      </span>
+                    </div>
+                    <div class="col-lg-4 pull-right text-center theme-color campaign-aggregate-recommendation no-display">
+                      Aggregate Recommendations
+                    </div>
+                  </div>
+
+                  <div class="row no-display">
+                    <div class="col-lg-8">
+                      <h4>Wellness Score</h4>
+                      <div id="wellnesssummary"></div>
+                      <div id="wellness"></div>
+                    </div>
+                    <div class=col-lg-4>
+                      <div id=aggregate_recommendations></div>
+                    </div>
+                  </div>
+
+                  <div class="row mrgtop20" id="threshold_graph_parent">
+                  </div>
+
+                  <div class="row mrgtop20">
+                    <div class="col-lg-4">
+                      <h4>Farmingham Score</h4>
+                      <div id="fscore"></div>
+                    </div>
+                    <div class="col-lg-4">
+                      <h4>Metabolic Score</h4>
+                      <div id="mscore"></div>
+                    </div>
+                    <div class="col-lg-4 no-display">
+                      <h4>Nutrition Score</h4>
+                      <div id="nscore"></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-6 text-center">
+                      <span class="danger theme-bold">Clinical data not available to calculate the risk score.</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="population_health_management_patient_list_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="population_health_management_patient_list_header"></h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row paddtop">
+          <div class="col-lg-2 theme-color pull-right pointer hovercolor">
+            <a id="export_list" class="theme-link">Export to csv</a>
+          </div>
+          <table class="table tbl-border" id="population_health_management_patient_list">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>DHPID</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="col-lg-12 pagination-align" id="population_health_management_patient_list_pagination"></div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12" id="daily_dashboard_details_modal_footer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

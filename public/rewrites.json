@@ -1,0 +1,481 @@
+[
+   {
+       "to": "../../../meluha_db5",
+       "from": "meluha_db5"
+   },
+   {
+       "to": "../../../meluha_db5_pi/",
+       "from": "meluha_db5_pi/"
+   },
+   {
+       "to": "../../../_print/*",
+       "from": "_print/*"
+   },
+   {
+       "to": "../../../meluha_db5_pi/*",
+       "from": "meluha_db5_pi/*"
+   },
+   {
+       "to": "../../../yhsqizvkmp/*",
+       "from": "yhsqizvkmp/*"
+   },
+   {
+       "to": "../../../yhsqizvkmp/_design/tamsa/_view/getDoctorPractiseCode",
+       "from": "yhsqizvkmp/_design/tamsa/_view/getDoctorPractiseCode",
+       "query": {
+           "key": ":key"
+          }
+   },
+    {
+       "to": "../../../yhsqizvkmp/_design/tamsa/_view/getSpecialization",
+       "from": "yhsqizvkmp/_design/tamsa/_view/getSpecialization",
+       "query": {
+         "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "true",
+           "group": "true",
+         "limit": "5"
+          }
+   },
+   {
+       "to": "../../../yhsqizvkmp/_design/tamsa/_view/getDoctorsList",
+       "from": "yhsqizvkmp/_design/tamsa/_view/getDoctorsList",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "../../../yhsqizvkmp/_design/tamsa/_view/getDhpHospital",
+       "from": "yhsqizvkmp/_design/tamsa/_view/getDhpHospital",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "true",
+           "group": "true"
+       }
+   },
+   {
+       "to": "../../../yhsqizvkmp/_design/tamsa/_view/getSubUsers",
+       "from": "yhsqizvkmp/_design/tamsa/_view/getSubUsers",
+       "query": {
+           "key": ":key",
+           "include_docs": "true"
+       }
+   },
+   { 
+       "to": "../../../meluha_db5_pi/_design/tamsa/_view/getPatientEmail",
+       "from": "meluha_db5_pi/_design/tamsa/_view/getPatientEmail",
+       "query": {
+           "key": ":key"
+       }
+   },
+   { 
+       "to": "../../../meluha_db5_pi/_design/tamsa/_view/getPatientPhoneNumber",
+       "from": "meluha_db5_pi/_design/tamsa/_view/getPatientPhoneNumber",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "*",
+       "from": "../../../images/*"
+   },
+   {
+       "to": "*",
+       "from": "../../../img/*"
+   },
+   {
+       "to": "../../*",
+       "from": "meluha_db5/*"
+   },
+   {
+       "to": "_view/lib",
+       "from": "meluha_db5/_design/tamsa/_view/lib"
+   },
+   {
+       "to": "_view/getCitiesByState",
+       "from": "meluha_db5/_design/SHSViews/_view/getCitiesByState",
+       "query": {
+           "key": ":key",
+           "reduce": "true",
+           "group" : "true"
+       }
+   },
+   {
+       "to": "_view/getScreeningDetails",
+       "from": "meluha_db5/_design/SHSViews/_view/getScreeningDetails",
+       "query": {
+           "key": ":key",
+           "include_docs": "true"
+       }
+   },
+   {
+       "to": "_view/getOtherVideoDocuments",
+       "from": "meluha_db5/_design/tamsa/_view/getOtherVideoDocuments",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/testFamilyMedicalHistory",
+       "from": "meluha_db5/_design/tamsa/_view/testFamilyMedicalHistory",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getVaccineDetails",
+       "from": "meluha_db5/_design/tamsa/_view/getVaccineDetails",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/mGetAnalyticsRange",
+       "from": "meluha_db5/_design/tamsa/_view/mGetAnalyticsRange",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/mGetRiskAnalysisScores",
+       "from": "meluha_db5/_design/tamsa/_view/mGetRiskAnalysisScores",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/mGetUserMedHis",
+       "from": "meluha_db5/_design/tamsa/_view/mGetUserMedHis",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/mGetRiskAnalysisScores",
+       "from": "meluha_db5/_design/tamsa/_view/mGetRiskAnalysisScores",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getCommunityCarePlans",
+       "from": "meluha_db5/_design/SHSViews/_view/getCommunityCarePlans",
+       "query": {
+       }
+   },
+   {
+       "to": "_view/mGetPatientNotes",
+       "from": "meluha_db5/_design/tamsa/_view/mGetPatientNotes",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getThresholdAlerts",
+       "from": "meluha_db5/_design/tamsa/_view/getThresholdAlerts",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/doctorNotesComplaints",
+       "from": "meluha_db5/_design/tamsa/_view/doctorNotesComplaints",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "true",
+           "group": "true"
+       }
+   },
+   {
+       "to": "_view/doctorNotesDiagnoses",
+       "from": "meluha_db5/_design/tamsa/_view/doctorNotesDiagnoses",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "true",
+           "group": "true"
+       }
+   },
+   {
+       "to": "_view/getMedicationByPrescriptionId",
+       "from": "meluha_db5/_design/tamsa/_view/getMedicationByPrescriptionId",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getCarePlans",
+       "from": "meluha_db5/_design/SHSViews/_view/getCarePlans",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getPatientCarePlan",
+       "from": "meluha_db5/_design/SHSViews/_view/getPatientCarePlan",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getDoctorChartNotes",
+       "from": "meluha_db5/_design/tamsa/_view/getDoctorChartNotes",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getRecentLabResults",
+       "from": "meluha_db5/_design/tamsa/_view/getRecentLabResults",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "descending": "false"
+       }
+   },
+   {
+       "to": "_view/patientConditions",
+       "from": "meluha_db5/_design/tamsa/_view/patientConditions",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getBillList",
+       "from": "meluha_db5/_design/tamsa/_view/getBillList",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "include_docs": "true"
+       }
+   },
+   {
+       "to": "_view/getNSmonitoring",
+       "from": "meluha_db5/_design/tamsa/_view/getNSmonitoring",
+       "query": {
+           "key": ":key",
+           "include_docs": "true"
+       }
+   },
+   {
+       "to": "_view/getPatientMedications",
+       "from": "meluha_db5/_design/tamsa/_view/getPatientMedications",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getPatientConditionBySeverity",
+       "from": "meluha_db5/_design/tamsa/_view/getPatientConditionBySeverity",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "true",
+           "group": "true"
+       }
+   },
+   {
+       "to": "_view/getDoctorSubscribers",
+       "from": "meluha_db5/_design/tamsa/_view/getDoctorSubscribers",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/testPatientsInfo",
+       "from": "meluha_db5/_design/tamsa/_view/testPatientsInfo",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getDueTasks",
+       "from": "meluha_db5/_design/tamsa/_view/getDueTasks",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getDocumentTasks",
+       "from": "meluha_db5/_design/tamsa/_view/getDocumentTasks",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "include_docs": "true"
+       }
+   },
+   {
+       "to": "_view/getDocuments",
+       "from": "meluha_db5/_design/tamsa/_view/getDocuments",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "include_docs": "true"
+       }
+   },
+   {
+       "to": "_view/getImagingByCity",
+       "from": "meluha_db5/_design/tamsa/_view/getImagingByCity",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "false",
+           "group": "false"
+       }
+   },
+   {
+       "to": "_view/getLabsByCity",
+       "from": "meluha_db5/_design/tamsa/_view/getLabsByCity",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "false",
+           "group": "false"
+       }
+   },
+   {
+       "to": "_view/getPharmacy",
+       "from": "meluha_db5/_design/tamsa/_view/getPharmacy",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey"
+       }
+   },
+   {
+       "to": "_view/getDueTasksCount",
+       "from": "meluha_db5/_design/tamsa/_view/getDueTasksCount",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "true",
+           "group": "true"
+       }
+   },
+   {
+       "to": "_view/getAppointmentNotification",
+       "from": "meluha_db5/_design/tamsa/_view/getAppointmentNotification",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "false",
+           "group": "false"
+       }
+   },
+   {
+       "to": "_view/getDoctorReferral",
+       "from": "meluha_db5/_design/tamsa/_view/getDoctorReferral",
+       "query": {
+           "startkey": ":startkey",
+           "endkey": ":endkey",
+           "reduce": "false",
+           "group": "false"
+       }
+   },
+   {
+       "to": "_view/getCvg",
+       "from": "meluha_db5/_design/tamsa/_view/getCvg",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getEbilling",
+       "from": "meluha_db5/_design/tamsa/_view/getEbilling",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "_view/getEprescribe",
+       "from": "meluha_db5/_design/tamsa/_view/getEprescribe",
+       "query": {
+           "key": ":key"
+       }
+   },
+   {
+       "to": "../../../meluha_db5_pi/_design/tamsa/_view/getPatientInformation",
+       "from": "meluha_db5_pi/_design/tamsa/_view/getPatientInformation"
+   },
+   {
+       "to": "../../../vasudevas",
+       "from": "vasudevas"
+   },
+   {
+       "to": "index.html",
+       "from": "index.html"
+   },
+   {
+       "to": "index.html",
+       "from": ""
+   },
+   {
+       "to": "signup.html",
+       "from": "signup.html"
+   },
+   {
+       "to": "images/*",
+       "from": "images/*"
+   },
+   {
+       "to": "img/*",
+       "from": "img/*"
+   },
+   {
+       "to": "script/*",
+       "from": "script/*"
+   },
+   {
+       "to": "css/*",
+       "from": "css/*"
+   },
+   {
+       "to": "js/*",
+       "from": "js/*"
+   },
+   {
+       "to": "fonts/*",
+       "from": "fonts/*"
+   },
+   {
+       "to": "vendor/*",
+       "from": "vendor/*"
+   },
+   {
+       "to": "template/*",
+       "from": "template/*"
+   },
+   {
+       "to": "telemedicine.html",
+       "from": "telemedicine.html"
+   },
+   {
+       "to": "my-account.html",
+       "from": "my-account.html"
+   },
+   {
+       "to": "library/*",
+       "from": "library/*"
+   },
+   {
+       "to": "controller/*",
+       "from": "controller/*"
+   },
+   {
+       "to": "terms_and_conditions.html",
+       "from": "terms_and_conditions.html"
+   },
+   {
+       "to": "my-account.html",
+       "from": "*"
+   }
+]

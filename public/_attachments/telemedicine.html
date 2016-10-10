@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Sensory Health System</title>
+<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="images/favi_icon.png" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/sha1.js"></script>
+<script src="js/jquery.couch.js"></script>
+<script src="js/jquery.dialog.js?0.11.0"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script src="js/jquery.form.js"></script>
+<script type="text/javascript" src="script/config.js"></script>
+<script type="text/javascript" src="script/telemedicine_doc.js"></script>
+<script type="text/javascript" src="script/telemedicine_app.js"></script>
+</head>
+<body>
+<noscript>
+<div class="jumbotron">
+  <h3 class = "theme-color">Javascript is Disabled</h3>
+  <p>
+ For full functionality of this site it is necessary to enable JavaScript.
+ Here are the <a href="//www.enable-javascript.com/" target="_blank" class = "noscript-msg">
+ instructions how to enable JavaScript in your web browser</a>.
+  </p>
+</div>
+ <style type="text/css">
+    .modal, .container, #footer { display:none; }
+  </style>
+</noscript>
+<div class="modal fade" id="closest_symptom_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" id = "login_modal_content">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id = "" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 id = "telemedicine_modal_title" class="modal-title">If multiple symptoms, select the one that matches closest.</h4>
+        <div class="alert-msg-box"></div>
+      </div>
+      <form id="telemedicine_form" enctype="multipart/form-data" method="post" action="">
+        <div class="modal-footer text-center">
+          <div id = "telemedicine_multiple">
+            <label class="">Symptoms:</label><select  name = "symptoms" class="form-control select2-input parsley-validated" id="closet_symptom_dpval" data-required="true"></select><br>
+            <label>Subject</label>
+            <div class="form-group full-input">
+              <input type="New Lab" id="subject_id" class="form-control" name="subject">
+            </div>
+            <label>Health Issue</label>
+            <textarea class="form-control parsley-validated mrg5" id="health_id" name="Health_issue" type="text"></textarea>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="inputPassword3">Upload Your File (Optional)</label>
+              <div class="col-sm-8">
+                <input type="file" value="" id="upload_symptoms_doc" class="page-browse-box-right" name="_attachments">
+              </div>
+            </div><br><br><span class="label label-warning pointer" id="telemedicine_nxt">Next</button>
+          </div>
+
+          <div id = "telemedicine_payment" style = "display:none;">
+            <span id="telemedicine_back" class="label label-warning pointer" style="float:right;">Back</span><br>
+            <label><b>You need to pay ₹750 to submit telemedicine query.</b></label><br>
+            <label>Card Number</label>
+            <div class="form-group full-input">
+              <input type="text" size="20" data-stripe="number" name="number" value=""/>
+            </div>
+
+            <label>CVC</label>
+            <div class="form-group full-input">
+                <input type="text" size="4" data-stripe="cvc" name="CVC" value=""/>
+            </div>
+
+            <label>Expiration (MM/YYYY)</label>
+            <div class="form-group full-input">
+              <input type="text" size="2" data-stripe="exp-month" name="exp_month" value=""/>
+              <span> / </span>
+              <input type="text" size="4" data-stripe="exp-year" name="exp_year" value=""/>
+            </div>
+
+            <button type="submit" class="btn btn-warning" id="save_health_issue">Send</button>
+            <input type="hidden" name="_id" class="form-control" id="tele_id">
+            <input type="hidden" name="_rev" class="form-control" id="tele_rev">
+            <input type="hidden" name="userid" class="form-control" id="userid">            
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="stripe_payment_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Payment Information</h4>
+        <div class="alert-msg-box"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="message_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id = "close_subscribe_modal" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <div><span id="alertmsg">Your Payment is Successfully received.You will get the receipt of your payment in your email. and Your query will be answered within <span class = "theme-color">24-48 Hours. </span>You will get notification once its answered.</span></div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" value="" id="hidden_patient_id">
+<input type="hidden" value="" id="hidden_patient_email">
+<input type="hidden" value="" id="hidden_patient_dhp_id">
+<div class="container pdn1">
+ <div class="row"><div class="col-lg-12 pdn"><h1 class="pagetitle">Tele Medicine</h1></div></div>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox"> <a class = "orange" onclick="anchor_tag(this)" data-symval = "Common Ailments">
+        <h2>Common Ailments <span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Common Ailments </li>
+          <li>Fever</li>
+          <li>Cough</li>
+          <li>Cold</li>
+          <li>Flu</li>
+        </ul>
+        </a> </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox graybox"> <a class = "gray" onclick="anchor_tag(this)" data-symval = "Ear, Nose and Throat">
+        <h2>Ear, Nose &amp; Throat<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Sore Thoat</li>
+          <li>Ear Infection</li>
+          <li>Sinus Infection</li>
+          <li>Nasal Congestion</li>
+        </ul>
+        </a> </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox"> <a class="orange" onclick="anchor_tag(this)" data-symval = "Gastrointestional">
+        <h2>Gastrointestional<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Upset Stomach</li>
+          <li>Nausea</li>
+          <li>Vomiting</li>
+          <li>Diarrhea</li>
+        </ul>
+        </a> </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox graybox"><a class = "gray" onclick="anchor_tag(this)" data-symval = "Respiratory">
+        <h2>Respiratory<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Asthma</li>
+          <li>Infections</li>
+          <li>Bronchitis</li>
+          <li>Allerrgies</li>
+        </ul>
+        </a> </div>
+    </div>
+  </div>
+  <div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox graybox"><a class = "gray" onclick="anchor_tag(this)" data-symval = "Maternal Newborn Pediatrics">
+        <h2>Maternal &amp; Newborn &amp; 
+Pediatrics<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Pregnacy</li>
+          <li>Pediatric health issues</li>
+          <li>Vaccinations</li>
+          <li>Nutrition</li>
+        </ul>
+        </a> </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox"><a class = "orange" onclick="anchor_tag(this)" data-symval = "Eye">
+        <h2>Eye<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Eye Infection</li>
+          <li>Eye Irritation</li>
+          <li>Pink Eye</li>
+          <li>Eye Pain</li>
+        </ul>
+        </a> </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox graybox"><a class = "gray" onclick="anchor_tag(this)" data-symval = "Skin">
+        <h2>Skin<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Rash</li>
+          <li>Skin Infection</li>
+          <li>Dry Skin &amp; Ecrema</li>
+          </ul>
+        </a> </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 pdn">
+      <div class="telemedicine_greenbox"><a class = "orange" onclick="anchor_tag(this)" data-symval = "Other Injuries">
+        <h2>Other Injuries<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Muscle, Back Pain</li>
+          <li>Cuts &amp; Scrapes</li>
+          <li>Strains &amp; Sprains</li>
+          <li>Bee Stings</li>
+          </ul>
+        </a> </div>
+    </div>
+    
+  </div>
+  <div class="row mrgbtm20">
+  <div class="col-lg-4 col-md-4 col-sm-6 pdn">
+      <div class="telemedicine_greenbox"><a class = "orange" onclick="anchor_tag(this)" data-symval = "Nutrition">
+        <h2>Nutrition<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Weight Managemnet</li>
+          <li>Sports Nutrition</li>
+          <li>Pre-Natal Nutrition</li>
+          <li>Gerneral Wellness</li>
+         </ul>
+        </a> </div>
+    </div>
+  
+  <div class="col-lg-4 col-md-4 col-sm-6 pdn">
+      <div class="telemedicine_greenbox graybox"><a class = "gray" onclick="anchor_tag(this)" data-symval = "Chronic Conditions">
+        <h2>Chronic Conditions<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Diabetes</li>
+          <li>Blood Pressure</li>
+          <li>Heart Related</li>
+          <li>Sleep Apnea</li>
+          <li>Chronic Pain</li>
+        </ul>
+        </a> </div>
+    </div>
+  
+    <div class="col-lg-4 col-md-4 col-sm-6 pdn">
+      <div class="telemedicine_greenbox"><a class = "orange" onclick="anchor_tag(this)" data-symval = "Dentistry">
+        <h2>Dentistry<span class="glyphicon glyphicon-ok-circle telemedicine_issue_active"></span></h2>
+        <ul>
+          <li>Pain / Sensitivity</li>
+          <li>Cavities</li>
+          <li>Bleeding gums / Bad breath</li>
+          <li>Strains / Discoloration</li>
+          <li>Crooked teeth</li>
+        </ul>
+        </a></div>
+    </div>
+  </div>
+  <div align="center" class="row"><button type="button" class="btn btn-warning" id="save_symptom">Next</button></div>
+</div>
+ 
+
+<!-- inserted by Kiran -->
+<!--inserted by Kiran for liveagent -->
+<script type="text/javascript">
+(function(d, src, c) { var t=d.scripts[d.scripts.length - 1],s=d.createElement('script');s.id='la_x2s6df8d';s.async=true;s.src=src;s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&(rs!='complete')&&(rs!='loaded')){return;}c(this);};t.parentElement.insertBefore(s,t.nextSibling);})(document,
+'//sensoryhealthsystems.ladesk.com/scripts/track.js',
+function(e){ LiveAgent.createButton('87e0f13e', e); });
+</script>
+
+<script type="text/javascript">
+(function(d, src, c) { var t=d.scripts[d.scripts.length - 1],s=d.createElement('script');s.id='la_x2s6df8d';s.async=true;s.src=src;s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&(rs!='complete')&&(rs!='loaded')){return;}c(this);};t.parentElement.insertBefore(s,t.nextSibling);})(document,
+'//sensoryhealthsystems.ladesk.com/scripts/track.js',
+function(e){  });
+</script>
+<!-- Google Analytics -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37748935-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<!-- End code insertion by Kiran  -->
+
+</body>
+</html>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>

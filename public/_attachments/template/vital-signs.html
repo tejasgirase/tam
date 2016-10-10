@@ -1,0 +1,241 @@
+<table class="table vital-sign-table" id="vital_sign_table">
+  <thead>
+    <tr>
+      <th width="20%" align="center" style="color:#149FFE;font-size:17px" class="show_vitals" id="show_vitals">Vital Sign<span class="mrg-left5 vitalsplus_minus glyphicon glyphicon-minus-sign"></span>
+      </th>
+      <th width="20%" align="center">BP (mmHg)</th>
+      <th width="20%" align="center">Heart Rate</th>
+      <th width="20%" align="center">Fasting Glucose</th>
+      <th width="20%" align="center">O2</th>
+      <th width="20%" align="center">Normal Condition</th>
+      <!-- <th width="20%" align="center">value weight</th> -->
+      <th width="20%" align="center">Temp</th>
+      <th width="20%" align="center">Respirations</th>
+      <th width="20%" align="center">Weight</th>
+      <th width="20%" align="center">Height</th>
+      <th width="20%" align="center">BMI</th>
+      <th width="20%" align="center">waist</th>
+    </tr>
+  </thead>
+  <tbody id="charting_vital_sign_inputs">
+    <tr>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 8px;" class="text-align" id="charting_vital_sign_current_date"></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>Sys</th>
+              <th>Dias</th>
+              <th>MAP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td width="33%">
+                <input type="text" value="" class="form-control paddside5" id="ct_systolic_bp">
+              </td>
+              <td width="33%">
+                <input type="text" value="" class="form-control paddside5" id="ct_diastolic_bp">
+              </td>
+              <td width="34%">
+                <input type="text" value="" class="form-control paddside5" id="ct_map_value">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>Bpm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" class="form-control paddside5" id="ct_heartrate">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="ct_Fasting_Glucose" class="form-control paddside5" value="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="ct_O2" class="form-control paddside5" value="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <select id="ct_OutOfRange" class="form-control paddside5">
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+<!--       <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="ct_Value_weight" class="form-control paddside5" value="">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td> -->
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>*F</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" value="" class="form-control paddside5" id="ct_temp">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>bpm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" value="" class="form-control paddside5" id="ct_respiration_rate">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>kgs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" value="" class="form-control paddside5" id="ct_bmi_weight">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>cms</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="ct_bmi_height" class="form-control paddside5">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>kg/m<sup>2</sup></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" value="" class="form-control paddside5" id="ct_bmi_value">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table tbl-border">
+          <thead>
+            <tr>
+              <th>cms</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" value="" class="form-control paddside5" id="ct_waist">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

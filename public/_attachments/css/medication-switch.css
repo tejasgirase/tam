@@ -1,0 +1,48 @@
+.join,
+.link,
+.node rect {
+  fill: none;
+  stroke: #636363;
+}
+
+.link {
+  stroke: #969696;
+}
+
+.node .selection rect {
+  stroke: #e6550d;
+}
+
+.node .code text {
+  font-family: monospace;
+}
+
+.bar .quantity {
+  stroke: #84D667;
+}
+
+.switch-header {
+    width:1520px;
+    height:100px;
+    display:inline-block;
+}
+
+.from-others {
+    position:absolute;
+    left:250px;
+    top:50px;
+    backround:red;
+    width:150px;
+    display:inline-block;
+    color:#E3BF67;
+}
+
+.to-others {
+    position:absolute;
+    left:875px;
+    top:50px;
+    backround:red;
+    width:150px;
+    display:inline-block;
+    color:#E3BF67;
+}

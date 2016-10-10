@@ -1,0 +1,176 @@
+<div id="medication_common_form_parent" class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-12 Premrg">
+      <div class="alert-msg alert-warning medication_allergies" role="alert" id="medication_allergies"></div>
+    </div>    
+  </div>
+  
+  <div id="medication_tabs" class="col-lg-12">
+    <ul id="medication_name_tabs">
+      <li><a href="#default_medication">Medication</a></li>
+      <li style="padding: 5px;float:right;"><a id="add_more_medication"><span class="glyphicon glyphicon-plus" title="add more medication"></span></a></li>
+    </ul>
+    <div class="row medication_details_parent" id="default_medication">
+      <div class="col-lg-12 Premrg">
+        <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Drug*</div>
+        <div class="col-lg-4 col-md-6 col-xs-12 Premrg1">
+          <input type="text" autocomplete="off" id="drug" class="form-control drug">
+        </div>
+        <div class="col-lg-3 col-md-6 col-xs-12 Premrg1">
+          <div class="adddrug">
+          <div class="hideCheckbox">
+            <span><input type="checkbox" value="" class="favorite_drug" id="favorite_drug"></span>Add drug to favorites
+          </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xs-12 Premrg1">
+          <div class="adddrug">
+            <span><input type="checkbox" id="substitution" class="substitution" value=""></span>Allow Substitution
+          </div>
+        </div>
+      </div>  
+      <div class="col-lg-12 Premrg">
+        <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Patient Instructions</div>
+        <div class="col-lg-9 col-md-9 col-xs-12 Premrg1">
+          <textarea type="text" id="medication_instructions" data-required="true" class="form-control parsley-validated medication_instructions"></textarea>
+        </div>
+      </div>
+
+      <div class="col-lg-12 Premrg">
+        <div class="col-lg-5 col-md-3 col-xs-12 Premrg1">
+          <div class="row">
+            <div class="col-lg-5"><label for="drug_start_date">Choose Date Range*</label></div>
+            <div class="col-lg-6">
+              <input type="text" class="form-control drug_start_date text-center" id="drug_start_date">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 Premrg1">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+              <div class="adddrug"><span><input type="checkbox" id="mt_morning" class="medication-time mt_morning" value="morning"></span><span>Morning</span><input class="cuswidth25 dose-common morning-dose no-display" value="1"></div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12 Premrg1 paddright1">
+              <div class="adddrug"><span><input type="checkbox" id="mt_afternoon" class="medication-time mt_afternoon" value="afternoon"></span><span>AfterNoon</span><input class="cuswidth25 dose-common afternoon-dose no-display" value="1"></div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+              <div class="adddrug"><span><input type="checkbox" id="mt_evening" class="medication-time mt_evening" value="evening"></span><span>Evening</span><input class="cuswidth25 dose-common evening-dose no-display" value="1"></div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+              <div class="adddrug"><span><input type="checkbox" id="mt_night" class="medication-time mt_night" value="night"></span><span>Night</span><input class="cuswidth25 dose-common night-dose no-display" value="1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 Premrg">
+        <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">
+          <div class="row">
+            <div class="col-lg-5">Quantity</div>
+            <div class="col-lg-7">
+              <input type="text" id="drug_quantity" class="form-control drug_quantity" readonly="readonly">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+          <div class="row">
+            <div class="col-lg-5 medic-str">Disperse Form*</div>
+            <div class="col-lg-7">
+              <select id="desperse_form" name="desperse_form" class="form-control select2-input parsley-validated desperse_form" data-required="true">
+                <option value="">Select</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Capsule">Capsule</option>
+                <option value="Vaccine">Vaccine</option>
+                <option value="Syrup">Syrup</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">
+          <div class="row">
+            <div class="col-lg-6 medic-str">Dose*</div>
+            <div class="col-lg-6">
+              <input type="text" id="drug_strength" class="form-control drug_strength">
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-xs-12 Premrg1">
+          <div class="row">
+            <div class="col-lg-6 medic-str">
+              Units*
+            </div>
+            <div class="col-lg-6 paddside">
+              <select id="drug_unit" class="form-control select2-input parsley-validated drug_unit" data-required="true">
+                <option value="">Select</option>
+                <option value="mg">mg</option>
+                <option value="ml">ml</option>
+                <option value="drops">drops</option>
+                <option value="mcg">mcg</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+          <div class="row">
+            <div class="col-lg-4 medic-str">Route</div>
+            <div class="col-lg-8 paddside">
+              <input type="text" id="medication_route" class="form-control medication_route">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-lg-12 paddside pharmacy-head">
+        <span class="pharmacy-details">Pharmacy Details</span>
+      </div>
+    </div>
+
+    <div class="col-lg-12 Premrg">
+      <div class="col-xs-2 col-md-2 col-xs-12 Premrg1">Pharmacy Name</div>
+      <div class="col-lg-8 col-md-8 col-xs-12 Premrg1">
+        <select data-required="true" class="cuswidth65 form-control select2-input parsley-validated searchselect pharmacy" name="pharmacy" id="pharmacy">
+        </select>
+        <button class="btn btn-warning search pharmacy_search_btn" id="pharmacy_search_btn" type="button" data-toggle="modal" data-target="#pharmacy_search_modal">Search</button>
+      </div>
+    </div>
+    <div class="col-lg-12 Premrg">
+      <div class="col-xs-2 col-md-2 col-xs-12 Premrg1">Pharmacy Instructions</div>
+      <div class="col-xs-2 col-md-2 col-xs-12 Premrg1"></div>
+      <div class="col-lg-9 col-md-9 col-xs-12">
+        <textarea id="pharmacy_instructions" name="pharmacy_instructions" class="form-control parsley-validated mrg5 pharmacy_instructions" data-required="true" type="text"></textarea>
+      </div>
+    </div>  
+  </div>
+  
+  <div class="row" id="medication_chart_notes_parent">
+    <div class="col-lg-12">
+      <div class="col-lg-12 paddside pharmacy-head">
+        <span class="pharmacy-details">Charting Notes</span>
+      </div>
+    </div>
+    <div class="col-lg-12 Premrg">
+      <div class="col-xs-2 col-md-2 col-xs-12 Premrg1">Choose Chart Note</div>
+      <div class="col-xs-2 col-md-2 col-xs-12 Premrg1"></div>
+      <div class="col-lg-9 col-md-9 col-xs-12">
+        <select class="form-control medication_chart_notes" id="medication_chart_notes" type="text">
+          <option>No Chart Note</option>
+        </select>
+      </div>
+    </div>  
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-12 mrg6 text-center">
+      <button class="btn btn-warning save_new_medication mrg9" id="save_new_medication" type="button">Save</button><button class="btn btn-warning save_new_print_medication mrg9" id="save_new_print_medication" type="button">Print Rx</button>
+      <button class="btn btn-warning save_medication_new" id="save_medication_new" index="" rev="">Send e-Rx-to-Patient &amp;Pharmacy</button>
+      <button class="btn btn-warning save_medication_for_patient_only" id="save_medication_for_patient_only" index="" rev="">Send e-Rx-to Patient</button>
+      <br />*Rx order will be sent only if valid phone number/email/fax is given
+    </div>  
+  </div>
+</div>

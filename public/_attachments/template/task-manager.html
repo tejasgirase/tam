@@ -1,0 +1,190 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row" id="task_list">
+  <div class="tab_box">
+    <div class="panel panel-default">
+      <div class="panel-heading">Task List</div>
+      <div class="col-md-12 col-sm-12 col-xs-12 paddside mrg-top5">
+        <div class="col-lg-9 paddside">
+          <ul class="nav nav-tabs sub-teb-set" role="tablist">
+            <li id="task_list_tab_link" class="active"><a class="pointer">Due Task List</a></li>
+            <li id="completed_task_list_tab_link"><a class="pointer">Completed Task List</a></li>
+            <li id="request_list_link"><a class="pointer">Request List</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12 add-button-only">
+          <button id="add_new_task" class="btn btn-warning add-new-task-btn">Add New Task</button>
+        </div>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="task_list_tab" style="border:none;">
+          <table class="table tbl-border" id="task_list_table">
+            <thead>
+              <th width="15%">Task-Type</th>
+              <th width="25%">Patient Name</th>
+              <th width="25%">Doctor Name</th>
+              <th width="15%">Date Created
+                <br>(YYYY-MM-DD)</th>
+              <th width="15%">Status</th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="task_list_pagination"></div>
+        </div>
+        <div class="tab-pane" id="completed_task_list_tab" style="border:none;">
+          <table class="table tbl-border" id="crequest_list_table">
+            <thead>
+              <th width="15%">Task-Type</th>
+              <th width="25%">Patient Name</th>
+              <th width="25%">Doctor Name</th>
+              <th width="15%">Date Created
+                <br>(YYYY-MM-DD)</th>
+              <th width="15%">Status</th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="crequest_list_pagination"></div>
+        </div>
+        <div class="tab-pane" id="request_list" style="border:none;">
+          <table class="table tbl-border" id="request_list_table">
+            <thead>
+              <th width="5%">#</th>
+              <th width="22%">Patient Name</th>
+              <th width="22%">Request Date
+                 (YYYY-MM-DD)</th>
+              <th width="22%">Type</th>
+              <th width="29%">Action</th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="request_list_pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--modal starts-->
+  <div class="modal fade" id="subscriber_alerts_reports_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 id="patient_subscriber_msg" class="modal-title">Patient will be added as a Subscriber. Please Save Preference for receiving Alerts and Reports.</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="col-lg-12 Premrg">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="row">
+                <div style="margin-top: 10px;" class="col-md-12">
+                  <!-- <div class="form-group form-input-set" style="">
+                    <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="subscription_approval_critical_checkbox"><label for="select-multi-input"> Mark As a Critical Patient</label>
+                  </div><br> -->
+                  <div class="form-group form-input-set">
+                    <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="subscription_approval_alerts"><label for="select-multi-input">Receive Alerts</label>
+                    <span class="single-user-alerts-option-parent" id="subscription_approval_alerts_option_parent"><span class="theme-color single-user-alerts-option-parent-span">Via</span> <select class="single-user-alerts-option" id="subscription_approval_alerts_option"><option>Email</option><option>SMS</option><option>Both</option></select></span>
+                  </div>
+                  <div class="form-group form-input-set">
+                    <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="subscription_approval_reports"><label for="select-multi-input">Receive Reports</label>
+                    <span class="single-user-reports-frequency-parent" id="subscription_approval_reports_frequency_parent"><span class="theme-color">Frequency</span> <select class="single-user-reports-frequency" id="subscription_approval_reports_frequency"><option>Daily</option><option>Weekly</option><option>Monthly</option></select></span>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning cplan_field_btn" id="approval_subscription_with_preference">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_new_task_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Task Creation</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div id="health_alert_form" class="col-lg-12 Premrg">
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Task Type:*</div>
+              <div class="col-lg-3 paddside">
+                <select class="form-control" id="task_type">
+                  <option value="noselect">Select Task Type</option>
+                  <option>Appointment</option>
+                  <option>eImaging</option>
+                  <option>eImagingResults</option>
+                  <option>eLab</option>
+                  <option>eLabResults</option>
+                  <option>eRx</option>
+                  <option>Charting_Template</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-lg-3">Effective Date:</div>
+              <div class="col-lg-3 paddside">
+                <input type="text" id="task_effective_date" class="datetime-with-mintoday new-task-datepicker form-control" placeholder="YYYY-MM-DD">
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Assign To:*</div>
+              <div class="col-lg-3 paddside">
+                <input type="text" id="task_assignee" class="form-control" placeholder="search Doctors">
+              </div>
+              <div class="col-lg-3">Due Date:</div>
+              <div class="col-lg-3 paddside">
+                <input type="text" id="task_due_date" class="form-control datetime-with-mintoday new-task-datepicker" placeholder="YYYY-MM-DD">
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Priority:</div>
+              <div class="col-lg-3 paddside">
+                <select class="form-control" id="task_priority">
+                  <option>Regular</option>
+                  <option>Low</option>
+                  <option>Medium</option>
+                  <option>High</option>
+                </select>
+              </div>
+              <div class="col-lg-3">Status:</div>
+              <div class="col-lg-3 paddside">
+                <select class="form-control new-task-datepicker" id="task_status">
+                  <option value="Review">Under Review</option>
+                  <option>Completed</option>
+                  <option>Reassign</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Patient</div>
+              <div class="col-lg-3 paddside">
+                <input type="text" class="form-control" id="task_patient" placeholder="search Patients">
+              </div>
+              <div class="col-lg-3">Notify When:</div>
+              <div class="col-lg-3">
+                <input type="checkbox" id="task_notify" class="checkshow">OverDue
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Comments:</div>
+              <div class="col-lg-9 paddleft">
+                <textarea class="form-control task_comments" id="task_comments"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+            <button class="btn btn-warning" id="save_new_task">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--modal ends-->
+</div>

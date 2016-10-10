@@ -1,0 +1,614 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-pane row" id="choose_care_plan_list">
+  <h2 class="mytitle">Care Plan Lists</h2>
+  <div class="panel panel-default" id="search_care_plan_tab">
+    <div class="panel-heading">Care Plan Lists:</div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="row choiceCont">
+        <div id="my_practise_link" class="col-md-4 ChoiceText ChoiceTextActive">My Practice</div>
+        <div class="col-md-4 ChoiceLineSep"></div>
+        <div id="careplan_community_link" class="col-md-4 ChoiceText">Community</div>
+      <!-- <ul class="nav nav-tabs sub-teb-set" role="tablist">
+        <li class="active"><a id="my_practise_link" class="pointer">My Practice</a></li>
+        <li class=""><a id="careplan_community_link" class="pointer">Community</a></li>
+      </ul> -->
+      </div>
+    </div>
+    <div class="tab-content">
+      <div class="tab-pane active" id="my_practise_tab" style="border:none;">
+        <div class="col-md-12">
+          <div class="searchdiv col-md-12">
+            <div class="search_box col-md-12">
+              <input type="text" class="top-form-control placeholder-no-fix searchfield" id="search_practise_care_plan" value="" autocomplete="off" placeholder="Search Practise Care Plans.." name="Name">
+            </div>
+          </div>
+          <div class="careplanlist col-md-12">
+            <div role="navigation" id="practise_care_plan_list" class="sidebar-offcanvas">
+              <div class="list-group">
+                <h3 class="list-group-item active text-align">Care Plans</h3>
+                <table id="all_practise_care_plans" class="table tbl-border">
+                  <thead>
+                    <th class="text-align">Name</th>
+                    <th class="text-align">Specialization</th>
+                    <th class="text-align">Description</th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="mypractise_careplan_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="community_tab" style="border:none;">
+        <div class="col-md-12">
+          <div class="searchdiv col-md-12">
+            <div class="search_box">
+              <input type="text" class="top-form-control placeholder-no-fix searchfield" id="search_community_care_plan" value="" autocomplete="off" placeholder="Search Community Care Plans.." name="Name">
+            </div>
+          </div>
+          <div class="careplanlist col-md-12">
+            <div role="navigation" id="community_care_plan_list" class="sidebar-offcanvas">
+              <div class="list-group"></div>
+              <h3 class="list-group-item active text-align" style="font-size:16px;">Care Plans</h3>
+              <table id="all_community_care_plans" class="table tbl-border">
+                <thead>
+                  <th class="text-align">Name</th>
+                  <th class="text-align">Specialization</th>
+                  <th class="text-align">Description</th>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="community_careplan_pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="patient_care_plans_tab" class="tab-pane" style="border:none;display:none;">
+        <div class="col-md-12">
+          <div class="searchdiv col-md-12">
+            <div class="search_box">
+              <input type="text" class="top-form-control placeholder-no-fix searchfield" id="search_patient_care_plan" value="" autocomplete="off" placeholder="Search Patient Care Plans.." name="Name">
+            </div>
+          </div>
+          <div class="careplanlist col-md-12">
+            <div role="navigation" class="sidebar-offcanvas">
+              <h3 class="list-group-item active text-align" style="line-height: 18px; font-size: 16px;">Currently Prescribed Care Plans</h3>
+              <br>
+            </div>
+            <div role="navigation" class="sidebar-offcanvas">
+              <h3 class="list-group-item active text-align" style="line-height: 18px; font-size: 16px;">Care Plans From Past</h3>
+              <br>
+              <table class="table tbl-border" id="past_patient_care_plans">
+                <thead>
+                  <tr>
+                    <th style="border-top-left-radius: 4px;">Care Plan Name</th>
+                    <th>Doctor Name</th>
+                    <th>Specialization</th>
+                    <th>Start Date</th>
+                    <th style="border-top-right-radius: 4px;">End Date</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div id="careplan_visulization" class="tab-pane panel panel-default" style="border:none;display:none;">
+    <div class="panel-heading"><span id="lbl_care_plan">Visulize</span> Care Plan :: <span style="color:#eb8613" id="selected_care_plan_name_visulize"></span>
+      <i class="uservoice" id="back_to_choose_care_plan">
+        <span class="glyphicon glyphicon-arrow-left">Back</span>
+      </i>
+    </div>
+    <div style="background:#fff;" class="col-md-12 col-sm-12 col-xs-12">
+      <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border:1px solid #ccc;width:auto;">
+        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+        <span></span>
+        <b class="caret"></b>
+      </div>
+      <ul role="tablist" class="nav nav-tabs sub-teb-set">
+        <li class="active"><a id="visualize_viewall_tab" class="pointer">Viewall</a></li>
+        <li><a id="visualize_completed_tab" class="pointer">Complete</a></li>
+        <li><a id="visualize_skipped_tab" class="pointer">Skipped</a></li>
+        <li><a class="careplans_summery_table pointer" id="visualize_incompleted_tab">Incomplete</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="viewall_task_tab" class="tab-pane active">
+          <span>No Activity Found</span>
+        </div>
+        <div id="completed_task_tab" class="tab-pane">
+          <span>No Records Found For Completed Activity.</span>
+        </div>
+        <div id="skipped_task_tab" class="tab-pane">
+          <span>No Records Found For Skipped Activity.</span>
+        </div>
+        <div id="incompleted_task_tab" class="tab-pane">
+          <span>No Records Found For InCompleted Activity.</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="panel panel-default" id="save_care_plan_tab" style="display:none">
+    <div class="panel-heading"><span id="lbl_care_plan">Save</span> Care Plan :: <span style="color:#eb8613" id="selected_care_plan_name"></span>
+      <i class="uservoice" id="back_to_choose_care_plan">
+                      <span class="glyphicon glyphicon-arrow-left">Back</span>
+                    </i>
+      <span style="float: right; margin-right: 50px;" id="copy_care_plan">Copy</span>
+    </div>
+    <div style="" class="col-lg-12">
+      <br>
+      <div class="col-lg-6">
+        <div class="form-group full-input">
+          <label for="cp_startdate">
+            <h4>Choose Date Range :</h4></label>
+          <input type="New Lab" id="cp_startdate" class="cp-date-range">
+        </div>
+      </div>
+    </div>
+    <table class="table tbl-border" id="activity_list">
+      <thead>
+        <tr>
+          <th>No Activity Found</th>
+        </tr>
+      </thead>
+      <tbody class="careplan-tbody">
+      </tbody>
+    </table>
+    <h2 id="care_plan_frequency_table_label" style="padding-left:8px;">Reports Frequency </h2>
+    <table class="table table-bordered" id="care_plan_frequency_table" style="border:1px solid #ddd;">
+      <tbody>
+        <tr>
+          <td align="center"><span> Weekly</span></td>
+          <td align="center">
+            <div class="roundedTwo">
+              <input type="checkbox" id="cp_weekly_reports" value="WEEKLY" class="cp_report_freq">
+              <label for="cp_weekly_reports"></label>
+            </div>
+          </td>
+          <td align="center"><span> Every 3 Day </span></td>
+          <td align="center">
+            <div class="roundedTwo">
+              <input type="checkbox" id="cp_three_day_reports" value="EVERY_THREE_DAYS" class="cp_report_freq">
+              <label for="cp_three_day_reports"></label>
+            </div>
+          </td>
+          <td align="center">
+            <span> Every Day</span>
+          </td>
+          <td align="left">
+            <div class="roundedTwo">
+              <input type="checkbox" id="cp_daily" value="DAILY" class="cp_report_freq">
+              <label for="cp_daily"></label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="care_plan_save_button_parent"></div>
+  </div>
+  <div class="panel panel-default" id="thresholds" style="display: none;">
+    <div class="panel-heading">
+      Heart Failure Care Plan
+      <i id="back_to_choose_care_plan" class="uservoice">
+        <span class="glyphicon glyphicon-arrow-left">Back</span>
+      </i>
+    </div>
+    <div class="tab_box">
+      <div class="tab-content">
+        <!-- <h3>Heart-Failure-Care-Plan</h3> -->
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>Reports</td>
+                <td>Alert</td>
+                <td></td>
+                <td></td>
+                <td>Report</td>
+                <td>Alert</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="1%" align="left"><img src="images/icon-1.png" />Heart Rate</td>
+                <td width="10%" align="left">
+                  <input id="heartrate_low" type="text" class="textarea_box heart" placeholder="low" />
+                  <input id="heartrate_high" type="text" class="textarea_box heart" placeholder="high" />
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="report_HeartRate" value="HeartRate" class="cmn-toggle cmn-toggle-round report_checkbox" type="checkbox">
+                    <label for="report_HeartRate"></label>
+                  </div>
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="alert_HeartRate" value="HeartRate" class="cmn-toggle cmn-toggle-round alert_checkbox" type="checkbox">
+                    <label for="alert_HeartRate"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left"><img src="images/icon-4.png" />Blood Pressure</td>
+                <td width="8%" align="left">
+                  <input id="bp_low" type="text" class="textarea_box heart" placeholder="low" />
+                  <input id="bp_high" type="text" class="textarea_box heart" placeholder="high" />
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="report_BP" value="BP" class="cmn-toggle cmn-toggle-round report_checkbox" type="checkbox">
+                    <label for="report_BP"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="alert_BP" value="BP" class="cmn-toggle cmn-toggle-round alert_checkbox" type="checkbox">
+                    <label for="alert_BP"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td width="1%" align="left"><img src="images/icon-3.png" />Weight</td>
+                <td width="8%" align="left">
+                  <input id="weight_low" type="text" class="textarea_box heart" placeholder="low" />
+                  <input id="weight_high" type="text" class="textarea_box heart" placeholder="high" />
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="report_Weight" value="Weight" class="cmn-toggle cmn-toggle-round report_checkbox" type="checkbox">
+                    <label for="report_Weight"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="alert_Weight" value="Weight" class="cmn-toggle cmn-toggle-round alert_checkbox" type="checkbox">
+                    <label for="alert_Weight"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left"><img src="images/icon-5.png" />Oxygen</td>
+                <td width="8%" align="left">
+                  <input id="oxygen_low" type="text" class="textarea_box heart" placeholder="low" />
+                  <input id="oxygen_high" type="text" class="textarea_box heart" placeholder="high" />
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="report_Oxygen" value="Oxygen" class="cmn-toggle cmn-toggle-round report_checkbox" type="checkbox">
+                    <label for="report_Oxygen"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="alert_Oxygen" value="Oxygen" class="cmn-toggle cmn-toggle-round alert_checkbox" type="checkbox">
+                    <label for="alert_Oxygen"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td width="1%" align="left"><img src="images/icon-2.png" />Glucose</td>
+                <td width="8%" align="left">
+                  <input id="glucose_low" type="text" class="textarea_box heart" placeholder="low" />
+                  <input id="glucose_high" type="text" class="textarea_box heart" placeholder="high" />
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="report_Glucose" value="Glucose" class="cmn-toggle cmn-toggle-round report_checkbox" type="checkbox">
+                    <label for="report_Glucose"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="alert_Glucose" value="Glucose" class="cmn-toggle cmn-toggle-round alert_checkbox" type="checkbox">
+                    <label for="alert_Glucose"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left"><img src="images/icon-6.png" />Respiration Rate</td>
+                <td width="8%" align="left">
+                  <input id="respiration_rate_low" type="text" class="textarea_box heart" placeholder="low" />
+                  <input id="respiration_rate_high" type="text" class="textarea_box heart" placeholder="high" />
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="report_RespirationRate" value="RespirationRate" class="cmn-toggle cmn-toggle-round report_checkbox" type="checkbox">
+                    <label for="report_RespirationRate"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="alert_RespirationRate" value="RespirationRate" class="cmn-toggle cmn-toggle-round alert_checkbox" type="checkbox">
+                    <label for="alert_RespirationRate"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered">
+            <tr>
+              <h2>Reports Freq </h2>
+            </tr>
+            <tr>
+              <td align="center"><span> Weekly</span></td>
+              <td align="center">
+                <div class="roundedTwo">
+                  <input type="checkbox" class="report_freq" value="None" id="WEEKLY" name="check" />
+                  <label for="WEEKLY"></label>
+                </div>
+              </td>
+              <td align="center"><span> Every 3 Day </span></td>
+              <td align="center">
+                <div class="roundedTwo">
+                  <input type="checkbox" class="report_freq" value="None" id="EVERY_THREE_DAYS" name="check" />
+                  <label for="EVERY_THREE_DAYS"></label>
+                </div>
+              </td>
+              <td align="center">
+                <span> Every Day</span>
+              </td>
+              <td align="left">
+                <div class="roundedTwo">
+                  <input type="checkbox" class="report_freq" value="None" id="DAILY" name="check" />
+                  <label for="DAILY"></label>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <br />
+          <div class="col-lg-12 col-sm-12 text-center mrgtop2">
+            <button type="button" class="btn btn-warning btnwidth" id="thsave">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default" id="thresholds_generic_care" style="display: none";>
+    <div class="panel-heading">
+      Generic-Care-Plan
+      <i id="back_to_choose_care_plan" class="uservoice">
+        <span class="glyphicon glyphicon-arrow-left">Back</span>
+      </i>
+    </div>
+    <div class="tab_box">
+      <div class="tab-content">
+        <!-- <h3>Generic-Care-Plan</h3> -->
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>Reports</td>
+                <td>Alert</td>
+                <td></td>
+                <td></td>
+                <td>Report</td>
+                <td>Alert</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="1%" align="left"><img src="images/icon-1.png" />Heart Rate</td>
+                <td width="10%" align="left">
+                  <input id="generic_heartrate_low" type="text" class="textarea_box generic" placeholder="low" />
+                  <input id="generic_heartrate_high" type="text" class="textarea_box generic" placeholder="high" />
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="generic_report_HeartRate" value="HeartRate" class="cmn-toggle cmn-toggle-round generic_report_checkbox" type="checkbox">
+                    <label for="generic_report_HeartRate"></label>
+                  </div>
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="generic_alert_HeartRate" value="HeartRate" class="cmn-toggle cmn-toggle-round generic_alert_checkbox" type="checkbox">
+                    <label for="generic_alert_HeartRate"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left"><img src="images/icon-4.png" />Blood Pressure</td>
+                <td width="8%" align="left">
+                  <input id="generic_bp_low" type="text" class="textarea_box generic" placeholder="low" />
+                  <input id="generic_bp_high" type="text" class="textarea_box generic" placeholder="high" />
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="generic_report_BP" value="BP" class="cmn-toggle cmn-toggle-round generic_report_checkbox" type="checkbox">
+                    <label for="generic_report_BP"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_alert_BP" value="BP" class="cmn-toggle cmn-toggle-round generic_alert_checkbox" type="checkbox">
+                    <label for="generic_alert_BP"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td width="1%" align="left"><img src="images/icon-3.png" />Weight</td>
+                <td width="8%" align="left">
+                  <input id="generic_weight_low" type="text" class="textarea_box generic" placeholder="low" />
+                  <input id="generic_weight_high" type="text" class="textarea_box generic" placeholder="high" />
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_report_Weight" value="Weight" class="cmn-toggle cmn-toggle-round generic_report_checkbox" type="checkbox">
+                    <label for="generic_report_Weight"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_alert_Weight" value="Weight" class="cmn-toggle cmn-toggle-round generic_alert_checkbox" type="checkbox">
+                    <label for="generic_alert_Weight"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left"><img src="images/icon-5.png" />Oxygen</td>
+                <td width="8%" align="left">
+                  <input id="generic_oxygen_low" type="text" class="textarea_box generic" placeholder="low" />
+                  <input id="generic_oxygen_high" type="text" class="textarea_box generic" placeholder="high" />
+                </td>
+                <td width="10%" align="left">
+                  <div class="switch">
+                    <input id="generic_report_Oxygen" value="Oxygen" class="cmn-toggle cmn-toggle-round generic_report_checkbox" type="checkbox">
+                    <label for="generic_report_Oxygen"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_alert_Oxygen" value="Oxygen" class="cmn-toggle cmn-toggle-round generic_alert_checkbox" type="checkbox">
+                    <label for="generic_alert_Oxygen"></label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td width="1%" align="left"><img src="images/icon-2.png" />Glucose</td>
+                <td width="8%" align="left">
+                  <input id="generic_glucose_low" type="text" class="textarea_box generic" placeholder="low" />
+                  <input id="generic_glucose_high" type="text" class="textarea_box generic" placeholder="high" />
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_report_Glucose" value="Glucose" class="cmn-toggle cmn-toggle-round generic_report_checkbox" type="checkbox">
+                    <label for="generic_report_Glucose"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_alert_Glucose" value="Glucose" class="cmn-toggle cmn-toggle-round generic_alert_checkbox" type="checkbox">
+                    <label for="generic_alert_Glucose"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left"><img src="images/icon-6.png" />Respiration Rate</td>
+                <td width="8%" align="left">
+                  <input id="generic_respiration_rate_low" type="text" class="textarea_box generic" placeholder="low" />
+                  <input id="generic_respiration_rate_high" type="text" class="textarea_box generic" placeholder="high" />
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_report_RespirationRate" value="RespirationRate" class="cmn-toggle cmn-toggle-round generic_report_checkbox" type="checkbox">
+                    <label for="generic_report_RespirationRate"></label>
+                  </div>
+                </td>
+                <td width="1%" align="left">
+                  <div class="switch">
+                    <input id="generic_alert_RespirationRate" value="RespirationRate" class="cmn-toggle cmn-toggle-round generic_alert_checkbox" type="checkbox">
+                    <label for="generic_alert_RespirationRate"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered">
+            <tr>
+              <h2>Reports Freq </h2>
+            </tr>
+            <tr>
+              <td align="center"><span> Weekly</span></td>
+              <td align="center">
+                <div class="roundedTwo">
+                  <input type="checkbox" class="generic_report_freq" value="WEEKLY" id="generic_WEEKLY" />
+                  <label for="generic_WEEKLY"></label>
+                </div>
+              </td>
+              <td align="center"><span> Every 3 Day </span></td>
+              <td align="center">
+                <div class="roundedTwo">
+                  <input type="checkbox" class="generic_report_freq" value="EVERY_THREE_DAYS" id="generic_EVERY_THREE_DAYS" />
+                  <label for="generic_EVERY_THREE_DAYS"></label>
+                </div>
+              </td>
+              <td align="center">
+                <span> Every Day</span>
+              </td>
+              <td align="left">
+                <div class="roundedTwo">
+                  <input type="checkbox" class="generic_report_freq" value="DAILY" id="generic_DAILY" />
+                  <label for="generic_DAILY"></label>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <br />
+          <div class="col-lg-12 col-sm-12 text-center mrgtop2">
+            <button type="button" class="btn btn-warning btnwidth" id="generic_thsave">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!--  <div class="panel panel-default" id="saved_patient_care_plan_tab" style="display:none">
+    <div class="panel-heading" style="padding-top:5px; padding-bottom:13px;">Update Care Plan :: <span style="color:#eb8613" id="selected_patient_care_plan_name"></span>
+      <i style="margin-left:13px;padding-top:7px;" id="back_to_choose_care_plan_new" class="uservoice">
+                      <span class="glyphicon glyphicon-arrow-left">Back</span>
+                    </i>
+      <i class="uservoice">
+                      <div class="switch switchcheck" id="cp_update_toggle">
+                        <span>Active</span>
+                        <input type="checkbox" class="cmn-toggle cmn-toggle-round" rev="" value="" id="patient_careplan_checkbox">
+                        <label for="patient_careplan_checkbox"></label>
+                      </div>                    
+                    </i>
+    </div>
+    <div>
+      <div class="col-lg-12" style="">
+        <div class="col-lg-6">
+          <div class="form-group full-input">
+            <label for="patient_cp_startdate">
+              <h4>Start Date :</h4></label>
+            <input type="New Lab" class="cp-date-single" id="patient_cp_startdate">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group full-input">
+            <label for="patient_cp_enddate">
+              <h4>End Date :</h4></label>
+            <input type="New Lab" class="cp-date-single" id="patient_cp_enddate">
+          </div>
+        </div>
+      </div>
+      <br>
+      <table class="table tbl-border" id="patient_activity_list">
+        <thead>
+          <tr>
+            <th>No Activity Found</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2>Reports Freq </h2>
+      <table class="table table-bordered" id="patient_care_plan_frequency_table" style="display:none;">
+        <tbody>
+          <tr>
+            <td align="center"><span> Weekly</span></td>
+            <td align="center">
+              <div class="roundedTwo">
+                <input type="checkbox" id="patient_cp_weekly_reports" value="Patient Weekly Careplan Reports" class="patient_cp_report_freq">
+                <label for="patient_cp_weekly_reports"></label>
+              </div>
+            </td>
+            <td align="center"><span> Every 3 Day </span></td>
+            <td align="center">
+              <div class="roundedTwo">
+                <input type="checkbox" id="patient_cp_three_day_reports" value="Patient Every Three Day Careplan Reports" class="patient_cp_report_freq">
+                <label for="patient_cp_three_day_reports"></label>
+              </div>
+            </td>
+            <td align="center">
+              <span>Every Day</span>
+            </td>
+            <td align="left">
+              <div class="roundedTwo">
+                <input type="checkbox" id="patient_cp_daily" value="Patient Daily Careplan Reports" class="patient_cp_report_freq">
+                <label for="patient_cp_daily"></label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="care_plan_update_button_parent"></div>
+    </div>
+  </div> -->
+</div>

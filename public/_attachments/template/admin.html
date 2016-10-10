@@ -1,0 +1,557 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row mrgtop1" id="admin_interface">
+  <div class="tab_box">
+    <div class="panel panel-default patients">
+      <div class="panel-heading">Welcome Admin</div>
+      <div class="tab-content col-md-12 col-sm-12 col-xs-12">
+        <div class="row ChoiceWrapper">
+          <div class="col-md-4 remove_hide ChoiceText ChoiceTextActive" id="admin_configer_link">Configuration</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div class="col-md-4 remove_hide ChoiceText" id="admin_telemedicine_link">Telemedicine Inquiries</div>
+          <div class="col-md-4 ChoiceLineSep"></div>          
+          <div class="col-md-4 remove_hide ChoiceText" id="admin_patient_tag_link">Patient Tag Reporting</div>
+          <div class="col-md-4 ChoiceLineSep"></div>          
+          <div class="col-md-4 remove_hide ChoiceText" id="admin_remove_patient_link">Remove Patients</div>
+        </div>
+
+        <div class="tab-pane" id="admin_remove_patient_tab" style="border: medium none;">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 pull-right">
+              <input autocomplete="off" id="remove_patient" class="SearchTextBox" placeholder="Search Patients by First name or DHP ID..."><span class="glyphicon glyphicon-search search-patients"></span>
+            </div>
+          </div>
+          <div class="row text-center theme-color default-patient-msg" id="remove_patient_default"><span class="glyphicon glyphicon-hand-right"></span>No Pantient selected.... Please search by Patient Name or DHP Code</div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12" style="margin: 30px 0px 10px 10px; padding-right: 15px;display:none;" id="remove_patient_details">
+              <div class="col-lg-2 col-md-2" style="float: right;">
+                <img src="" id="remove_patient_profile_pic" style="height:100px;width:100px;">
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Name</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="remove_patient_name" class="form-control" readonly="readonly">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Patient DHP ID</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="remove_patient_dhp_id" class="form-control" readonly="readonly">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                   <div class="form-group form-input-set">
+                      <label for="select-multi-input">Email ID</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="remove_patient_emailid" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Phone</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="remove_patient_phone" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                   <div class="form-group form-input-set">
+                      <label for="select-multi-input">Subscribed Hospital</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                    	<select class="form-control" id="remove_patient_hospital_id">
+                    	</select>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5 no-display" id="remove_subscribed_doctor_lbl">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Subscribed Doctors</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input no-display">
+                      <select class="form-control" multiple="multiple" id="remove_patient_subscribed_doctor">
+                    	</select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7 no-display" id="remove_reason_parent">
+              	<div class="row"> 
+             		 	<div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Reason to Deletion</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-10 col-md-6">
+                    <div class="form-group full-input">
+                      <textarea id="remove_reason" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7 text-center">
+                <button id="remove_patient_profile" class="btn btn-warning">Delete</button>
+              </div>
+            </div>
+          </div> 
+        </div>
+
+        <div class="tab-pane" id="admin_telemedicine_tab" style="border: medium none;">
+          <div class="row">
+						<div class="col-lg-12">
+							<table class="table tbl-border" id="admin_telemedicine_inquiry_list">
+							  <thead>
+							    <tr>
+							    	<th class="text-align">Patient Name</th>
+							      <th class="text-align">Patient DHP ID</th>
+							      <th class="text-align">Date</th>
+							      <th class="text-align">Health Category</th>
+							      <th class="text-align">Action</th>
+							      <th class="text-align">Response</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr dir-paginate = "x in teleinquiries | itemsPerPage: 5" ng-show="(teleinquiries.length)">
+							      <td class="text-align">
+                      <span class="patient_name">{{x.patient_name}}</span>
+                      <input type="hidden" class="patient_email" value="{{x.patient_email}}">
+                      <input type="hidden" class="patient_phone" value="{{x.patient_phone}}">
+                    </td>
+							      <td class="text-align">{{x.patient_dhp_id}}</td>
+							      <td class="text-align">
+							      	<span doc_id="{{x._id}}" class="pointer telemedicine_row">{{(x.update_ts ? x.update_ts : x.insert_ts) | limitTo:10}}</span>
+							      </td>
+							      <td class="text-align">{{x.Health_Category}}</td>
+							      <td class="text-align assignee-parent">
+                      <select class="form-control cuswidth65 assign_hospital" data-index="{{x._id}}" data-hospital="{{x.dhp_code}}" data-doctor="{{x.doctor_id}}">
+                        <option value="">Choose any Hospital to Assign</option>
+                        <option ng-repeat="opt in x.hospital_list" value="{{opt.dhp_code}}">{{opt.name}} -- {{opt.dhp_code}}</option>
+                      </select>
+                      <!-- <span class="pointer label label-warning assign_teleinquiry pull-right no-display" data-index="{{x._id}}">Assign</span> -->
+                      <select class="form-control cuswidth65 assign_doctor no-display Premrg" data-index="{{x._id}}">
+                        <option value="">Choose Doctors</option>
+                      </select>
+							      </td>
+							      <td class="text-align">
+                      <button class="btn btn-warning assign_teleinquiry" data-index="{{x._id}}">{{(x.admin_dhp_code) ? "Reassign" : "Assign"}}</button>
+                      <!-- <button class="btn btn-warning assign_teleinquiry" data-index="{{x._id}}">Reassign</button> -->
+                      <button class="mrgleft1 btn btn-warning reply_teleinquiry mrgtop5" data-userid="{{x.user_id}}" data-index="{{x._id}}">Reply</button>
+							      </td>
+							    </tr>
+                  <tr ng-show="!(teleinquiries.length)">
+                    <td class="text-align" colspan="6">No Inquiries Found.</td>
+                  </tr>
+							  </tbody>
+							</table>
+              <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+                <dir-pagination-controls></dir-pagination-controls>
+              </div>							
+						</div>
+          </div> 
+        </div>  
+        
+        <div class="tab-pane" id="admin_patient_tag_tab" style="border: medium none;">
+          <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+            <span class="glyphicon glyphicon-th-list"></span>
+            <span id="settingmain_title">Configure Patient Tag Sections/Fields</span>
+          </div>
+          <div class="col-lg-4">Choose Hospital for Tags:: </div>
+          <div class="col-lg-4">
+            <select class="form-control" id="admin_hospitals_for_patient_tags">
+              <option value="">Select Hospitals</option>
+            </select>
+          </div>
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4"></div>
+          <div class="col-lg-12 mrgtop1" id="patient_tag_parent">
+            <div class="tab-heading blab patient-tags-list">Patient Tags for <span id="hospital_label_name">All Hospital</span></div>
+            <div class="col-lg-12 paddside">
+              <input type="text" class="form-control" id="patient_tags"/>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-7 text-center Premrg">
+            <button id="export_patient_by_categories" class="btn btn-warning">Search</button>
+          </div>
+          <div class="col-lg-12"><a class="theme-link pull-right no-display" id="export_patient_by_categories_link">Click here to Export</a></div>
+          <div class="col-lg-12">
+            <table class="table tbl-border no-display" id="admin_patient_category_list">
+              <thead>
+                <tr>
+                  <th class="text-align">Patient Name</th>
+                  <th class="text-align">Email</th>
+                  <th class="text-align">Contact No</th>
+                  <th class="text-align">Patient DHP ID</th>
+                  <!-- <th class="text-align">Tags</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr dir-paginate = "x in ptagdata | itemsPerPage: 10">
+                  <td class="text-align">{{x.patient_name}}</td>
+                  <td class="text-align">{{x.email}}</td>
+                  <td class="text-align">{{x.phone}}</td>
+                  <td class="text-align">{{x.patient_dhp_id}}</td>
+                  <!-- <td class="text-align">{{x.tags}}</td> -->
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+              <dir-pagination-controls></dir-pagination-controls>
+            </div>
+          </div>
+        </div>
+
+        <div id="admin_config_tab" class="tab-pane mrgtop">
+          <div class="col-md-12 CategContainer">
+            <div class="row">
+              <div id="careplan_link_tab" class="col-md-2 CategText rmv_tab inner-tab-left CategTextActive">Careplan Section</div>
+              <div id="specialization_tab" class="col-md-2 CategText rmv_tab inner-tab-mid">Specialization</div>
+              <div id="pharmacy_tab" class="col-md-2 CategText rmv_tab inner-tab-mid">Pharmacy</div>
+              <div id="labtest_tab" class="col-md-2 CategText rmv_tab inner-tab-mid">Lab &amp; Imaging</div>
+              <div id="medication_tab" class="col-md-2 CategText rmv_tab inner-tab-mid">Medications</div>
+              <div id="hospital_tab" class="col-md-2 CategText rmv_tab inner-tab-mid">Hospital Names</div>
+            </div>
+          </div>
+          <div id="admin_careplan_tab" class="active content_tab">
+            <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+              <span class="glyphicon glyphicon-th-list"></span>
+              <span id="settingmain_title">Configure Careplan Sections/Fields</span>
+              <!-- <span style="float:right; line-height: 40px" class="glyphicon glyphicon-arrow-left" id="setting_back_button">Back</span> -->
+            </div>
+            <div class="col-lg-4">
+              <select class="form-control" id="current_sections">
+                <option value="">Select Sections From Here</option>
+              </select>
+            </div>
+            <div class="col-lg-1 text-center">OR</div>
+            <div class="col-lg-4">
+              <input type="text" class="form-control" id="new_section_val" placeholder="Enter Section Name and Hit Enter">
+            </div>
+            <div class="col-lg-3 no-display" id="create_new_prop">
+              <input type="checkbox" class="checkshow" id="response_freq">Frequency&nbsp;
+              <input type="checkbox" class="checkshow" id="response_bool">Boolean&nbsp;
+              <input type="checkbox" class="checkshow" id="response_notes">Notes&nbsp;
+              <!-- <button id="create_new_section" class="btn btn-warning">add fields</button> -->
+            </div>
+
+            <div class="col-lg-12 mrgtop1 no-display" id="tokenfield_parent">
+              <div class="tab-heading blab patient-tags-list">Currently Available Fields for <span id="section_label_name">Biometrics</span></div>
+              <div class="col-lg-12 paddside">
+                <input type="text" class="form-control" id="tokenfield" placeholder="Type your question here and Hit Enter"/>
+              </div>
+            </div>
+
+            <div class="col-lg-12 mrgtop1 text-center">
+                <button class="btn btn-warning mrgbottom1" id="save_section_fields_for_admin">Save</button>
+            </div>
+          </div>
+          <div id ="specialization_content" class="content_tab">
+            <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+              <span class="glyphicon glyphicon-th-list"></span>
+              <span id="settingmain_title">Specialization List</span>
+            </div>
+            <div class="col-lg-12 mrgtop1" id="tokenfield_parent">
+              <div class="tab-heading blab patient-tags-list">Currently Available Specialization  Fields</div>
+              <div class="col-lg-12 paddside">
+                <input type="text" class="form-control" id="specialization_tokenfield" placeholder="Type your Specialization here and Hit Enter"/>
+              </div>
+            </div>
+            <div style="margin-bottom: 10px;" class="col-lg-8 OtherExamsTitle">
+              <span class="glyphicon glyphicon-th-list"></span>
+              <span id="settingmain_title">To add hospital wise settings select Hospital</span>
+              <div class="col-lg-4" style="float:right;margin-top:2px"><select class="form-control" id= "hospital_dhp_specialization"></select></div><div class="col-lg-2" style="float:right">Hospital dhp code:-</div>
+            </div>
+            <div class="col-lg-12 mrgtop1" style="display:none" id="token_hospital_parent">
+              <div class="tab-heading blab patient-tags-list dhp-select-title"></div>
+              <div class="col-lg-12 paddside">
+                <input type="text" class="form-control" id="specialization_hospital_tokenfield" placeholder="Type your Specialization here and Hit Enter"/>
+              </div>
+            </div>
+            <div class="col-lg-12 mrgtop1 text-center">
+                <button class="btn btn-warning mrgbottom1" id="save_specialization_for_admin">Save</button>
+            </div>
+          </div>
+          <div id ="labtest_content" class="content_tab">
+            <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+              <div class="col-lg-2 paddside">
+                <span class="glyphicon glyphicon-th-list"></span>
+                <span id="settingmain_title">Lab &amp; Imaging</span>
+              </div>
+              <div class="col-lg-2 paddside"><select class="form-control" id="dhp_code_lab"></select></div>
+              <div class="col-lg-2" style="margin-top: 8px; padding-right: 0px; margin-left: 0px; margin-right: 53px;"><input type="file" id="import_lab_imging_file" style="width: 224px;"></div>
+                <div style="width: 134px; padding-left: 0px;" class="col-lg-1"><button class="btn btn-warning" id = "import_lab_imging">Import</button></div>
+                <div class="col-lg-3 small paddside" style="width: 209px;font-size:10px;">To downoad CSV template <a class="theme-link" target="_blank" href="template/lab_imging_import.csv" data-original-title="you will get a CSV template.." style="">Click Here.</a></div>
+                <div id="skipped_lab_link_parent" style="display:none;font-size:10px;margin-left: 14px;width: 163px;" class="col-lg-1 paddside">
+                <span>For skipped rows  </span>
+                <a id="skipped_lab_link" class="theme-link">Click Here</a>
+                </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="table-responsive">
+                <table id="lab_table" class="table tbl-border widthset">
+                  <thead>
+                    <tr>
+                      <th width="14%" class="text-center">Lab/Imaging Name</th>
+                      <th width="10%" class="text-center">Type</th>
+                      <th width="12%" class="text-center">Contact Person name</th>
+                      <th width="12%" class="text-center">Contact Person email</th>
+                      <th width="12%" class="text-center">Contact Person Phone</th>
+                      <th width="10%" class="text-center">Services</th>
+                      <!-- <th width="10%" class="text-center">
+                      <span type="button" class="glyphicon glyphicon-plus theme-color" id="add_favourite_medication"></span></th> -->
+                    </tr>
+                  </thead>
+                  <tbody><tr><td colspan="6">No record found</td></tr></tbody>
+                </table>
+                <div id="lab_records_pagination" style="margin-top: 5px;" class="col-lg-12 pagination-align"></div>
+              </div>
+            </div>
+          </div>
+          <div id ="medication_content" class="content_tab">
+            <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+              <div class="col-lg-2 paddside">
+                <span class="glyphicon glyphicon-th-list"></span>
+                <span id="settingmain_title">Medication List</span>
+              </div>
+              <div class="col-lg-2 paddside"><select class="form-control" id="dhp_code_medication"></select></div>
+              <div class="col-lg-2" style="margin-top: 8px; padding-right: 0px; margin-left: 0px; margin-right: 53px;"><input type="file" id="import_medication_list_file" style="width: 224px;"></div>
+              <div style="width: 134px; padding-left: 0px;" class="col-lg-1"><button class="btn btn-warning" id = "import_medication_list">Import</button></div>
+              <div class="col-lg-3 small paddside" style="width: 209px;font-size:10px;">To downoad CSV template <a class="theme-link" target="_blank" href="template/medication_import.csv" data-original-title="you will get a CSV template.." style="">Click Here.</a></div>
+              <div id="skipped_medication_list_parent" style="display:none;font-size:10px;margin-left: 14px;width: 163px;" class="col-lg-1 paddside">
+              <span>For skipped rows  </span>
+              <a id="skipped_medication_link" class="theme-link">Click Here</a>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="table-responsive">
+                <table id="medication_list_table" class="table tbl-border widthset">
+                  <thead>
+                    <tr>
+                      <th width="20%" class="text-center">Medication Name</th>
+                      <th width="20%" class="text-center">Disperse Form</th> 
+                      <th width="20%" class="text-center">Dose</th>
+                      <th width="20%" class="text-center">Units</th>
+                      <th width="20%" class="text-center">Route</th>
+                      <!-- <th width="20%" class="text-center"> -->
+                    </tr>
+                  </thead>
+                  <tbody><tr><td colspan="9">No record found</td></tr></tbody>
+                </table>
+                <div id="medication_list_pagination" style="margin-top: 5px;" class="col-lg-12 pagination-align"></div>
+              </div>
+            </div>
+          </div>
+          <div id ="pharmacy_content" class="content_tab">
+              <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+                <div class="col-lg-2 paddside">
+                  <span class="glyphicon glyphicon-th-list"></span>
+                  <span id="settingmain_title">Add Pharmacy</span>
+                </div>
+                <div class="col-lg-2 paddside"><select class="form-control" id="dhp_code_pharmacy"></select></div>
+                <div class="col-lg-2" style="margin-top: 8px; padding-right: 0px; margin-left: 0px; margin-right: 53px;"><input type="file" id="import_pharmacy_file" style="width: 224px;"></div>
+                <div style="width: 134px; padding-left: 0px;" class="col-lg-1"><button class="btn btn-warning" id = "import_pharmacy">Import</button></div>
+                <div class="col-lg-3 small paddside" style="width: 209px;font-size:10px;">To downoad CSV template <a class="theme-link" target="_blank" href="template/pharmacy_import.csv" data-original-title="you will get a CSV template.." style="">Click Here.</a></div>
+                <div id="skipped_pharmacy_link_parent" style="display:none;font-size:10px;margin-left: 14px;width: 163px;" class="col-lg-1 paddside">
+                <span>For skipped rows  </span>
+                <a id="skipped_pharmacy_link" class="theme-link">Click Here</a>
+                </div>
+            </div>
+            <div class="panel panel-default">
+              <!-- <div class="table-responsive">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group full-input">
+                        <label for="select-multi-input">Pharmacy Name :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="pharmacy_list_name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Phone :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="pharmacy_list_phone">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Fax :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="pharmacy_list_fax">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Email :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="pharmacy_list_email">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Dhp Code :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <select class="form-control" id="dhp_code_pharmacy">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Street :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="pharmacy_list_street">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">State:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <select type="text" class="form-control" id="pharmacy_list_state"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">City:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <select class="form-control" id="pharmacy_list_city"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Zip:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="pharmacy_list_zip">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div style="margin-left:600px"><button class="btn btn-warning" id="pharmacy_list_save" type="button">Save</button></div>
+                </div>
+              </div> -->
+              <div class="table-responsive">
+                <table id="pharmacy_list_table" class="table tbl-border widthset">
+                  <thead>
+                    <tr>
+                      <th width="12%" class="text-center">Pharmacy name</th>
+                      <th width="12%" class="text-center">Phone</th> 
+                      <th width="13%" class="text-center">Fax</th>
+                      <th width="13%" class="text-center">Email</th>
+                      <th width="10%" class="text-center">Street</th>
+                      <th width="10%" class="text-center">State</th>
+                      <th width="10%" class="text-center">city</th>
+                      <th width="10%" class="text-center">zip</th>
+                      <th width="11%" class="text-center">Dhp code</th>
+                      <!-- <th width="20%" class="text-center"> -->
+                    </tr>
+                  </thead>
+                  <tbody><tr><td colspan="9">No record found</td></tr></tbody>
+                </table>
+                <div id="pharmacy_list_pagination" style="margin-top: 5px;" class="col-lg-12 pagination-align"></div>
+              </div>
+            </div>
+          </div>
+          <div id ="hospital_content" class="content_tab">
+            <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+              <span class="glyphicon glyphicon-th-list"></span>
+              <span id="settingmain_title">Hospital List</span>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+  <div class="modal fade" id="telemedicine_inquiry_reply_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Reply to Patient:: <span class="theme-color" id="reply_patient_name"></span><span class="theme-color mrgleft1" id="reply_patient_email"></span></h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-lg-3">
+            <label>Message ::</label>
+          </div>
+          <div class="col-lg-9">
+            <textarea class="form-control" id="message_to_patient" placeholder="send message to patient...."></textarea>
+          </div>
+          <div class="col-lg-12 text-center Premrg">
+            <button class="btn btn-warning" type="button" id="send_reply_teleinquiry">Assign</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

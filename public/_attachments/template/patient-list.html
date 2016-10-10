@@ -1,0 +1,288 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row mrgtop1" id="my_account">
+  <div class="tab_box">
+    <div class="panel panel-default patients">
+      <div class="panel-heading">Your Patients</div>
+      <div class="tab-content col-md-12 col-sm-12 col-xs-12">
+        <div class="row ChoiceWrapper">
+          <div class="col-md-4 ChoiceText ChoiceTextActive" id="critical_patient_link">Critical Patient</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div class="col-md-4 ChoiceText" id="referred_patient_link">Referred Patient</div>
+          <div class="col-md-4 ChoiceLineSep"></div>          
+          <div class="col-md-4 ChoiceText" id="regular_patient_link">All Patients</div>
+          <div class="col-md-4 ChoiceLineSep"></div>          
+          <div class="col-md-4 ChoiceText" id="referred_patient_list_link">Referred Patients Summary</div>
+        </div>
+
+      </div> 
+      
+      <div id="critical_patient_tab" class="tab-pane hide_patient active mrgtop">
+        <div class="row">
+          <div class="col-md-4 SearchTextBoxWrapper">
+            <input id="search_critical_patients" class="SearchTextBox" placeholder="Search Patients by First name or DHP ID..."><span class="glyphicon glyphicon-search search-patients"></span>
+          </div>
+        </div>
+        <div class="main_div">
+          <h3 id="criticalHeading" class="referred-div" style="display:none;">There isn't any Critical patient in Your practice.</h3>
+          <div class="main_div_in">
+            <div class="row criticalPatients"></div>
+          </div>
+          <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="critical_patient_list_pagination"></div>
+        </div>
+      </div>  
+      <div id="referred_patient_tab" class="tab-pane hide_patient mrgtop">
+        <div class="row">
+          <div class="col-md-4 SearchTextBoxWrapper">
+            <input id="search_name_referred" class="SearchTextBox" placeholder="Search Patients by First name or DHP ID..."><span class="glyphicon glyphicon-search search-patients"></span>
+          </div>
+        </div>
+        <div class="main_div">
+          <h3 id="referredHeading" class="referred-div"></h3>
+          <div class="main_div_in">
+            <div class="con_inmain criticalPatients" id="referredPatients"></div>
+          </div>
+        </div>
+        <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="referred_patient_list_pagination"></div>
+      </div>
+      <div id="regular_patient_tab" class="tab-pane hide_patient mrgtop">
+        <div class="row">
+          <div class="col-md-4 SearchTextBoxWrapper">
+            <input id="search_name_regular" class="SearchTextBox" placeholder="Search Patients by First name or DHP ID..."><span class="glyphicon glyphicon-search search-patients"></span>
+          </div>
+        </div>  
+        <div class="main_div">
+          <h3 id="regularHeading" class="referred-div" style="display:none;">There isn't any Patient in Your practice.</h3>
+          <div class="main_div_in">
+            <div class="con_inmain criticalPatients" id="regular_patient"></div>
+          </div>
+        </div>
+        <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="regular_patient_list_pagination"></div>
+      </div>
+      <div id="referred_patient_list_tab" class="tab-pane hide_patient mrgtop">
+        <div class="table-responsive">
+          <table id="refered_patient_list" class="table">
+            <thead>
+              <tr>
+                <th width="10%">Patient Name</th>
+                <th width="8%">Referred Date</th>
+                <th width="8%">Referred Complition Date</th>
+                <th width="10%">Doctor Referred to</th>
+                <th width="10%">Chart Note</th>
+                <th width="10%">Note</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div id="refered_patient_list_pagination" style="margin-top: 5px;" class="col-lg-12 pagination-align">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="add_patient_task_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog xbigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add Task</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div class="col-lg-12 mrg-top5">
+            <div class="col-lg-1 paddside cuswidth1">
+            </div>
+            <div class="col-lg-2 paddright text-center">
+              <label><b>Task</b></label>
+            </div>
+            <div class="col-lg-1 text-center">
+              <label><b>Type</b></label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <label><b>Priority</b></label>
+            </div>
+            <div class="col-lg-2 text-center">
+              <label><b>Due Date</b></label>
+            </div>
+            <div class="col-lg-2 text-center">
+              <label><b>Effective Date</b></label>
+            </div>
+            <div class="col-lg-3 text-center paddright">
+              <label><b>Comments</b></label>
+            </div>
+            <div class="col-lg-1 text-center paddside cuswidth5">
+              <label><b>Notify</b></label>
+            </div>
+          </div>
+          
+          <div data-task_type="eRx"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="hidden" id="task_user_id" value="" patient_name="">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+            <div class="col-lg-2 paddright text-center">
+              <label>Send eRx order</label>
+            </div>
+            <div class="col-lg-1 text-center">
+              <label>eRx</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+          
+          <div data-task_type="Appointment"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+
+            <div class="col-lg-2 paddright text-center">
+              <label>Send Appointment</label>
+            </div>
+
+            <div class="col-lg-1 text-center paddleft">
+              <label>Appointment</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+
+          <div data-task_type="eLab"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+
+            <div class="col-lg-2 paddright text-center">
+              <label>Send Lipid Profile Lab Order</label>
+            </div>
+
+            <div class="col-lg-1 text-center">
+              <label>eLab</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+
+          <div data-task_type="eImaging"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+
+            <div class="col-lg-2 paddright text-center">
+              <label>Send MRI scan Order</label>
+            </div>
+
+            <div class="col-lg-1 text-center">
+              <label>eImaging</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center mrg-top5">
+          <button type="button" class="btn btn-warning" id="save_patient_add_task">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <div class="modal fade" id="start_chartnote_model" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title theme-color">Choose preference</h4>
+        </div>
+        <div class="modal-body theme-bold">
+          <div class="row">
+            <div class="col-lg-7">
+              <span>Most Recently Used Charting Template :: </span>
+            </div>
+            <div class="col-lg-5">  
+              <span id="recently_chatrtion_template" class="theme-color hovercolorchange"></span>
+              <span id="not_chartnote_available" class="theme-color hovercolorchange"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">  
+              <span>To Choose Charting Templates From MyPractce/Community :: </span>
+              <span id="charting_template_default" class="theme-color hovercolorchange">Click Here</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

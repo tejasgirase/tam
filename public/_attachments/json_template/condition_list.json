@@ -1,0 +1,32 @@
+{
+   "_id": "condition_list",
+   "_rev": "2-9a10be994a2a7ed342262e797644b261",
+   "doctype": "condition_list",
+   "conditions": [
+       "Arthritis",
+       "Asthama",
+       "Bladder Control Problem",
+       "Brittol Bones",
+       "Chest Pain (Angina)",
+       "Chrohns Disease",
+       "Depression",
+       "Emphysema (COPD, Chronic Bronchitis)",
+       "Enlarged prostate (benign prostatic hyperplasia)",
+       "Gastric reflux, heat burn or esophagitis(GERD)",
+       "Glaucoma",
+       "Heart Attack(myocardia infarction)",
+       "Heart failure (CHF)",
+       "Hemophilia and Hemophilia like conditions",
+       "High blood pressure (hypertension)",
+       "High blood sugar (Diabetes)",
+       "High Cholesterol",
+       "Inflammatory bowel disease",
+       "Migraine Headache",
+       "Overactive thyroid (Hyperthyroid)",
+       "Peptic , Stomach or duodenal ulcer",
+       "Poor circulation in legs (Peripheral vascular legs)",
+       "Seizures(Epilepsy)",
+       "Stroke (TIA)",
+       "Underactive thyroid(Hypothyroid)"
+   ]
+}

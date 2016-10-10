@@ -1,0 +1,319 @@
+{
+   "_id": "lab_reference_value",
+   "_rev": "5-75fe8b04e9565f0b0a307b12b8d89648",
+   "doctype": "lab_reference_value",
+   "dhp_code": "H-testingdhp",
+   "doctor_id": "org.couchdb.user:n@n.com",
+   "reference_values": [
+       {
+           "Lipid_Profile": [
+               {
+                   "field_name": "Total Cholesterol",
+                   "values": [
+                       {
+                           "normal": "<200",
+                           "near_optimal": "",
+                           "BorderLineHigh": "200-239",
+                           "high": ">=240",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 199
+                       }
+                   ]
+               },
+               {
+                   "field_name": "TRIGLYCERIDES",
+                   "values": [
+                       {
+                           "normal": "0-200",
+                           "near_optimal": "",
+                           "BorderLineHigh": "",
+                           "high": "",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 199
+                       }
+                   ]
+               },
+               {
+                   "field_name": "dHDL",
+                   "values": [
+                       {
+                           "normal": "40-60",
+                           "near_optimal": "",
+                           "BorderLineHigh": "",
+                           "high": "",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 40,
+                           "end": 60
+                       }
+                   ]
+               },
+               {
+                   "field_name": "LDL",
+                   "values": [
+                       {
+                           "normal": "<100",
+                           "near_optimal": "100-129",
+                           "BorderLineHigh": "130-159",
+                           "high": "160-189",
+                           "very_high": ">190"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 129
+                       }
+                   ]
+               },
+               {
+                   "field_name": "VLDL",
+                   "values": [
+                       {
+                           "normal": "10-30",
+                           "near_optimal": "",
+                           "BorderLineHigh": "",
+                           "high": "",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 10,
+                           "end": 30
+                       }
+                   ]
+               },
+               {
+                   "field_name": "CHOL/dHDL",
+                   "values": [
+                       {
+                           "normal": "0.0-4.1",
+                           "near_optimal": "",
+                           "BorderLineHigh": "",
+                           "high": "",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 4.1
+                       }
+                   ]
+               },
+               {
+                   "field_name": "dLDL/dHDL",
+                   "values": [
+                       {
+                           "normal": "0-3.5",
+                           "near_optimal": "",
+                           "BorderLineHigh": "",
+                           "high": "",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 3.5
+                       }
+                   ]
+               },
+               {
+                   "field_name": "TOTAL LIPIDS",
+                   "values": [
+                       {
+                           "normal": "400-1000",
+                           "near_optimal": "",
+                           "BorderLineHigh": "",
+                           "high": "",
+                           "very_high": ""
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 400,
+                           "end": 1000
+                       }
+                   ]
+               },
+               {
+                   "field_name": "DirectLDL",
+                   "values": [
+                       {
+                           "normal": "<100",
+                           "near_optimal": "100-129",
+                           "BorderLineHigh": "130-159",
+                           "high": "160-189",
+                           "very_high": ">190"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 129
+                       }
+                   ]
+               }
+           ],
+           "Glucose_Test": [
+               {
+                   "field_name": "A1C",
+                   "values": [
+                       {
+                           "normal": "<=5",
+                           "Pre_Diabetic": "5.7-6.4",
+                           "Diabetic": ">6.5"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 5
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Fasting Plasma Glucose ",
+                   "values": [
+                       {
+                           "normal": "<99",
+                           "Pre_Diabetic": "100-125",
+                           "Diabetic": ">126"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 99
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Oral Glucose",
+                   "values": [
+                       {
+                           "normal": "<=139",
+                           "Pre_Diabetic": "140-199",
+                           "Diabetic": ">200"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 139
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Random Blood Sugar",
+                   "values": [
+                       {
+                           "normal": "<=200",
+                           "Pre_Diabetic": "NA",
+                           "Diabetic": ">200"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 0,
+                           "end": 199
+                       }
+                   ]
+               }
+           ],
+           "Blood_Pressure": [
+               {
+                   "field_name": "Sys",
+                   "values": [
+                       {
+                           "normal": "<120 (AND)",
+                           "Prehypertension": "120-139 (OR)",
+                           "High_BP_Stage1": "140-159 (OR)",
+                           "High_BP_Stage2": ">160 (OR)",
+                           "Emergency": ">180 (OR)",
+                           "Low_BP": "<90 (OR)"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 90,
+                           "end": 119
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Dia",
+                   "values": [
+                       {
+                           "normal": "80",
+                           "Prehypertension": "80-89",
+                           "High_BP_Stage1": "90-99",
+                           "High_BP_Stage2": ">=100",
+                           "Emergency": ">110",
+                           "Low_BP": "<60"
+                       }
+                   ],
+                   "ranges": [
+                       {
+                           "start": 80,
+                           "end": 80
+                       }
+                   ]
+               }
+           ],
+           "Vitamin_D": [
+               {
+                   "field_name": "Deficient",
+                   "values": [
+                       {
+                           "ng_mL": "12",
+                           "nmol_L": "<30"
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Inadequate for bone health and healthy individuals",
+                   "values": [
+                       {
+                           "ng_mL": "12-20",
+                           "nmol_L": "30-50"
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Optimal",
+                   "values": [
+                       {
+                           "ng_mL": "20-50",
+                           "nmol_L": "50-125"
+                       }
+                   ]
+               },
+               {
+                   "field_name": "Abnormal levels",
+                   "values": [
+                       {
+                           "ng_mL": ">50",
+                           "nmol_L": ">125"
+                       }
+                   ]
+               }
+           ]
+       }
+   ]
+}

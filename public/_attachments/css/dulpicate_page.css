@@ -1,0 +1,108 @@
+body {
+    background-color: #f5f5f5;
+}
+.ListPanelScheduledButton {
+    background: #f2bb5c;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    border-radius: 5px;
+    float: right;
+    width: auto;
+    cursor: pointer;
+}
+.ListPanelScheduledCount {
+    width: auto;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: 300;
+    padding: 0px 5px;
+}
+
+.ListPanelScheduledText {
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0px 5px;
+    width: auto;
+}
+.ListPanelCheckedInButton {
+    background: #f2bb5c;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    padding-right: 2px;
+    border-radius: 5px;
+    float: right;
+    width: auto;
+    cursor: pointer;
+}
+.ListPanelRemainingButton {
+    background: #f2bb5c;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    border-radius: 5px;
+    float: right;
+    width: auto;
+    cursor: pointer;
+}
+.ListPanelCheckedInCount {
+    width: auto;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: 300;
+    padding: 0px 5px;
+}
+.ListPanelRemainingCount {
+    width: auto;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: 300;
+    padding: 0px 5px;
+}
+.ListPanelCheckedInText {
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0px 5px;
+    width: auto;
+}
+.ListPanelRemainingText {
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0px 5px;
+    width: auto;
+}
+.ListPanelScheduledButton:hover {
+    background: #eb8613;
+}
+.ListPanelCheckedInButton:hover {
+    background: #eb8613;
+}
+.ListPanelRemainingButton:hover {
+    background: #eb8613;
+}
+.ScrollerPanel::-webkit-scrollbar {
+    width: 4px;
+}
+.ScrollerPanel::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+.ScrollerPanel::-webkit-scrollbar-thumb {
+    background-color: #39c6d7;
+}
+.CurrentTaskPanel .ListPanelTitleText {
+    font-size: 18px;
+    padding: 7px 15px;
+}
+.dd-list-hover, .dd-list-buttons :hover{
+    background-color: #eb8613;
+}

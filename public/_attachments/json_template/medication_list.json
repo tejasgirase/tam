@@ -1,0 +1,2390 @@
+{
+   "_id": "2e479b62c27fd573584c4726c00180cf",
+   "_rev": "17-8e7ca69ff601374160c2949ec638d20b",
+   "dhp_code": "H-AesXNNWbsz",
+   "doctype": "medication_list",
+   "medication_list": [
+       {
+           "drug_name": "ATARAX",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATARAX",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AMTAS -E",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "AMIFRU",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AZITHRAL",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MMG"
+       },
+       {
+           "drug_name": "AZITHAL",
+           "type": "Tablet",
+           "strength": "250",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ACITROM",
+           "type": "Tablet",
+           "strength": "4",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ACITROM",
+           "type": "Tablet",
+           "strength": "1",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ACITROM",
+           "type": "Tablet",
+           "strength": "3",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ACITROM",
+           "type": "Tablet",
+           "strength": "2",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AMARYL",
+           "type": "Tablet",
+           "strength": "1",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AZEE",
+           "type": "Tablet",
+           "strength": "100",
+           "units": ""
+       },
+       {
+           "drug_name": "ATORLIP",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AZTOR",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATOCOR",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATOCOR",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AZTOR",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATORVA",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATORVA",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATORVA",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ASSURANCE",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AVIL",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AVIL",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATORLIP",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATEN",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ASTHALIN",
+           "type": "Tablet",
+           "strength": "2",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AB-FLOW",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ABIPHYLIIN",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ABIPHYLLIN SR",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATEN 50MG",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AMLONG",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AMLONG",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ALDACTONE",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ALDACTONE",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "AMLOKIND",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ALLEGRA",
+           "type": "Tablet",
+           "strength": "180",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATOZ",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ALLEGRA -M",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CLOPITAB",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CARDACE -H",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CARDACE",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CARDACE",
+           "type": "Tablet",
+           "strength": "1.25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CARDARONE X",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "COVERSYL",
+           "type": "Tablet",
+           "strength": "2",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DEPLAT CV",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CARDARONE",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "COVERSYL",
+           "type": "Tablet",
+           "strength": "4",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CADACE METO",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CARDACE H",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "COMBIFLAM",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CHYMORAL FORTE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CETAPIN XR",
+           "type": "Tablet",
+           "strength": "500",
+           "units": ""
+       },
+       {
+           "drug_name": "CARCA",
+           "type": "Tablet",
+           "strength": "6.25",
+           "units": ""
+       },
+       {
+           "drug_name": "CARCA",
+           "type": "Tablet",
+           "strength": "3.125",
+           "units": ""
+       },
+       {
+           "drug_name": "CLARIBID",
+           "type": "Tablet",
+           "strength": "500",
+           "units": ""
+       },
+       {
+           "drug_name": "CLARIBID",
+           "type": "Tablet",
+           "strength": "250",
+           "units": ""
+       },
+       {
+           "drug_name": "BEPLEX FORTE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CONCOR AM",
+           "type": "Tablet",
+           "strength": "5",
+           "units": ""
+       },
+       {
+           "drug_name": "CONCOR AM",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": ""
+       },
+       {
+           "drug_name": "CONCOR",
+           "type": "Tablet",
+           "strength": "5",
+           "units": ""
+       },
+       {
+           "drug_name": "CONCOR",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": ""
+       },
+       {
+           "drug_name": "CONCOR",
+           "type": "Tablet",
+           "strength": "10",
+           "units": ""
+       },
+       {
+           "drug_name": "CLOTAN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CARDIVAS",
+           "type": "Tablet",
+           "strength": "6.25",
+           "units": ""
+       },
+       {
+           "drug_name": "CARDACE H",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": ""
+       },
+       {
+           "drug_name": "CARDIVAS",
+           "type": "Tablet",
+           "strength": "12.2",
+           "units": ""
+       },
+       {
+           "drug_name": "CLOPITARVA",
+           "type": "Tablet",
+           "strength": "10",
+           "units": ""
+       },
+       {
+           "drug_name": "CALAPTIN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CIPLAR LA",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CILPAR LA",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "INOD",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ELDOPAR",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "EVION LC",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "EVION",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "BECOSULES",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "BETALOC",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "BENADONE",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DOLONEX DT",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DIAMICRONE XR",
+           "type": "Tablet",
+           "strength": "60",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DILZEM SR",
+           "type": "Tablet",
+           "strength": "90",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DALACIN-C",
+           "type": "Tablet",
+           "strength": "300",
+           "units": "MG"
+       },
+       {
+           "drug_name": "FEBUSTAT",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DYTOR",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DRONTIN M",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DERIPHYLLIN R",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DILZEM",
+           "type": "Tablet",
+           "strength": "30",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DYTOR",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DROTIN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DYTOR",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "BIO D3 PLUS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DYTOR PLUS",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DYTOR PLUS",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "DYTOR PLUS",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ATORFIT CV",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CARDACE",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "BIO D3",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "AZTOR ASP",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CLOPITAB CV",
+           "type": "Tablet",
+           "strength": "10",
+           "units": ""
+       },
+       {
+           "drug_name": "AZTOR",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "BEVON CD",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CLOPTAB A",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CLOPITAB A",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN",
+           "type": "Tablet",
+           "strength": "75",
+           "units": ""
+       },
+       {
+           "drug_name": "ECOSPRIN",
+           "type": "Tablet",
+           "strength": "325",
+           "units": ""
+       },
+       {
+           "drug_name": "OROFER XT",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NOVASTAT",
+           "type": "Tablet",
+           "strength": "10",
+           "units": ""
+       },
+       {
+           "drug_name": "NOVASTAT",
+           "type": "Tablet",
+           "strength": "20",
+           "units": ""
+       },
+       {
+           "drug_name": "ISOLAZINE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "IMDUR",
+           "type": "Tablet",
+           "strength": "60",
+           "units": ""
+       },
+       {
+           "drug_name": "IMDUR",
+           "type": "Tablet",
+           "strength": "30",
+           "units": ""
+       },
+       {
+           "drug_name": "ISMO",
+           "type": "Tablet",
+           "strength": "20",
+           "units": ""
+       },
+       {
+           "drug_name": "ISMO",
+           "type": "Tablet",
+           "strength": "10",
+           "units": ""
+       },
+       {
+           "drug_name": "INDERAL",
+           "type": "Tablet",
+           "strength": "10",
+           "units": ""
+       },
+       {
+           "drug_name": "INDERAL",
+           "type": "Tablet",
+           "strength": "40",
+           "units": ""
+       },
+       {
+           "drug_name": "IVABRAD",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LASILACTONE",
+           "type": "Tablet",
+           "strength": "50",
+           "units": ""
+       },
+       {
+           "drug_name": "LASIX",
+           "type": "Tablet",
+           "strength": "40",
+           "units": ""
+       },
+       {
+           "drug_name": "LOMOTIL",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LIMCEE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LOSAR",
+           "type": "Tablet",
+           "strength": "25",
+           "units": ""
+       },
+       {
+           "drug_name": "FORE COX",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "FLAVIDON MR",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LOSAR  H",
+           "type": "Tablet",
+           "strength": "50",
+           "units": ""
+       },
+       {
+           "drug_name": "HISTAC",
+           "type": "Tablet",
+           "strength": "150",
+           "units": ""
+       },
+       {
+           "drug_name": "LIBRIUM",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HOMOCHECK",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "KARVOL PLUS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LOSAR",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LIBRIUM",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LOMOFIN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LIOFEN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LESORIDE OD",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "GLYCOMET",
+           "type": "Tablet",
+           "strength": "500",
+           "units": "MG"
+       },
+       {
+           "drug_name": "GLYCOMET",
+           "type": "Tablet",
+           "strength": "250",
+           "units": "MG"
+       },
+       {
+           "drug_name": "GLYCIPHAGE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "GELUSIL",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "GLUCORED FORTE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "OMEZ",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ONDEM MD",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "OFLEX",
+           "type": "Tablet",
+           "strength": "400",
+           "units": "MG"
+       },
+       {
+           "drug_name": "OFLOX",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "METHYCOBAL",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MYOSPAS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MEFTAL SPAS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MONOCEF-O",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "METROGYL",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MYORIL",
+           "type": "Tablet",
+           "strength": "8",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MYORIL",
+           "type": "Tablet",
+           "strength": "4",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MEFTAL FORTE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "METROGYL",
+           "type": "Tablet",
+           "strength": "400",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NEUROBION FORTE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEBICARD",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": ""
+       },
+       {
+           "drug_name": "NATIRILIX SR",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NUCARNIT",
+           "type": "Tablet",
+           "strength": "500",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NEBICARD",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NEXPRO RD",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NEXPRO RD",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NICARDIA RETARD",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MET STAMLO",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MET STAMLO",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "METOSARTAN",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MINIPRESS XL",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MINIPRESS XL",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN AV",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN AV ",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN AV",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN GOLD",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN GOLD",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ECOSPRIN AV",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NEPHROSAVE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEUROKIND NEXT",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEUROKIND PLUS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MONOCEF O CV",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEUROKIND D3",
+           "type": "Tablet",
+           "strength": "3",
+           "units": ""
+       },
+       {
+           "drug_name": "ERITIL -LN",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PLAVIX",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEUROKIND LC",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MET XL",
+           "type": "Tablet",
+           "strength": "12.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MET XL",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NEKSIUM",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "LANOXIN",
+           "type": "Tablet",
+           "strength": "0.25",
+           "units": ""
+       },
+       {
+           "drug_name": "MET XL",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ENVAS",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": ""
+       },
+       {
+           "drug_name": "SORBITRETE",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "SPOROLAC DS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "STORVAS",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STORVAS",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "S-NUMLO",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "SPOROLAC PLUS",
+           "type": "Tablet",
+           "strength": "PL",
+           "units": ""
+       },
+       {
+           "drug_name": "SORBITREATE",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PAN -D",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PANTODAC",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PANTOCID -L",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PANTOP DSR",
+           "type": "Tablet",
+           "strength": "D",
+           "units": ""
+       },
+       {
+           "drug_name": "SUPRADYN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "STARPRESS XL",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STARPRESS XL",
+           "type": "Tablet",
+           "strength": "12.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STAMLO",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STAMLO",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STUGERON FORTE",
+           "type": "Tablet",
+           "strength": "FOR",
+           "units": ""
+       },
+       {
+           "drug_name": "STAMLO BETA",
+           "type": "Tablet",
+           "strength": "BE",
+           "units": ""
+       },
+       {
+           "drug_name": "SELOKEN XL",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STARPRESS XL",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "SINAREST",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "STUGERON",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RESTYL",
+           "type": "Tablet",
+           "strength": "0.25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "REVOTRIL",
+           "type": "Tablet",
+           "strength": "0.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RANTAC",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAZO",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RESTYL",
+           "type": "Tablet",
+           "strength": "0.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PROLOMET XL",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PROLOMET XL",
+           "type": "Tablet",
+           "strength": "12.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PROLOMET XL",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PLANEP",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TONACT",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TONACT",
+           "type": "Tablet",
+           "strength": "80",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TONACT",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TONACT",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TUS -Q",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "TRIKA",
+           "type": "Tablet",
+           "strength": "0.25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TOZAAR H",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TOZALAC",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TAZOLAC H",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TOZAAR",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TOZAAR",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TINORIC",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TINORIC",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TELMA",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RED0TIL",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAMISTAR",
+           "type": "Tablet",
+           "strength": "1.25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAMISTAR H",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAMISTAR",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAMISTAR A",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAMISTAR H",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RAMISTAR",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RANOZEX",
+           "type": "Tablet",
+           "strength": "500",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZERODOL P",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ZERODOL CR",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ZERODOL MR",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PREGASTAR",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ROSUVAS",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ROSUVAS",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "STROCIT",
+           "type": "Tablet",
+           "strength": "500",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TAXIM -O",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PREGASTAR M",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "PANTAKIND",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "TELMA",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ROSUVAS",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TELMA",
+           "type": "Tablet",
+           "strength": "80",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TELMA H",
+           "type": "Tablet",
+           "strength": "80",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TELMA H",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NIKORAN",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NIKORAN",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "EPTOIN ER",
+           "type": "Tablet",
+           "strength": "300",
+           "units": "MG"
+       },
+       {
+           "drug_name": "THYRONORM",
+           "type": "Tablet",
+           "strength": "25",
+           "units": "MG"
+       },
+       {
+           "drug_name": "MONIT GTN",
+           "type": "Tablet",
+           "strength": "2.6",
+           "units": ""
+       },
+       {
+           "drug_name": "EPTOIN",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "THYRONORM",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MCG"
+       },
+       {
+           "drug_name": "THYRONORM",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MCG"
+       },
+       {
+           "drug_name": "THYRONORM",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MCG"
+       },
+       {
+           "drug_name": "THYRONORM",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "EPTION",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "THYRONORM",
+           "type": "Tablet",
+           "strength": "12.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZYLORIC",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "VERTIN",
+           "type": "Tablet",
+           "strength": "8",
+           "units": "MG"
+       },
+       {
+           "drug_name": "VERTIN",
+           "type": "Tablet",
+           "strength": "16",
+           "units": "MG"
+       },
+       {
+           "drug_name": "VERTIN",
+           "type": "Tablet",
+           "strength": "24",
+           "units": "MG"
+       },
+       {
+           "drug_name": "RIBOFLAVIN",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "WARF",
+           "type": "Tablet",
+           "strength": "1",
+           "units": "MG"
+       },
+       {
+           "drug_name": "WARF",
+           "type": "Tablet",
+           "strength": "2",
+           "units": "MG"
+       },
+       {
+           "drug_name": "WARF",
+           "type": "Tablet",
+           "strength": "3",
+           "units": "MG"
+       },
+       {
+           "drug_name": "GLIMY M2",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "TELSARTAN CT",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "SHECAL",
+           "type": "Tablet",
+           "strength": "500",
+           "units": "MG"
+       },
+       {
+           "drug_name": "SHECAL OS",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "SHECAL",
+           "type": "Tablet",
+           "strength": "250",
+           "units": "MG"
+       },
+       {
+           "drug_name": "SHECAL CT",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "WARF",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZYTANIX",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZOLFRESH",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZOLFRESH",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZOLSOMA",
+           "type": "Tablet",
+           "strength": "5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZOLOSOMA",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZANOCIN",
+           "type": "Tablet",
+           "strength": "200",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZAART",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZEEDOTT",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZYTANIX",
+           "type": "Tablet",
+           "strength": "2.5",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZOFER",
+           "type": "Tablet",
+           "strength": "4",
+           "units": "MG"
+       },
+       {
+           "drug_name": "TELSARTAN H",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "VOVERAN SR",
+           "type": "Tablet",
+           "strength": "100",
+           "units": "MG"
+       },
+       {
+           "drug_name": "VOVERAN",
+           "type": "Tablet",
+           "strength": "50",
+           "units": "MG"
+       },
+       {
+           "drug_name": "URIMAX",
+           "type": "Tablet",
+           "strength": "0.4",
+           "units": "MG"
+       },
+       {
+           "drug_name": "UDILIV",
+           "type": "Tablet",
+           "strength": "300",
+           "units": "MG"
+       },
+       {
+           "drug_name": "VOVERAN SR",
+           "type": "Tablet",
+           "strength": "75",
+           "units": "MG"
+       },
+       {
+           "drug_name": "UDILIV",
+           "type": "Tablet",
+           "strength": "150",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZERODOL SP",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DOLO",
+           "type": "Tablet",
+           "strength": "650",
+           "units": "MG"
+       },
+       {
+           "drug_name": "NOVASTART CV",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ATOCOR",
+           "type": "Tablet",
+           "strength": "80",
+           "units": "MG"
+       },
+       {
+           "drug_name": "ZINCOVIT",
+           "type": "Tablet",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ATOCOR",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CATT",
+           "type": "Tablet",
+           "strength": "80",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CATT",
+           "type": "Tablet",
+           "strength": "40",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CAATT",
+           "type": "Tablet",
+           "strength": "20",
+           "units": "MG"
+       },
+       {
+           "drug_name": "CATT",
+           "type": "Tablet",
+           "strength": "10",
+           "units": "MG"
+       },
+       {
+           "drug_name": "HEAMUP",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ZINCOVIT",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ASCORIL",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CITRALKA",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "SUCRAL",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "SUCRAL O",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "GRILLINTUS BM",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "POTKLOR",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MUCAINE GEL",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CREMMAFIN PLANE",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CREMMAFFIN PINK",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CREMMAFFIN PLUS",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DUPHALLAC",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DEXORANGE",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ARISTROZYME",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ZINCOVIT",
+           "type": "Syrup",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DERIPHYLLIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ATROPIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ADRENALLIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DEX C",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "FERIJECT",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "KETROL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "EPSOLLIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ETHWAK",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "RIDOOF",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CYCLOPAM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "EMIGAN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DIAZEPAM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MYPYROLATEN5ML",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MYOPYROLATE 1ML",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "BETALOC",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEUROBIN FORTE",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "VECORIUM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DROTIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DYTOR",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ANAWIN0.5%",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CORDARONE",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "VECORIUM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "STROCIT",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "T.T",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HMI",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PNEUMOVAX",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HAI",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ANAWIN HEAVY",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NORADRANALLIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HEPARIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HEPARIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MVI",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "AMIKACIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ISOLIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LEVIPRIL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ADENOCIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MEDAZOLAM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CLAXENE",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "THROMBIFLOW",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "AMINNOPHYLLIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PROPOFOL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "AGGRAMED",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HUMAN ALBUMIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LOX 2%",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PENTOWOK",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "FALCIGO",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HIPENCLAV",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MONOCEF",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PIPTAZ",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CIDAL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CIPROX",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "METRIX",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "POTASSIUM CHLORIDE",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CALCIUM GLUCONTE",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "HYDROCORT",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "EVACEF 1GM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "VIT K",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "MGSO4",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "VOVORAN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PERINORM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "AVIL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NEOMOL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "RANTAC",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "ZOFER",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DOTAMIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DOMIN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "NTG",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "DYNAPAR",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "LASIX",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "BUSCOPAN",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "TRAMADOL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "PCM",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CEZOSOL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "TRAMDOL",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       },
+       {
+           "drug_name": "CURADEX",
+           "type": "Injection",
+           "strength": "",
+           "units": ""
+       }
+   ]
+}

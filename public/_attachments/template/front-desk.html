@@ -1,0 +1,289 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row" id="front_desk_parent">
+  <div class="tab_box">
+    <div class="panel panel-default patients panel-grey-background">
+      <div class="panel-heading">Front Desk</div>
+      <div id="doctor_dashboard_container" class="doctor_dashboard_container">
+        <div class="fd-container">
+          <div class="row mrgside">
+            <div id="default_patient_fd_profile" class="col-md-3 UserPanel" style="margin-left: 0px; margin-top: 0px; height: 415px; position: relative;box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);border-radius: 4px;">
+              <div style="position: absolute; top: 110px; text-align: center;">
+                <img alt="profile-pic" src="images/profile-pic.png" class="img-responsive" style="height: 100px ! important; width: 100px;"><br>
+                <span style="width: 500px;">No Patient is selected Currently</span>
+              </div>
+            </div>
+            <div id="selected_patient_fd_profile" style="margin-left: 0px; margin-top: 0px;display: none;box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);border-radius: 4px; height: 415px;" class="col-md-3 UserPanel">
+              <div class="row UserPanelDetails">
+                <div class="col-md-4 UserPanelThumpNail"></div>
+                <div class="col-md-8 UserPanelDetailsEdit" id="fd_edit_profile">Edit Profile</div><span id="infosybol" class="glyphicon glyphicon-info-sign infosybol" data-toggle="tooltip" data-placement="top" title="Please Complete your Profile"></span>
+                <div class="col-md-12 UserPanelUserName">
+                  <div class="row">
+                    <div class="col-md-6 UserPanelUserNameBold" id="fd_patient_fname"></div>
+                    <div class="col-md-6 UserPanelUserNameThin" id="fd_patient_lname"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="padding-left: 8px;">
+                <span class="glyphicon glyphicon-phone cus-glyphicon" title="Phone no." style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;"></span>
+                <span id = "fd_patient_phone"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="Gender." class="glyphicon glyphicon-user cus-glyphicon" style="padding: 0px;"></span>
+                <span id="fd_patient_gender"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="Date of Birth." class="glyphicon glyphicon-calendar cus-glyphicon" style="padding: 0px;"></span>
+                <span id="fd_patient_date_of_birth"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="DHP ID." class="glyphicon glyphicon-print cus-glyphicon" style="padding: 0px;"></span>
+                <span id="fd_patient_dhp_id"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 14px; background-color: white; height: 43px; line-height: 43px;" title="BMI." class="theme-color" style="margin-left: -6px;">BMI</span>
+                <span id="fd_patient_bmi"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="Email." class="glyphicon glyphicon-envelope cus-glyphicon" style="padding: 0px;"></span>
+                <span id="fd_patient_email"></span>
+              </div>
+            </div>
+
+            <div class="col-md-9 AppointmentPanel no-display" style="width: 77% ! important; padding-right: 0px ! important; margin-left: 9px; box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15); border-radius: 4px; background-color: white; margin-top: 0px;">
+              <div class="row ListPanelTitleWrapper">
+                <div class="col-md-6 ListPanelTitle">
+                  <div class="row ListPanelTitleText" style="border-bottom-width: 0px;">Appointment</div>
+                  <div style="width: 120px;" class="row ListPanelTitleBar"></div>
+                </div>
+                
+                <div class="col-md-6 AppointmentPanelTitleWrapper" id="fd_color_code_value_parent" style="display: none;">
+                  <div class="row">
+                    <div class="col-md-6 AppointmentPanelTitleText open" style="padding-top: 10px;">
+                      <button id="fd_color_code_value" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button" style="">Select Preference <span class="caret"></span></button>
+                      <ul class="dropdown-menu appointment-drp-menu" id="fd_color_code_dropdown">
+                        <li><a backcolor="#378006" class="green-link">Regular Appointment</a></li>
+                        <li><a backcolor="#0000ff" class="blue-link">New Patient</a></li>
+                        <li><a backcolor="#ff0000" class="red-link">Critical Patient</a></li>
+                        <li><a backcolor="#eb8613" class="orange-link">Normal Appointment</a></li>
+                        <li><a backcolor="#7F00FF" class="purple-link">Routine Checkup</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 AppointmentPanelTitleWrapper" id="is_fd_appointment_tentative_parent" style="display: none;">
+                  <div class="row">
+                    <div class="col-md-6 AppointmentPanelTitleText"><input type="checkbox" id="is_fd_appointment_tentative" class="checkshow">&nbsp;Tentative</div>
+                  </div>
+                </div>
+                <div class="col-md-6 AppointmentPanelMoreOptions"><span id="moreoption" class="moreoption">More Options</span></div>
+                <div class="col-md-6 AppointmentPanelTitleWrapper">
+                  <div class="row">
+                    <div class="col-md-6 AppointmentPanelChecbox"><input id="fd_new_patient" type="checkbox" class="checkshow"></div>
+                    <div class="col-md-6 AppointmentPanelTitleText">New Patient</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row AppintmentTextBoxWrapper">
+                <div class="col-md-6 AppintmentTextBoxContainer">
+                  <input class="AppintmentTextBox PhysicanIcon" id="fd_appointment_physician_list" placeholder="Physician">
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer paddleft">
+                  <input class="AppintmentTextBox DateIcon datetime-with-mintoday-not-img" id="fd_appointment_date" placeholder="Date">
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer" style="padding-left: 15px;">
+                  <input class="AppintmentTextBox PatientIcon" id="fd_appointment_patient_list" placeholder="Patient Name">
+                  <input class="AppintmentTextBox PatientIcon" id="fd_appointment_patient_first_name"  style = "display:none;width:50% !important;" placeholder="Patient First Name">
+                  <input class="AppintmentTextBox PatientIcon" id="fd_appointment_patient_last_name" style = "display:none;width:49% !important;" placeholder="Patient Last Name">
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer paddleft">
+                  <div class="TimerTextbox TimeIcon">
+                    <div class="col-md-12 TimerText paddright">Time</div>
+                    <div class="col-md-12 Start">
+                      <select id="fd_end_time_hour" class="col-md-12 TimerValTextBox">
+                        <option value="00">00</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                      </select>
+                      <select id="fd_end_time_minute" class="col-md-12 TimerValTextBox">
+                        <option value="00">00</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                      </select>
+                      <div class="col-md-12 TimerText">End</div>                
+                    </div>
+                    <div class="col-md-12 Start">
+                      <div class="col-md-12 TimerText">Start</div>
+                      <select id="fd_start_time_hour" class="col-md-12 TimerValTextBox">
+                        <option value="00">00</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                      </select>
+                      <select id="fd_start_time_minute" class="col-md-12 TimerValTextBox">
+                        <option value="00">00</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer">
+                  <input class="AppintmentTextBox PatientEmailIcon" id="fd_appointment_patient_email" placeholder="Patient's Email" >
+                  <small class="rght-float font-size not-email"><span id="isu_email_not_provid" class="theme-color pointer">not Having EmailId.</span></small>
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer paddleft">
+                  <select class="AppintmentTextBox ConsultantsIcon" id="fd_consultant_list"></select>
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer">
+                  <input class="AppintmentTextBox PatientPhoneIcon" id="fd_appointment_patient_phone" placeholder="Patient's Phone">
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer paddleft">
+                  <select class="AppintmentTextBox MiscDocIcon" id="fd_hospital_document_list">
+                    <option value="volvo">Select Hospital Misc Documents</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                  </select>
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer">
+                  <input class="AppintmentTextBox RemainderNoteIcon" id="fd_reminder_note" placeholder="Note">
+                </div>
+                <div class="col-md-6 AppintmentTextBoxContainer paddleft">
+                  <select id="fd_service_list" class="AppintmentTextBox ServiceIcon">
+                    <option value="volvo">Select Services</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                    <option value="saab">Lorem</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2 CreateAppointment" id="upload_files_from_front_desk">Upload Files</div>
+              <div class="col-md-3 CreateAppointment" id="create_new_appointment_from_front_desk">Create Appointment</div>
+            </div>
+
+            <div class="col-lg-9 fd-right-sidebar">
+              <div class="col-lg-12">
+                <h2 class="col-lg-6 mytitle paddtopbottom6 cuswidth25 paddside"><span class="glyphicon glyphicon-user"></span>Today's Schedule</h2>
+                <span class="col-lg-2 padd-right paddtopbottom6"><select class="form-control" id="fd_locations"><option>Ahmedabad</option></select></span>
+                <!-- <div class="col-lg-4">
+                  <span class="label label-warning fd-schedule-label sl-hover" id="fd_remaining_patients_label">Remaining</span>
+                  <span id="fd_todays_remaining_patients" class="green-label">0</span>
+                </div> -->
+                <div id="fd_remaining_patients_label" class="col-md-2 ListPanelScheduledButton dd-list-buttons">
+                  <div id="fd_todays_remaining_patients" class="col-md-6 ListPanelScheduledCount">0</div>
+                  <div class="col-md-6 ListPanelScheduledText">Remaining</div>
+                </div>
+
+                <!-- <div class="col-lg-4">
+                  <span class="label label-warning fd-schedule-label sl-hover" id="fd_checkedin_patients_label">Checked In</span>
+                  <span id="fd_todays_checkedin_patients" class="green-label">0</span>
+                </div> -->
+                <div id="fd_checkedin_patients_label" class="col-md-2 ListPanelScheduledButton dd-list-buttons">
+                  <div id="fd_todays_checkedin_patients" class="col-md-6 ListPanelScheduledCount">0</div>
+                  <div class="col-md-6 ListPanelScheduledText">Checked In</div>
+                </div>
+
+                <!-- <div class="col-lg-4">
+                  <span class="label label-warning fd-schedule-label sl-hover" id="fd_scheduled_patients_label">Schedule</span>
+                  <span id="fd_todays_scheduled_patients" class="green-label">0</span>
+                </div> -->
+                <div id="fd_scheduled_patients_label" class="col-md-2 ListPanelScheduledButton dd-list-buttons dd-list-hover">
+                  <div id="fd_todays_scheduled_patients" class="col-md-6 ListPanelScheduledCount">0</div>
+                  <div class="col-md-6 ListPanelScheduledText">Scheduled</div>
+                </div>
+              </div>
+              <div class="col-lg-12 mrgbtm1">
+              </div>
+              <div class="row">
+                <div class="table-responsive col-lg-12">
+                  <table id="fd_today_schedule_table" class="table task_table tbl-border tbl-center">
+                    <thead>
+                      <tr>
+                        <th width="20%">Patient</th>
+                        <th width="20%">Visit Type</th>
+                        <th width="20%">Status</th>
+                        <th width="10%">Checked In Time</th>
+                        <th width="10%">Mark as Critical</th>
+                        <th width="15%">Tags</th>
+                        <th width="5%">Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                  <div id="today_schedule_front_desk_pagination" class="daily-dashboard-pagination col-lg-12 pagination-align">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mrgside">
+            <div class="col-lg-12" style="min-height: 517px;background-color: white; border-radius: 4px; box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);">
+              <div class="row mrg-top5">
+                <div class="col-lg-6">
+                  <h2 class="mytitle" style="display: inline; margin-right: 5px;">Current Tasks</h2>
+                  <span id="fd_no_of_current_task" class="green-label"></span>
+                </div>
+                <div class="col-lg-3 paddleft">
+                  <select class="form-control mrgbtm20" placeholder="Select Patient" id="fd_select_patient_task">
+                    <option>Select Patient</option>
+                  </select>
+                </div>
+                <div class="col-lg-3" style="padding-left: 0px;">
+                  <select id="fd_select_task_type" class="form-control fd-select-task-type" placeholder="Select Task Type">
+                    <option value="noselect">Select Task Type</option>
+                    <option value="Appointment">Appointment</option>
+                    <option value="eImaging">eImaging</option>
+                    <option value="eImagingResults">eImagingResults</option>
+                    <option value="eLab">eLab</option>
+                    <option value="eLabResults">eLabResults</option>
+                    <option value="eRx">eRx</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mrgtop1">
+                <div style="" class="table-responsive col-lg-12">
+                  <table id="fd_current_task_table" class="table task_table tbl-border tbl-center">
+                    <thead>
+                      <tr>
+                        <th width="5%"></th>
+                        <th width="10%">Patient</th>
+                        <th width="25%">Task</th>
+                        <th width="10%">Flag</th>
+                        <th width="10%">Note</th>
+                        <th width="10%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                  <div id="current_task_front_desk_pagination" class="daily-dashboard-pagination col-lg-12 pagination-align"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="fd_edit_patient_tags_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title theme-color">Choose Tags::</h4>
+          </div>
+          <div class="modal-body theme-bold">
+            <div class="row">
+              <div class="col-lg-12">
+                <input type="text" id="fd_appointment_tag_status" placeholder="search here">
+              </div>
+            </div>
+            <div class="row Premrg">
+              <div class="col-lg-12 text-align">
+                <button class="btn btn-warning" id="fd_update_patient_tags">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

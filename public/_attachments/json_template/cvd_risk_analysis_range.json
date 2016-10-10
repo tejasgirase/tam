@@ -1,0 +1,352 @@
+{
+  "_id": "cvd_risk_analysis_range",
+  "_rev": "1-967a00dff5e02add41819138abb3284d",
+  "age": [
+    {
+      "range": "20-34",
+      "man": -9,
+      "woman":-7
+    }, {
+      "range": "35-39",
+      "man": -4,
+      "woman":-3
+    }, {
+      "range": "40-44",
+      "man": 0,
+      "woman":0
+    }, {
+      "range": "45-49",
+      "man": 3,
+      "woman":3
+    }, {
+      "range": "50-54",
+      "man": 6,
+      "woman":6
+    }, {
+      "range": "55-59",
+      "man": 8,
+      "woman":8
+    }, {
+      "range": "60-64",
+      "man": 10,
+      "woman":10
+    }, {
+      "range": "65-69",
+      "man": 11,
+      "woman":12
+    }, {
+      "range": "70-74",
+      "man": 12,
+      "woman":14
+    }, {
+      "range": "75-79",
+      "man": 13,
+      "woman":16
+    }
+  ],
+  "HDL": [
+    {
+      "range": "0-40",
+      "man": 2,
+      "woman": 2
+    }, {
+      "range": "40-49",
+      "man": 1,
+      "woman": 1
+    }, {
+      "range": "50-59",
+      "man": 0,
+      "woman": 0
+    }, {
+      "range": "60-all",
+      "man": -1,
+      "woman": -1
+    }
+  ],
+  "total_cholesterol": [
+    {
+      "range": "0-160",
+      "man_value": [
+        {
+          "age_range": "20-39",
+          "value": 0
+        }, {
+          "age_range": "40-49",
+          "value": 0
+        }, {
+          "age_range": "50-59",
+          "value": 0
+        }, {
+          "age_range": "60-69",
+          "value": 0
+        }, {
+          "age_range": "70-79",
+          "value": 0
+        }
+      ],
+      "woman_value": [
+        {
+          "age_range": "20-39",
+          "value": 0
+        }, {
+          "age_range": "40-49",
+          "value": 0
+        }, {
+          "age_range": "50-59",
+          "value": 0
+        }, {
+          "age_range": "60-69",
+          "value": 0
+        }, {
+          "age_range": "70-79",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "range": "160-199",
+      "man_value": [
+        {
+          "age_range": "20-39",
+          "value": 4
+        }, {
+          "age_range": "40-49",
+          "value": 3
+        }, {
+          "age_range": "50-59",
+          "value": 2
+        }, {
+          "age_range": "60-69",
+          "value": 1
+        }, {
+          "age_range": "70-79",
+          "value": 0
+        }
+      ],
+      "woman_value": [
+        {
+          "age_range": "20-39",
+          "value": 4
+        }, {
+          "age_range": "40-49",
+          "value": 3
+        }, {
+          "age_range": "50-59",
+          "value": 2
+        }, {
+          "age_range": "60-69",
+          "value": 1
+        }, {
+          "age_range": "70-79",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "range": "200-239",
+      "man_value": [
+        {
+          "age_range": "20-39",
+          "value": 7
+        }, {
+          "age_range": "40-49",
+          "value": 5
+        }, {
+          "age_range": "50-59",
+          "value": 3
+        }, {
+          "age_range": "60-69",
+          "value": 1
+        }, {
+          "age_range": "70-79",
+          "value": 0
+        }
+      ],
+      "woman_value": [
+        {
+          "age_range": "20-39",
+          "value": 8
+        }, {
+          "age_range": "40-49",
+          "value": 6
+        }, {
+          "age_range": "50-59",
+          "value": 4
+        }, {
+          "age_range": "60-69",
+          "value": 2
+        }, {
+          "age_range": "70-79",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "range": "240-279",
+      "man_value": [
+        {
+          "age_range": "20-39",
+          "value": 9
+        }, {
+          "age_range": "40-49",
+          "value": 6
+        }, {
+          "age_range": "50-59",
+          "value": 4
+        }, {
+          "age_range": "60-69",
+          "value": 2
+        }, {
+          "age_range": "70-79",
+          "value": 1
+        }
+      ],
+      "woman_value": [
+        {
+          "age_range": "20-39",
+          "value": 11
+        }, {
+          "age_range": "40-49",
+          "value": 8
+        }, {
+          "age_range": "50-59",
+          "value": 5
+        }, {
+          "age_range": "60-69",
+          "value": 3
+        }, {
+          "age_range": "70-79",
+          "value": 2
+        }
+      ]
+    },    
+    {
+      "range": "280-all",
+      "man_value": [
+        {
+          "age_range": "20-39",
+          "value": 11
+        }, {
+          "age_range": "40-49",
+          "value": 8
+        }, {
+          "age_range": "50-59",
+          "value": 5
+        }, {
+          "age_range": "60-69",
+          "value": 3
+        }, {
+          "age_range": "70-79",
+          "value": 1
+        }
+      ],
+      "woman_value": [
+        {
+          "age_range": "20-39",
+          "value": 13
+        }, {
+          "age_range": "40-49",
+          "value": 10
+        }, {
+          "age_range": "50-59",
+          "value": 7
+        }, {
+          "age_range": "60-69",
+          "value": 4
+        }, {
+          "age_range": "70-79",
+          "value": 2
+        }
+      ]
+    }
+  ],
+  "smoking":{
+    "nonsmoker":[
+      {
+        "age_range":"20-39",
+        "man_value":0,
+        "woman_value":0
+      },
+      {
+        "age_range":"40-49",
+        "man_value":0,
+        "woman_value":0
+      },
+      {
+        "age_range":"50-59",
+        "man_value":0,
+        "woman_value":0
+      },
+      {
+        "age_range":"60-69",
+        "man_value":0,
+        "woman_value":0
+      },
+      {
+        "age_range":"70-79",
+        "man_value":0,
+        "woman_value":0
+      }
+    ],
+    "smoker":[
+      {
+        "age_range":"20-39",
+        "man_value":8,
+        "woman_value":9
+      },
+      {
+        "age_range":"40-49",
+        "man_value":5,
+        "woman_value":7
+      },
+      {
+        "age_range":"50-59",
+        "man_value":3,
+        "woman_value":4
+      },
+      {
+        "age_range":"60-69",
+        "man_value":1,
+        "woman_value":2
+      },
+      {
+        "age_range":"70-79",
+        "man_value":1,
+        "woman_value":1
+      }
+    ]
+  },
+  "systolic_bp": [
+    {
+      "range": "0-120",
+      "man_treated_value": 0,
+      "man_untreated_value": 0,
+      "woman_treated_value": 0,
+      "woman_untreated_value": 0
+    },{
+      "range": "120-129",
+      "man_treated_value": 0,
+      "man_untreated_value": 1,
+      "woman_treated_value": 1,
+      "woman_untreated_value": 3
+    },{
+      "range": "130-139",
+      "man_treated_value": 1,
+      "man_untreated_value": 2,
+      "woman_treated_value": 2,
+      "woman_untreated_value": 4
+    },{
+      "range": "140-159",
+      "man_treated_value": 1,
+      "man_untreated_value": 2,
+      "woman_treated_value": 3,
+      "woman_untreated_value": 5
+    },{
+      "range": "160-all",
+      "man_treated_value": 2,
+      "man_untreated_value": 3,
+      "woman_treated_value": 4,
+      "woman_untreated_value": 6
+    }
+  ]
+}

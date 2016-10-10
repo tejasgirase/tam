@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Replication</title>
+	<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/arrow52.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/moment-timezone.min.js"></script>
+	<script src="js/jquery.couch.js"></script>
+	<script src="/_utils/script/json2.js"></script>
+	<script src="/_utils/script/sha1.js"></script>
+	<script src="/_utils/script/jquery.form.js?0.9.0"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	function getCouchUrl(tempurl){
+		console.log(tempurl);
+		var x = tempurl.split("@");
+		console.log(x);
+    var y = x[x.length-1].split("/");
+    console.log( y[0]);
+		return "http://"+y[0];
+	}
+
+	$(document).ready(function(){
+		//$.couch.urlPrefix = "http://50.97.122.211:5984";
+		$("body").on("click","#replicator",function(){
+			// if($("#source_medical_DB").val()) $.couch.urlPrefix = getCouchUrl($("#source_medical_DB").val())
+			// else if($("#source_pi_DB").val()) $.couch.urlPrefix = getCouchUrl($("#source_pi_DB").val())
+			// else $.couch.urlPrefix = getCouchUrl($("#source_replicated_DB").val())
+			// getAllDoctorsListFromDHP($("#DHPCode").val());
+			$("replicator_count").val("3");
+			$.couch.urlPrefix = $("#local_ip").val();
+			replicator($("#source_medical_DB").val(),$("#target_medical_DB").val(),$("#DHPCode").val(),"","","replicator0");
+			$.couch.urlPrefix = $("#remote_ip").val();
+			getAllDoctorsListFromDHP($("#source_medical_DB").val(),$("#target_medical_DB").val(),$("#DHPCode").val(),"","","replicator0");
+			getAllUsersListFromDHP($("#source_medical_DB").val(),$("#target_medical_DB").val(),$("#DHPCode").val(),"","","replicator0");
+		});
+
+		$("body").on("click","#replicator_1",function(){
+			// if($("#source_medical_DB").val()) $.couch.urlPrefix = getCouchUrl($("#source_medical_DB").val())
+			// else if($("#source_pi_DB").val()) $.couch.urlPrefix = getCouchUrl($("#source_pi_DB").val())
+			// else $.couch.urlPrefix = getCouchUrl($("#source_replicated_DB").val())
+			$("replicator1_count").val("3");
+			$.couch.urlPrefix = $("#local_ip").val();
+			replicator($("#source_pi_DB").val(),$("#target_pi_DB").val(),$("#DHPCode").val(),"","","replicator1");
+			$.couch.urlPrefix = $("#remote_ip").val();
+			getAllDoctorsListFromDHP($("#source_pi_DB").val(),$("#target_pi_DB").val(),$("#DHPCode").val(),"","","replicator1");
+			getAllUsersListFromDHP($("#source_pi_DB").val(),$("#target_pi_DB").val(),$("#DHPCode").val(),"","","replicator1");
+		});
+
+		$("body").on("click","#replicator_2",function(){
+			// if($("#source_medical_DB").val()) $.couch.urlPrefix = getCouchUrl($("#source_medical_DB").val())
+			// else if($("#source_pi_DB").val()) $.couch.urlPrefix = getCouchUrl($("#source_pi_DB").val())
+			// else $.couch.urlPrefix = getCouchUrl($("#source_replicated_DB").val())
+			$("replicator2_count").val("1");
+			$.couch.urlPrefix = $("#local_ip").val();
+			replicator($("#source_replicated_DB").val(),$("#target_replicated_DB").val(),$("#DHPCode").val(),"","","replicator2");
+			$.couch.urlPrefix = $("#remote_ip").val();
+			// getAllDoctorsListFromDHP("http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp","http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp_replicator",$("#DHPCode").val());
+			// getAllUsersListFromDHP("http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp","http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp_replicator",$("#DHPCode").val());
+		});
+
+		// $("body").on("click","#replication_login",function(){
+		// 	createLogin();
+		// });
+
+	});
+
+	//replicator("http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp","http://nimesh:nimesh@192.168.0.67:5984/meluha_replicator")	
+	function replicator(sourceDB,targetDB,dhp_code,doctor_arr,patient_arr,source_station){
+
+		$.couch.replicate(sourceDB, targetDB, {
+	    success: function(data) {
+	      console.log(data);
+	      if(source_station == "replicator0"){
+	      	$("#replicator_count").val(Number($("#replicator_count").val()) - 1);
+	      	if($("#replicator_count").val() == "0"){
+	      		newAlert('success', "Replication Done for Medical Info.");
+	      		$('html, body').animate({scrollTop: 0}, 'slow');	
+	      	}
+	      }else if(source_station == "replicator1"){
+	      	$("#replicator1_count").val(Number($("#replicator1_count").val()) - 1);
+	      	if($("#replicator1_count").val() == "0"){
+	      		newAlert('success', "Replication done for Personal Information.");
+	      		$('html, body').animate({scrollTop: 0}, 'slow');	
+	      	}
+	      }else{
+	      	$("#replicator2_count").val(Number($("#replicator2_count").val()) - 1);
+	      	if($("#replicator2_count").val() == "0"){
+	      		newAlert('success', "Replication done for replicated DB.");
+	      		$('html, body').animate({scrollTop: 0}, 'slow');	
+	      	}
+	      }
+	    },
+	    error: function(data,error,reason) {
+	      console.log(data);
+	    }
+		}, {
+	    create_target: true,
+	    filter:"tamsa/filter_replication",
+	    query_params: {"dhp_code":dhp_code,"doctor_list":doctor_arr,"patient_list":patient_arr}
+		});
+	}
+
+	// var mapFunction = function(doc) {
+	//   if(doc.type =='user' && doc.name && doc.first_name && doc.last_name && doc.level != "Nurse" && doc.level != "Staff")
+	//     emit([doc.dhp_code, doc.first_name+" "+doc.last_name], doc._id);
+	// };
+
+	// function getAllCopiedDoctorsList(){
+	//   $.couch.db("http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp").query(mapFunction, "_count", "javascript", {
+	//     success: function(data) {
+	//       console.log(data);
+	//     },
+	//     error: function(status) {
+	//       console.log(status);
+	//     },
+	//     startkey:["H-testingdhp"],
+	//     endkey:["H-testingdhp",{}],
+	//     reduce: false
+	//   });
+	// }
+
+	function getAllDoctorsListFromDHP(sourceDB,targetDB,dhpcode){
+		var a = $("#source_replicated_DB").val();
+		var b = a.split("/");
+		var sourceDBName = '';
+		if(b.length > 0) var sourceDBName = b[b.length-1]
+		else sourceDBName = b[0]
+
+		// $.ajax({
+		// 	url: "http://50.97.122.211:5984/meluha_db5/_design/tamsa/_view/getDhpSubscriberByName?reduce=false",
+		// 	type: "GET",
+		// 	data: {"data":"nirmal"},
+		// 	success: function(data){
+		// 		console.log(data);
+		// 	},
+		// 	dataType: "application/json"
+		// });
+		if(sourceDBName == "_users") sourceDBName = $("#source_replicated_DB_name").val()
+	  $.couch.db(sourceDBName).view("tamsa/getDoctorsList",{
+	    success:function(data){
+	      if(data.rows.length > 0){
+	      	var doctor_arr = "";
+	        for(var i=0;i<data.rows.length;i++){
+	        	if(i != 0) doctor_arr += "|";
+	          doctor_arr += data.rows[i].doc._id;
+	        }
+	        $.couch.urlPrefix = $("#local_ip").val();
+	        replicator(sourceDB,targetDB,dhpcode,doctor_arr,"","");
+	        $.couch.urlPrefix = $("#remote_ip").val();
+	        //saveDoctorsList(data.rows[i].doc,$("#target_replicated_DB").val());
+	      }
+	    },
+	    error:function(data,error,reason){
+	      console.log(error);
+	    },
+	    startkey: [dhpcode],
+	    endkey:   [dhpcode,{}],
+	    include_docs:true
+	  });  
+	}
+
+	function getAllUsersListFromDHP(sourceDB,targetDB,dhpcode){
+		var a = $("#source_medical_DB").val();
+		var b = a.split("/");
+		var sourceDBName = '';
+		if(b.length > 0) sourceDBName = b[b.length-1]
+		else sourceDBName = b[0]
+	  $.couch.db(sourceDBName).view("tamsa/getDhpSubscriberByName",{
+	    success:function(data){
+	      if(data.rows.length > 0){
+	      	var patient_arr = "";
+	        for(var i=0;i<data.rows.length;i++){
+	        	if(data.rows[i].doc.user_id){
+        			if(i != 0) patient_arr += "|";
+        		  patient_arr += data.rows[i].doc.user_id;
+	        	}
+	        }
+	        $.couch.urlPrefix = $("#local_ip").val();
+	        replicator(sourceDB,targetDB,dhpcode,"",patient_arr);
+	        //saveDoctorsList(data.rows[i].doc,$("#target_replicated_DB").val());
+	      }
+	    },
+	    error:function(data,error,reason){
+	      console.log(error);
+	    },
+	    startkey:     [dhpcode],
+	    endkey:       [dhpcode,{},{}],
+	    reduce:       false,
+	    include_docs: true
+	  }); 
+	}
+	</script>
+</head>
+<body>
+	<div id="alert-area" style="position: absolute; right: 10px; top: 1px; width: 28%"></div>
+	<input type="hidden" id="replicator_count" value="">
+	<input type="hidden" id="replicator1_count" value="">
+	<input type="hidden" id="replicator2_count" value="">
+	<fieldset id="provide_credential" style="display:none;">
+		<legend>Provide Source DB Credentials</legend>
+		<label>Enter Username ::</label>
+		<input type="text" id="source_DB_uname"><br>
+		<label>Enter Password ::</label>
+		<input type="text" id="source_DB_upass"><br>
+		<button id="replication_login">Login</button>
+	</fieldset>
+	<div class="col-lg-12" id="replication_parent">
+		<div class="col-lg-12">
+			<label>Enter DHP Code::</label>
+			<input type="text" id="DHPCode" placeholder="enter DHP Code">
+		</div>
+
+		<fieldset>
+			<legend>IP addresses</legend>
+			<label>Local IP</label>
+			<input type="text" style="width:400px;" id="local_ip"> (e.g "http://192.168.0.67:5984")<br>
+			<label>Remote IP</label>
+			<input type="text" style="width:400px;" id="remote_ip"> (e.g "http://50.97.122.211:5984")<br>
+		</fieldset>
+
+		<fieldset>
+			<legend>Source DB Details</legend>
+			<label>Enter Source Medical Info DB Name ::</label>
+			<input type="text" style="width:400px;" id="source_medical_DB"><br><span style="color:green">(Provide whole path. )</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/meluha_db5</span><hr>
+			<label>Enter Source User DB Name ::</label>
+			<input type="text" style="width:400px;" id="source_replicated_DB"><br><span style="color:green">(Provide whole path. )</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/_users</span><hr>
+			<label>Enter Source replicated DB Name only (e.g "yhs*******") ::</label>
+			<input type="text" style="width:400px;" id="source_replicated_DB_name"><br><span style="color:green">(Provide whole path. )</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/yhsqizvkmp</span><hr>
+			<label>Enter Source Personal Info Name ::</label>
+			<input type="text" style="width:400px;" id="source_pi_DB"><br><span style="color:green">(Provide whole path. )</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/meluha_db5_pi</span>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Target DB Details</legend>
+			<label>Enter Target Medical Info DB Name ::</label>
+			<input type="text" style="width:400px;" id="target_medical_DB"><br><span style="color:green">(Provide whole path.)</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/meluha_db5</span><hr>
+			<label>Enter Target User DB Name ::</label>
+			<input type="text" style="width:400px;" id="target_replicated_DB"><br><span style="color:green">(Provide whole path.)</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/_users</span><hr>
+			<label>Enter Target Personal Info Name ::</label>
+			<input type="text" style="width:400px;" id="target_pi_DB"><br><span style="color:green">(Provide whole path.)</span><span>e.g. http://nimesh:nimesh@192.168.0.67:5984/meluha_db5_pi</span>
+		</fieldset>
+
+		<div class="col-lg-12">
+			<button id="replicator">Medical Info</button>	
+			<button id="replicator_1">Personal Information</button>	
+			<button id="replicator_2">Replicated Information</button>
+		</div>
+		<hr/>
+		<br>
+		<div style="color:red;">Make Sure Following filter function and views are availabel in every source DB.</div>	
+		<b>(1)</b>
+		<span>Design Doc ::</span>
+		<span style="color:green";><b>tamsa</b></span><br/>
+		<span> Filter Name :: </span>
+		<span style="color:green";><b>filter_replication</b></span>
+		<code><pre>
+			function (doc, req) {
+				if(doc.dhp_code && doc.dhp_code == req.query.dhp_code){
+					return true;	
+				}		
+			else{
+				var temp;
+				if(req.query.doctor_list && req.query.doctor_list != ""){
+					var querylist = req.query.doctor_list.split("|");
+					for(var i=0;i&lt;querylist.length;i++){
+						if(doc.doctor_id != "" && querylist[i] == doc.doctor_id){
+							temp = true;
+							break;
+						}else{
+							temp = false;
+						}	
+					}
+					if(temp){
+						return true;
+					}else{
+						return false;
+					}	
+				}else {
+					if(req.query.patient_list && req.query.patient_list != ""){
+						var patient_querylist = req.query.patient_list.split("|");
+						for(var i=0;i&lt;patient_querylist.length;i++){
+							if(doc.user_id != "" && patient_querylist[i] == doc.user_id){
+								temp = true;
+								break;
+							}else{
+								temp = false;
+							}	
+						}
+						if(temp){
+							return true;
+						}else{
+							return false;
+						}	
+					}
+				}
+			}
+		}		
+		</pre></code>
+		<hr/>
+		<b>(2)</b>
+		<span>Design Doc ::</span>
+		<span style="color:green";><b>tamsa</b></span><br/>
+		<span> View Name :: </span>
+		<span style="color:green";><b>getDhpSubscriberByName</b></span><br/>
+		<span><b>map.js</b></span><code><pre>
+	function(doc) {
+		if(doc.doctype == "Subscriber" && doc.User_firstname && doc.User_lastname && doc.dhp_code){
+			emit([doc.dhp_code,doc.User_firstname +" "+doc.User_lastname, doc.user_id]);
+    }
+  }	
+		</pre></code>
+		<span><b>reduce.js</b></span><code><pre>_count</pre></code>
+		<hr/>
+		<b>(3)</b>
+		<span>Design Doc ::</span>
+		<span style="color:green";><b>tamsa</b></span><br/>
+		<span> View Name :: </span>
+		<span style="color:green";><b>getDoctorsList (replicated_db :: yhs***)</b></span><br/>
+		<span><b>map.js</b></span><code><pre>
+		function(doc) {
+		if(doc.type =='user' && doc.name && doc.first_name && doc.last_name && doc.level != "Nurse" && doc.level != "Staff")
+		  emit([doc.dhp_code, doc.first_name+" "+doc.last_name], doc._id);
+		}
+		</pre></code>
+		<hr/>
+		</div>
+<!-- inserted by Kiran -->
+<!--inserted by Kiran for liveagent -->
+<script type="text/javascript">
+(function(d, src, c) { var t=d.scripts[d.scripts.length - 1],s=d.createElement('script');s.id='la_x2s6df8d';s.async=true;s.src=src;s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&(rs!='complete')&&(rs!='loaded')){return;}c(this);};t.parentElement.insertBefore(s,t.nextSibling);})(document,
+'//sensoryhealthsystems.ladesk.com/scripts/track.js',
+function(e){ LiveAgent.createButton('87e0f13e', e); });
+</script>
+
+<!-- Google Analytics -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37748935-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<!-- End code insertion by Kiran  -->
+
+	</body>
+	<script type="text/javascript">
+		function createSession(){
+		  $.couch.session({
+		    success: function(data) {
+		      if(data.userCtx.name == null){
+		      	newAlert('danger', "Please provide username and password again.");
+		      	$('html, body').animate({scrollTop: 0}, 'slow');
+		      	$("#provide_credential").hide();
+		      	$("#replication_parent").show();
+		      }else{
+		      	newAlert('success', "Successfully signed In.");
+		      	$("#provide_credential").show();
+		      	$("#replication_parent").hide();
+		      }
+		    },
+		  	error:function(data,error,reason){
+		  		$("#provide_credential").hide();
+		  		$("#replication_parent").show();
+		  		newAlert('danger', reason);
+		  		$('html, body').animate({scrollTop: 0}, 'slow');
+		  	}
+		  });
+		}
+
+		function createLogin(){
+			var uname    = $("#source_DB_uname").val();
+			var password = $("#source_DB_upass").val();
+			$.couch.login({
+		    name: uname,
+		    password: password,
+		    success: function(data) {
+		    	$("#replication_parent").show();
+		    	$("#provide_credential").hide();
+		    	alert("Successfully signed In.");
+		    },
+		    error: function(data, error, reason) {
+		    	alert("Wrong credentials.");
+		    	$("#provide_credential").show();
+		    	$("#replication_parent").hide();
+		    }
+			});
+		}
+		function saveDoctorsList(data,mydb){
+		  $.couch.db(mydb).saveDoc(data,{
+		    success:function(data){
+		      console.log(data);
+		    },
+		    error:function(data,error,reason){
+		      console.log(reason);
+		    }
+		  });
+		}
+
+			//////////////////////Copy Dhp Documents/////////////////////////////////
+			//getAllDHPDocuments("H-testingdhp");
+			function getAllDHPDocuments(dhpcode,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getReplicatedData",{
+			    success:function(data){
+			      for(var i=0;i<data.rows.length;i++){
+			        if(data.rows[i].doc.dhp_code){
+			          copyDocumentFromGivenDHP(data.rows[i].doc,$("#target_medical_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    },
+			    startkey:[dhpcode],
+			    endkey:[dhpcode,{},{}],
+			    include_docs:true
+			  });
+			}
+			/////////////////////////Copy Doctor ID Documents////////////////////////////////
+			//getDoctorsListFromDHP("H-testingdhp");
+			function getDoctorsListFromDHP(dhpcode,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getDoctorsList",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          getAllDetailsFromDoctorId(data.rows[i].doc._id,$("#source_medical_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(error);
+			    },
+			    startkey: [dhpcode],
+			    endkey:   [dhpcode,{}],
+			    include_docs:true
+			  });
+			}
+			function getAllDetailsFromDoctorId(doctor_id,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getReplicatedDataFromDoctorsId",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          if((!data.rows[i].doc.dhp_code) && data.rows[i].doc.doctor_id){
+			            copyDocumentFromGivenDHP(data.rows[i].doc,$("#target_medical_DB").val());
+			            //console.log(data.rows[i].doc);
+			          }
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    },
+			    key:doctor_id,
+			    include_docs:true
+			  });
+			}
+			/////////////////////Copy Subscribers///////////////////////
+			//getSubscriberListFromDHPDoctors("H-testingdhp");
+			function getSubscriberListFromDHPDoctors(dhpcode,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getDoctorsList",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          getAllSubscribersFromDoctorId(dhpcode,data.rows[i].doc._id,$("#source_medical_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(error);
+			    },
+			    startkey: [dhpcode],
+			    endkey:   [dhpcode,{}],
+			    include_docs:true
+			  });
+			}
+			function getAllSubscribersFromDoctorId(dhpcode,doctor_id,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getSubscriberByPatientDhpId",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          getAllSubscriberDetails(data.rows[i].doc.user_id,$("#source_medical_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    },
+			    startkey:[dhpcode,doctor_id],
+			    endkey:[dhpcode,doctor_id,{}],
+			    include_docs:true
+			  });
+			}
+			function getAllSubscriberDetails(userid,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getReplicatedDataFromUserId",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          if((!data.rows[i].doc.dhp_code) && (!data.rows[i].doc.doctor_id) && data.rows[i].doc.user_id){
+			            copyDocumentFromGivenDHP(data.rows[i].doc,$("#target_medical_DB").val());
+			            //console.log(data.rows[i].doc);
+			          }
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    },
+			    key:userid,
+			    include_docs:true
+			  });
+			}
+			/////////////////////////Copy PI DB///////////////////////////////
+			//getSubscriberPIListFromDHPDoctors("H-testingdhp");
+			function getSubscriberPIListFromDHPDoctors(dhpcode,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getDoctorsList",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          getAllSubscribersPIFromDoctorId(dhpcode,data.rows[i].doc._id,$("#source_medical_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(error);
+			    },
+			    startkey: [dhpcode],
+			    endkey:   [dhpcode,{}],
+			    include_docs:true
+			  });
+			}
+
+			function getAllSubscribersPIFromDoctorId(dhpcode,doctor_id,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getSubscriberByPatientDhpId",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          getSubscribersPersonalDetails(data.rows[i].doc.user_id,$("#source_pi_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    },
+			    startkey:[dhpcode,doctor_id],
+			    endkey:[dhpcode,doctor_id,{}],
+			    include_docs:true
+			  });
+			}
+
+			function getSubscribersPersonalDetails(user_id,sourceDB){
+			  $.couch.db(sourceDB).view("tamsa/getPatientInformation",{
+			    success:function(data){
+			      if(data.rows.length > 0){
+			        for(var i=0;i<data.rows.length;i++){
+			          copyDocumentFromGivenDHP(data.rows[i].value,$("#target_pi_DB").val());
+			        }
+			      }
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    },
+			    key:user_id
+			  });
+			}
+			//////////////////////////////////////////Copy function common///////////
+			function copyDocumentFromGivenDHP(data,mydb){
+			  delete data._rev;
+			  $.couch.db(mydb).saveDoc(data,{
+			    success:function(data){
+			      console.log(data);
+			    },
+			    error:function(data,error,reason){
+			      console.log(data);
+			    }
+			  });
+			}
+			/////////////////////////////////////////////////////////////////////////
+	</script>
+	<style type="text/css">
+		fieldset {
+    	border: 1px solid #DDD;
+    	padding: 0 1.4em 1.4em 1.4em;
+    	margin: 0 0 1.5em 0;
+		}
+
+		legend {
+    	font-size: 1.2em;
+    	font-weight: bold;
+		}
+	</style>
+</html>
+
+
+
+
+
+
+
+
+
+

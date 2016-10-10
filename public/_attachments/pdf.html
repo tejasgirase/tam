@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Requesting For PDF</title>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="blob-stream.js"></script>
+</head>
+<body>
+<button onclick="getMedication()">Generate</button>
+	<div style="display:none;">
+		<iframe id="fremelist" src=''></iframe>
+	</div>
+</body>
+<script type="text/javascript">
+	function getPDF() {
+		var data = {
+			"id":"org.couchdb.user:n@n.com",
+			"start":"2016-06-27",
+			"end":"2016-08-30"
+		};
+			// $.ajax ({
+			// 	url: "http://192.168.0.66:5984/_print/appointments",
+			// 	method:"GET",
+			// 	data:data,
+			// 	contentType:"application/json",
+			// 	success:function(data){
+			// 		console.log(data);
+			// 		// window.open("data:application/pdf," + escape(data));
+			// 		// window.open("data:application/pdf;base64, " + data);
+			// 	  // var open_link = window.open('','_blank');
+		 //   	// 	open_link.document.open();
+		 // 			// open_link.document.write("<iframe width='1100' height='1000' src='http://192.168.0.66:5984/_print/appointment?id=org.couchdb.user:n@n.com&start=2016-06-27&end=2016-08-30&dhp_code=H-testingdhp'></iframe>");
+		 //   	// 	open_link.document.close();
+			// 	},
+			// 	error:function(err) {
+			// 		console.log(err);
+			// 	}
+			// })
+	}
+	function getMedication() {
+		// var ids = ['e4e3880147bbadc03acaa29ded004a5d','e4e3880147bbadc03acaa29ded0042fc','0fa9a735ee6eed360714a314e144d592'];
+		var ids = "38195612b2d7b60ef17057a4d7003660";
+			// $.ajax ({
+			// 	url: "http://192.168.0.66:5984/_print/medications?dhp_code=H-testingdhp&medlen=3&ids="+ids+"",
+			// 	method:"GET",
+			// 	contentType:"application/json",
+			// 	success:function(data){
+			// 		console.log(data);
+					// window.open("data:application/pdf," + escape(data));
+					// window.open("data:application/pdf;base64, " + data);
+				  var open_link = window.open('','_blank');
+		   		open_link.document.open();
+		 			open_link.document.write("<iframe width='1266' height='1000' src='http://192.168.0.66:5984/_print/medications?dhp_code=H-testingdhp&ids="+ids+"'></iframe>");
+		   		open_link.document.close();
+			// 	},
+			// 	error:function(err) {
+			// 		console.log(err);
+			// 	}
+			// })
+	}
+</script>
+</html>

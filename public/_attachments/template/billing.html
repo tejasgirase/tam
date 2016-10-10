@@ -1,0 +1,43 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-content row" id="dashboard_billing_parent">
+  <div class="tab-pane active" id="e_billing">
+    <div class="tab_box">
+      <div class="panel panel-default">
+        <div class="panel-heading">E Billing</div>
+        <div class="row" style="margin:0px;">
+          <div class="tab-pane active" id="ebill_summary" style="border:none;display:block;">
+            <div class="panel panel-default">
+              <div class="col-md-12">
+                <div class="">
+                  <div class="">
+                    <div class="tab-heading-section">Invoice Summary</div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <table class="table tbl-center tbl-border" id="invoice_summary_table">
+                    <thead>
+                      <tr>
+                        <th width="10%">Bill Date</th>
+                        <th width="10%">Provider/Dr</th>
+                        <th width="10%">Bill amount</th>
+                        <th width="35%">Email Sent To</th>
+                        <th width="10%">Sent Date</th>
+                        <th width="10%">Patient Name</th>
+                        <th width="15%"><span id="ebill_view_pref">View</span><span id="ebill_add_pref" class="pointer">Add New <span class=" glyphicon glyphicon-plus"></span></span></th>
+                        <th width="15%" ></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                  <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="ebill_pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" ui-view="billing_template" id="create_bill_parent"></div>
+</div>

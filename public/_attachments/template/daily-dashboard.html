@@ -1,0 +1,570 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row mrgtop1" id="daily_dashboard_parent">
+  <div class="tab_box">
+    <div class="panel panel-default patients panel-grey-background">
+      <div class="panel-heading">Dr. Dashboard</div>
+      <div id="doctor_dashboard_container" style="margin-left:13px;margin-right: 10px;">
+        <div class="dd-container">
+          <div class="row mrgside">
+            <div id="default_patient_dd_profile" class="col-md-3 UserPanel" style="margin-left: 0px; margin-top: 0px; height: 414px; position: relative;box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);border-radius: 4px;">
+              <div style="position: absolute; top: 110px; text-align: center;">
+                <img alt="profile-pic" src="images/profile-pic.png" class="img-responsive" style="height: 100px ! important; width: 100px;"><br>
+                <span style="width: 500px;">No Patient is selected Currently</span>
+              </div>
+            </div>
+            <div id="selected_patient_dd_profile" style="margin-left: 0px; margin-top: 0px;display: none;box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);border-radius: 4px;" class="col-md-3 UserPanel">
+              <div class="row UserPanelDetails">
+                <div class="col-md-4 UserPanelThumpNail"></div>
+                <div class="col-md-8 UserPanelDetailsEdit" id="dd_edit_profile">Edit Profile</div>
+                <div class="col-md-12 UserPanelUserName">
+                  <div class="row">
+                    <div class="col-md-6 UserPanelUserNameBold" id="dd_patient_fname"></div>
+                    <div class="col-md-6 UserPanelUserNameThin" id="dd_patient_lname"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="padding-left: 8px;">
+                <span class="glyphicon glyphicon-phone cus-glyphicon" title="Phone no." style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;"></span>
+                <span id="dd_patient_phone"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="Gender." class="glyphicon glyphicon-user cus-glyphicon" style="padding: 0px;"></span>
+                <span id="dd_patient_gender"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="Date of Birth."  class="glyphicon glyphicon-calendar cus-glyphicon" style="padding: 0px;"></span>
+                <span id="dd_patient_date_of_birth"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="DHP ID." class="glyphicon glyphicon-print cus-glyphicon" style="padding: 0px;"></span>
+                <span id="dd_patient_dhp_id"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 14px; background-color: white; height: 43px; line-height: 43px;" title="BMI." class="theme-color" style="margin-left: -6px;">BMI</span>
+                <span id="dd_patient_bmi"></span>
+              </div>
+              <div class="row" style="padding-left: 8px;">
+                <span style="padding: 5px; font-size: 20px; background-color: white; height: 43px; line-height: 43px;" title="Email." class="glyphicon glyphicon-envelope cus-glyphicon" style="padding: 0px;"></span>
+                <span id="dd_patient_email"></span>
+              </div>
+
+              <!-- <div class="row UserPanelIcons UserPanelIconsPhone"></div>
+              <span class="glyphicon glyphicon-calendar UserPanelIcons" style="padding: 0px; color: rgb(240, 173, 78);"></span>
+              <span style="color: -moz-comboboxtext;">01January 1990</span>
+              <div class="row UserPanelIcons UserPanelIconsDateOfBirth">01January 1990</div>
+              <div class="row UserPanelIcons UserPanelIconsPrinter">SHS - 15752924</div>
+              <div class="row UserPanelIcons UserPanelIconsBMI">24.49</div>
+              <div class="row UserPanelIcons UserPanelIconsMail">example@fiverr.com</div> -->
+            </div>
+            <div class="col-lg-9" style="width: 77% !important;padding-right: 0px !important;margin-left: 9px;box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);border-radius: 4px;background-color: white;">
+              <!-- <div class="row">
+                <h2 class="col-lg-12 mytitle">Today's Schedule</h2>
+              </div> -->
+              <div class="row ListPanelTitleWrapper">
+                <div class="col-md-3 ListPanelTitle">
+                  <div class="row ListPanelTitleText">Today's Schedule</div>
+                </div>
+                <div class="col-md-3 ListPanelTitle">
+                  <select class="form-control" style="margin-top: 10px;" id="dd_locations"></select>
+                </div>
+                <div class="col-md-2 ListPanelRemainingButton" id="dd_remaining_patients_label" style="cursor: auto;">
+                  <div class="col-md-6 ListPanelRemainingCount" id="todays_remaining_patients">0</div>
+                  <div class="col-md-6 ListPanelRemainingText">Remaining</div>
+                </div>
+                <div class="col-md-2 ListPanelCheckedInButton dd-list-buttons" id="dd_checkedin_patients_label" style="padding-right: 2px;">
+                  <div class="col-md-6 ListPanelCheckedInCount" id="todays_checkedin_patients">0</div>
+                  <div class="col-md-6 ListPanelCheckedInText">Checked In</div>
+                </div>
+                <div class="col-md-2 ListPanelScheduledButton dd-list-buttons" id="dd_scheduled_patients_label">
+                  <div class="col-md-6 ListPanelScheduledCount" id="todays_scheduled_patients">0</div>
+                  <div class="col-md-6 ListPanelScheduledText">Scheduled</div>
+                </div>
+              </div>
+              <div class="row">
+                <div style="position: relative; height: 366px;" class="table-responsive col-lg-12">
+                  <table id="dd_today_schedule_table" class="table task_table tbl-center">
+                    <thead>
+                      <tr>
+                        <th width="20%">Patient</th>
+                        <th width="18%">Visit Type</th>
+                        <th width="15%">Status</th>
+                        <th width="10%">Checked In Time</th>
+                        <th width="10%">Mark as Critical</th>
+                        <th width="12%">Tags</th>
+                        <th width="5%">Note</th>
+                        <th width="5%">View Medical Info</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+
+                  <div id="today_schedule_daily_dashboard_pagination" class="daily-dashboard-pagination col-lg-12 pagination-align today-schedule">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mrgside mrgtop1">
+            <div class="col-lg-6 dd-left-sidebar">
+              <div class="row mrg-top5">
+                <div class="col-lg-5">
+                  <h2 class="mytitle" style="display: inline; margin-right: 5px;">Current Tasks</h2>
+                  <span id="no_of_current_task" class="green-label">14</span>
+                </div>
+                <div class="col-lg-3" style="padding-left: 0px;">
+                  <select class="form-control mrgbtm20" placeholder="Select Patient" id="dd_select_patient_task">
+                    <option>Select Patient</option>
+                  </select>
+                </div>
+                <div class="col-lg-4" style="padding-left: 0px;">
+                  <select id="dd_select_task_type" class="form-control dd-select-task-type" placeholder="Select Task Type">
+                    <option value="noselect">Select Task Type</option>
+                    <option>Appointment</option>
+                    <option>eImaging</option>
+                    <option>eImagingResults</option>
+                    <option>eLab</option>
+                    <option>eLabResults</option>
+                    <option>eRx</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <table id="dd_current_task_table" class="table tbl-border col-lg-12">
+                    <thead>
+                      <tr>
+                        <th width="10%">Patient</th>
+                        <th width="13%">Task</th>
+                        <th width="10%">Assigned Date</th>
+                        <th width="10%">Flag</th>
+                        <th width="10%">Note</th>
+                        <th width="10%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>                  
+                </div>
+                <div class="col-lg-12" style="position: absolute; bottom: 0px;">
+                  <div id="current_task_daily_dashboard_pagination" style="margin-top: 5px;border-radius:3px;background:#ececec none repeat scroll 0 0;" class="col-lg-12 pagination-align">
+                  </div>  
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 dd-right-sidebar">
+              <div class="row mrg-top5" style="min-height: 52px;">
+                <div class="col-lg-12">
+                  <span class="glyphicon glyphicon-stats"></span>
+                  <h2 class="mytitle" style="display: inline;">Chart</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <table id="dd_charting_template_table" class="table tbl-border">
+                    <thead>
+                      <tr>
+                        <th width="10%">Patient</th>
+                        <!-- <th width="13%">Chief complaints</th> -->
+                        <th width="10%">Visit Type</th>
+                        <th width="10%">Encounter date</th>
+                        <th width="20%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-12" style="position: absolute; bottom: 0px;">
+                  <div id="chart_notes_daily_dashboard_pagination" class="col-lg-12 pagination-align" style="margin-top: 5px;border-radius:3px;background:#ececec none repeat scroll 0 0;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mrgside mrgtop1">
+            <div class="col-lg-6 dd-critical-patient-sidebar">
+              <div class="row" style="margin-bottom: 5px;"><span class="small-label">Critical Patients</span></div>
+              <div class="row">
+                <div class="table-responsive col-lg-12">
+                  <table id="dd_critical_patient_table" class="table tbl-borders">
+                    <thead>
+                      <tr>
+                        <th width="10%">Patient</th>
+                        <th width="13%">DHP_ID</th>
+                        <th width="10%">Date</th>
+                        <th width="10%">Note</th>
+                        <th width="10%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colspan="5" align="center">No Data found..!!</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-12" style="position: absolute;bottom: 0px;">
+                  <div id="critical_patient_daily_dashboard_pagination" class="col-lg-12 pagination-align" style="background-color: #ececec"></div>  
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 dd-telemedicine-sidebar">
+              <div class="dr-dashboard-telemedicine">
+                <div class="row" style="margin-bottom: 5px;">
+                  <div class="col-lg-3">
+                    <span style="color: rgb(242, 187, 92);font-weight:bold;float:left;width: 100%;">Telemedicine</span>
+                  </div>
+                  <div class="col-lg-9">
+                    <select class="form-control" style="float: right !important; width: 235px ! important;" id="dd_telemedicine_health_category">
+                      <option>Show From All Category</option>
+                      <option>Common Ailments</option>
+                      <option>Ear, Nose &amp; Throat</option>
+                      <option>Gastrointestional</option>
+                      <option>Respiratory</option>
+                      <option>Maternal &amp; Newborn &amp; Pediatrics</option>
+                      <option>Eye</option>
+                      <option>Skin</option>
+                      <option>Other Injuries</option>
+                      <option>Nutrition</option>
+                      <option>Chronic Conditions</option>
+                      <option>Dentistry</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <table id="dd_telemedicine" class="table task_table">
+                    <thead>
+                      <tr>
+                        <th width="10%">Patient</th>
+                        <th width="13%">Health Issue</th>
+                        <th width="10%">Date Recived</th>
+                        <th width="10%">Already Critical Patient</th>
+                        <th width="10%">Payment status</th>
+                        <th width="20%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-12" style="position: absolute;bottom: 0px;">
+                  <div id="telemedicine_daily_dashboard_pagination" class="col-lg-12 pagination-align" style="background-color: #ececec">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="daily_dashboard_medical_history_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog biggermodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Patient Medical History/Timeline</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div class="col-lg-12">
+            <ul class="nav nav-tabs sub-teb-set" role="tablist" style="margin-bottom: 5px;">
+              <li class="active"><a id="dd_medical_info_tab_link" class="pointer">Medical Info</a></li>
+              <li><a class="pointer" id="dd_vital_signs_tab_link">Vital Signs</a></li>
+              <li><a id="dd_timeline_tab_link" class="pointer">Timeline</a></li>
+            </ul>
+            <table id="daily_dashboard_medical_history_tabel" class="table tbl-border"><thead><tr><th>Medication</th><th>Medical History</th><th>Allergies</th><th>Procedures</th></tr></thead><tbody></tbody></table>
+            <div class="col-lg-12 lg-tabel" id="dd_vital_sign_parent"><div class="row" ui-view="vital_signs"></div></div>
+            <div class="col-lg-12 timeline_list" style="width:980px !important;float:left !important" id="dd_timeline_list"></div>
+          </div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="dd_appointment_notes_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Notes::</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <textarea id="dd_doctor_appointment_notes" class="form-control"></textarea>
+            </div>  
+          </div>
+          <div class="row">
+            <div class="col-lg-12 theme-color">Past Notes::</div>
+            <div class="col-lg-12" id="dd_appointment_notes_histories"></div>
+          </div>
+          
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+            <button class="btn btn-warning" id="save_dd_appointment_notes">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="partial_charting_template_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="partial_charting_template_modal_close" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Charting Template</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              Once changes are made to the chart note and marked finalized, please refresh the current daily dashboard to see the changes.
+            </div>  
+          </div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12" id="view_edit_partial_charting_template">
+            <button class="btn btn-warning" id="confirm_view_edit_partial_charting_template">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_patient_task_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog xbigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add Task</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div class="col-lg-12 mrg-top5">
+            <div class="col-lg-1 paddside cuswidth1">
+            </div>
+            <div class="col-lg-2 paddright text-center">
+              <label><b>Task</b></label>
+            </div>
+            <div class="col-lg-1 text-center">
+              <label><b>Type</b></label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <label><b>Priority</b></label>
+            </div>
+            <div class="col-lg-2 text-center">
+              <label><b>Due Date</b></label>
+            </div>
+            <div class="col-lg-2 text-center">
+              <label><b>Effective Date</b></label>
+            </div>
+            <div class="col-lg-3 text-center paddright">
+              <label><b>Comments</b></label>
+            </div>
+            <div class="col-lg-1 text-center paddside cuswidth5">
+              <label><b>Notify</b></label>
+            </div>
+          </div>
+          
+          <div data-task_type="eRx"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="hidden" id="task_user_id" value="" patient_name="">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+            <div class="col-lg-2 paddright text-center">
+              <label>Send eRx order</label>
+            </div>
+            <div class="col-lg-1 text-center">
+              <label>eRx</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+          
+          <div data-task_type="Appointment"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+
+            <div class="col-lg-2 paddright text-center">
+              <label>Send Appointment</label>
+            </div>
+
+            <div class="col-lg-1 text-center paddleft">
+              <label>Appointment</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+
+          <div data-task_type="eLab"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+
+            <div class="col-lg-2 paddright text-center">
+              <label>Send Lipid Profile Lab Order</label>
+            </div>
+
+            <div class="col-lg-1 text-center">
+              <label>eLab</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+
+          <div data-task_type="eImaging"class="col-lg-12 mrg-top5 add-patient-task-parent">
+            <div class="col-lg-1 paddside cuswidth1 text-center">
+              <input type="checkbox" class="checkshow task_patient_checkbox">
+            </div>
+
+            <div class="col-lg-2 paddright text-center">
+              <label>Send MRI scan Order</label>
+            </div>
+
+            <div class="col-lg-1 text-center">
+              <label>eImaging</label>
+            </div>
+            <div class="col-lg-1 paddside text-center">
+              <select class="form-control patient-task-priority">
+                <option>Regular</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-due-date">
+            </div>
+            <div class="col-lg-2 text-center">
+              <input type="text" class="form-control datetime-with-mintoday new-patient-task patient-task-effective-date">
+            </div>
+            <div class="col-lg-3 text-center">
+              <input type="text" class="form-control patient-task-comments">
+            </div>
+            <div class="col-lg-1 text-center cuswidth5">
+              <input type="checkbox" class="checkshow patient-task-notify">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center mrg-top5">
+          <button type="button" class="btn btn-warning" id="save_patient_add_task">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="start_chartnote_model" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title theme-color">Choose preference</h4>
+          </div>
+          <div class="modal-body theme-bold">
+            <div class="row">
+              <div class="col-lg-7">
+                <span>Most Recently Used Charting Template :: </span>
+              </div>
+              <div class="col-lg-5">  
+                <span id="recently_chatrtion_template" class="theme-color hovercolorchange"></span>
+                <span id="not_chartnote_available" class="theme-color hovercolorchange"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">  
+                <span>To Choose Charting Templates From MyPractce/Community :: </span>
+                <span id="charting_template_default" class="theme-color hovercolorchange">Click Here</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="modal fade" id="edit_patient_tags_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title theme-color">Choose Tags::</h4>
+          </div>
+          <div class="modal-body theme-bold">
+            <div class="row">
+              <div class="col-lg-12">
+                <input type="text" id="appointment_tag_status" placeholder="search here">
+              </div>
+            </div>
+            <div class="row Premrg">
+              <div class="col-lg-12 text-align">
+                <button class="btn btn-warning" id="update_patient_tags">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

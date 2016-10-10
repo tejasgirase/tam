@@ -1,0 +1,68 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-pane row" id="patient_alerts">
+  <h2 class="mytitle">NurtureSense Device</h2>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <ul class="nav nav-tabs sub-teb-set" role="tablist">
+      <li class="active"><a href="#alerts_tab" role="tab" data-toggle="tab">Alerts</a></li>
+      <li><a href="#results_tab" role="tab" data-toggle="tab">Results</a></li>
+    </ul>
+  </div>
+  <div class="tab-content">
+    <div class="tab-pane active" style="border:none;" id="alerts_tab">
+      <div class="col-md-12">
+        <br />
+        <h4><span class="label label-warning">Nothing to report or not a NurtureSense customer</span></h4>
+        <ul class="nav2 nav-tabs">
+          <li> <a href="#low_alerts" data-toggle="tab">Low</a></li>
+          <li><a href="#medium_alerts" data-toggle="tab">Medium</a></li>
+          <li class="active"><a href="#critical_alerts" data-toggle="tab">Critical</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="low_alerts" class="tab-pane" style="border:none !important;">
+            <table class="tabin_list" id="low_alerts_records" width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="tab-pane" id="medium_alerts" style="border:none !important;">
+            <table class="tabin_list" id="medium_alerts_records" width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="tab-pane active" id="critical_alerts" style="border:none !important;">
+            <table class="tabin_list" id="high_alerts_records" width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" style="border:none;" id="results_tab">
+      <div class="col-md-12">
+        <br />
+        <h4><span class="label label-warning">Nothing to report or not a NurtureSense customer</span></h4>
+        <ul class="nav2 nav-tabs">
+          <li> <a href="#" data-toggle="tab">Low</a></li>
+          <li><a href="#" data-toggle="tab">Medium</a></li>
+          <li class="active"><a href="#" data-toggle="tab">Critical</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane" style="border:none !important;">
+            <table class="tabin_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="tab-pane" style="border:none !important;">
+            <table class="tabin_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="tab-pane active" style="border:none !important;">
+            <table class="tabin_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

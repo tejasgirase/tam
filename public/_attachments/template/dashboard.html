@@ -1,0 +1,115 @@
+<div class="tab-pane" id="practice_dashboard">
+  <div class="tab_box">
+    <div class="row" id="notifications">
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-lg-3 col-md-3 mrg22" id="daily_dashboard_parent" ng-if="level == 'Doctor'">
+        <div class="box1">
+          <img src="images/doctor.png" width="48" height="38" alt="icon" />
+          <h2>Dr. Dashboard</h2>
+          <p>Check your dashboard details.</p>
+          <a role="button" id="daily_dashboard" ui-sref="dailydashboard" class="safe-hover">Daily Dashboard</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" id="front_desk_parent" ng-if="(level == 'Front Desk') || configurable_level">
+        <div class="box1">
+          <img src="images/front_desk.png" width="48" height="38" alt="icon" />
+          <h2>Front Desk</h2>
+          <p>Check your Front Desk.</p>
+          <a role="button" class="safe-hover" ui-sref="frontdesk">Front Desk view</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22">
+        <div class="box1">
+          <img src="images/practice_info.png" width="48" height="38" alt="icon" />
+          <h2>Your Practice</h2>
+          <p>Edit your practice details.</p>
+          <a role="button" id="practice_info" ui-sref="practice_info" class="safe-hover">Practice info</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" ng-if="level != 'Front Desk'">
+        <div class="box1">
+          <img src="images/import_patient.png" width="48" height="38" alt="icon" />
+          <h2>Critical Patients</h2>
+          <p>Total Number of Patients</p>
+          <p>In Your Practise :: <span id="total_patients_in_practise" class="theme-color">Loading...</span></p>
+          <p>In DHP :: <span id="total_patients_in_DHP" class="theme-color">Loading...</span></p>
+          <a id="my_account_dashboard_link" ui-sref="patientlist" class="safe-hover">View your patients</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22">
+        <div class="box1">
+          <img src="images/task.png" width="48" height="38" alt="icon" />
+          <h2>Task Manager</h2>
+          <b id="total_due_task"></b>
+          <p id="due_tasks" class="due-task"></p>
+          <b id="total_pending_request" style="margin-top:5px;"></b>
+          <p id="pending_request" class="due-task"></p>
+          <span id="moresign" style="display:none;">.....</span>
+          <a id="view_task_list" ui-sref="task_manager" role="button" class="safe-hover">View all Task</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22">
+        <div class="box1">
+          <img src="images/calendar.png" width="48" height="38" alt="icon" />
+          <h2 id="today_date"></h2>
+          <b id="appointment_count"></b>
+          <div class="row">
+            <div id="appointments" style="padding:0px;overflow:visible;height:137px" class="demo mCustomScrollbar"></div>
+          </div>  
+          <a id="view_schedule" ui-sref="appointments" class="safe-hover">View Schedule</a>
+        </div> 
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22">
+        <div class="box1">
+          <img src="images/billing.png" width="48" height="38" alt="icon" />
+          <h2>Billing</h2>
+          <p>Create and Send Invoices.</p>
+          <a id="enable_billing_link" ui-sref="billing" role="button" class="safe-hover">Enable Billing</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" ng-if="level != 'Front Desk'">
+        <div class="box1">
+          <img src="images/population.png" width="48" height="38" alt="icon" />
+          <h2>Population Health Management</h2>
+          <p>Disease Alerts, Compliance, Adherence,</p>
+          <!-- <b style="color:#FF0000; font-size:18px;">Coming Soon....</b> -->
+          <a class="safe-hover" ui-sref="population_health_management" id="health_management_click" role="button" >Health Management</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" ng-if="level != 'Front Desk'">
+        <div class="box1">
+          <img src="images/lab.png" width="48" height="38" alt="icon" />
+          <h2>Template Community</h2>
+          <p>Find and Share charting templates from the community.</p>
+          <a id="view_dc_template_list" class="safe-hover" ui-sref="community_template">Template Community</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" ng-if="level == 'Doctor'">
+        <div class="box1">
+          <img src="images/telehealth.png" width="48" height="38" alt="icon" />
+          <h2>Telehealth</h2>
+          <p>Answer/treat your patients questions on their existing conditions, care plans</p>
+          <a id="telemedicine_inquiry_link" class="safe-hover" ui-sref="telemedicine">Answer,Diagnose and Treat</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" ng-if="level != 'Nurse'">
+        <div class="box1">
+          <img src="images/learn.png" width="48" height="38" alt="icon" />
+          <h2>Inventory Management</h2>
+          <p>Manage Your Inventory</p>
+          <a id="intentory_mgt_id" class="safe-hover" ui-sref="inventory">Inventory Management</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 mrg22" ng-if="dhp_code == 'H-0000000000'">
+        <div class="box1">
+          <img src="images/learn.png" width="48" height="38" alt="icon" />
+          <h2>Admin Interface</h2>
+          <p>Customize your Application</p>
+          <a id="admin_interface" class="safe-hover" ui-sref="admin">Admin Interface</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

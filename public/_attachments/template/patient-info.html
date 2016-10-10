@@ -1,0 +1,997 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row" id="single_user">
+  <div class="tab_box">
+    <div class="panel panel-default">
+      <div class="panel-heading">Patients Info</div>
+        <div class="tab-content col-md-12 col-sm-12 col-xs-12">
+          <div class="row ChoiceWrapper">
+            <div id="import_patients_link" class="col-md-4 ChoiceText ChoiceTextActive">Add patients to your Practice</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div id="search_patient_link" class="col-md-4 ChoiceText">Update Patient Info</div>
+            <div class="col-md-4 ChoiceLineSep"></div>          
+          </div>
+        </div>
+      <!-- <ul class="nav nav-tabs sub-teb-set" role="tablist">
+        <li class="active"><a id="import_patients_link" class="pointer">Add patients to your Practice</a></li>
+        <li><a id="search_patient_link" class="pointer">Update Patient Info</a></li>
+      </ul> -->
+      <div class="tab-content">
+        <div class="tab-pane" id="import_patient_tab">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
+            <button type="button" class="btn btn-warning btn-xs" id="single_user_add">Add Single Patient</button>
+            <button type="button" class="btn btn-default btn-xs" id="single_user_by_dhp_id">Add Patient By DHP ID</button>
+            <button type="button" class="btn btn-default btn-xs" id="import_from_csv">Import From CSV</button>
+          </div>
+          <!-- add single patient starts-->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="single_user_add_parent">
+            <form class="form-inline lable-text-small" role="form">
+              <div class="col-md-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-4">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Physicians</label>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-group full-input">
+                        <select class="form-control" id="isu_physicians" multiple></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12" style="margin-top: 10px;">
+                      <div style="" class="form-group form-input-set">
+                        <input type="checkbox" id="single_user_critical" style="visibility:visible;margin-top: 10px;">
+                        <label for="select-multi-input"> Mark As a Critical Patient</label>
+                      </div>
+                      <br>
+                      <div style="" class="form-group form-input-set">
+                        <input type="checkbox" id="single_user_alerts" style="visibility:visible;margin-top: 10px;">
+                        <label for="select-multi-input">Receive Alerts</label>
+                        <span id="single_user_alerts_option_parent" class="single-user-alerts-option-parent"><span class="theme-color single-user-alerts-option-parent-span">Via</span>
+                        <select id="single_user_alerts_option" class="single-user-alerts-option">
+                          <option>Email</option>
+                          <option>SMS</option>
+                          <option>Both</option>
+                        </select>
+                        </span>
+                      </div>
+                      <br>
+                      <div style="" class="form-group form-input-set">
+                        <input type="checkbox" id="single_user_reports" style="visibility:visible;margin-top: 10px;">
+                        <label for="select-multi-input">Receive Reports</label>
+                        <span id="single_user_reports_frequency_parent" class="single-user-reports-frequency-parent"><span class="theme-color">Frequency</span>
+                        <select id="single_user_reports_frequency" class="single-user-reports-frequency">
+                          <option>Daily</option>
+                          <option>Weekly</option>
+                          <option>Monthly</option>
+                        </select>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-heading-section">Patient identifying details</div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">First Name*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="New Lab" autocomplete="off" id="isu_first_name" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Last Name*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" id="isu_last_name" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input" id="db_label">Date of birth*</label>&nbsp;&nbsp;&nbsp;&nbsp;OR&nbsp;&nbsp;&nbsp;<span id="age_link" class="hospital-dhp-link-span">Enter Age</span>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" placeholder="YYYY-MM-DD" id="isu_date_of_birth" class="form-control datetime-with-maxdate isu-dob-width">
+                        <input type="text" id="isu_age" class="form-control" style="display:none">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Sex*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div>
+                        <select data-required="true" id="isu_sex" class="form-control select2-input parsley-validated">
+                          <option value="">Select Sex</option>
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Marital Status</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <select data-required="true" id="isu_status" class="form-control select2-input parsley-validated">
+                          <option value="">Select Marital Status</option>
+                          <option>Married</option>
+                          <option>Single</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Waist (Cms)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" autocomplete="off" id="isu_waist" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Height* (Cms)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" autocomplete="off" id="isu_height" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Weight* (Kg)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" autocomplete="off" id="isu_weight" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">BMI</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input readonly="readonly" type="text" class="form-control" id="isu_BMI" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" class="form-control" id="isu_patient_dhp_id" value="">
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Blood Group</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <select class="form-control placeholder-no-fix" id="isu_blood_group">
+                          <option value="">Select Blood Group</option>
+                          <option value="A-">A-</option>
+                          <option value="A+">A+</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="O-">O-</option>
+                          <option value="O+">O+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="AB+">AB+</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-heading-section">Emergency Contact info</div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Name*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" id="isu_ename" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Phone*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" id="isu_ephone" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Relation*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" id="isu_erelation" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-heading-section">Biometrics &amp; Medical History</div>
+              <div class="textareatmain">
+                <label for="select-multi-input">
+                  <h4>Procedures (medical procedures and surgeries) :</h4></label>
+                <textarea type="text" name="subjective" id="isu_procedure" class="form-control parsley-validated mrg5"></textarea>
+              </div>
+              <div class="textareatmain">
+                <label for="select-multi-input">
+                  <h4>Medication :<small> (Enter multiple medications using comma separated. eg. Medication-1, Medication-2) </small></h4></label>
+                <textarea type="text" name="subjective" id="isu_medication" class="form-control parsley-validated mrg5"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label for="select-multi-input">
+                  <h4>Allergies :</h4></label>
+                <div class="issu_add_item_parent" id="issu_add_item_parent">
+                  <div class="col-sm-12 save-allergies">
+                    <div style= "float: left">
+                      <select class="issu_name_allergies my-select form-control placeholder-no-fix" type="text" id="issu_name_allergies">
+                      </select>
+                    </div>
+                    <div style= "float: left">
+                      <select class="form-control my-select issu_name_severe placeholder-no-fix" type="text" id="issu_name_severe">
+                      </select>
+                    </div>
+                    <div style= "float: left">
+                      <select class="form-control my-select issu_name_reaction placeholder-no-fix" type="text" id="issu_name_reaction">
+                      </select>
+                    </div>
+                    <span id = "add_new_allergiess" class="glyphicon glyphicon-plus theme-color" style = "position: absolute;margin-left:0px;margin-top:13px"></span>
+                  </div>
+                </div>               
+              </div>
+              <div class="col-md-12">
+                <label for="select-multi-input">
+                  <h4>Medical History :</h4>
+                </label>
+                <div>
+                  <div class="col-lg-6">
+                    <select multiple="multiple" class="form-control multiselect placeholder-no-fix my_multiselect" type="text" id="isu_condition">
+                      <option>Arthritis</option>
+                      <option>Asthama</option>
+                      <option>Bladder Control Problem</option>
+                      <option>Brittol Bones</option>
+                      <option>Chest Pain (Angina)</option>
+                      <option>Chrohns Disease</option>
+                      <option>Depression</option>
+                      <option>Emphysema (COPD, Chronic Bronchitis)</option>
+                      <option>Enlarged prostate (benign prostatic hyperplasia)</option>
+                      <option>Gastric reflux, heat burn or esophagitis(GERD)</option>
+                      <option>Glaucoma</option>
+                      <option>Heart Attack(myocardia infarction)</option>
+                      <option>Heart failure (CHF)</option>
+                      <option>Hemophilia and Hemophilia like conditions</option>
+                      <option>High blood pressure (hypertension)</option>
+                      <option>High blood sugar (Diabetes)</option>
+                      <option>High Cholesterol</option>
+                      <option>Inflammatory bowel disease</option>
+                      <option>Migraine Headache</option>
+                      <option>Overactive thyroid (Hyperthyroid)</option>
+                      <option>Peptic , Stomach or duodenal ulcer</option>
+                      <option>Poor circulation in legs (Peripheral vascular legs)</option>
+                      <option>Seizures(Epilepsy)</option>
+                      <option>Stroke (TIA)</option>
+                      <option>Underactive thyroid(Hypothyroid)</option>
+                    </select>
+                  </div>  
+                  <!-- <textarea type="text" name="subjective" id="isu_condition" class="form-control parsley-validated mrg5"></textarea> -->  
+                </div>
+              
+                <div class="col-lg-6">
+                  <!-- <label for="select-multi-input" class="mrgleft1">
+                    <h4>Allergies :</h4>
+                  </label>  
+                  <select multiple="multiple" class="form-control placeholder-no-fix my_multiselect" type="text" id="isu_allergies">
+                    <optgroup label="Food">
+                     <option>Fruit</option>
+                     <option>Garlic</option>
+                     <option>Meat</option>
+                     <option>Milk</option>
+                     <option>Oats</option>
+                     <option>Peanut</option>
+                     <option>Fish / Shellfish</option>
+                     <option>Soy</option>
+                     <option>Nut</option>
+                     <option>Wheat</option>
+                     <option>Gluten</option>
+                     <option>Egg</option>
+                     <option>Sulfites</option>
+                     <option>Casein</option>
+                    </optgroup>
+                    <optgroup label="Drug">
+                      <option>Tetracycline</option>
+                      <option>Dilantin</option>
+                      <option>Tegretol (carbamazepine)</option>
+                      <option>Penicillin</option>
+                      <option>cephalosporins</option>
+                      <option>sulfonamides</option>
+                      <option>Local anesthetics</option>
+                      <option>Non-steroidal anti-inflammatories (cromolyn sodium, nedocromil sodium, etc.)</option>
+                      <option>I.V. contrast dye</option>
+                    </optgroup>
+                    <optgroup label="Environmental">
+                      <option>BT,CT</option>
+                      <option>PT,APT</option>
+                      <option>Pollen</option>
+                      <option>Cat</option>
+                      <option>Dog</option>
+                      <option>Insect sting</option>
+                      <option>Bee sting</option>
+                      <option>Mold</option>
+                      <option>Perfume</option>
+                      <option>Cosmetics</option>
+                      <option>Semen</option>
+                      <option>Latex</option>
+                      <option>House dust mites</option>
+                      <option>Nickel</option>
+                      <option>Gold</option>
+                      <option>Chromium</option>
+                      <option>Cobalt Chloride</option>
+                      <option>Formaldehyde</option>
+                      <option>Sun</option>
+                      <option>Phorographic developers</option>
+                    </optgroup>
+                  </select> -->
+                  <!-- <textarea type="text" name="subjective" id="isu_allergies" class="form-control parsley-validated mrg5"></textarea> -->
+                </div>
+              </div>
+              <div class="tab-heading-section">Family History</div>
+              <div class="col-md-12">
+                <div class="fmh-parent col-md-12" style="padding-left: 0px;">
+                  <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group form-input-set">
+                          <label for="select-multi-input">Relation</label>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group full-input">
+                          <!-- <input type="text" autocomplete="off" class="form-control isu-fmh-relation"> -->
+                          <select class="form-control isu-fmh-relation">
+                            <option>Select</option>
+                            <option>Sister</option>
+                            <option>Brother</option>
+                            <option>Father</option>
+                            <option>Mother</option>
+                            <option>Paternal Grand Father</option>
+                            <option>Paternal Grand Mother</option>
+                            <option>Maternal Grand Father</option>
+                            <option>Maternal Grand Mother</option>
+                            <option>Uncle</option>
+                            <option>Aunt</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group form-input-set">
+                          <label for="select-multi-input">Condition</label>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group full-input">
+                          <!-- <input type="text" autocomplete="off" class="form-control isu-fmh-condition"> -->
+                          <select class="form-control isu-fmh-condition">
+                            <option>Select</option>
+                            <option>Cancer</option>
+                            <option>Clotting Disorder</option>
+                            <option>Diabetes</option>
+                            <option>Dementia/Alzheimers</option>
+                            <option>Heart Disease</option>
+                            <option>Gastro Intestinal Disorders</option>
+                            <option>High Cholesterol</option>
+                            <option>Hypertension</option>
+                            <option>Kidney Disease</option>
+                            <option>Lung Disease</option>
+                            <option>Osteoporosis</option>
+                            <option>Psychological Disorders</option>
+                            <option>Stroke/Brain attack</option>
+                            <option>Sudden Death Infant Syndrome (SIDS)</option>
+                            <option>Unknown Disease</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="" class="col-md-12">
+                  <label style="float: right;" class="label label-warning add_more_fmh pointer">Add More</label>
+                </div>
+              </div>
+              <div class="tab-heading-section">Contact Information</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Mobile No*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="isu_phone" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Email*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="isu_email" class="form-control">
+                      <small class="rght-float font-size"><span class="theme-color pointer" id="isu_email_not_provided">not Having EmailId.</span></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address1*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="isu_address1" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address2</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="isu_address2" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Pincode*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="isu_pincode" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Country*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="isu_country" class="form-control" value="India" disabled="disabled">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">State*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <select id="isu_state" class="form-control placeholder-no-fix">
+                      <option selected="selected" value="select state">Select State</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">City*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <select id="isu_city" class="form-control placeholder-no-fix">
+                      <option selected="selected" value="select state">Select City</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align">
+                <div class="form-group">
+                  <button class="btn btn-warning" type="button" id="isu_upload"><span id="save_patient_label">Save</span></button>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <b>All the fields marked with * are mandatory.</b>
+              </div>
+            </form>
+          </div>
+          <!-- add single patient ends-->
+          <!-- add patient by dhp starts-->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="single_user_by_dhp_id_parent" style="display:none;">
+            <form class="form-inline lable-text-small" role="form">
+              <div class="col-md-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-4">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Physicians</label>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-group full-input">
+                        <select class="form-control" multiple id="physicians_by_dhp_id"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12" style="margin-top: 10px;">
+                      <div class="form-group form-input-set" style="">
+                        <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="critical_by_dhp_id">
+                        <label for="select-multi-input">Mark As a Critical Patient</label>
+                      </div>
+                      <br>
+                      <div class="form-group form-input-set" style="">
+                        <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="user_by_dhp_alerts">
+                        <label for="select-multi-input">Receive Alerts</label>
+                        <span class="single-user-alerts-option-parent" id="user_by_dhp_alerts_option_parent"><span class="theme-color single-user-alerts-option-parent-span">Via</span>
+                        <select class="single-user-alerts-option" id="user_by_dhp_alerts_option">
+                          <option>Email</option>
+                          <option>SMS</option>
+                          <option>Both</option>
+                        </select>
+                        </span>
+                      </div>
+                      <br>
+                      <div class="form-group form-input-set" style="">
+                        <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="user_by_dhp_reports">
+                        <label for="select-multi-input">Receive Reports</label>
+                        <span class="single-user-reports-frequency-parent" id="user_by_dhp_reports_frequency_parent"><span class="theme-color">Frequency</span>
+                        <select class="single-user-reports-frequency" id="user_by_dhp_reports_frequency">
+                          <option>Daily</option>
+                          <option>Weekly</option>
+                          <option>Monthly</option>
+                        </select>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Patient DHP id</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="New Lab" autocomplete="off" class="form-control" id="patient_add_dhp_id">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align">
+                <div class="form-group">
+                  <button class="btn btn-warning" type="button" id="save_by_dhp_id">Save</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- add patient by dhp ends-->
+          <!-- import patients from csv -->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="import_from_csv_parent" style="display:none;">
+            <h5 class="modal-title col-lg-4">To download csv template <a class="tooltip-test hoverchange" data-original-title="you will get a CSV template.." href="template/importusers.csv" target="_blank">Click Here.</a></h5>
+            <div class="col-lg-5">
+              <p id="filedata" style="display: none; &quot;"></p>
+              <input id="userfile" class="" style="display:inline" name="userfile" value="" type="file">
+              <button id="import_patient" class="btn btn-warning" style="float:none">Import</button>
+            </div>
+            <div class="col-lg-3" id="skipped_rows_parent1" style="display:none;margin-top:9px">
+              <span>For skipped rows &nbsp;</span><a id="skipped_rows_link_patient" class="theme-link hoverchange">Click Here</a>
+              <div style="display:none"><input id="getemailid"></div>
+              <span id="import_skipped_patient_rows_link_parent1" style="float: left; color: red; margin-left: 10px;display:none;" class="">Skipped Rows During Last Import::<a class="link" id="import_skipped_rows_link_patient"></a></span>
+            </div>
+            <br>
+          </div>
+        </div>
+          <!-- import patients from csv -->
+        </div>
+        <div class="tab-pane" id="search_patient_tab" style="border:none;">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 pull-right">
+              <input id="search_patients_update_profile" class="SearchTextBox" placeholder="Search Patients by First name or DHP ID..."><span class="glyphicon glyphicon-search search-patients"></span>
+            </div>
+          </div>
+          <div class="row text-center theme-color default-patient-msg" id="show_profile_name_not"><span class="glyphicon glyphicon-hand-right"></span>No Patient selected.... Please search by Patient Name or DHP Code</div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12" style="margin: 30px 0px 10px 10px; padding-right: 15px;display:none;" id="edit_profile_parent">
+              <div class="col-lg-2 col-md-2" style="float: right;">
+                <img src="" id="patient_profile_pic" style="height:100px;">
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Name</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_name" class="form-control" readonly="readonly">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Patient DHP ID</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_dhp_id" class="form-control" readonly="readonly">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                   <div class="form-group form-input-set">
+                      <label for="select-multi-input">Email ID</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_emailid" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Phone</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_phone" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Marital Status</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <select autocomplete="off" class="form-control" id="edit_patient_maritalstatus" data-required="true">
+                        <option selected="selected">Select Marital Status</option>
+                        <option>Married</option>
+                        <option>Single</option>
+                      </select>
+                    </div>  
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Gender</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <select autocomplete="off" class="form-control" id="edit_patient_gender" data-required="true">
+                      <option selected="selected">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7" ng-if="level != 'Front Desk'">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Height* (Cms)</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_height" class="form-control">
+                    </div>  
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Weight* (Kg)</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_weight" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7" ng-if="level != 'Front Desk'">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Waist (Cms)</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_waist" class="form-control">
+                    </div>  
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Blood Group</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <select autocomplete="off" class="form-control  single-user-reports-frequency" id="edit_patient_bloodgroup">
+                      <option selected="selected">Select Blood Group</option>
+                          <option>A-</option>
+                          <option>A+</option>
+                          <option>B-</option>
+                          <option>B+</option>
+                          <option>O-</option>
+                          <option>O+</option>
+                          <option>AB+</option>
+                          <option>AB-</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <div class="form-group form-input-set">
+                        <h6><label for="select-multi-input" id="dbl_label">Enter Age*</label>&nbsp;&nbsp;&nbsp;&nbsp;OR&nbsp;&nbsp;&nbsp;<br/><span id="edit_link" id="dbl_label" class="hospital-dhp-link-span">Date of birth</span></h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                       <input type="text" placeholder="YYYY-MM-DD" id="issu_date_of_birth" class="form-control datetime-with-maxdate" style="display:none">
+                        <input type="text" id="issu_age" class="form-control">
+                    </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="tab-heading-section">Emergency Contact Info</div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Name*</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_emergency_name" class="form-control">
+                    </div>  
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Phone*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_emergency_phone" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Relation*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_emergency_relation" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="tab-heading-section">Contact Information</div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address1*</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_address1" class="form-control">
+                    </div>  
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address2</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_address2" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Pincode*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_pincode" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>  
+              <div class="col-lg-12 col-md-7">
+                <div class="row">
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Country*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" autocomplete="off" id="edit_patient_country" class="form-control">
+                    </div>
+                  </div>              
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">State*</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <select class="form-control placeholder-no-fix" id="edit_patient_state">
+                      <option value="Select State" selected="selected">Select State</option>
+                      <option>Andaman and Nicobar Islands</option>
+                      <option>Andhra Pradesh</option>
+                      <option>Arunachal Pradesh</option>
+                      <option>Assam</option><option>Bihar</option><option>Chandigarh</option><option>Chhattisgarh</option><option>Dadra and Nagar Haveli</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jammu and Kashmir</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Puducherry</option><option>Punjab</option><option>Rajasthan</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option></select>
+                    </div>  
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">City*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <select class="form-control placeholder-no-fix" id="edit_patient_city"> 
+                      <option value="Select city" selected="selected">Select city</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>      
+              <div class="col-lg-10 col-md-7" style="text-align:center;">
+                <button id="update_patient_profile" class="btn btn-warning" style="margin-left:125px;">Update</button>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

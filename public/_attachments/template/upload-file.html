@@ -1,0 +1,195 @@
+<div class="modal fade" id="upload_files_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog bigmodal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title theme-color">Upload Files</h4>
+        <div class="alert-msg-box"></div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label for="inputPassword3" id="upload_files_from_computer" class="col-sm-6 control-label pointer hovercolor theme-bold">
+            <span >Upload Files from Computer</span>
+            <span class="glyphicon glyphicon-user mrg-left5"></span>
+          </label>
+          <label id="upload_files_from_webcam" class="col-sm-6 control-label pointer hovercolor theme-bold">
+            <span>Take a Photo from webcam &nbsp;&nbsp;&nbsp;</span>
+            <span class="glyphicon glyphicon-camera" id=""></span>
+          </label>
+        </div>
+        <hr style="margin-top: 0px;">
+        <div class="row">
+          <div class="col-lg-8 Premrg" id="upload_file_camera_parent" style="display:none;">
+            <div class="col-sm-6 text-center">
+              <div id="upload_file_camera"></div>
+            </div>
+            <div class="col-sm-6" style="display:none;">
+              <div id="upload_file_camera_preview"></div>    
+            </div>
+          </div>
+          <div class="col-sm-4" id="upload_file_pre_take_buttons_parent" style="display:none">
+            <div id="upload_file_pre_take_buttons">
+              <!-- This button is shown before the user takes a snapshot -->
+              <input class="mrgtop100" type="button" value="Take Snapshot" onClick="preview_snapshot('upload_file_pre_take_buttons', 'upload_file_post_take_buttons', 'upload_file_camera_preview', 480, 480)">
+            </div>
+            <div id="upload_file_post_take_buttons" style="display:none">
+              <!-- These buttons are shown after a snapshot is taken -->
+              <input class="mrgtop100" type="button" value="Take Another" onClick="cancel_preview('upload_file_pre_take_buttons', 'upload_file_post_take_buttons')">
+              <!-- <input type=button value="Save Photo &gt;" onClick="save_photo()" style="font-weight:bold;"> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 mrgtop1" id="patient_uploaded_file_parent" style="display:none;">
+            <div class="col-lg-4">
+              <label>Choose File to upload* ::</label>
+            </div>
+            <div class="col-lg-8">
+              <input type="file" id="patient_uploaded_file">
+              <img style="display:none;" src="">
+            </div>
+          </div>
+          <div class="col-lg-12 mrgtop1" style="display:none;" id="patient_upload_file_preference_parent">
+            <div class="col-lg-4">
+              <label>Upload this File As* :: </label>
+            </div>
+            <div class="col-lg-4 paddside">
+              <select id="patient_upload_file_preference" class="form-control">
+                <option>Select</option>
+                <option>Dr. Chart Note</option>
+                <option>Medications</option>
+                <option>Patient Reports</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-12 mrgtop1" id="patient_upload_file_comment_parent">
+            <div class="col-lg-4">
+              <label>Comments/Note:: </label>
+            </div>
+            <div class="col-lg-8">
+              <textarea class="form-control" id="upload_document_comments"></textarea>
+            </div>
+          </div>
+          <div class="col-lg-12 mrgtop1" style="display:none;" id="document_details_parent">
+            <div class="col-lg-12">
+              <h5 class="theme-color" style="">Provide Document Details :: </h5>
+              <hr style="margin-top: 0px; margin-bottom: 0px;">
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Document Name*</label>
+                  </div>
+                </div>
+                <div class="col-md-12" style="">
+                  <div class="form-group full-input">
+                    <input type="text" class="form-control" id="upload_document_name">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Document Type*</label>
+                  </div>
+                </div>
+                <div class="col-md-12" style="">
+                  <div class="form-group full-input">
+                    <select id="upload_document_type" class="form-control select2-input">
+                      <option value="Lab-Results">Lab-Results</option>
+                      <option value="Imaging-Results">Imaging-Results</option>
+                      <option value="Video">Video</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center" id="upload_document_category_parent">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Category*</label>
+                  </div>
+                </div>
+                <div class="col-md-12" style="">
+                  <div class="form-group full-input">
+                    <select id="upload_document_category" class="form-control">
+                      <option>Blood</option>
+                      <option>Cardiology</option>
+                      <option>Kidneys & Electrolytes</option>
+                      <option>Nutrients</option>
+                      <option>Liver</option>
+                      <option>Sugars & Digestion</option>
+                      <option>Hormones</option>
+                      <option>Thyroid</option>
+                      <option>Inflammation & Autoimmunity</option>
+                      <option>Clotting</option>
+                      <option>Specialized Tests</option>
+                      <option>Infection</option>
+                      <option>Urine</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Task Priority*</label>
+                  </div>
+                </div>
+                <div style="" class="col-md-12">
+                  <div class="form-group full-input">
+                    <select id="upload_document_task_priority" class="form-control">
+                      <option value="Regular">Regular</option>
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Due Date*</label>
+                  </div>
+                </div>
+                <div style="" class="col-md-12">
+                  <div class="form-group full-input">
+                    <input type="text" class="form-control datetime-with-mintoday" id="upload_document_due_date">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 text-center">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Effective Date*</label>
+                  </div>
+                </div>
+                <div style="" class="col-md-12">
+                  <div class="form-group full-input">
+                    <input type="text" class="form-control datetime-with-mintoday" id="upload_document_effective_date">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-center mrg-top5">
+        <button type="button" class="btn btn-warning" id="upload_patient_files">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>

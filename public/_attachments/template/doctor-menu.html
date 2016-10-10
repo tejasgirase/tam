@@ -1,0 +1,19 @@
+<div class="row mrgbottom1">
+  <ul class="nav nav-tabs col-md-3 col-sm-3 col-xs-12 doctor-menu">
+    <li class="doctor-menu menu_items" style="border-left:1px solid #fff;">
+      <a ui-sref="dashboard" class="pointer">Practice Dashboard</a>
+    </li>
+    <li class="doctor-menu menu_items" ng-if="level != 'Front Desk'" ng-class="getCurrentActiveStatus('/patientlist')">
+      <a ui-sref="patientlist" class="pointer">Your Patients</a>
+    </li>
+    <li class="doctor-menu menu_items" ng-class="getCurrentActiveStatus('/billing')">
+      <a ui-sref="billing" class="pointer">Billing</a>
+    </li>
+    <li class="doctor-menu menu_items" ng-if="level == 'Doctor'" ng-class="getCurrentActiveStatus('/telemedicine')">
+      <a id="telemedicine_link" ui-sref="telemedicine">Telemedicine</a>
+    </li>
+    <li class="doctor-menu menu_items" ng-class="getCurrentActiveStatus('/appointments')">
+      <a id="appointment_link" target="_blank" ui-sref="appointments" class="safe-hover-sidebar pointer">Appointment</a>
+    </li>
+  </ul>
+</div>

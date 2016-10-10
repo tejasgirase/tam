@@ -1,0 +1,293 @@
+{
+   "rows":[
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c038340",
+         "key":[
+            "Female",
+            18,
+            50
+         ],
+         "value":"Screening for rubella, iron deficiency anemia, urinary tract infection,Hepatitis B, blood type and RH(D) incompatibility",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":50,
+            "screening_name":"Screening for rubella, iron deficiency anemia, urinary tract infection,Hepatitis B, blood type and RH(D) incompatibility",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03a39e",
+         "key":[
+            "Female",
+            18,
+            50
+         ],
+         "value":"Folic Acid – recommended dosage is 0.4 - 0.8mg daily",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":50,
+            "screening_name":"Folic Acid – recommended dosage is 0.4 - 0.8mg daily",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c039ae6",
+         "key":[
+            "Female",
+            18,
+            55
+         ],
+         "value":"Gestational Diabetes",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":55,
+            "screening_name":"Gestational Diabetes",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03758d",
+         "key":[
+            "Female",
+            18,
+            70
+         ],
+         "value":"Cervical cancer screening (Pap Smear)",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":70,
+            "screening_name":"Cervical cancer screening (Pap Smear)",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c036f28",
+         "key":[
+            "Female",
+            18,
+            75
+         ],
+         "value":"Well Women exams",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"Well Women exams",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c0373e9",
+         "key":[
+            "Female",
+            18,
+            75
+         ],
+         "value":"Sexually transmitted infections",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"Sexually transmitted infections",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03a63e",
+         "key":[
+            "Female",
+            18,
+            75
+         ],
+         "value":"HIV Screening and Counseling",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"HIV Screening and Counseling",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c0382b9",
+         "key":[
+            "Female",
+            30,
+            75
+         ],
+         "value":"HPV DNA Testing",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":30,
+            "age_upper_limit":75,
+            "screening_name":"HPV DNA Testing",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03a972",
+         "key":[
+            "Female",
+            40,
+            75
+         ],
+         "value":"Mammography",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":40,
+            "age_upper_limit":75,
+            "screening_name":"Mammography",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c038b3f",
+         "key":[
+            "Female",
+            65,
+            75
+         ],
+         "value":"Osteoporosis",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":65,
+            "age_upper_limit":75,
+            "screening_name":"Osteoporosis",
+            "dhp_code":"H-testingdhp",
+            "gender":"female"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c031718",
+         "key":[
+            "Male",
+            18,
+            75
+         ],
+         "value":"Obesity",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"Obesity",
+            "dhp_code":"H-testingdhp",
+            "gender":"both"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c032f10",
+         "key":[
+            "Male",
+            18,
+            75
+         ],
+         "value":"Blood Pressure",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"Blood Pressure",
+            "dhp_code":"H-testingdhp",
+            "gender":"both"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03368c",
+         "key":[
+            "Male",
+            18,
+            75
+         ],
+         "value":"Dibetes",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"Dibetes",
+            "dhp_code":"H-testingdhp",
+            "gender":"both"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03393b",
+         "key":[
+            "Male",
+            18,
+            75
+         ],
+         "value":"Cholesterol (Lipid) test",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":18,
+            "age_upper_limit":75,
+            "screening_name":"Cholesterol (Lipid) test",
+            "dhp_code":"H-testingdhp",
+            "gender":"both"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c0355f8",
+         "key":[
+            "Male",
+            45,
+            75
+         ],
+         "value":"Cardiovascular Disease Aspirin use counseling",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":45,
+            "age_upper_limit":75,
+            "screening_name":"Cardiovascular Disease Aspirin use counseling",
+            "dhp_code":"H-testingdhp",
+            "gender":"both"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c0360c9",
+         "key":[
+            "Male",
+            50,
+            75
+         ],
+         "value":"Colorectal cancer",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":50,
+            "age_upper_limit":75,
+            "screening_name":"Colorectal cancer",
+            "dhp_code":"H-testingdhp",
+            "gender":"both"
+         }
+      },
+      {
+         "id":"4efc0aa3d2bf6f3c2cdf066e0c03401c",
+         "key":[
+            "Male",
+            65,
+            75
+         ],
+         "value":"Abdominal Aortic Aneurysm",
+         "doc":{
+            "doctype":"screening_schedule_for_adults",
+            "age_lower_limit":65,
+            "age_upper_limit":75,
+            "screening_name":"Abdominal Aortic Aneurysm",
+            "dhp_code":"H-testingdhp",
+            "gender":"male"
+         }
+      }
+   ]
+}

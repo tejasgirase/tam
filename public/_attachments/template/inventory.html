@@ -1,0 +1,142 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane" id="inv_mgt_tab">
+  <div class="tab_box">
+    <div class="panel panel-default row">
+      <div class="panel-heading">Inventory Management</div>
+      <div class="search-bg-design" style="background:#fff;padding-bottom: 13px; padding-left: 26px;">
+        <span style="float: left; font-size: 20px; color: rgb(242, 187, 92); margin-right: 15px;">Product Filter Search : </span>
+        <input type="text" id="cat_search" placeholder="Search For Category" class="top-form-control placeholder-no-fix ui-autocomplete-input cat_search" style="float: left; margin-right: 11px; width: 244px;">
+        <select name="manufacture" class="form-control inv_select" style="width: 225px ! important; float: left; margin-top: 0px; margin-right: 11px;" id="filter_manf">
+          <option>Select Manufacture</option>
+        </select>
+        <select name="product" class="form-control" style="width: 225px ! important; float: left; margin-right: 12px;" id="filter_prod">
+          <option>Select Product name</option>
+        </select>
+        <button class="btn btn-warning" style="padding: 6px;" id="resetFilter">Reset Filter</button>
+      </div>
+      <div class="search-bg-design" style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; padding-bottom: 5px; padding-left: 26px; float: left; margin: 0px;">
+        <span style="float: left; font-size: 20px; color: rgb(242, 187, 92); margin-right: 15px;">Import Products Form CSV: </span>
+        <input type="file" id="product_csv_file" class="product-csv-file" name=files[]>
+        <button id="import_products" style="float: left; padding: 6px;text-align:right;margin-right:60px" class="btn btn-warning">Import</button>
+        <div id="skipped_rows_parent" style="float: left;display:none;">
+          <span>For skipped rows &nbsp;</span><a id="skipped_rows_link" class="theme-link">Click Here</a>
+        </div>
+        <span id="import_skipped_rows_link_parent" style="float: right; color: red; margin-left: 10px;display:none;" class="">Skipped Rows During Last Import::<a class="link" id="import_skipped_rows_link">Click Here</a>
+          </span>
+        <span style="margin-left: 80px;float:right">To download csv template
+            <a class="theme-link" style="" data-original-title="you will get a CSV template.." href="template/inventory_import.csv" target="_blank">Click Here.</a>
+        </span>
+      </div>
+      <div class="search-bg-design" style="background:#fff;padding-bottom: 13px; padding-left: 26px;float: left; margin: 0px;">
+        <h1 style="float: left; font-size: 20px; margin: 0px; color: rgb(242, 187, 92);display:none;" id="fre_title">Frequently Purchase Products :</h1>
+        <span id="frequent_prod" class="frequent_prod"><span class="glyphicon glyphicon-plus" id="plus" style="color: rgb(242, 187, 92); font-size: 12px; padding-top: 2px;"></span>Show Frequently Purchase Products</span>
+        <!-- <span class="glyphicon glyphicon-plus" id="plus" style="float: right; color: rgb(242, 187, 92); font-size: 12px; padding-top: 2px;"></span> -->
+        <div id="frequent_products" style="display:none;" class="frequent_products">
+        </div>
+      </div>
+      <table class="table tbl-border widthset invcat_table" id="invcat_table">
+        <thead>
+          <tr>
+            <th width="11%"><span data-sorting_parameter = "category" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Category</span></th>
+            <th width="12%"><span data-sorting_parameter = "product_name" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Product Name</span></th>
+            <th width="10%"><span data-sorting_parameter = "manufacturer_name" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Manufact ure</span></th>
+            <th width="10%"><span data-sorting_parameter = "code_no" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Code(8 digit max)</span></th>
+            <th width="10%"><span data-sorting_parameter = "lot_no" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Lot(8 digit max)</span></th>
+            <th width="14%">QTY (<span data-sorting_parameter = "quantity_remaining" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Remaining</span>/ <span data-sorting_parameter = "quantity_total" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Total</span>)</th>
+            <th width="15%"><span data-sorting_parameter = "expiry_date" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Expiration Date </span>(YYYY-MM-DD)</th>
+            <th width="10%"><span data-sorting_parameter = "cost" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Cost</span></th>
+            <th width="10%"><span data-sorting_parameter = "price" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Price</span></th>
+            <th width="10%"><span data-sorting_parameter = "status" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Status</span></th>
+            <th width="10%"><span data-sorting_parameter = "note" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Notes</span></th>
+            <th width="16%"><span data-sorting_parameter = "inventory_added_date" data-sort_order = "ascending" class="pointer hovercolor sort_by_category">Date Added to Inventory</span>
+              <br>(YYYY-MM-DD)</th>
+            <th width="13%">Add (<span class="glyphicon glyphicon-plus" id="add_category" text="Family History" style="margin-right: 2px; margin-left: 4px;"></span>)</th>
+          </tr>
+        </thead>
+        <tbody id="inventory_data">
+        </tbody>
+      </table>
+      <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="inventory_pagination"></div>
+    </div>  
+  </div>
+  <!-- Modal for Inventory Add/Update -->
+  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="add_cat_wiz" class="modal fade" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+       <button data-dismiss="modal" class="close" type="button" style="margin-top: 21px; margin-right: 12px;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <div class="modal-header">
+          <h4 class="modal-title">Add Inventory</h4>
+          <div class="alert-msg-box"></div>
+         
+        </div>
+        <div class="modal-body">
+          <div class="form-group" id="add_cat_wiz1">
+            <div>
+              <label>Category Name:</label>
+              <input type="text" placeholder="CategoryName" id="catid" class="form-control">
+            </div>
+          </div>
+          <form action="" id="add_cat_wiz2" class="add_cat_wiz2">
+          <div class="form-group">   
+          <label style="color: rgb(242, 187, 92);font-size:19px;" id="addcat"></label>
+          <span class="glyphicon glyphicon-arrow-left backcat" id="backcat">Back</span>
+          <span id="catvalid_fin" class="catvalid_fin"></span>      
+            <div class="col-sm-6">
+              <label style="">Product Name:</label>
+              <input type="text" placeholder="Product name" id="product_name" class="form-control">
+            </div>
+            <div class="col-sm-6">
+               <label style="">Manufacture:</label>
+              <input type="text" placeholder="Manufacture" id="manf" class="form-control">
+            </div>
+            <div class="col-sm-6">
+               <label style="">Code:</label>
+              <input type="text" placeholder="Code(8 digit max)" id="code" class="form-control prod_cost">
+            </div>
+            <div class="col-sm-6">
+              <label style="">Lot Number:</label>
+              <input type="text" placeholder="Lot(8 digit max)" id="lot" class="form-control prod_cost">
+            </div>
+            <div class="col-sm-6">
+               <label style="">Quantity:</label>
+              <input type="number" placeholder="Quantity" min="0" id="qty_t" class="form-control">
+            </div>
+            <div class="col-sm-6">
+              <label style="">Cost:</label>
+              <input type="text" placeholder="Cost" id="cost" class="form-control prod_cost">
+            </div>
+            <div class="col-sm-6">
+              <label style="">Price:</label>
+              <input type="text" placeholder="Price" id="price" class="form-control prod_price">
+            </div>
+            <div class="col-sm-6">
+                <label style="">Status:</label>
+                <select id="status" class="form-control">
+                  <option>Active</option>
+                  <option>Inactive</option>
+                </select>
+            </div>
+            <div class="col-sm-6">
+              <label style="">Date Added to Inventory:</label>          
+              <input type="text" placeholder="Date Added to Inventory" id="date_add_inv" class="form-control datetime-with-maxdate cat-width">
+            </div>
+            <div class="col-sm-6">          
+              <label style="">Expiration Date:</label>
+              <input type="text" placeholder="Expiration Date" id="exp_date" class="form-control datetime-with-mintoday cat-width">
+            </div>
+            <div class="col-sm-6" style="width:100%;">
+              <label style="">Notes:</label>
+              <textarea placeholder="Notes" id="note" class="form-control note"></textarea>
+            </div>
+          </div>
+          </form>
+        </div>
+        <div class="modal-footer text-center">
+         <span class="glyphicon btn btn-warning " text="Family History" data-target="#add_inv_wiz2" role="button" data-toggle="modal" id="wiznext">Next</span>
+         <button operation="" id="add_cat_finish" type="button" class="btn btn-warning add_cat_finish">Finish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

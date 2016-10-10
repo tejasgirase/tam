@@ -1,0 +1,2 @@
+Category,Product,Manf,Code (8 digit max),Lot (8 digit max),Qty (Remaining/ Total),Expiration Date (DD/MM/YYYY),Cost,Price,Status,Notes,Date Added to Inv (DD/MM/YYYY)
+test123,testpro,testmanf,12345685,75485475,12/15,18/11/16,500,800,Active,nothing,14/04/16

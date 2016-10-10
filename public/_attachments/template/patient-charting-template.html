@@ -1,0 +1,900 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="row tab-content" id="patient_charting_template_parent">
+  <!-- <div class="tab-pane" id="start_chart_note">
+    <h2 class="mytitle">Generic Soap Note</h2>
+    <div class="tab_box">
+      <div class="panel panel-default">
+        <div class="panel-heading" style="height:50px;">Chart Notes
+          <div class="col-lg-7 pull-right">  
+            <div class="col-lg-6"><span>Mark patient as critical : </span></div>
+            <div class="col-lg-2 text-right">No</div>
+            <div class="col-lg-3 row">
+              <input type="checkbox" id="critical_checkbox" value="" rev="" class="cmn-toggle cmn-toggle-round">
+              <label for="critical_checkbox"></label>
+            </div>
+            <div class="col-lg-1 row">Yes</div>
+          </div>
+        </div>
+        <div class="col-lg-12" id="generic_charting_remainder">
+        </div>
+        <div class="row">
+        <div class="col-lg-12">
+        <br />
+          <div class="col-lg-6">
+            <div class="col-lg-6"><span>Monitor using NS : </span></div>
+            <div class="col-lg-2 text-right">No</div>
+            <div class="col-lg-3 row">
+              <input type="checkbox" value="" id="ns_monitor" class="cmn-toggle cmn-toggle-round">
+              <label for="ns_monitor"></label>
+            </div>
+            <div class="col-lg-1 row" style = "margin-left: 0px;">Yes</div>
+          </div>
+        </div>
+
+        <div class="col-lg-12" id="ns_details" style="display:none">
+        <br/>
+          <div class="col-lg-6">
+            <div class="form-group full-input">
+              <label for="ns_device_id"><h4>NS Device Id :</h4></label>
+              <input type="text" class="form-control parsley-validated mrg5 ns_device_id" id="ns_device_id">
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="form-group full-input">
+              <label for="ns_monitor_startdate"><h4>Start Date :</h4></label>
+              <input type="New Lab" class="datetime ns_monitor_startdate" id="ns_monitor_startdate">
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="form-group full-input">
+              <label for="ns_monitor_enddate"><h4>End Date :</h4></label>
+              <input type="New Lab" class="datetime ns_monitor_enddate" id="ns_monitor_enddate">
+            </div>
+          </div>
+        </div>
+          
+        <div class="col-lg-12">
+          <div class="table-responsive mrg10">
+          <div class="col-lg-12">
+            <div class="">
+              
+            </div>
+            <table class="table" id="vital_signs_doctor_note">
+              <thead>
+                <tr>
+                  <th width="20%" align="center">Date</th>
+                  <th width="20%" align="center">Diastolic BP</th>
+                  <th width="20%" align="center">Systolic BP</th>
+                  <th width="20%" align="center">Heart Rate</th>
+                  <th width="20%" align="center">O2</th>
+                  <th width="20%" align="center">Respiration Rate</th>
+                  <th width="20%" align="center">Fasting Glucose</th>
+                  <th width="20%" align="center">Value Weight</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br/>
+        <div class="table-responsive mrg10">
+          <div class="col-lg-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="20%" align="center">Diastolic BP</th>
+                  <th width="20%" align="center">Systolic BP</th>
+                  <th width="20%" align="center">Heart Rate</th>
+                  <th width="20%" align="center">O2</th>
+                  <th width="20%" align="center">Respiration Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="text" id="cn_diastolic_bp" class="form-control" value=""/></td>
+                  <td><input type="text" id="cn_systolic_bp" class="form-control" value=""/></td>
+                  <td><input type="text" id="cn_heartrate" class="form-control" value=""/></td>
+                  <td><input type="text" id="cn_O2" class="form-control" value=""/></td>
+                  <td><input type="text" id="cn_respiration_rate" class="form-control" value=""/></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="20%" align="center">Fasting Glucose</th>
+                  <th width="20%" align="center">Weight</th>
+                  <th width="20%" align="center">Normal Condition</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="text" id="cn_Fasting_Glucose" class="form-control" value=""/></td>
+                  <td><input type="text" id="cn_Value_weight" class="form-control" value=""/></td>
+                  <td>
+                    <select type="text" id="cn_OutOfRange" class="form-control">
+                      <option>No</option>
+                      <option>Yes</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="textareatmain">
+          <label for="select-multi-input"><h4>Visit Type :</h4></label>
+          <select type="text" id="visit_type" class="form-control placeholder-no-fix mrg5">
+            <option>Office Visit</option>
+            <option>Home Visit</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-12" id="objective"></div>
+      <div class="col-lg-12 mrg8 text-center">
+        <button class="btn btn-warning" type="submit" id="save_doctor_note">Save</button>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="tab-pane" id="build_charting_template">
+    <h2 class="mytitle">Build Charting Template</h2>
+    <div class="tab_box">
+      <div class="main_div">
+        <div class="main_div_in">                  
+        <div style="" class="col-md-6 ">
+          <button type="button" id="add_new_charting_template" class="btn btn-warning mrg23 pointer" style="margin-left: 99px;">Add New Charting Template</button>
+        </div>
+        <div class="col-md-6">
+          <div class="search_box col-md-12"><input type="text" placeholder="Search Existing Templates By Name*" autocomplete="off" value="" id="existing_charting_template_list" class="top-form-control placeholder-no-fix">
+          <input type="text" placeholder="Search Existing Templates By Specialization*" autocomplete="off" id="existing_specialization_list" class="top-form-control placeholder-no-fix" style = "display:none;">
+          <select id="search_and_display_care_plan_list" class="form-control" style="display:none;width:565 !important;"></select>
+          <small style = "font-size:10px;"><span id = "click_toggle" class = "theme-color pointer" style = "margin-left:40px;">click here</span>to Search By <span id = "clk_toggle_lbl">Specialization</span></small>
+          </div>
+        </div>
+        <br>
+          <div class="con_inmain">
+            <table class="table" id="charting_template_current_list">
+              <thead>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: "You can search and edit templates which are made at "My Practise". Same templates if present at Community will not have any effect of changes.</div>
+  </div>
+
+  <div class="tab-pane" id="new_charting_template">
+    <div class="tab_box">
+      <div class="tab-content">
+        <div class="table-responsive">
+          <div class="panel panel-default"> 
+            <div class="panel-heading">Create New Charting Template
+              <i class="uservoice" id="back_to_charting_build">
+                <span title="Back to Charting Template" class="glyphicon glyphicon-arrow-left">Back</span>
+              </i>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 Premrg">
+                <div class="col-lg-3 col-md-2 col-xs-12 Premrg1"> Template Name*</div>
+                <div class="col-lg-9 col-md-5 col-xs-12 Premrg1">
+                  <div class="input-group inp-width">
+                    <input type="text" name="cplan_name" id="new_charting_template_name" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 Premrg">
+                <div class="col-lg-3 col-md-2 col-xs-12 Premrg1"> Specialization*</div>
+                <div class="col-lg-7 col-md-5 col-xs-12 Premrg1">
+                  <div class="input-group inp-width">
+                    <span id="hide_box"><select id="new_charting_specialization_name" style="width:675px !important;" class="form-control"></select></span>
+                    <input type="text" style="width:675px !important;display:none;" name="cplan_name" id="new_charting_template_name_by_text" class="form-control" >
+                  </div>
+                </div>  
+                <div class="col-lg-2 col-md-5 col-xs-12 Premrg1">
+                  <small style="font-size:10px;"><span id = "click_toggle_first" class ="theme-color pointer" style="
+            ">Click here </span><span id="clk_toggle_lbl_first">to add new</span></small>
+                </div>
+              </div>
+              <div class="col-lg-12 Premrg ct-section-parentdiv">
+                <table class="table charting_template_field_table">
+                  <thead>
+                    <tr style="text-align: center;">
+                      <th width="45%" style="text-align: center;">Field Name</th>
+                      <!-- <th width="25%" style="text-align: center;">Response Type</th> -->
+                      <th width="55%" style="text-align: inherit;">Form</th>
+                    </tr>
+                  </thead>
+                  <tbody class="maintbody">
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-lg-12 mrg6" style="width: 200px; margin-left: 150px;" id = "add-new-field-parent">
+              <span class="label label-warning pointer" rev="" index="" id="add_new_fields">Add New Fields</span>
+              </div>
+              <div class="col-lg-12 mrg6 text-center">
+                <button rev="" index="" id="save_new_charting_template" class="btn btn-warning">Save Template</button>
+                <button class="btn btn-warning" id="save_publish_new_charting_template" index="" rev="">Save & Publish</button>
+              </div>
+              <div class="col-lg-12 mrg6" style="margin-left: 13px;">
+                <h2 style="margin-top: 0px; margin-bottom: 0px; height: 10px; color: rgb(235, 134, 19);"> Steps to Follow</h2><hr style="margin-top: 22px; margin-bottom: 3px; color: rgb(235, 134, 19);">
+                <span style="color:#eb8613">Step 1 :</span> Enter the name of the Template name.<br>
+                <span style="color:#eb8613">Step 2 :</span> Enter the specialization.<br>
+                <span style="color:#eb8613">Step 3 :</span> Create the charting Template . Tip : Keep adding all the fields in the charting template till you are done.<br>
+                <span style="color:#eb8613">Step 4 :</span> Save (Visible only in your practice)  Save&amp; Publish (Visible for the entire community. The more everyone shares, the more everyone benefits)<br>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <div class="tab-pane" id="choose_charting_template_list">
+    <h2 class="mytitle">Charting Template Lists</h2>
+    <div class="panel panel-default" id = "search_charting_template_tab">
+      <div class="panel-heading">Charting Template Lists:</div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class ="row choiceCont">
+          <div id="ctemplate_my_practise_link" class="col-md-4 ChoiceText ChoiceTextActive">My Practice</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div id="ctemplate_community_link" class="col-md-4 ChoiceText">Community</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div id="ctemplate_summary_link" class="col-md-4 ChoiceText">Template Summary</div>
+        </div>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="ctemplate_my_practise_tab" style="border:none;">
+          <div class = "col-md-12">  
+            <div class="searchdiv col-md-12">
+              <div class="search_box">
+                <input type="text" class="top-form-control placeholder-no-fix" id="search_practise_charting_template" value="" autocomplete="off" placeholder="Search Charting Templates By Name" name="Name" style="float: left; margin-right: 16px; width: 495px;">
+                <span style="float: left; margin-top: 8px; margin-right: 24px;">OR</span>
+                 <select id="search_practise_specialization" class="form-control" style="width:565 !important;"></select>
+                <!-- <input type="text" class="top-form-control placeholder-no-fix" id="search_practise_specialization" value="" autocomplete="off" placeholder="Search Charting Templates By Specialization" name="Name" style = "width: 493px;"> -->
+              </div>
+            </div>
+            <div class="careplanlist col-md-12">
+              <div role="navigation" id="practise_charting_template_list" class="sidebar-offcanvas">
+                <div class="list-group">
+                  <h3 class="list-group-item active text-align">Charting Templates</h3>
+                  <table class="table tbl-border" id="all_practise_charting_templates">
+                    <thead>
+                      <th class="text-align">Name</th>
+                      <th class="text-align">Specialization</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="my_practise_charting_pagination"></div>
+              </div>
+            </div>
+          </div>  
+        </div>
+        <div class="tab-pane" id="ctemplate_community_tab" style="border:none;">
+          <div class = "col-md-12">
+            <div class="searchdiv col-md-12">
+              <div class="search_box">
+                <input type="text" class="top-form-control placeholder-no-fix" id="search_community_charting_template" value="" autocomplete="off" placeholder="Search Charting Templates By Name" name="Name" style="float: left; margin-right: 16px; width: 495px;">
+                <span style="float: left; margin-top: 8px; margin-right: 24px;">OR</span>
+                <select id="search_community_specialization" class="form-control" style="width:565 !important;"></select>
+                <!-- <input type="text" class="top-form-control placeholder-no-fix" id="search_community_specialization" value="" autocomplete="off" placeholder="Search Charting Templates By Specialization" name="Name" style = "width: 493px;"> -->
+              </div>
+            </div>
+            <div class="careplanlist col-md-12">
+              <div role="navigation" id="community_charting_template_list" class="sidebar-offcanvas">
+                <div class="list-group">
+                  <h3 class="list-group-item active text-align">Charting Templates</h3>
+                  <table class="table tbl-border" id="all_community_charting_templates">
+                    <thead>
+                      <th class="text-align">Name</th>
+                      <th class="text-align">Specialization</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="community_charting_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="ctemplate_summary_tab" style="border:none;">
+          <div class="panel panel-default">
+            <div class="tab-pane col-md-12" id="ctemplate_summary_tab" style="border:none;">
+              <div class="col-md-12">
+                <div role="navigation" id="charting_template_summary_list" class="sidebar-offcanvas">
+                  <div class="list-group">
+                    <h3 class="list-group-item active text-align">Charting Templates</h3>
+                    <table class="table tbl-border" id="charting_templates_summary">
+                      <thead>
+                        <th class="text-align">Name</th>
+                        <th class="text-align">Specialization</th>
+                        <th class="text-align">Doctors Who also used this Template</th>
+                        <th class="text-align">Last Accessed By</th>
+                      </thead>
+                      <tbody class="doctor-details-at-charting">
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-lg-12 pagination-align" style="margin-top:5px;" id="charting_summary_pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default" id = "save_charting_template_tab" style="display:none"> 
+      <div class="panel-heading"><span id = "lbl_ctemplate">Save</span> Charting Template:: <span style = "color:#eb8613" id ="selected_charting_template_name"></span>
+        <i class="uservoice" id="back_to_choose_charting_template">
+          <span class="glyphicon glyphicon-arrow-left">Back</span>
+        </i>
+        <span id="dc_copy" index="" class="dc-copy label label-warning" ng-if="level == 'Doctor'">Add to My Template</span>
+        <span id="dc_publish" class="dc-copy label label-warning" index="" ng-if="level == 'Doctor'">Publish to Community</span>
+      </div>
+      <div class = "ctemplate-common-section">
+        <div class="critical_toggle mrgtop1 col-lg-12" ng-if="level == 'Doctor'">
+          <div class="col-lg-6 pull-left">  
+            <div class="col-lg-2" style="width:32%;"><span>Critical Patitent: </span></div>
+            <div class="col-lg-2 text-right">No</div>
+            <div class="col-lg-3 row">
+              <input type="checkbox" class="cmn-toggle cmn-toggle-round" rev="" value="" id="charting_critical_checkbox">
+              <label for="charting_critical_checkbox"></label>
+            </div>
+            <div class="col-lg-1 row">Yes</div>
+          </div>
+          <div class="col-lg-6 pull-right">  
+            <div class="col-lg-2" style="width: 31%;"><span>Monitor using NS: </span></div>
+            <div class="col-lg-2 text-right">No</div>
+            <div class="col-lg-3 row">
+              <input type="checkbox" class="cmn-toggle cmn-toggle-round" rev="" value="" id="charting_ns_monitor">
+              <label for="charting_ns_monitor"></label>
+            </div>
+            <div class="col-lg-1 row">Yes</div>
+            <div id="charting_ns_details" class="col-lg-12" style="display:none;">
+              <div class="col-lg-4">
+                <div class="form-group full-input">
+                  <label for="charting_ns_device_id"><h4>NS Device Id :</h4></label>
+                  <input type="text" id="charting_ns_device_id" class="form-control parsley-validated mrg5 ns_device_id">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group full-input">
+                  <label for="charting_ns_monitor_startdate"><h4>Start Date :</h4></label>
+                  <input type="New Lab" id="" class="datetime form-control ns_monitor_startdate">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group full-input">
+                  <label for="charting_ns_monitor_enddate"><h4>End Date :</h4></label>
+                  <input type="New Lab" class="datetime form-control ns_monitor_enddate">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 charting_medicalinfo charting_referred_info" id="charting_referred_info" style="display:none">
+          <h2 style="background:#B8D0A5; color:#333; width: 100%; float: left; margin-top: 9px; font-weight: bold; font-size: 15px; padding: 10px;">
+            <div style="margin-top: 0px;" class="show_referred_info">
+              <span class="glyphicon referred_info_show glyphicon-minus-sign" style="margin-left:6px;top:3px;"></span>
+              Referred Information
+            </div>
+          </h2>
+        </div>
+        <div id="referred_info" style="display:none">
+          <div class="col-lg-2" style="width:115px">Referred By:</div>
+          <div class="col-lg-4 pointer" id="refer_doctor_name"></div>
+          <div class="col-lg-1">Notes:</div>
+          <div class="col-lg-4"><textarea id="referred_doctor_notes" cols="63" rows="3" placeholder="Type note here"></textarea></div>
+        </div>
+        <div id="charting_medicalinfo" class="col-lg-12 charting_medicalinfo">
+          <h2 style="background:#B8D0A5; color:#333; width: 100%; float: left; margin-top: 9px; font-weight: bold; font-size: 15px; padding: 10px;">
+            <div class="showmedicalinfo" style="margin-top: 0px;">
+              <span style="margin-left:6px;top:3px;" class="glyphicon glyphicon-minus-sign medicalinfo_show"></span>
+              Medical Information
+            </div>
+          </h2>
+        </div>
+        <div class="col-lg-12" id="medicalinfo">
+           <div class="col-lg-2 charting_medicalinfo_div" infotype="Histories">
+            <span class="glyphicon glyphicon-time"></span>
+            <lable class="pointer">Medical History<span class="theme-color" id="charting_alerts_history_count"></span></lable>
+        </div>
+          <div class="col-lg-2 charting_medicalinfo_div" infotype="Allergies">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            <lable class="pointer">Allergies <span class="theme-color" class='charting_info_count' id="charting_alerts_allergies_count"></span></lable>
+          </div>
+          <div class="col-lg-2 charting_medicalinfo_div" infotype="Risks">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            <lable class="pointer">Risks <span class="theme-color" id="charting_alerts_risk_count"></span></lable>
+          </div>
+          <div class="col-lg-2 charting_medicalinfo_div" infotype="Referral">
+            <span class="glyphicon glyphicon-refresh"></span>
+            <lable class="pointer">Referral <span class="theme-color" id="charting_alerts_referral_count"></span></lable>
+          </div>
+          <div class="col-lg-2 charting_medicalinfo_div" infotype="Care Plans">
+            <lable class="pointer">Care Plans <span class="theme-color" id="charting_alerts_careplan_count"></span></lable>
+          </div>
+          <div class="col-lg-2 charting_medicalinfo_div" infotype="Lab">
+            <span class="glyphicon glyphicon-filter"></span>
+            <lable class="pointer">Lab <span class="theme-color" id="charting_alerts_lab_count"></span></lable>
+          </div>
+          <div class="table-responsive mrg10">
+            <div class="col-lg-12 vital_sign_display" id="vital_sign_display">
+              <div class="row" ui-view="vital_signs"></div>
+            </div>
+            <div class="col-lg-12" id = "">
+            </div>
+            <div class="textareatmain" id="ct_visit_type_parent">
+              <label for="select-multi-input"><h4>Visit Type :</h4></label>
+              <select class="form-control placeholder-no-fix mrg5" id="ct_visit_type" type="text">
+                <option>Office Visit</option>
+                <option>Home Visit</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="charting-template-field" style="float: left; width: 100%;" ng-if="level == 'Doctor'">
+          <h2 style="background:#B8D0A5; color:#333; width: 100%; float: left; margin-top: 9px;font-weight: bold;font-size: 15px; padding:10px;">
+            <div class="">
+              Select Section From Following
+            </div>
+          </h2>
+          <!-- <select class="my-account-form-control" size="4" style="width:25%;height:325px;float:left;" id="charting_section_selection"></select> -->
+          <nav id="charting_section_selection" class="sticky-nav" style="float:left;">
+            <ul>
+            </ul>
+          </nav>
+          <!-- <select class="my-account-form-control" size="4" style="width:25%;height:325px;float:left;" id="charting_section_selection"></select> -->
+          <div id="charting_template_activity_list" style="width:75%;padding:0 11px 11px;float:left;max-height:500px;overflow-y:scroll;"></div>
+          <div id="charting_template_common_activity_list" style="display:none;width:75%;padding:0 11px 11px;float:left;max-height:500px;overflow-y:scroll;">
+            <div class="ctemplate-display-sectionlist">
+              <div class="common-display-section-parent">
+                <span class="ctemplate-display-section-name"></span>
+              </div>
+              <div class="ctemplate-display-fieldlist-parent">
+                <div class="ctemplate-display-fieldlist">
+                  <div class="ctemplate-display-responselist row">
+                    <div class="col-md-12" id="soapnote_chief_complaint_parent" style="display:none;">
+                      <textarea id="soapnote_chief_complaint" class="form-control parsley-validated mrg5"></textarea>  
+                    </div>
+                    <div class="col-md-12" id="soapnote_history_of_present_illness_parent">
+                      <textarea id="soapnote_history_of_present_illness" placeholder="Includes description of acute problems plus status of important chronic problems like diabetes, hypertension" class="form-control parsley-validated mrg5"></textarea>
+                    </div>
+                    <div id="soapnote_pmh_parent" class="col-md-12">
+                      <label for="select-multi-input"><h5 class="theme-color">Procedure ::</h5></label>
+                      <div><select id="soapnote_pmh_procedure" multiple="multiple" class="form-control parsley-validated mrg5 multiselect-width"></select></div>
+                      <!-- <textarea id="soapnote_pmh_procedure" class="form-control parsley-validated mrg5"></textarea> -->
+                      <label for="select-multi-input"><h5 class="theme-color">Medications ::</h5></label>
+                      <textarea id="soapnote_pmh_medication" class="form-control parsley-validated mrg5"></textarea>
+                      <label for="select-multi-input"><h5 class="theme-color">Medical History ::</h5></label>
+                      <div><select id="soapnote_pmh_condition" multiple="multiple" class="form-control parsley-validated mrg5 multiselect-width">
+                      <option>Arthritis</option>
+                      <option>Asthama</option>
+                      <option>Bladder Control Problem</option>
+                      <option>Brittol Bones</option>
+                      <option>Chest Pain (Angina)</option>
+                      <option>Chrohns Disease</option>
+                      <option>Depression</option>
+                      <option>Emphysema (COPD, Chronic Bronchitis)</option>
+                      <option>Enlarged prostate (benign prostatic hyperplasia)</option>
+                      <option>Gastric reflux, heat burn or esophagitis(GERD)</option>
+                      <option>Glaucoma</option>
+                      <option>Heart Attack(myocardia infarction)</option>
+                      <option>Heart failure (CHF)</option>
+                      <option>Hemophilia and Hemophilia like conditions</option>
+                      <option>High blood pressure (hypertension)</option>
+                      <option>High blood sugar (Diabetes)</option>
+                      <option>High Cholesterol</option>
+                      <option>Inflammatory bowel disease</option>
+                      <option>Migraine Headache</option>
+                      <option>Overactive thyroid (Hyperthyroid)</option>
+                      <option>Peptic , Stomach or duodenal ulcer</option>
+                      <option>Poor circulation in legs (Peripheral vascular legs)</option>
+                      <option>Seizures(Epilepsy)</option>
+                      <option>Stroke (TIA)</option>
+                      <option>Underactive thyroid(Hypothyroid)</option>
+                      </select></div>
+                      <!-- <textarea id="soapnote_pmh_condition" class="form-control parsley-validated mrg5"></textarea> -->       
+                      <label for="select-multi-input"><h5 class="theme-color">Allergies ::</h5></label><h6 style="float:right;" class="theme-color">Add New <span class="glyphicon glyphicon-plus" text="Allergies" id="add_new_allergies_charting" role="button"></span></h6></lable>
+                      <!-- <textarea id="soapnote_pmh_allergies" class="form-control parsley-validated mrg5"></textarea> -->
+                      <div><table id="charting_current_allergies_list" class="table tbl-border">
+                        <thead>
+                          <tr>
+                            <th>Allergies Name</th>  
+                            <th>Severe</th>
+                            <th>Reaction</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>  
+                      </table>
+                      <div id ="charting_current_allergies_list_pagination" class="col-lg-12 pagination-align"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" id="soapnote_fmh_parent">
+                      <!-- <div style="padding-left: 0px;" class="soapnote-fmh-parent col-md-12">
+                        <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group form-input-set">
+                                <label>Relation</label>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group full-input">
+                                <select class="form-control soapnote-fmh-relation">
+                                  <option>Select</option>
+                                  <option>Sister</option>
+                                  <option>Brother</option>
+                                  <option>Father</option>
+                                  <option>Mother</option>
+                                  <option>Paternal Grand Father</option>
+                                  <option>Paternal Grand Mother</option>
+                                  <option>Maternal Grand Father</option>
+                                  <option>Maternal Grand Mother</option>
+                                  <option>Uncle</option>
+                                  <option>Aunt</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group form-input-set">
+                                <label>Condition</label>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group full-input">
+                                <select class="form-control soapnote-fmh-condition">
+                                  <option>Select</option>
+                                  <option>Cancer</option>
+                                  <option>Clotting Disorder</option>
+                                  <option>Diabetes</option>
+                                  <option>Dementia/Alzheimers</option>
+                                  <option>Heart Disease</option>
+                                  <option>Gastro Intestinal Disorders</option>
+                                  <option>High Cholesterol</option>
+                                  <option>Hypertension</option>
+                                  <option>Kidney Disease</option>
+                                  <option>Lung Disease</option>
+                                  <option>Osteoporosis</option>
+                                  <option>Psychological Disorders</option>
+                                  <option>Stroke/Brain attack</option>
+                                  <option>Sudden Death Infant Syndrome (SIDS)</option>
+                                  <option>Unknown Disease</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12" style="">
+                        <label class="label label-warning add-more-fmh-in-soapnote pointer rght-float">Add More</label>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- medication in charting -->
+        <div id="patient_medications_charting" class="col-lg-12" ng-if="level == 'Doctor'">
+          <div class="row">
+            <h2 class="col-lg-12" style="background:#B8D0A5; color:#333;font-weight: bold; font-size: 15px; padding:10px;">
+              <div class="showmedication">
+                <span style="margin-left:6px;top:3px;" class="glyphicon glyphicon-minus-sign ctemplate_medication"></span>Medications
+              </div>
+              <span id="add_new_medication_from_charting" class="dc-copy label label-warning" index="">Add New Medication</span>
+            </h2>
+          </div>
+          <div class="show-ct-records row">
+            <div id="current_medication_parent_charting" style="border:none;min-height:0px !important;" class="tab-pane active">
+              <table class="table tbl-border" id="charting_current_medication_list">
+                <thead>
+                  <tr>
+                    <th>Drug name</th>  
+                    <th>Strength</th>
+                    <th>Unit</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>  
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="charting_current_medication_pagination"></div>
+            </div>
+            <!-- <div id="past_medication_parent_charting" style="border:none;" class="tab-pane">
+              <table class="table tbl-border" id="charting_past_medication_list">
+                <thead>
+                  <tr>
+                    <th>Drug name</th>  
+                    <th>Strength</th>
+                    <th>Unit</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>  
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="charting_past_medication_pagination"></div>
+            </div> -->
+          </div>
+        </div>
+        <!-- Medication charting end -->
+        <div class="tab-pane row" id="view_orders_content_charting" ng-if="level == 'Doctor'">
+          <div class="col-md-12">
+            <div class="showlaborder" style="cursor:pointer;">
+              <h2 style="background:#B8D0A5; color:#333; width: 100%; float: left; margin-top: 9px; font-weight: bold;font-size:15px;padding:10px 10px 10px 5px;">
+                <span class="glyphicon glyphicon-minus-sign ctemplate_laborder" style="margin-left:6px;top:3px;"></span><span>View Lab Orders</span>
+              </h2>
+            </div>
+            <div style="display:inline-block;width:100%" id="view_orders_table_charting_parent">
+              <table class="table" id="view_orders_table_charting">
+                <thead>
+                  <tr>
+                    <th width="9%" class="text-align">Imaging/Lab</th>
+                    <th width="9%" class="text-align">Order Number</th>
+                    <th width="9%" class="text-align">Order Type</th>
+                    <th width="24%" class="text-align">Tests</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="view_orders_pagination_charting"></div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div id = "charting_template_save_button_parent"></div>
+      </div>
+    </div>
+    <div class="panel panel-default" id = "update_charting_template_tab" style="display:none"> 
+      <div class="panel-heading">Update Charting Template :: <span style = "color:#eb8613" id ="update_charting_template_name"></span>
+        <i class="uservoice">
+          <div class="switch switchcheck">
+            <span>Active</span>
+            <input type="checkbox" class="cmn-toggle cmn-toggle-round" rev="" value="" id="update_careplan_checkbox">
+            <label for="patient_careplan_checkbox"></label>
+          </div>                    
+        </i>
+      </div>
+      <div>
+      <table class="table tbl-border" id="update_activity_list">
+        <thead>
+          <tr><th>No Activity Found</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div id="charting_template_update_button_parent"></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_medication_from_charting_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog xbigmodal">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Add New Medication</h4>
+            <div class="alert-msg-box"></div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="row" ui-view="add_medication"></div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal For confirm charting print -->
+  <div class="modal fade" id="confirm_print_charting_template" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Chart Note is not marked Finalized. Continue print?</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="yes_print_charting_template" index="" rev="">Yes</button>
+          <button class="btn btn-danger" id = "no_print_charting_template" data-dismiss="modal" aria-hidden="true">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal For Charting Template fields -->
+  <div class="modal fade" id="build_charting_template_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Set your field for <span id = "section_name_label" class = "theme-color"></span></h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <form class="" role="form">
+            <div class="col-lg-12 Premrg">
+              <div class="col-lg-3 col-md-2 col-xs-12 Premrg1">Field Name*</div>
+              <div class="col-lg-9 col-md-9 col-xs-12 Premrg1">
+                <div class="input-group">
+                  <textarea type="text" class="form-control" id="ctemplate-fieldname" autocomplete = "off"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 Premrg">
+              <table id = "ctemplate_combo_table" class="table tbl-border">
+                  <thead>
+                  <tr><th><div class="">Response</div></th><th><div>Format Type</div></th><th></th></tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" align="right"><span class="label label-warning pointer" id = "add_charting_response_pair">Add More</span></td>
+                  </tr>
+                </tfoot>
+                </table>                
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning cplan_field_btn" edit = "" id="save_charting_response_field">Save Field</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_new_marker_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Create New Marker</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-4 theme-color">Label</div>
+            <div class="col-lg-8"><input type="text" id="new_marker_name" class="form-control"></div>
+          </div>
+          <div class="row mrgtop1">
+            <div class="col-lg-4 theme-color">Image</div>
+            <div class="col-lg-8">
+              <select id="new_marker_image" class="form-control">
+                <option>Select Image</option>
+                <option value="./images/implant.png">./images/implant.png</option>
+                <option value="./images/crack.png">./images/crack.png</option>
+                <option value="./images/perioSurgery.png">./images/perioSurgery.png</option>
+                <option value="./images/missingTooth.png">./images/missingTooth.png</option>
+                <option value="./images/crown.png">./images/crown.png</option>
+                <option value="./images/braces.png">./images/braces.png</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mrgtop1">
+            <div class="col-lg-4 theme-color">Mouser</div>
+            <div class="col-lg-8">
+              <select id="new_marker_mouser" class="form-control">
+                <option>Select Mouser</option>
+                <option value="purpleTriangle">purpleTriangle</option>
+                <option value="hashChar">hashChar</option>
+                <option value="perioCircle">perioCircle</option>
+                <option value="xChar">xChar</option>
+                <option value="grayCircle">grayCircle</option>
+                <option value="pinkTriangle">pinkTriangle</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="save_new_marker">Save Marker</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Deleting Care Plan -->
+  <div class="modal fade" id="delete_cplan_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to delete this Care Plan Template?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="delete_cplan_confirm" index="" rev="">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Save and Print Charting Template -->
+  <div class="modal fade" id="save_and_print_chart_temp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Chart template finalized.Do you want to Print ?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="yes_print_and_save" index="" rev="">Yes</button>
+          <button type="button" class="btn btn-danger" id="no_print_and_save" index="" rev="">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Deleting Charting Template -->
+  <div class="modal fade" id="delete_charting_template_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to delete this Charting Template?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="delete_charting_template_confirm" index="" rev="">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_padf_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="add_padf_modal_title"></h4>
+            <div class="alert-msg-box"></div>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="" id="add_padf_item_parent">
+              </div>
+            </div>       
+          </div>
+          <div class="modal-footer">
+          <center><button class="btn btn-warning" type="button" id="add_padf" operation="">Add</button></center>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- Modal for Charting Medical Infomation Display -->
+  <div class="modal fade" id="charting_medicalinfo_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title charting_medicalinfo_title">Charting Medical Information Dialog</h4>
+            <div class="alert-msg-box"></div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div id="charting_medical_information" class="charting-medical-information">
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

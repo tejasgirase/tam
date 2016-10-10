@@ -1,0 +1,171 @@
+<div id="create_bill">
+  <h2 class="mytitle">Create bill</h2>
+  <div class="tab_box">
+    <div class="panel panel-default">
+      <div class="panel-heading">Create Bill
+        <i class="uservoice" id="back_to_billing_list">
+            <span class="glyphicon glyphicon-arrow-left">Back</span>
+          </i>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 Premrg">
+          <div class="col-lg-2 col-md-2 col-xs-2 Premrg1">Finalize</div>
+          <div class="col-lg-2 col-md-2 col-xs-2 Premrg1">
+            <select class="form-control" id="billing_appointment_finalize" type="text">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+          <div class="col-lg-2 col-md-2 col-xs-2 Premrg1">Due Date</div>
+          <div class="col-lg-3 col-md-3 col-xs-3 Premrg1">
+            <input class="form-control datetime-with-mintoday" id="billing_due_date" type="text" placeholder="YYYY-MM-DD">
+          </div>
+          <div class="col-lg-3 col-md-3 col-xs-3 Premrg1 text-align">
+            <b>Invoice No ::</b><span id="invoice_no"></span>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="row Premrg tab-heading-section">Provider Information</div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td width="25%"><b>Hospital Name:</b></td>
+                <td width="25%" id="bill_hospital_name"></td>
+                <td width="25%"><b>Address:</b></td>
+                <td width="26%" id="bill_hospital_addr"></td>
+              </tr>
+              <tr>
+                <td width="25%"><b>Doctor Name:</b></td>
+                <td width="25%" id="bill_doctor_name"></td>
+                <td width="25%"><b>Hospital Email ID:</b></td>
+                <td width="25%" id="bill_doctor_email"></td>
+              </tr>
+              <tr>
+                <td width="20%"><b>DHP ID/Practise Code:</b></td>
+                <td width="20%" id="bill_dhp_code"></td>
+                <td width="20%"><b>Hospital Phone No:</b></td>
+                <td width="20%" id="bill_doctor_phone"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row Premrg tab-heading-section">Patient Information</div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td width="25%"><b>Patient Name:</b></td>
+                <td width="25%" id="bill_patient_name"></td>
+                <td width="25%"><b>Patient Address:</b></td>
+                <td width="26%" id="bill_patient_addr"></td>
+              </tr>
+              <tr>
+                <td width="25%"><b id="bill_patient_dob_lbl">Date Of Birth:</b></td>
+                <td width="25%" id="bill_patient_dob"></td>
+                <td width="25%"><b>Patient DHP ID:</b></td>
+                <td width="25%" id="patient_bill_dhp"></td>
+              </tr>
+              <tr>
+                <td width="25%"><b>Patient phone:</b></td>
+                <td width="25%" id="bill_patient_phone"></td>
+                <td width="25%"><b>Patient email:</b></td>
+                <td width="26%" id="bill_patient_email"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row Premrg tab-heading-section">Diagnosis/Procedures</div>
+          <table class="table tbl-border" id="subjective_billrecords">
+            <thead>
+              <tr>
+                <th>Date Of Visit</th>
+                <th>Diagnosis/Procedure Code</th>
+                <th>Billing Code</th>
+                <th>Description</th>
+                <th colspan="2">Charges</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="no_records">
+                <td colspan="3">No records</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="add_subjective_billrecords"><span id="add_subjective_billrecords" class="label label-warning pointer">Add More</span></div>
+          <div class="textareatmain">
+            <label for="select-multi-input">
+              <h4>Additional Notes::</h4></label>
+            <textarea class="form-control parsley-validated mrg5" id="bill_additional_notes" type="text"></textarea>
+          </div>
+          <br>
+          <br>
+          <table class="table" style="width: 50% ! important;" align="right">
+            <tbody>
+              <tr>
+                <td width="31%">Total Charges:</td>
+                <td>
+                  <input readonly="readonly" type="text" class="form-control" id="total_bill_amount" readonly="readonly" value="0">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Total Discounts:</td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="total_bill_discount" value="0">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Total:</td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="total_bill_topay" value="0" readonly="readonly">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Advance Payment:</td>
+                <td width="35%">
+                  <input type="text" value="0" id="advance_paid" class="form-control">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Patient Balance Due:</td>
+                <td width="35%">
+                  <input autocomplete="off" readonly="readonly" type="text" class="form-control" id="total_balance_due" value="0">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Patient Credit:</td>
+                <td width="35%">
+                  <input type="text" value="0" readonly="readonly" id="patient_credit" class="form-control">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Insurance Balance Due:</td>
+                <td width="35%">
+                  <input type="text" readonly="readonly" class="form-control" id="insurance_balance_due" value="0">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Total Paid:
+                  <br />(via cash)</td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="total_cash_paid" value="0">
+                </td>
+              </tr>
+              <tr>
+                <td width="31%">Total Charges:
+                  <br />(via credit card)</td>
+                <td width="35%">
+                  <input type="text" class="form-control" id="total_online_paid" value="0">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="testprintHTML" style="margin-left: 140px; width: 70%;"></div>
+        <div class="col-lg-12 mrg6 text-center">
+          <button class="btn btn-warning mrg9" id="savebill_print" type="button">Save &amp; Print</button>
+          <button class="btn btn-warning" id="savebill">Save &amp; Send</button>
+          <button id="bill_reprint" class="btn btn-default mrg9" style="display: none;">RePrint</button>
+          <button id="bill_resend" class="btn btn-warning" style="display:none;">ReSend</button>
+        </div>
+        <p align="center" id="finalized_message" style="display: none;">*Any receipt will not be sent until the bill is finalized.</p>
+      </div>
+    </div>
+  </div>
+</div>

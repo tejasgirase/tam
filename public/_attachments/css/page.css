@@ -1,0 +1,664 @@
+body {
+    background-color: #f5f5f5;
+}
+.headerContainer {
+    background: #12a7a2;
+    height: 70px;
+    color: #fff;
+}
+.headerLogo {
+    font-size: 40px;
+    font-weight: 200;
+    height: 70px;
+    line-height: 57px;
+    padding: 0px 50px;
+}
+.headerUserName {
+    width: auto;
+    float: right;
+    height: 70px;
+    line-height: 70px;
+    font-size: 18px;
+    font-weight: 300;
+}
+.headerThumbNail {
+    height: 50px;
+    width: 50px;
+    padding: 0px;
+    float: right;
+    margin: 10px 0px;
+    background-image: url(../img/headerUserThumpnail.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.headerThreeDots {
+    width: 10px;
+    height: 60px;
+    padding: 0px;
+    margin: 5px 20px;
+    float: right;
+    background-image: url(../img/threeDots.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.headerUserDetails {
+    float: right;
+    width: auto;
+    cursor: pointer;
+    margin-right: 0px;
+}
+.headerPopUp {
+    background: white;
+    position: absolute;
+    top: 80px;
+    width: 250px;
+    right: 15px;
+    height: auto;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    z-index: 999;
+    height: 0px;
+    opacity: 0;
+    display: none;
+}
+.popupUserthumpnail {
+    height: 50px;
+    padding: 0px;
+    width: 50px;
+    margin: 10px;
+    background-image: url(../img/headerUserThumpnail.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 45px;
+}
+.popupUserTextDetails {
+    width: 180px;
+}
+.popupWelcome {
+    color: #B1B1B1;
+    height: 35px;
+    line-height: 50px;
+    text-transform: uppercase;
+    padding-left: 5px;
+}
+.popupUsername {
+    color: #12a7a2;
+    height: 35px;
+    line-height: 20px;
+    font-size: 17px;
+    padding-left: 5px;
+}
+.popupPractiseCode {
+    height: 100%;
+    width: auto;
+    color: #565656;
+    padding-right: 8px;
+}
+.popupPractiseDetails {
+    height: 45px;
+    background-color: #F7F7F7;
+    font-size: 16px;
+    line-height: 45px;
+}
+.popupPractiseCodeVal {
+    color: #12a7a2;
+    padding-left: 0px;
+}
+.popupHelp {
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    color: #494949;
+    padding: 0px 15px;
+    border-bottom: 1px solid #F1F1F1;
+    cursor: pointer;
+}
+.popupLogOut {
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    color: #494949;
+    padding: 0px 15px;
+    cursor: pointer;
+}
+.arrowUp{
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid white;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: -10px;
+    float: right;
+    right: 15px;
+}
+.headerUserDetails:hover {
+    background: rgba(0, 0, 0, 0.07);
+}
+.popupPractiseDetails:hover {
+    background-color: #DCF7F6;
+}
+.popupHelp:hover {
+    background-color: #DCF7F6;
+}
+.popupLogOut:hover {
+    background-color: #DCF7F6;
+}
+.headerBottom {
+    height: 80px;
+    background: #56bebb;
+    color: #fff;
+    font-size: 15px;
+}
+.headerSubTitle {
+    width: auto;
+    line-height: 32px;
+    margin: 0px 5px;
+    padding: 0px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.arrowUpContainer {
+    position: absolute;
+    width: 100%;
+}
+.lineSep {
+    width: auto;
+    line-height: 30px;
+    margin: 0px 5px;
+    padding: 0px;
+    font-size: 20px;
+}
+.headerSubTitle:hover {
+    background-color: rgba(18, 167, 162, 0.4);
+}
+.headerBottomLinks {
+    width: auto;
+    float: left;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+}
+.headerSubTitleActive { 
+    background-color: #12a7a2 !important;
+}
+.headerBottomLinksFirst {
+    margin: 5px 0px 2px 0px;
+}
+.headerBottomLinksSecond {
+    margin: 2px 0px 5px 0px;
+}
+.UserPanel {
+    width: 270px;
+    background: white;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+    margin: 15px 0px 5px 20px;
+    border-radius: 4px;
+}
+.UserPanelThumpNail {
+    width: 140px;
+    padding: 0px;
+}
+.UserPanelDetails {
+    background-image: url(../img/UserDetailsBk.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    height: 150px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.UserPanelDetailsEdit {
+    width: auto;
+    float: right;
+    text-align: right;
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.34);
+    padding-left: 30px;
+    margin-top: 10px;
+    line-height: 25px;
+    background-image: url(../img/pencil.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+    cursor: pointer;
+}
+.UserPanelUserName {
+    color: #fff;
+    line-height: 35px;
+    font-size: 20px;
+    height: 40px;
+    cursor: pointer;
+}
+.UserPanelUserNameBold {
+    width: auto;
+    padding-right: 0px;
+}
+.UserPanelUserNameThin {
+    padding-left: 5px;
+    font-weight: 300;
+}
+.UserPanelIcons {
+    height: 43px;
+    background-color: #F6F6F6;
+    line-height: 43px;
+    padding: 0px 15px 0px 40px;
+    color: #4f4f4f;
+}
+
+.UserPanelIcons:nth-child(2n) {
+    background-color: #FFFFFF;
+}
+.UserPanelIcons:last-child {
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.UserPanelIconsPhone {
+    background-image: url(../img/mobile.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+.UserPanelIconsGender {
+    background-image: url(../img/gender.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+.UserPanelIconsDateOfBirth {
+    background-image: url(../img/calender.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+.UserPanelIconsPrinter {
+    background-image: url(../img/printer.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+.UserPanelIconsBMI {
+    background-image: url(../img/bmi.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+.UserPanelIconsMail {
+    background-image: url(../img/mail.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+.UserPanelIcons:hover {
+    background-color: #DCF7F6;
+}
+.ListPanel {
+    margin: 15px 15px 5px 20px;
+    width: calc(100% - 330px);
+    background: white;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 0px;
+}
+.ListPanelTitleText {
+    width: auto;
+    float: left;
+    line-height: 35px;
+    color: #f2bb5c;
+    font-size: 20px;
+    font-weight: 300;
+    background-color: white;
+    margin-top: 5px;
+    border-bottom: 2px solid #f2bb5c; 
+}
+.ListPanelTitleBar {
+    width: 0px;
+    float: left;
+    height: 2px;
+    position: absolute;
+    bottom: 10px;
+    background: #f2bb5c;
+    left: 15px;
+    margin: 0px;
+}
+.ListPanelScheduledButton {
+    background: #f2bb5c;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    border-radius: 5px;
+    float: right;
+    width: auto;
+    cursor: pointer;
+}
+.ListPanelScheduledCount {
+    width: auto;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: 300;
+    padding: 0px 5px;
+}
+
+.ListPanelScheduledText {
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0px 5px;
+    width: auto;
+}
+.ListPanelCheckedInButton {
+    background: #f2bb5c;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    padding-right: 2px;
+    border-radius: 5px;
+    float: right;
+    width: auto;
+    cursor: pointer;
+}
+.ListPanelRemainingButton {
+    background: #f2bb5c;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    border-radius: 5px;
+    float: right;
+    width: auto;
+    cursor: pointer;
+}
+.ListPanelCheckedInCount {
+    width: auto;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: 300;
+    padding: 0px 5px;
+}
+.ListPanelRemainingCount {
+    width: auto;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: 300;
+    padding: 0px 5px;
+}
+.ListPanelCheckedInText {
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0px 5px;
+    width: auto;
+}
+.ListPanelRemainingText {
+    font-size: 15px;
+    line-height: 40px;
+    padding: 0px 5px;
+    width: auto;
+}
+.ListPanelScheduledButton:hover {
+    background: #eb8613;
+}
+.ListPanelCheckedInButton:hover {
+    background: #eb8613;
+}
+.ListPanelRemainingButton:hover {
+    background: #eb8613;
+}
+.SheduleTableWrapper .TableTitle {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    background: #39c6d7;
+    width: 14.28%;
+    border-left: 2px solid #FFFFFF;
+}
+.SheduleTableWrapper .TableTitle:first-child {
+    border-left: 0px;
+}
+.TableTitleVal {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 14.28%;
+    border-left: 2px solid #F5F5F5;
+    color: #717171;
+    box-sizing: border-box;
+}
+.TableTitleVal:first-child {
+    border-left: 0px;
+}
+.TableTitleValWrapper {
+    background: #FFFFFF;
+    margin: 0px;
+    cursor: pointer;
+}
+.TableTitleValWrapper:nth-child(2n) {
+    background: whitesmoke;
+}
+.TableTitleWrapper {
+    margin: 0px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+.ListPanelTitleWrapper {
+    margin: 0px;
+}
+.ScrollerPanel {
+    padding: 0px;
+    height: 240px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+.ScrollerPanel::-webkit-scrollbar {
+    width: 4px;
+}
+.ScrollerPanel::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+.ScrollerPanel::-webkit-scrollbar-thumb {
+    background-color: #39c6d7;
+}
+.TableTitleValWrapper:hover {
+    background: #DCF7F6;
+}
+.NoElem {
+    height: 298px;
+    line-height: 298px;
+    text-align: center;
+    color: #A0A0A0;
+    font-size: 14px;
+}
+.TableNavBar {
+    height: 58px;
+    background-image: url(../img/nav.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 200px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+.CurrentTaskPanel {
+    width: calc(50% - 30px);
+    margin: 15px 0px 5px 20px;
+}
+.CurrentTaskPanel .ListPanelTitleText {
+    font-size: 18px;
+    padding: 7px 15px;
+}
+.CurrentTaskPanel .SheduleTableWrapper .TableTitle {
+    width: 16.665%;
+}
+.CurrentTaskPanel .TableTitleVal {
+    width: 16.660%;
+    padding: 0px 5px;
+}
+.SheduleTableWrapper .Twoline {
+    line-height: 17px !important;
+    padding-top: 3px;
+}
+.TableTitleVal select {
+    width: 100%;
+    margin: 6px 0px;
+    border: 1px solid #84DEDB;
+    border-radius: 3px;
+    background: rgba(255, 0, 0, 0);
+    height: 26px;
+    outline: none;
+}
+.SelectCurrentTasks {
+    float: right;
+    height: 60px;
+    padding: 0px;
+    margin: 0px 14px 0px 0px;
+    width: 140px;
+}
+.SelectCurrentTasks select {
+    width: 100%;
+    margin: 15px 0px;
+    height: 30px;
+    padding: 0px 5px;
+    border-radius: 3px;
+    border: 1px solid #84DEDB;
+    color: #717171;
+    outline: none;
+}
+.ChartPanel {
+    width: calc(50% - 30px);
+    margin: 15px 0px 5px 20px;
+}
+.ChartPanel .SheduleTableWrapper .TableTitle {
+    width: 16.665%;
+}
+.ChartPanel .TableTitleVal {
+    width: 16.660%;
+    padding: 0px 5px;
+    height: 80px;
+}
+.ChartPanel .ThreeLine {
+    line-height: 20px;
+    padding-top: 10px;
+}
+.CriticalPatientsPanel {
+    width: calc(50% - 30px);
+    margin: 15px 0px 5px 20px;
+}
+.CriticalPatientsPanel .SheduleTableWrapper .TableTitle {
+    width: 20%;
+}
+.CriticalPatientsPanel .TableTitleVal {
+    width: 20%;
+    padding: 0px 5px;
+}
+.TeleMedicinePanel {
+    width: calc(50% - 30px);
+    margin: 15px 0px 5px 20px;
+}
+.TeleMedicinePanel .SheduleTableWrapper .TableTitle {
+    width: 16.665%;
+    line-height: 80px;
+    height: 80px;
+}
+.TeleMedicinePanel .Threeline {
+    line-height: 20px !important;
+    padding-top: 10px;
+    font-size: 14px;
+}
+.TeleMedicinePanel .TableTitleVal {
+    width: 16.660%;
+    padding: 0px 5px;
+}
+.SelectHealthCategory {
+    float: right;
+    height: 60px;
+    padding: 0px;
+    margin: 0px 14px 0px 0px;
+    width: 190px;
+}
+.SelectHealthCategory select {
+    width: 100%;
+    margin: 15px 0px;
+    height: 30px;
+    padding: 0px 5px;
+    border-radius: 3px;
+    border: 1px solid #84DEDB;
+    color: #717171;
+    outline: none;
+}
+.FooterLinkTitle {
+    width: auto;
+    padding: 3px 5px;
+    color: #39C6D7;
+    font-size: 14px;
+    cursor: pointer;
+}
+.FooterLink .lineSep {
+    line-height: 24px;
+    color: #39C6D7;
+    font-size: 18px;
+}
+.FooterLink {
+    width: auto;
+    float: left;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+}
+.FooterLinkContainer {
+    margin: 10px 0px;
+}
+.FooterLinkTitle:hover {
+    background: rgba(57, 198, 215, 0.73);
+    color: #fff;
+    border-radius: 4px;
+}
+.FooterContainer {
+    background-color: #2f3438;
+    height: 130px;
+}
+.SocialIconContainer {
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    margin-top: 30px;
+}
+.SocialIcon {
+    height: 35px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.GplusIcon {
+    background-image: url(../img/gplus.png);
+}
+.TwitterIcon {
+    background-image: url(../img/twitter.png);
+}
+.FBIcon {
+    background-image: url(../img/fb.png);
+}
+.CopyrightText {
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 300;
+}
+.TeleMedicinePanel .ScrollerPanel {
+    height: 200px;
+}
+.TeleMedicinePanel .Twoline {
+    line-height: 20px !important;
+    padding-top: 20px;
+}
+.TeleMedicinePanel .NoElem {
+    height: 258px;
+}
+.dd-list-hover, .dd-list-buttons :hover{
+    background-color: #eb8613;
+}

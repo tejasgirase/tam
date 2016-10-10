@@ -1,0 +1,12 @@
+{
+   "_id": "replication_configuration",
+   "_rev": "2-e320af558522ab98fa8ab56599d01717",
+   "doctype": "replication_configuration",
+   "available_priority_values": [
+       "Timestamp",
+       "FS",
+       "Cloud"
+   ],
+   "priority_value": "Timestamp",
+   "replication_source": "Cloud"
+}

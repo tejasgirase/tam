@@ -1,0 +1,61 @@
+<div class="row mrgbottom1">
+  <ul class="nav nav-tabs col-md-3 col-sm-3 col-xs-12 mytabs" id="mytabs" style="background: rgb(242, 187, 92) none repeat scroll 0% 0%;width:100%;">
+    <li class="active menu_items" style="border-left:1px solid #fff;margin-left: 5px;">
+      <a ui-sref="dashboard" id="practice_dashboard_link">Practice Dashboard</a>
+    </li>
+    <li class="pd menu_items">
+      <a id="my_account_tab_link" class="pointer">Your Patients</a>
+    </li>
+
+    <li class="pd menu_items">
+      <a ui-sref="medical_history({user_id:patient_id})" id="past_history_tab_link">Patient Information</a>
+    </li>
+    <li class="pd menu_items" id="patinet_billing">
+      <a ui-sref="patient_billing({user_id:patient_id})" class="pointer">Billing</a>
+    </li>
+    <!-- <li class="dropdown pd menu_items" id="diagnosis_link">
+      <a data-toggle="dropdown" class="dropdown-toggle pointer">Diagnosis
+        <span class="glyphicon glyphicon-chevron-down" style="float:right; margin-top: 3px; margin-left: 7px; margin-right: 2px;"></span>
+      </a>
+      <ul aria-labelledby="myTabDrop1" role="menu" class="dropdown-menu fade bottom in pcp-color">
+        <li><a id="patient_alerts_link" class="pointer" ui-sref="patient_diagnosis({user_id:patient_id})">NurtureSense Device</a></li>
+        <li><a id="patient_ecg_results_link" class="pointer" style="border:none;" ui-sref="patient_ecgresults({user_id:patient_id})">ECG Results</a></li>
+      </ul>
+    </li> -->
+    <li class="dropdown pd menu_items" id="careplan_link" ng-hide="level == 'Front Desk'">
+      <a data-toggle="dropdown" class="dropdown-toggle pointer">Care Plans
+        <span class="glyphicon glyphicon-chevron-down" style="float: right; margin-top: 3px;margin-left:7px;margin-right: 2px;"></span>
+      </a>
+      <ul aria-labelledby="myTabDrop2" role="menu" class="dropdown-menu fade bottom in pcp-color">
+        <li ng-if="level == 'Doctor'"><a id="choose_care_plan_link" ui-sref="patient_choose_careplan({user_id:patient_id})" class="pointer">Choose Your Care Plan</a></li>
+        <li ng-if="level == 'Doctor'"><a id="build_cplan_link" class="pointer" style="border:none;">Build Your Care Plan</a></li>
+        <li><a ui-sref="patient_care_plans_summary({user_id:patient_id})" id="care_plan_summary_id" class="pointer" style="border:none;">Care Plans Summary</a></li>
+      </ul>
+    </li>
+    <li class="dropdown pd menu_items" id="charting_link" ng-hide="level == 'Front Desk'">
+      <a data-toggle="dropdown" class="dropdown-toggle pointer">Charting
+        <span class="glyphicon glyphicon-chevron-down" style="float:right; margin-top: 3px; margin-left: 7px; margin-right: 2px;"></span>
+      </a>
+      <ul aria-labelledby="myTabDrop1" role="menu" class="dropdown-menu fade bottom in pcp-color">
+        <!-- <li><a tabindex="-1" id="start_chart_note_link" ui-sref="patient_generic_chart_note({user_id:patient_id,template_state:'generic'})" class="pointer">Generic Soap Note</a></li> -->
+        <li><a tabindex="-1" id="choose_charting_template" ui-sref="patient_charting_templates({user_id:patient_id,template_state:'choose'})" class="pointer">Choose Template</a></li>
+        <li><a tabindex="-1" id="build_charting_template_link" ui-sref="patient_build_templates({user_id:patient_id,template_state:'build'})" style="border:none;">Build Template</a></li>
+      </ul>
+    </li>
+    <li class="pd menu_items" ng-if="level == 'Doctor'">
+      <a id="prepare_referral_link" ui-sref="patient_referral({user_id:patient_id})">Prepare Referral</a>
+    </li>
+    <li class="pd menu_items">
+      <a id="appointment_link" ui-sref="patient_appointments({user_id:patient_id})" class="safe-hover-sidebar pointer">Appointment</a>
+    </li>
+    <li class="pd menu_items">
+      <a id="clinical_risk_calculator_link" ui-sref="risk_calculator({user_id:patient_id})" class="safe-hover-sidebar pointer">Clinical Risk Calculator</a>
+    </li>
+    <li ng-if="level != 'Front Desk'">
+      <a id="dicom_link" style="focus:unset !important;" class="pointer">DICOM</a>
+    </li>
+    <li>
+      <a id="upload_files_link" style="focus:unset !important;" class="pointer">Upload Files</a>
+    </li>
+  </ul>
+</div>

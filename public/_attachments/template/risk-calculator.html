@@ -1,0 +1,199 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-pane row" id="patient_clinical_risk_calculator">
+  <h2 class="mytitle">Clinical risk calculator</h2>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="row choiceCont">
+      <div id="metabolic_risk_calculator_link" class="col-md-4 ChoiceText ChoiceTextActive">Metabolic Syndrome</div>
+      <div class="col-md-4 ChoiceLineSep"></div>
+      <div id="cvd_risk_calculator_link" class="col-md-4 ChoiceText">Framingham (CVD)</div>
+    <!-- <ul role="tablist" class="nav nav-tabs sub-teb-set">
+      <li class="active"><a id="metabolic_risk_calculator_link" class="pointer">Metabolic Syndrome</a>
+        <li><a id="cvd_risk_calculator_link" class="pointer">Framingham (CVD)</a></li>
+    </ul> -->
+  </div>
+  <div class="tab-content col-md-12 col-sm-12 col-xs-12 mrgtop1" style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; padding: 0px; margin: 0px 0px 0px 16px; width: 97%;">
+    <div class="tab-pane metabolic_risk_calculator_tab" id="metabolic_risk_calculator_tab">
+      <div class="error_not_smoking"></div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label>Waist*</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="waist_mets" placeholder="In CM">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>Triglyceride*</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="triglyceride_mets" placeholder="In  mg / dL.">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>HDL cholesterol*</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="hdl_cholesterol_mets" placeholder="In  mg / dL.">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>2hr Post Glucose</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="two_hr_post_glucose" placeholder="In  mg / dL.">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>Age*</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="age_mets" placeholder="In years">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <label>BP systolic*</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="bp_systolic_mets" placeholder="In mmHg.">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>BP diastolic*</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="bp_diastolic_mets" placeholder="In mmHg.">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>Fasting glucose</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="fasting_glucose_mets" placeholder="In  mg / dL.">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label>Diabetic Condition</label>
+          </div>
+          <div class="col-md-7">
+            <select class="form-control" id="diabetic_condition">
+              <option>Select</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <h3 style="font-size: 18px; color: rgb(236, 151, 31);">Family History</h3>
+          </div>
+        </div>
+        <div id="family_medical_history_mets">
+          <div class="row mets_fmh_risk_score"><div class="col-md-2"><label>Relation</label></div><div class="col-md-3"><select class="form-control mets_fmh_relation"><option>Select</option><option>Sister</option><option>Brother</option><option>Father</option><option>Mother</option><option>Paternal Grand Father</option><option>Paternal Grand Mother</option><option>Maternal Grand Father</option><option>Maternal Grand Mother</option><option>Uncle</option><option>Aunt</option></select></div><div class="col-md-2"><label>Condition</label></div><div class="col-md-3"><select class="form-control mets_fmh_condition"><option>Select</option><option>Cancer</option><option>Clotting Disorder</option><option>Diabetes</option><option>Dementia/Alzheimers</option><option>Heart Disease</option><option>Gastro Intestinal Disorders</option><option>High Cholesterol</option><option>Hypertension</option><option>Kidney Disease</option><option>Lung Disease</option><option>Osteoporosis</option><option>Psychological Disorders</option><option>Stroke/Brain attack</option><option>Sudden Death Infant Syndrome (SIDS)</option><option>Unknown Disease</option></select></div><div class="col-md-1 paddtop1"><label class="label label-warning add-metabolic-fmh pointer">add New</label></div></div>
+        </div>
+      </div>
+      <div class="col-md-12" style="text-align:center;">
+        <button type="button" id="calculate_metabolics_risk_score" class="btn btn-warning">Calculate</button>
+        <button type="button" id="save_metabolics_risk_score" class="btn btn-warning">Save</button>
+      </div>
+      <div class="col-md-12 metabolic_risk_graph" style="display:none;">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <input type="hidden" id="angle" value="">
+          <div id="current_risk_score" style="height: 200px;"></div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+          <div id="past_risk_score" style="height: 200px; margin-right:2px; margin-left: 20px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane cvd_risk_calculator_tab" id="cvd_risk_calculator_tab" style="border:none;">
+      <div class="col-md-6">
+        <div class="row mrgtop1">
+          <div class="col-md-4">
+            <label>Total cholesterol</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="total_cholesterol_cvd" placeholder="In  mg / dL.">
+          </div>
+        </div>
+        <div class="row mrgtop1">
+          <div class="col-md-4">
+            <label>HDL cholesterol</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="hdl_cholesterol_cvd" placeholder="In  mg / dL.">
+          </div>
+        </div>
+        <div class="row mrgtop1">
+          <div class="col-md-4">
+            <label>Systolic Blood Pressure</label>
+          </div>
+          <div class="col-md-7">
+            <input type="text" id="systolic_bp_cvd" class="form-control" placeholder="In mmHg.">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row mrgtop1">
+          <div class="col-md-4">
+            <label>Age</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="age_cvd" placeholder="In years">
+          </div>
+        </div>
+        <div class="row mrgtop1">
+          <div class="col-md-4">
+            <label>Smoking</label>
+          </div>
+          <div class="col-md-7">
+            <input class="form-control" type="text" id="smoking_cvd" placeholder="Yes/No">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 mrgtop1 text-center">
+        <button type="button" id="calculate_cvd_risk_score" class="btn btn-warning">Calculate</button>
+        <button type="button" id="save_cvd_risk_score" class="btn btn-warning">Save</button>
+      </div>
+      <div class="col-md-12 cvd_risk_graph" style="display:none;">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <input type="hidden" id="angle" value="">
+          <div id="current_cvd_score" style="height: 200px;"></div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <div id="past_cvd_score" style="height: 200px; margin-right:2px; margin-left: 20px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="confirm_metabolic_params_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Do You want to update risk score with changed values?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="yes_metabolic_params_change">Yes</button>
+          <button type="button" class="btn btn-danger" id="no_metabolic_params_change">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

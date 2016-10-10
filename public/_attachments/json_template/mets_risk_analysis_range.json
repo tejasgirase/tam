@@ -1,0 +1,325 @@
+{
+   "_id": "mets_risk_analysis_range",
+   "_rev": "2-a8fa7af2308a861eab26b2c225531af5",
+   "waist_man": [
+       {
+           "range": "0-70",
+           "score": 0
+       },
+       {
+           "range": "70-80",
+           "score": 0
+       },
+       {
+           "range": "80-90",
+           "score": 0
+       },
+       {
+           "range": "90-94",
+           "score": 0
+       },
+       {
+           "range": "94-100",
+           "score": 1
+       },
+       {
+           "range": "100-102",
+           "score": 2
+       },
+       {
+           "range": "102-110",
+           "score": 3
+       },
+       {
+           "range": "110-120",
+           "score": 4
+       },
+       {
+           "range": "120-all",
+           "score": 5
+       }
+   ],
+   "waist_woman": [
+       {
+           "range": "0-70",
+           "score": 0
+       },
+       {
+           "range": "70-80",
+           "score": 0
+       },
+       {
+           "range": "80-90",
+           "score": 1
+       },
+       {
+           "range": "90-94",
+           "score": 2
+       },
+       {
+           "range": "94-100",
+           "score": 3
+       },
+       {
+           "range": "100-102",
+           "score": 4
+       },
+       {
+           "range": "102-110",
+           "score": 5
+       },
+       {
+           "range": "110-all",
+           "score": 5
+       }
+   ],
+   "Triglyceride": [
+       {
+           "range": "100-150",
+           "score": 3
+       },
+       {
+           "range": "150-all",
+           "score": 3
+       }
+   ],
+   "HDL": [
+       {
+           "range": "0-40",
+           "score": 3
+       },
+       {
+           "range": "40-49",
+           "score": 1
+       },
+       {
+           "range": "50-59",
+           "score": 0
+       },
+       {
+           "range": "60-all",
+           "score": -1
+       }
+   ],
+   "total_cholesterol": [
+       {
+           "range": "0-160",
+           "score": 0
+       },
+       {
+           "range": "160-199",
+           "score": 2
+       },
+       {
+           "range": "200-239",
+           "score": 4
+       },
+       {
+           "range": "240-279",
+           "score": 5
+       },
+       {
+           "range": "280-all",
+           "score": 6
+       }
+   ],
+   "systolic_bp": [
+       {
+           "range": "0-120",
+           "score": 0
+       },
+       {
+           "range": "120-129",
+           "score": 1
+       },
+       {
+           "range": "130-139",
+           "score": 2
+       },
+       {
+           "range": "140-149",
+           "score": 3
+       },
+       {
+           "range": "150-159",
+           "score": 4
+       },
+       {
+           "range": "160-all",
+           "score": 6
+       }
+   ],
+   "diastolic_bp": [
+       {
+           "range": "0-80",
+           "score": 0
+       },
+       {
+           "range": "80-85",
+           "score": 1
+       },
+       {
+           "range": "85-all",
+           "score": 2
+       }
+   ],
+   "fasting_glucose": [
+       {
+           "range": "60-100",
+           "score": 0
+       },
+       {
+           "range": "100-all",
+           "score": 5
+       }
+   ],
+   "age": [
+       {
+           "range": "20-29",
+           "score": 0
+       },
+       {
+           "range": "30-34",
+           "score": 1
+       },
+       {
+           "range": "35-39",
+           "score": 2
+       },
+       {
+           "range": "40-44",
+           "score": 3
+       },
+       {
+           "range": "45-49",
+           "score": 4
+       },
+       {
+           "range": "50-54",
+           "score": 5
+       },
+       {
+           "range": "55-59",
+           "score": 6
+       },
+       {
+           "range": "60-64",
+           "score": 7
+       },
+       {
+           "range": "65-69",
+           "score": 8
+       },
+       {
+           "range": "70-74",
+           "score": 9
+       },
+       {
+           "range": "75-all",
+           "score": 10
+       }
+   ],
+   "smoking": [
+       {
+           "range": "20-29",
+           "score": 5
+       },
+       {
+           "range": "30-34",
+           "score": 5
+       },
+       {
+           "range": "35-39",
+           "score": 5
+       },
+       {
+           "range": "40-44",
+           "score": 4
+       },
+       {
+           "range": "45-49",
+           "score": 4
+       },
+       {
+           "range": "50-54",
+           "score": 3
+       },
+       {
+           "range": "55-59",
+           "score": 3
+       },
+       {
+           "range": "60-64",
+           "score": 2
+       },
+       {
+           "range": "65-69",
+           "score": 2
+       },
+       {
+           "range": "70-74",
+           "score": 1
+       },
+       {
+           "range": "75-all",
+           "score": 1
+       }
+   ],
+   "possible_range": [
+       {
+           "range": "20-29",
+           "min": -1,
+           "max": 39
+       },
+       {
+           "range": "30-34",
+           "min": 0,
+           "max": 40
+       },
+       {
+           "range": "35-39",
+           "min": 1,
+           "max": 41
+       },
+       {
+           "range": "40-44",
+           "min": 2,
+           "max": 41
+       },
+       {
+           "range": "45-49",
+           "min": 3,
+           "max": 42
+       },
+       {
+           "range": "50-54",
+           "min": 4,
+           "max": 42
+       },
+       {
+           "range": "55-59",
+           "min": 5,
+           "max": 43
+       },
+       {
+           "range": "60-64",
+           "min": 6,
+           "max": 43
+       },
+       {
+           "range": "65-69",
+           "min": 7,
+           "max": 44
+       },
+       {
+           "range": "70-74",
+           "min": 8,
+           "max": 44
+       },
+       {
+           "range": "75-all",
+           "min": 9,
+           "max": 45
+       }
+   ]
+}

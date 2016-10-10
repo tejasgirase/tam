@@ -1,0 +1,138 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-content" id="build_careplan_parent">
+  <div class="tab-pane row" id="cplan_list">
+    <h2 class="mytitle">Build Your Care Plan</h2>
+    <div class="tab_box">
+      <div class="main_div">
+        <div class="main_div_in">
+          <div style="" class="col-md-6 ">
+            <button type="button" id="create_new_cplan" class="btn btn-warning mrg23 pointer" style="margin-left: 99px;">Add New Care Plan</button>
+          </div>
+          <div class="col-md-6">
+            <div class="search_box col-md-12">
+            <input type="text" name="Name" placeholder="Search Existing Care Plans.." autocomplete="off" value="" id="existing_care_plan_list" class="top-form-control placeholder-no-fix">
+            </div>
+          </div>
+          <div class="con_inmain">
+            <table class="table" id="cplan_current_list">
+              <thead>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane row" id="new_cplan_tab">
+    <div class="tab_box">
+      <div class="tab-content">
+        <div class="table-responsive">
+          <div class="panel panel-default">
+            <div class="panel-heading"><span id="crt_new_lbl">Build New</span> Care Plan
+              <i class="uservoice" id="back_to_cplan_list">
+                <span title="Back to Care Plan List" class="glyphicon glyphicon-arrow-left">Back</span>
+              </i>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <ul class="nav nav-tabs sub-teb-set" role="tablist">
+                <li class="active"><a id="create_new_careplan_link" class="pointer">Create Care-Plan</a></li>
+                <li class=""><a id="create_new_careplan_sections_link" class="pointer">Add Care-Plan Details</a></li>
+                <li class=""><a id="confirm_new_careplan_link" class="pointer">Confirm Care-plan Details</a></li>
+              </ul>
+            </div>
+            <div class="tab-content">
+              <div class="tab-pane active resetmin-height" id="create_new_careplan_parent">
+                <div class="row">
+                  <div class="col-lg-12 Premrg">
+                    <div class="col-lg-3 col-md-2 col-xs-12 Premrg1"> Care Plan Name*</div>
+                    <div class="col-lg-6 col-md-5 col-xs-12 Premrg1">
+                      <input type="text" name="cplan_name" id="cplan_name" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 Premrg">
+                    <div class="col-lg-3 col-md-2 col-xs-12 Premrg1"> Specialization*</div>
+                    <div class="col-lg-7 col-md-5 col-xs-12 Premrg1">
+                      <span id="select_box_hide">
+                        <select class="form-control" id="specialization_name" style="width:574px !important;" ></select>
+                        <input type="text" id="specialization_name_by_text" class="form-control" style="display:none;width:574px !important;">
+                      </span>  
+                    </div>
+                    <div class="col-lg-2 col-md-5 col-xs-12 Premrg1">
+                      <small style="font-size:10px;margin-left: -107px"><span id = "click_toggle_second" class ="theme-color pointer">Click here </span><span id="clk_toggle_lbl_second">to add new</span></small>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 Premrg">
+                    <div class="col-lg-3 col-md-2 col-xs-12 Premrg1">Description</div>
+                    <div class="col-lg-6 col-md-5 col-xs-12 Premrg1">
+                      <textarea id="careplan_description" class="form-control"></textarea> 
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 Premrg">
+                    <div class="col-lg-3 col-md-2 col-xs-12 Premrg1"> Add Section*</div>
+                    <div class="col-lg-6 col-md-5 col-xs-12 Premrg1">
+                      <select type="text" id="care_plan_section_name" style="width:574px !important;" multiple="multiple" class="form-control multiselect">
+                        <option value="Biometrics">Biometrics</option>
+                        <option value="Medication Management">Medication Management</option>
+                        <option value="Therapy">Therapy</option>
+                        <option value="Nutrition/Dietary">Nutrition/Dietary</option>
+                        <option value="Health Screening">Health Screening</option>
+                        <option value="Fitness">Fitness</option>
+                        <option value="Patient Education">Patient Education</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="create_new_careplan_sections_parent">
+                <div class="row">
+                  <div class="col-lg-12 Premrg">
+                    <div class=" col-lg-12 careplan-display-section-parent"><span>CarePlan Sections</span></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12" id="care_plan_field_table">
+                  </div>
+                  <div class="col-lg-12">
+                    <label class="label label-warning pointer" style="margin-left: 20px; margin-top: 19px; float: left; padding: 9px;" id="toggle_careplan_summary">Show Summary</label>
+                    <label class="label label-warning pointer" style="margin-left: 20px; margin-top: 19px; float: left; padding: 9px;display:none;" id="refresh_careplan_summary">Refresh Summary</label>
+                  </div>
+                  <div class="col-lg-12">
+                    <ol style="display:none; float: left; width: 100%;" id="careplan_summary_list"></ol>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 mrg6 text-center">
+                    <button rev="" index="" id="save_cplan_template" class="btn btn-warning">Save Template</button>
+                    <button class="btn btn-warning" id="save_publish_cplan_template" index="" rev="">Save & Publish</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-12 mrg6" style="margin-left: 13px;">
+                <h2 style="margin-top: 0px; margin-bottom: 0px; height: 10px; color: rgb(235, 134, 19);"> Steps to Follow</h2>
+                <hr style="margin-top: 22px; margin-bottom: 3px; color: rgb(235, 134, 19);">
+                <span style="color:#eb8613">Step 1 :</span> Enter the name of the care-plan.
+                <br>
+                <span style="color:#eb8613">Step 2 :</span> Enter the specialization.
+                <br>
+                <span style="color:#eb8613">Step 3 :</span> Create the care -plan . Tip : Keep adding all the fields in the care-plan till you are done.
+                <br>
+                <span style="color:#eb8613">Step 4 :</span> Save (Visible only in your practice) Save&amp; Publish (Visible for the entire community. The more everyone shares, the more everyone benefits)
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>

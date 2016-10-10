@@ -1,0 +1,1600 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-pane mrgtop1" id="past_history_new">
+  <h2 class="mytitle row">Personal Details & Medical History</h2>
+  <div class="clearfix"></div>
+  <div class="row">
+    <!-- <div class="paddleft col-md-5 col-sm-12 col-xs-12">
+      <ul class="nav nav-tabs sub-teb-set" role="tablist">
+        <li id="summary_tab" class="active"><a class="pointer">Summary</a></li>
+        <li id="timeline_tab"><a class="pointer">Timeline</a></li>
+      </ul>
+    </div> -->
+    <div class="col-md-12 paddleft">
+      <div class="row choiceCont">
+        <div id="summary_tab" class="col-md-4 ChoiceText ChoiceTextActive">Summary</div>
+        <div class="col-md-4 ChoiceLineSep"></div>
+        <div id="timeline_tab" class="col-md-4 ChoiceText">Timeline</div>
+        <div class="col-md-4 ChoiceLineSep"></div>
+        <div id="medication_tab" class="col-md-4 ChoiceText"  ng-if="level != 'Front Desk' && medication_show" style="margin-right:6px">Current Medications</div>
+        <!-- <div class="col-md-4 ChoiceLineSep"  ng-if="level != 'Front Desk'"></div> -->
+        <div id="elabs_tab" class="col-md-4 ChoiceText">Elabs</div>
+      </div>
+    </div>
+    <!-- <div class="paddright col-md-6 col-sm-12 col-xs-12">
+      <div class="summary_right_box choiceCont">
+        <h5>Reason for Current / Most recent visit:</h5>
+        <p id="most_recent_complaint"></p>
+      </div>
+    </div> -->
+  </div>
+  <div class="tab-content">
+    <div class="tab-pane active mrgtop" id="home">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="clearfix"></div>
+            <div class="col-md-12 CategContainer">
+              <div class="row">
+                <div id="more_labs" class="col-md-2 CategText CategTextActive inner-tab-left">Lab &amp; Diagnostics</div>
+                <div id="mh_vital_signs" class="col-md-1 CategText inner-tab-mid">Vital Signs</div>
+                <div id="more_event" class="col-md-2 CategText inner-tab-mid">Clinical Risk Scores</div>
+                <div id="com_history" class="col-md-2 CategText inner-tab-mid">Communication History</div>
+                <div id="telemedicine_history" class="col-md-2 CategText inner-tab-mid">Telemedicine History</div>
+                <div id="Patient_notes_tab" class="col-md-2 CategText inner-tab-mid">Patient Notes</div>
+                <div id="Patient_immunization" class="col-md-1 CategText inner-tab-right">Immunization</div>
+              </div>
+            </div>
+            <!-- <ul role="tablist" class="nav nav-tabs sub-teb-set charts-tabs" style="border-radius: 17px 17px 0 0;">
+              <li id="more_labs" class="active mh-summary-info-links"><a class="pointer">Lab & Diagnostics</a></li>
+              <li id="mh_vital_signs" class="mh-summary-info-links"><a class="pointer">Vital Signs</a></li>
+              <li id="more_event" class="mh-summary-info-links"><a class="pointer">Scores</a></li>
+              <li id="com_history" style="width: 217px;" class="mh-summary-info-links"><a class="pointer">Communication History</a></li>
+            </ul> -->
+            <div class="chart_box"></div>
+            <div class="tab-content" style="float:left;width:100%;min-height: 330px;border-radius: 4px;box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);">
+              <div class="chart_sub_box">
+                <div id="chart-section3" class="tab-container mh-summary-info">
+                  <div id="labGraphs" style="height:315px; margin: 0 auto"><div id="showMsgNotChartSection" class="" style="margin-left:500px;color: rgb(242, 187, 92);font-size:18px;display:none">No Record found</div></div>
+                  <a data-toggle="modal" role="button" data-target="#no_customization" href="#" style="color: rgb(124, 181, 236); font-weight: bold; font-size: 13px; text-decoration: underline; float: right; margin-right: 12px;">Customize</a>
+                </div>
+                <div id="chart-section4" class="tab-container mh-summary-info" style="display:none;">
+                  <div id="showMsgChartSection4" class="" style="margin-left:500px;color: rgb(242, 187, 92);font-size:18px;display:none">No Record found</div>
+                  <div id="framingham_score" class="col-lg-4" style="position: relative;height: 200px;"></div>
+                  <div id="metabolic_score" class="col-lg-4" style="height: 200px;position: relative;"></div>
+                  <div id="bmi_score" class="col-lg-4" style="height: 200px;"></div>
+                  <div id="score_ts"  style="width:100%;float:left;color:#7cb5ec;"></div>
+                </div>
+                <div id="chart-section1" class="row tab-container mh-summary-info cs-vital-graphs" style="display:none;">
+                  <div id="showMsgChartSection1" class="" style="margin-left:500px;color: rgb(242, 187, 92);font-size:18px;display:none">No Record found</div>
+                  <div id="blood_pressure_graph" class="charts" style="width:100px;float:left;"></div>
+                  <div id="graph_weight" class="charts" style="width:100px;margin-top:5px;float:left;"></div>
+                  <div id="graph_heartRate" class="charts" style="width:100px;margin-top:5px;float:left;"></div>
+                  <div id="graph_o2" class="charts" style="width:100px;margin-top:5px;float:left;"></div>
+                  <div id="graph_respiration_rate" class="charts" style="width:100px;margin-top:5px;float:left;"></div>
+                  <div id="graph_fasting_glucose" class="charts" style="width:100px;margin-top:5px;float:left;"></div>
+                  <a id="customize_vital_graphs" class="pointer" data-toggle="modal" role="button" data-target="#customize_vitalsign_graphs" style="color: rgb(124, 181, 236); font-weight: bold; float: right; font-size: 13px; text-decoration: underline; margin-left: 12px;position: absolute; bottom: 0; right: 0;">Customize</a>
+                  <a data-toggle="modal" role="button" data-target="#no_more_events" href="#" style="color: rgb(124, 181, 236); font-weight: bold; font-size: 13px; text-decoration: underline; float: right;position: absolute; bottom: 0; right: 80;">More Events</a>
+                </div>
+                <div class="tab-container mh-summary-info" id="chart-section5" style="display:none;">  
+                  <table class="table table-striped tbl-border" id="patient_communication_history">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Sent Type</th>
+                        <th>Type Of Communication</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                  <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="communication_pagination"></div>
+                </div>
+                <div class="tab-container mh-summary-info" style="display:none" id="chart-section6">
+                  <div class="tab_box">
+                    <div class="main_div">
+                      <div class="main_div_in">
+                        <div class="con_inmain">
+                          <table class="table" id="telemedicine_table">
+                            <thead>
+                              <tr>
+                                <th>Submit Date</th>
+                                <th>Category</th>
+                                <th>Question</th>
+                                <th>Answered By</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                          </table>
+                          <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="tele_inquiries_pagination"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-container mh-summary-info" style="display:none" id="chart-section7">
+                  <div id="patient_note" class="tab-pane row">
+                    <h2 class="mytitle">Patient Notes</h2>
+                    <div class="tab_box">
+                      <div class="panel panel-default"> 
+                        <div class="panel-heading">Patient Notes</div>
+                        <table class="table tbl-border">
+                          <tbody>
+                            <tr><td width="25%">Most Recent Condition</td><td width="75%" id="patient_note_recent_condition">past condition details</td></tr>
+                            <tr><td width="25%">Most Recent Diagnosis</td><td width="75%" id="patient_note_recent_diagnosis">past condition details</td></tr>
+                            <tr><td width="25%">Current/Recent Medication(Past 3 Months)</td><td width="75%" id="patient_note_recent_medication">Drug 1234, caplsul, cupsulee, capsul, ssfd, safd, ssd, fsdfsd, tejas</td></tr>
+                          </tbody>
+                        </table>
+                        <table id="patient_notes_table" class="table tbl-border">
+                          <thead><tr><th>Note</th><th>Date</th></tr></thead>
+                          <tbody><tr><td>Today is June 2nd 2014</td><td>2014-5-2</td></tr></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-container mh-summary-info" style="display:none" id="chart-section8">
+                  <div class="tab-pane row" id="patient_immunization">
+                    <h2 class="mytitle">Immunization Records</h2>
+                    <div class="col-md-12 col-sm-12 col-xs-12 mrgtop1">
+                      <div class="tab-pane active" style="border:none;padding-top:5px;" id="immunization_records_parent">
+                        <div class="con_inmain" id="immunization_records">
+                          <table class="table tbl-center tbl-border" id="immunization_record_table">
+                            <thead>
+                              <tr>
+                                <th>Vaccine</th>
+                                <th>Dose</th>
+                                <th>Date</th>
+                                <th>Physician Name</th>
+                                <th>Notes</th>
+                                <th>Status</th>
+                                <th><a id="add_new_immunization_record" data-action="Add" class="link pointer">Add&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></a></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-if="immunizataion_nodata">
+                                <td colspan="7">No Records are Found.</td>
+                              </tr>
+                              <tr ng-if="immunizataion_data_len" dir-paginate="x in immunizataion_data | itemsPerPage : 5" class="immunization-list animate-if">
+                                <td class="text-center immunization-name">{{x.immunization_name}}</td>
+                                <td class="text-center immunization-dose">{{x.dose}}</td>
+                                <td class="text-center immunization-date">{{x.date}}</td>
+                                <td class="text-center immunization-injected-name">{{((x.injected_name) ? x.injected_name : "NA")}}</td>
+                                <td class="text-center immunization-notes">{{((x.notes) ? x.notes : 'NA')}}</td>
+                                <td class="text-center immunization-status">{{((x.status) ? x.status : 'NA')}}</td>
+                                <td class="text-center">
+                                  <a class="mrgright1 link edit_immunization_record" data-toggle="tab" data-action="Edit" title="Edit"><span role="button" class="glyphicon glyphicon-edit"></span></a><a class="mrgright1 link delete_immunization_record" data-toggle="tab" title="Delete"><span data-toggle="modal" role="button" class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+                            <dir-pagination-controls></dir-pagination-controls>
+                          </div>
+                        </div>
+                        <div id="add_new_immunization_parent" class="tab_box" style="display:none;">
+                          <div class="panel panel-default">
+                            <div class="panel-heading">Add New Record
+                              <i id="back_to_immunization_records" class="uservoice">
+                                <span class="glyphicon glyphicon-arrow-left">Back</span>
+                              </i>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Vaccination Name:*</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <select data-required="true" class="form-control select2-input parsley-validated" id="patient_immunization_name">
+                                  </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 Premrg1"></div>
+                              </div>
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Vaccine Name:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <select data-required="true" class="form-control select2-input parsley-validated" id="immunization_vaccine_name">
+                                    <option value="">Select</option>
+                                  </select>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">Lot #:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <input type="text" id="immunization_lot_no" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Dose:*</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <select data-required="true" class="form-control select2-input parsley-validated" id="immunization_dose">
+                                    <option value="">Select</option>
+                                  </select>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">Manufacturer:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <input type="text" id="immunization_manufacturer" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">History Record:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <div class="col-lg-3">
+                                    <input type="checkbox" class="form-control checkshow" id="immunization_history_record">
+                                  </div>
+                                  <div class="col-lg-9" style="padding-right: 0px;">
+                                    <select style="display:none;" id="immunization_history_record_source" class="form-control">
+                                      <option value="">Select Information Source</option>
+                                      <option>Source Unspecified</option>
+                                      <option>Administered by another Provider</option>
+                                      <option>Patient's written record</option>
+                                      <option>Patient's recall</option>
+                                      <option>Immunization registry</option>
+                                      <option>Birth certification</option>
+                                      <option>School record</option>
+                                      <option>Patient</option>
+                                      <option>Public agency</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">Body Site:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <select class="form-control select2-input parsley-validated" id="immunization_body_site">
+                                    <option value="">Select</option>
+                                    <option>Left Arm(LA)</option>
+                                    <option>Left Deltoid (LD)</option>
+                                    <option>Left Gluteous Medius(LG)</option>
+                                    <option>Left Leg (LL)</option>
+                                    <option>Left Lower Forearm(LLFA)</option>
+                                    <option>Left Thigh(LT)</option>
+                                    <option>Left Vastus Lateralis (LVL)</option>
+                                    <option>Right Arm (RA)</option>
+                                    <option>Right Deltoid (RD)</option>
+                                    <option>Right Gluteous Medius (RG)</option>
+                                    <option>Right Leg (RL)</option>
+                                    <option>Right Lower Forearm(RLFA)</option>
+                                    <option>Right Thigh(RT)</option>
+                                    <option>RVL (Right Vastus Lateralis (RVL)</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Injected On:*</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <input type="text" id="immunization_injected_on" class="form-control datetime-with-maxdate">
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">Route:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <select class="form-control select2-input parsley-validated" id="immunization_route">
+                                    <option value="">Select</option>
+                                    <option>Intramuscular (IM) injection</option>
+                                    <option>Subcutaneous (SC) injection</option>
+                                    <option>Intradermal (ID) administration</option>
+                                    <option>Intranasal (IN) administration </option>
+                                    <option>Oral (PO)</option>
+                                    <option>IM or SC</option>
+                                    <option>Intravenous(IV)</option>
+                                    <option>Transdermal(TD)</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Injected By:*</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <select id="immunization_injected_by" class="form-control select2-input parsley-validated" data-required="true">
+                                    <option value="">Select</option>
+                                  </select>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">Dose Unit:</div>
+                                <div class="col-lg-3 col-md-3 col-xs-12 Premrg1">
+                                  <input type="text" class="form-control" id="immunization_dose_unit">
+                                </div>
+                              </div>
+                              <div class="col-lg-12 Premrg">
+                                <div class="col-lg-2 col-md-2 col-xs-12 Premrg1">Notes:</div>
+                                <div class="col-lg-9 col-md-9 col-xs-12 Premrg1">
+                                  <textarea type="text" id="immunization_notes" data-required="true" class="form-control parsley-validated"></textarea>
+                                </div>
+                              </div>
+                              <div class="col-lg-12 mrg6 text-center">
+                                <button id="save_patient_immunization" class="btn btn-warning">Save</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="summary_right_main_box">
+              <div class="col-md-2 scrollable-tile perwidth15">
+                <h6 class="border-top-radius mrgtop">Procedures <span id="add_new_procedures" role="button" text="Procedures" class="glyphicon glyphicon-plus add_padf"></span></h6>
+                <div class="demo col-md-12 summary_per_info" style="padding:0;">
+                    <ul id="mh_procedure_new" class="mh_procedure_new"></ul>
+                </div>
+              </div>
+              <div class="col-md-2 scrollable-tile perwidth16">
+                <h6 class="border-top-radius mrgtop">Allergies <span role="button" id="add_new_allergies" text="Allergies" class="glyphicon glyphicon-plus"></span></h6>
+                <div class="demo col-md-12 summary_per_info" style="padding:0;">
+                  <ul id="mh_allergies_new" class="mh_allergies_new">
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-2 scrollable-tile perwidth15">
+                <h6 class="border-top-radius mrgtop">Diagnosis <span role="button" id="add_new_condition" text="Diagnosis" class="glyphicon glyphicon-plus"></span></h6>
+                <div class="demo col-md-12 summary_per_info" style="padding:0;">
+                  <ul id="mh_conditions_new" class="mh_conditions_new">
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-2 scrollable-tile perwidth17">
+                <h6 class="border-top-radius mrgtop">Screening Details</h6>
+                <div class="demo col-md-12 summary_per_info" style="padding:0;">
+                  <ul id="mh_vaccine" class="mh_vaccine">
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-2 scrollable-tile perwidth15">
+                <h6 class="border-top-radius mrgtop">Medications</h6>
+                <div class="demo col-md-12 summary_per_info" style="padding:0;">
+                  <ul id="mh_medication_new" class="mh_medication_new">
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-2 scrollable-tile perwidth17">
+                <h6 class="border-top-radius mrgtop">Family History  <span data-toggle="modal" role="button" id="add_fmh_model_id" data-target="#add_fmh_modal" text="Family History" class="glyphicon glyphicon-plus mrgside"></span></h6>
+                <div class="demo col-md-12 summary_per_info" style="padding:0;">
+                  <ul id="mh_family_new" class="mh_family_new">
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="profile" class="tab-pane profile">
+    <div id="filters" class="tab-pane filters">
+      <div class="filter-toggle seeAll on"><span class="filter-circle"></span><span class="filter-label">See All</span></div>
+      <!-- <div class="filter-toggle doctorNotes off"><span class="filter-circle"></span><span class="filter-label">PhysicianNotes</span></div> -->
+      <div class="filter-toggle labs off"><span class="filter-circle"></span><span class="filter-label">Labs/Imaging</span></div><div class="filter-toggle keyEntries off"><span class="filter-circle"></span><span class="filter-label">Chart notes</span></div>
+      <div class="expand_collapse">
+
+        <div style="float:left;" id="expand_collapse_toggle"><span style="margin-right:5px;" class="glyphicon glyphicon-plus-sign iconToggleTimeline"></span><span id="expand">Expand All</span></div>
+      </div>
+    </div>
+    <div class="norecord_msg1" style="display:none;">No Lab Records Found.</div>
+    <div class="tab-pane" id="" style="border:none;">
+    <div style="background: rgb(51, 51, 51) none repeat scroll 0% 0%; text-align: center; display: block; width: 78px; padding: 10px; color: rgb(255, 255, 255); float: left; left: -44px; top: -37px; border-radius: 12px; position: relative;margin-top:-15px;" id="timeline_year" class=""></div>
+    <div id = "tl_print_multiple" style = "display:none"><span class="glyphicon glyphicon-print tl-print-selected"> PrintSelected</span></div>
+      <div id="timeline_list" class="timeline_list">
+        
+      </div>
+      <div class='seemore btn' id= "seemore" datalen="" style="">See More...</div>
+      <div id='seemore_phy' class='btn' datalen="" style="display:none;">See More...</div>
+      <div id='seemore_chart' class='btn' datalen="" style="display:none;">See More...</div>
+      <div id='seemore_lab' class='btn' datalen="" style="display:none;">See More...</div>
+    </div>
+    </div>
+    <div class="main-menu-hide" main-menu-hide id="currentMedication">
+      <div class="tab-pane row" id="patient_medications">
+        <h2 class="mytitle">Current Medications</h2>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="col-md-12 CategContainer">
+            <div class="row">
+              <div class="col-md-3 CategText CategTextActive inner-tab-left" id="current_medication_tab">Current</div>
+              <div class="col-md-3 CategText inner-tab-mid" id="past_medication_tab">Past</div>
+              <div class="col-md-3 CategText inner-tab-right" id="uploaded_medication_tab">Uploaded Medication</div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content col-md-12 col-sm-12 col-xs-12">
+          <div class="tab-pane active inner-content-mrg" id="current_medication_parent">
+            <div class="con_inmain" id="current_medications">
+              <table class="table" id="current_medications_list">
+                <thead>
+                  <tr>
+                    <th>Drug name</th>
+                    <th>Dose</th>
+                    <th>Frequency</th>
+                    <!-- <th>Strength</th> -->
+                    <!-- <th>Unit</th> -->
+                    <th>Start Date<br>(YYYY-MM-DD)</th>
+                    <th>End Date<br>(YYYY-MM-DD)</th>
+                    <th style="width:170px" ng-if="level == 'Doctor'" ><a id="add_new_medication">Add&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></a></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="current_medication_pagination"></div>
+            </div>
+            <div class="tab_box" id="add_new_medication_parent" style="display:none;">
+              <div class="panel panel-default">
+                <div class="panel-heading">Prescribe Medication
+                  <i class="uservoice back_to_medication_list">
+                    <span class="glyphicon glyphicon-arrow-left">Back</span>
+                  </i>
+                </div>
+                <div class="row" ui-view="add_medication"></div>
+              </div>
+            </div>
+            <div class="tab_box" id="add_new_pharmacy" style="display:none;">
+              <div class="panel panel-default">
+                <div class="panel-heading">Add Pharmacy
+                  <i class="uservoice back_to_add_new_medication_form">
+                    <span class="glyphicon glyphicon-arrow-left">Back</span>
+                  </i>&nbsp;
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form class="form-inline lable-text-small" role="form">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group full-input">
+                              <label for="select-multi-input">Pharmacy Name :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_name" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Phone :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_phone" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Fax :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_fax" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Email :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_email" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Dhp Code:</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_dhp_code" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Street :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_street" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">State:</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <select id="pharmacy_state" class="form-control"></select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">City:</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <select id="pharmacy_city" class="form-control"></select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Zip:</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" id="pharmacy_zip" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div style="margin-left:600px" class="form-group">
+                          <button type="button" id="pharmacy_save" class="btn btn-warning">Save</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane inner-content-mrg" id="past_medication_parent">
+            <div class="main_div">
+              <div class="main_div_in">
+                <div class="con_inmain">
+                  <table class="table" id="past_medications_list">
+                    <thead>
+                      <tr>
+                        <th>Drug name</th>
+                        <th>Dose</th>
+                        <th>Frequency</th>
+                        <!-- <th>Strength</th>
+                        <th>Unit</th> -->
+                        <th>Start Date<br>(YYYY-MM-DD)</th>
+                        <th>Stop Date<br>(YYYY-MM-DD)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                  <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="past_medication_pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane inner-content-mrg" id="uploaded_medication_parent">
+            <div class="main_div">
+              <div class="main_div_in">
+                <div class="con_inmain">
+                  <table class="table" id="uploaded_medication_list">
+                    <thead>
+                      <tr>
+                        <th>Document Name</th>
+                        <th>Comments/Notes</th>
+                        <th>Medication Upload Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                  <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="uploaded_medication_pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="main-menu-hide" id="currentElabs">
+      <div class="tab-pane row" id="lab_results">
+      <h2 class="mytitle">E-Labs Ordering &nbsp; Results</h2>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="col-md-12 CategContainer">
+            <div class="row">
+              <div class="col-md-2 CategText CategTextActive inner-tab-left" id="electronic_lab_ordering_link">ELab Ordering</div>
+              <div class="col-md-2 CategText inner-tab-mid" id="view_orders_link">View / Cancel Order</div>
+              <div class="col-md-2 CategText inner-tab-right" id="lab_results_inner_link">Lab Result</div>
+            </div>
+          </div>
+        </div>  
+        
+        <!--<div class="row ChoiceWrapper">
+          <div id="electronic_lab_ordering_link" class="col-md-4 ChoiceText ChoiceTextActive">Electronic Lab Ordering</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div id="view_orders_link" class="col-md-4 ChoiceText">View / Cancel Order</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div id="lab_results_inner_link" class="col-md-4 ChoiceText ">Lab Result</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <!-- <div id="other_doc_link" class="col-md-4 ChoiceText">Other/Video</div> 
+        </div>
+        <!-- <div class="col-md-12 col-sm-12 col-xs-12 paddside">
+          <ul class="nav nav-tabs sub-teb-set" role="tablist">
+            <li class="active"><a id="lab_results_inner_link" class="pointer">Lab Results</a></li>
+            <li><a id="other_doc_link" class="pointer">Other/Video</a></li>
+            <li><a id="electronic_lab_ordering_link" class="pointer">Electronic Lab ordering</a></li>
+            <!-- <li><a id="electronic_lab_imaging_link" class="pointer">Electronic Lab Imaging</a></li> -->
+            <!-- <li><a id="view_orders_link" class="pointer">View Orders</a></li>
+          </ul>
+        </div> -->
+        <div class="tab-content col-md-12">
+          <div class="inner-content-mrg tab-pane panel active" id="lab_results_inner">
+            <div class="labmain">
+              <div class="col-md-12">
+                <div class="row category-list-cards">
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/donate_blood-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Blood</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/cardiology.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Cardiology</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/kidney-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Kidneys &amp; Electrolytes</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/31-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Nutrients</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/85-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Liver</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/body-42-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Sugars &amp; Digestion</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/1109-brain-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Hormones</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/31-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Inflammation &amp; Autoimmunity</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/Disease_bladder-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Thyroid</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/31-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Clotting</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/673292-lab_chemistry_test-tube-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Specialized Tests</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/Virology-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Infection</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/53-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Urine</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/folder-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Other Exams</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center section_row">
+                    <div class="category-list-card overview">
+                      <div class="category-card-img">
+                        <img src="images/folder-128.png">
+                      </div>
+                      <div class="category-card-name text-center">
+                        <h4>Other / Video</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inner-content-mrg tab-pane panel" id="lab_results_inner_category">
+            <div class="row">
+              <div class="col-md-12 ChoiceContainer" style="margin-top: 0px;">
+                <div class="row">
+                  <div class="col-md-12 OtherExamsTitle">
+                    <span id="labmain_img"></span>
+                    <span id="labmain_title"></span>
+                    <span id="lab_results_back_button" class="glyphicon glyphicon-arrow-left" style="float:right; line-height: 40px">Back</span>
+                  </div>
+                  <div class="col-md-12 ContentWrapper">
+                    <div class="row lab-result-hide">
+                      <div class="col-md-4">
+                        <div class="row SearchCheck">
+                          <div class="col-md-12 SearchTextBoxWrapper">
+                            <input placeholder="Search Lab Results here..." class="SearchTextBox" id="lab_result_search">
+                          </div>
+                          <div class="col-md-12 ORText">OR</div>
+                          <div class="col-md-12">
+                            <select id="all_lab_results_options" class="CheckBoxContainer">
+                              <option value="volvo">Select Action</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row MostRacentTest">
+                          <div class="col-md-12 MostRacentTestTitle"><span class="glyphicon glyphicon-list-alt"></span><span style="margin-left: 6px;">Most recent tests</span></div>
+                          <div class="col-md-12">
+                            <div id="recent_lab_results" class="row">
+                            </div>
+                            <div class="ArrowRight"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-8 ContentPanel" style="height: inherit;">
+                        <div id="no_image" class="no-image">No Lab Results Selected.</div>
+                        <img style="display:none;height:inherit;width: inherit;" id="lab_result_image" src="" alt="No report Selected">
+                        <div style="background-color: rgb(255, 255, 255); height: inherit; display: none;" id="lab_result_pdf" class="media"></div>
+                      </div>
+                    </div>
+                    <div class="row lab-result-hide">
+                      <div class="col-lg-12">
+                        <div class="col-lg-12 labdetails" id="labdetails"></div>
+                        <table class="table tbl-border lab_result_medical_details" style="display:none" id="lab_result_medical_details">
+                          <tbody>
+                          </tbody>
+                        </table>    
+                      </div>
+                    </div>
+                    <div class="row" id="otherVideoShow" style="display:none">
+                      <div class="col-md-12">
+                        <table class="table" id="other_docs_table">
+                          <thead>
+                            <tr>
+                              <th width="20%" class="text-align">Other/Video</th>
+                              <th width="60%" class="text-align">Document Name</th>
+                              <th width="20%" class="text-align">Doctor</th>
+                              <th class="text-align"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                        <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="other_videos_pagination"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 lab-result-hide" id="lab_result_comment">
+                    <div class="row CommentPanel">
+                      <div class="col-md-12 CommentsTitle">Comments</div>
+                      <div class="col-md-10 mrgtop1">
+                        <textarea id="doctor_comment" style="0" class="col-md-12 CommentInput" placeholder="Comment..."></textarea>
+                      </div>
+                      <div class="col-lg-2" style="margin-top: 20px;"><button id="doctor_comment_save" class="btn btn-warning doctor_comment_save">Save and Send</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inner-content-mrg tab-pane panel" id="electronic_lab_ordering">
+            <div class="row paddtop15">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <form class="form-inline" role="form">
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group  ">
+                        <label for="select-multi-input">Order#</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" id="lo_order_number" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Type</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <select id="lo_type" type="text" class="form-control placeholder-no-fix mrg5">
+                          <option value="Select Order">Select Order</option>
+                          <option value="LabOrder">Lab Order</option>
+                          <option value="ImagingOrder">Imaging Order</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Referred-by* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" id="lo_referred_by" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Date* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" id="lo_date" placeholder="YYYY-MM-DD" class="form-control datetime-with-mintoday lo-date-width">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Patient Name* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" id="lo_patient_name" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Patient DHP ID* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" id="lo_patient_dhp_id" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Age* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="lo_age">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Gender* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <select class="form-control placeholder-no-fix mrg5" type="text" id="lo_gender">
+                          <option value="">Select Gender</option>
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Laboratory* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <select class="form-control placeholder-no-fix mrg5" type="text" id="lo_laboratory">
+                          <option>No Labs</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Tests* :</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <select multiple="multiple" class="form-control placeholder-no-fix my_multiselect" type="text" id="lo_tests">
+                          <optgroup label="Urine Test">
+                            <option>Albumin</option>
+                            <option>Sugar</option>
+                            <option>Microscopy</option>
+                            <option>Bile salt</option>
+                            <option>Bile pigments</option>
+                            <option>Urobilinogen</option>
+                            <option>Ketone Bodies</option>
+                            <option>BenceJones Protein</option>
+                            <option>Specific Gravity</option>
+                            <option>Pregnancy Test</option>
+                            <option>Complete Urine examination</option>
+                          </optgroup>
+                          <optgroup label="Hematology">
+                            <option>Hb/TC/DC/ESR</option>
+                            <option>Prothrombin time</option>
+                            <option>Absolute Eosinophil count</option>
+                            <option>Blood Group : ABO</option>
+                            <option>Blood Group : Rh</option>
+                            <option>Blood Picture (Peripheria smear)</option>
+                            <option>Platelet Count</option>
+                            <option>Absolute Eosinophil Count</option>1
+                          </optgroup>
+                          <optgroup label="MP/MF">
+                            <option>BT,CT</option>
+                            <option>PT,APT</option>
+                          </optgroup>
+                          <optgroup label="Infective profile">
+                            <option>Tridot</option>
+                            <option>HBS AG,HCV</option>
+                            <option>Widal</option>
+                            <option>PS for MP</option>
+                            <option>PF/PV Antigen</option>
+                            <option>VDRL</option>
+                          </optgroup>
+                          <optgroup label="BONE&amp;Joint Profile">
+                            <option>RA Test</option>
+                            <option>ALK Phosphatase</option>
+                            <option>C Reactive Protein</option>
+                            <option>ESR</option>
+                            <option>Urine for BJP</option>
+                            <option>ASO</option>
+                          </optgroup>
+                          <optgroup label="Diabetic Profile">
+                            <option>Fasting Blood Sugar</option>
+                            <option>Random Blood Sugar</option>
+                            <option>Post Pranidal Blood Sugar</option>
+                            <option>Micro Albuminuria</option>
+                            <option>Glyco Hb AIC</option>
+                            <option>Serum Cholesterol</option>
+                            <option>Serum Triglycerides</option>
+                            <option>HDL/LDL/VLDL</option>
+                          </optgroup>
+                          <optgroup label="Renal Profile">
+                            <option>Blood Urea</option>
+                            <option>Serum Creatinine</option>
+                            <option>Serum Uric Acid</option>
+                            <option>Serum Electrolytes</option>
+                          </optgroup>
+                          <optgroup label="Liver Profile">
+                            <option>Serum Bilirubin</option>
+                            <option>ALK Phosphatase</option>
+                            <option>SGOT</option>
+                            <option>SGPT</option>
+                            <option>A/G Ratio</option>
+                            <option>HBS.Ag.</option>
+                          </optgroup>
+                          <optgroup label="M.I. Profile">
+                            <option>CK-MB</option>
+                            <option>SGOT</option>
+                            <option>LDH</option>
+                            <option>Triponin-T</option>
+                          </optgroup>
+                          <optgroup label="Lipid Profile">
+                            <option>Lipid Profile</option>
+                          </optgroup>
+                          <optgroup label="Others">
+                            <option>Stool-OVA</option>
+                            <option>Stool-Cysts</option>
+                            <option>Stool-Occult Blood</option>
+                            <option>Sputum AFB</option>
+                          </optgroup>
+                          <optgroup label="Montoux Test">
+                            <option>T3 T4 TSH</option>
+                          </optgroup>
+                          <optgroup label="S.Amylase">
+                            <option>S.Amylase</option>
+                          </optgroup>
+                          <optgroup label="ECG">
+                            <option>ECG</option>
+                          </optgroup>
+                          <optgroup label="Serum Electrolytes">
+                            <option>Serum Electrolytes</option>
+                          </optgroup>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Instructions to Lab/Imaging Order</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-10 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <textarea id="lo_instructions" class="form-control" type="text"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div class="form-group">
+                      <button class="btn btn-warning" id="lo_save" type="button">Save &amp; Send</button>
+                      <button class="btn btn-warning" id="lo_save_print" type="button">Save &amp; Print</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="inner-content-mrg tab-pane panel" id="electronic_lab_imaging">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <form class="form-inline " role="form">
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group  ">
+                        <label for="select-multi-input">Order#:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="io_order_number">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Patient Name:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="io_patient_name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Referred-by:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="io_referred_by">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Patient DHP ID:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="io_patient_dhp_id">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group ">
+                        <label for="select-multi-input">Date:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control datetime lo-date-width" id="io_date" placeholder="YYYY-MM-DD">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Imaging Center:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <select class="form-control placeholder-no-fix mrg5" type="text" id="io_imaging_center">
+                          <option>No Imaging Center</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Age:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="io_age">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Gender:</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <select class="form-control placeholder-no-fix mrg5" type="text" id="io_gender">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="main_box">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                      <div class="form-group">
+                        <label for="select-multi-input">Instructions to Imaging Order</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-10 col-md-4 col-sm-4 col-xs-12">
+                      <div class="form-group full-input">
+                        <textarea id="io_instructions" class="form-control" type="text"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                    <div class="form-group">
+                      <label for="select-multi-input">Tests:</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <select multiple class="form-control placeholder-no-fix mrg5 my_multiselect" type="text" id="io_tests">
+                        <option>Blood sugar (Fasting , PPBS and Hba1C )</option>
+                        <option>Lipid Profile</option>
+                        <option>CBCESR</option>
+                        <option>Serum Creatinine. Blood Urea Nitrogen.</option>
+                        <option>Urine routine and Microscopic examination </option>
+                        <option>SGPT (Liver Function)</option>
+                        <option>S Uric Acid</option>
+                        <option>Stool Examination</option>
+                        <option>Thyroid Function ( T3)</option>
+                        <option>Thyroid Function ( T4/TSH)11) Vitamin B 12</option>
+                        <option>Vitamin D3</option>
+                        <option>Serum Calcium tests</option>
+                        <option>CBC.</option>
+                        <option>C-reactive protein.</option>
+                        <option>Blood for Malarial Parasites.</option>
+                        <option>S WidalTest (for typhoid)</option>
+                        <option>Preoperative Major Profile</option>
+                        <option>Preoperative Minor profile</option>
+                        <option>Fever Profile</option>
+                        <option>Basic Profile</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div class="form-group">
+                      <button class="btn btn-warning" id="io_save" type="button">Save &amp; Send</button>
+                      <button class="btn btn-warning" id="io_save_print" type="button">Save &amp; Print</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="inner-content-mrg tab-pane panel" id="view_orders_content">
+            <div class="col-md-12 paddside">
+              <table class="table" id="view_orders_table">
+                <thead>
+                  <tr>
+                    <th width="1%"></th>
+                    <th width="1%" class="text-align">Imaging/Lab</th>
+                    <th width="1%" class="text-align">Order Number</th>
+                    <th width="25%" class="text-align">Order Type</th>
+                    <th width="25%" class="text-align">Tests</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="view_orders_pagination"></div>
+            </div>
+          </div>
+          <div class="inner-content-mrg tab-pane panel" id="other_doc">
+           <!--  <div class="col-md-12">
+              <table class="table" id="other_docs_table">
+                <thead>
+                  <tr>
+                    <th width="20%" class="text-align">Other/Video</th>
+                    <th width="60%" class="text-align">Document Name</th>
+                    <th width="20%" class="text-align">Doctor</th>
+                    <th class="text-align"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="other_videos_pagination"></div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Model For Stop/Delete Medication -->
+  <div class="modal fade" id="update_medication_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Update Medication:: <span class="theme-color" id="update_medication_name"></span></h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6">Do you want to add new medication?</div>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-4">
+              <select class="form-control" id="change_medication_label"><option>Yes</option><option>No</option></select>
+            </div>
+          </div>
+          <div class="row mrgtop1" id="update_medication_frequency_parent" style="display:none;">
+            <div class="col-lg-7">Do you want to change medication Frequency?</div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-4">
+              <select class="form-control" id="change_medication_frequency_label"><option>Yes</option><option>No</option></select>
+            </div>
+          </div>
+        </div>  
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="medication_update_btn">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Stop/Delete Medication -->
+  <div class="modal fade" id="delete_medication_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to <span id="careplan_stop_delete_label">Stop</span> this medication ?</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-4">Reason for Stop Early*</div>
+            <div class="col-lg-8"><textarea id="reason_for_stop_medication" class="form-control resize-none"></textarea></div>
+          </div>
+        </div>  
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="delete_medication_confirm" index="" rev="">Stop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Stop/Delete Medication msg -->
+  <div class="modal fade" id="confirm_delete_immunization_record" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 style="width: 90%; display: inline;">Are you sure you want to remove this Immunization Record?</h4>
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-danger" id="yes_delete_immunization_confirm">Yes</button>
+          <button type="button" class="btn btn-warning" id="no_delete_immunization_confirm">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="delete_medication_message_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <div><span id="medication_delete_message">Delete not allowed as Its been more than a day since the medication has been created. Please use&nbsp;<span class="glyphicon glyphicon-ban-circle padding-reset" title="Stop"></span><span class="or-font">/</span><span class="glyphicon glyphicon-refresh padding-reset" title="Update"></span>&nbsp;to modify.</span></div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="confirm_medication_edit_update_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are you sure to Proceed with Following Changes?</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <table class="table tbl-border" id="medication_edit_update_summary_table">
+            <thead>
+              <th>Summary</th>
+              <th>From</th>
+              <th>To</th>
+            </thead>
+            <tbody></tbody>
+          </table>
+          </div>
+        </div>  
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="confirm_medication_edit_update">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="customize_vitalsign_graphs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Customize Vital Sign Graphs</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-11">
+              <label><b>Graph</b></label>
+            </div>
+          </div>
+          
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+              <div class="checkbox">
+                <input class="checkshow" type="checkbox" id="cvg_blood_pressure">
+              </div>
+            </div>
+            <div class="col-sm-11">
+              <label>Blood Pressure</label>
+            </div>
+          </div>
+          
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+              <div class="checkbox">
+                <input class="checkshow" type="checkbox" id="cvg_weight">
+              </div>
+            </div>
+
+            <div class="col-sm-11">
+              <label>Weight</label>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+              <div class="checkbox">
+                <input class="checkshow" type="checkbox" id="cvg_heart_rate">
+              </div>
+            </div>
+
+            <div class="col-sm-11">
+              <label>Heart Rate</label>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+              <div class="checkbox">
+                <input class="checkshow" type="checkbox" id="cvg_o2">
+              </div>
+            </div>
+
+            <div class="col-sm-11">
+              <label>O2</label>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+              <div class="checkbox">
+                <input class="checkshow" type="checkbox" id="cvg_respiration_rate">
+              </div>
+            </div>
+
+            <div class="col-sm-11">
+              <label>Respiration Rate</label>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="col-sm-1">
+              <div class="checkbox">
+                <input class="checkshow" type="checkbox" id="cvg_fasting_glucose">
+              </div>
+            </div>
+
+            <div class="col-sm-11">
+              <label>Glucose</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="cvg_save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_fmh_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add family history</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" id="mh_fmh_relation">
+            <div class="mh_fmh_field_parent row">
+              <div class="col-sm-5 mh_fmh_relation_field">
+              <!-- <input type="text" class="form-control" placeholder="Relation"> -->
+              <select class="form-control fmh_relation" id="fmh_relation">
+                <option selected="selected">Select Relation</option>
+                <option>Sister</option>
+                <option>Brother</option>
+                <option>Father</option>
+                <option>Mother</option>
+                <option>Paternal Grand Father</option>
+                <option>Paternal Grand Mother</option>
+                <option>Maternal Grand Father</option>
+                <option>Maternal Grand Mother</option>
+                <option>Uncle</option>
+                <option>Aunt</option>
+              </select>
+              </div>
+              <div class="col-sm-5 mh_fmh_condition_field">
+              <!-- <input type="text" class="form-control" id="fmh_condition" placeholder="Condition"> -->
+              <select class="form-control fmh_condition" id="fmh_condition">
+                <option selected="selected">Select Condition</option>
+                <option>Cancer</option>
+                <option>Clotting Disorder</option>
+                <option>Diabetes</option>
+                <option>Dementia/Alzheimers</option>
+                <option>Heart Disease</option>
+                <option>Gastro Intestinal Disorders</option>
+                <option>High Cholesterol</option>
+                <option>Hypertension</option>
+                <option>Kidney Disease</option>
+                <option>Lung Disease</option>
+                <option>Osteoporosis</option>
+                <option>Psychological Disorders</option>
+                <option>Stroke/Brain attack</option>
+                <option>Sudden Death Infant Syndrome (SIDS)</option>
+                <option>Unknown Disease</option>
+              </select>
+              </div>
+              <div class="col-sm-2 mh_fmh_add_remove">
+              <span class="theme-color add-family-medication glyphicon glyphicon-plus"></span>
+              </div>
+            </div>  
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button class="btn btn-warning" type="button" id="add_fmh" operation="">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_padf_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="add_padf_modal_title"></h4>
+            <div class="alert-msg-box"></div>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="" id="add_padf_item_parent">
+                <div class="col-sm-12 add-allergies">
+                  <div style="float: left">
+                    <select id="add_padf_item_allergies" type="text" class="add_padf_item_allergies form-control my-select placeholder-no-fix">
+                      </select>
+                  </div>
+                  <div style="float: left">
+                    <select id="add_padf_item_severity" type="text" class="form-control my-select placeholder-no-fix add_padf_item_severity">
+                    </select>
+                  </div>
+                  <div style="float: left">
+                    <select id="add_padf_item_reaction" type="text" class="form-control my-select placeholder-no-fix add_padf_item_reaction"></select>
+                  </div>
+                  <span style="margin-left:11px;margin-top:15px" class="glyphicon glyphicon-plus theme-color" id="add_new_allergiess"></span>
+                </div>
+              </div>
+            </div>       
+          </div>
+          <div class="modal-footer">
+          <center><button class="btn btn-warning" type="button" id="add_padf" operation="">Add</button></center>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

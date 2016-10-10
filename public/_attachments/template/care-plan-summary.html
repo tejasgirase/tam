@@ -1,0 +1,196 @@
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-pane row" id="summary_care_plan_tab">
+  <h2 class="mytitle">Care Plan Summary</h2>
+  <div class="panel panel-default care-plan-hide" id="summary_care_plan_panel">
+    <div id="patient_care_plans_summary" class="tab-pane" style="border:none;">
+        <div class="careplanlist col-md-12 careplanlist_new">
+          <div role="navigation" class="sidebar-offcanvas row">
+            <h3 style="line-height: 18px; font-size: 16px;" class="list-group-item active text-align">Currently Prescribed Care Plans</h3>
+            <table class="table tbl-border" id="prescribed_patient_care_plans">
+              <thead>
+                <tr>
+                  <th style="border-top-left-radius: 4px;">Care Plan Name</th>
+                  <th>Start Date</th>
+                  <th style="border-top-right-radius: 4px;">End Date</th>
+                  <th style="border-top-right-radius: 4px;">Sync Status</th>
+                  <th style="border-top-right-radius: 4px;">Adhereance</th>
+                  <th style="width:10%;">Engagement Status</th>
+                  <th style="width:20%;"></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="currently_prescribed_care_plan"></div>
+            <h3 class="list-group-item active text-align mrgtop col-lg-12" style="font-size:16px;">Care Plans From Past</h3>
+            <table class="table tbl-border" id="prescribed_patient_care_plans_past" style="margin-top: 17px;">
+              <thead>
+                <tr>
+                  <th style="border-top-left-radius: 4px;">Care Plan Name</th>
+                  <th>Start Date</th>
+                  <th style="border-top-right-radius: 4px;">End Date</th>
+                  <th style="border-top-right-radius: 4px;">Sync Status</th>
+                  <th style="border-top-right-radius: 4px;">Adhereance</th>
+                  <th style="width:10%;">Engagement Status</th>
+                  <th style="width:20%;"></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="past_prescribed_care_plan"></div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  <div id="careplan_visulization" class="tab-pane panel panel-default care-plan-hide" style="border:none;display:none;">
+    <div class="panel-heading"><span id="lbl_care_plan">Visulize</span> Care Plan :: <span style="color:#eb8613" id="selected_care_plan_name_visulize"></span>
+      <i class="uservoice" id="back_to_summary_care_plan_new">
+        <span class="glyphicon glyphicon-arrow-left">Back</span>
+      </i>
+    </div>
+    <div style="background:#fff;" class="col-md-12 col-sm-12 col-xs-12">
+      <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border:1px solid #ccc;width:auto;">
+        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+        <span></span>
+        <b class="caret"></b>
+      </div>
+      <span class="glyphicon glyphicon-stats" id="show_graph_all" style="float: right; margin-top:9px;margin-right:20px;"></span>
+      <div class="row">
+        <div class="col-md-12 paddleft">
+          <div class="row choiceCont">
+            <div class="col-md-4 ChoiceText ChoiceTextActive" id="visualize_viewall_tab">Viewall</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div class="col-md-4 ChoiceText" id="visualize_completed_tab">Complete</div>
+            <div class="col-md-4 ChoiceLineSep"></div>
+            <div class="col-md-4 ChoiceText" id="visualize_incompleted_tab">Incomplete</div>
+          </div>
+        </div>
+      </div>
+      <!-- <ul role="tablist" class="nav nav-tabs sub-teb-set">
+        <li class="active"><a id="visualize_viewall_tab" class="pointer">Viewall</a></li>
+        <li><a id="visualize_completed_tab" class="pointer">Complete</a></li>
+        <!-- <li><a id="visualize_skipped_tab" class="pointer">Skipped</a></li>
+        <li><a class="careplans_summery_table pointer" id="visualize_incompleted_tab">Incomplete</a></li>
+      </ul> -->
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <div id="viewall_task_tab" class="row visualization-hide">
+            <div id="view_all_task" class="col-lg-12">
+            </div>
+          </div>
+          <div id="completed_task_tab" class="tab-pane visualization-hide">
+            <span>No Records Found For Completed Activity.</span>
+          </div>
+          <!-- <div id="skipped_task_tab" class="tab-pane visualization-hide">
+            <span>No Records Found For Skipped Activity.</span>
+          </div> -->
+          <div id="incompleted_task_tab" class="tab-pane visualization-hide">
+            <span>No Records Found For InCompleted Activity.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="panel panel-default care-plan-hide" id="saved_patient_care_plan_tab" style="display:none">
+    <div class="panel-heading" style="padding-top:5px; padding-bottom:13px;">Update Care Plan :: <span style="color:#eb8613" id="selected_patient_care_plan_name"></span>
+      <i style="margin-left:13px;padding-top:7px;" id="back_to_summary_care_plan_new" class="uservoice">
+        <span class="glyphicon glyphicon-arrow-left">Back</span>
+      </i>
+      <i class="uservoice">
+        <div class="switch switchcheck" id="cp_update_toggle">
+          <span>Active</span>
+          <input type="checkbox" class="cmn-toggle cmn-toggle-round" rev="" value="" id="patient_careplan_summary_checkbox">
+          <label for="patient_careplan_summary_checkbox"></label>
+        </div>                    
+      </i>
+    </div>
+    <div>
+      <div class="col-lg-12" style="">
+        <div class="col-lg-6">
+          <div class="form-group full-input">
+            <label for="patient_cp_startdate">
+              <h4>Choose Date Range :</h4></label>
+            <input type="New Lab" id="patient_cp_startdate">
+          </div>
+        </div>
+      </div>
+      <br>
+      <table class="table tbl-border" id="patient_activity_list">
+        <thead>
+          <tr>
+            <th>No Activity Found</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <h2>Reports Freq </h2>
+      <table class="table table-bordered" id="patient_care_plan_frequency_table" style="display:none;">
+        <tbody>
+          <tr>
+            <td align="center"><span> Weekly</span></td>
+            <td align="center">
+              <div class="roundedTwo">
+                <input type="checkbox" id="patient_cp_weekly_reports" value="Patient Weekly Careplan Reports" class="patient_cp_report_freq">
+                <label for="patient_cp_weekly_reports"></label>
+              </div>
+            </td>
+            <td align="center"><span> Every 3 Day </span></td>
+            <td align="center">
+              <div class="roundedTwo">
+                <input type="checkbox" id="patient_cp_three_day_reports" value="Patient Every Three Day Careplan Reports" class="patient_cp_report_freq">
+                <label for="patient_cp_three_day_reports"></label>
+              </div>
+            </td>
+            <td align="center">
+              <span>Every Day</span>
+            </td>
+            <td align="left">
+              <div class="roundedTwo">
+                <input type="checkbox" id="patient_cp_daily" value="Patient Daily Careplan Reports" class="patient_cp_report_freq">
+                <label for="patient_cp_daily"></label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="care_plan_update_button_parent"></div>
+    </div>
+  </div>
+<div class="modal fade" id="disable_patient_careplan_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">This Careplan is past due date please extend end date if you want to active it.</h4>
+        </div>
+        <div class="modal-body" id="cp_start_end_date">
+
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="yes_patient_care_plan_checkbox" index="" rev="">Ok</button>
+          <button class="btn btn-danger" id = "no_patient_care_plan_checkbox" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>   
+</div>
+<div class="modal fade" id="care_plan_visualization_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog bigmodal">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title charting_medicalinfo_title">Visulazation Care Plan Information</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div id="careplan_visualization_information" class="charting-medical-information">
+              <div id='careplan_visualization_statistics' style='min-width: 850px; height: 400px; margin: 0 auto'>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

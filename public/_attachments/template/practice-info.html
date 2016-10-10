@@ -1,0 +1,3322 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane row mrgtop1" id="personal_details_tab">
+  <h2 class="mytitle">Your Practice</h2>
+  <div class="tab_box">
+    <div class="panel panel-default">
+      <div class="panel-heading">Practice Info</div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row ChoiceWrapper">
+          <div id="personal_details_in_link" class="col-md-4 menu-width ChoiceText ChoiceTextActive">Account Details</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div id="users_link" class="col-md-4 ChoiceText menu-width" ng-if="level !='Front Desk'">Users</div>
+          <div class="col-md-4 ChoiceLineSep" ng-if="level !='Front Desk'"></div> 
+          <div id="documents_link" class="col-md-4 ChoiceText menu-width">Upload Patients reports and documents</div>
+          <div class="col-md-4 ChoiceLineSep"></div> 
+          <div id="misc_document_link" class="col-md-4 ChoiceText menu-width">Hospital Forms</div>
+          <div class="col-md-4 ChoiceLineSep"></div> 
+          <div id="practice_info_settings_link" class="col-md-4 ChoiceText menu-width" ng-if="level == 'Doctor'">Settings</div>
+          <div class="col-md-4 ChoiceLineSep" ng-if="level=='Doctor'"></div>          
+          <div id="audit_link" class="col-md-4 ChoiceText menu-width" ng-if="level=='Doctor'">Audit</div>
+          <div class="col-md-4 ChoiceLineSep" ng-if="level=='Doctor'"></div>          
+          <div class="col-md-4 ChoiceText menu-width" id="import_patients_link">Add patients to your Practice</div>
+          <div class="col-md-4 ChoiceLineSep"></div>
+          <div class="col-md-4 ChoiceText menu-width" id="search_patient_link">Update Patient Info</div>
+        </div>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="personal_details_in" style="border:none;">
+          <div class="panel panel-default">
+            <div class="row">
+              <form>
+                <div class="col-md-12">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="tab-heading-section">User Details</div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">First Name</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control parsley-validated ui-autocomplete-input" id="first_name">
+                        <input type="hidden" id="pd_id">
+                        <input type="hidden" id="pd_rev">
+                        <input type="hidden" id="pd_level">
+                        <input type="hidden" id="pd_admin">
+                        <input type="hidden" id="pd_dhp_code">
+                        <input type="hidden" id="pdderived_key">
+                        <input type="hidden" id="pdpassword_scheme">
+                        <input type="hidden" id="pdsalt">
+                        <input type="hidden" id="pditerations">
+                        <input type="hidden" id="random_code">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Last Name</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="last_name">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Email</label>
+                      <div class="login_input">
+                        <input type="text" disabled="true" class="form-control placeholder-no-fix" id="pdemail">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Email address for alerts</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdemailalert">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Phone (Landline or mobile number)</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdphone">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Qualification</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdqualification">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Specialization</label>
+                      <div class="login_input">
+                        <select id = "pdspecialization" class="form-control" style="width:571;"></select>
+                        <input type="text" id="pdspecializationatext" class="form-control placeholder-no-fix sltpdt" style="display:none">
+                        <small style="font-size:10px;margin-left:380px;position:absolute;"><span style="margin-left:40px;" class="theme-color pointer" id="click_toggle_last">click here</span><span id="clk_toggle_lbl_last">Specialization</span></small>
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6 paddbtm5">
+                      <label class="control-label visible-ie8 visible-ie9">Experience</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix disinline cuswidth65" id="pdexperience">&nbsp;<small class="theme-color">In Years</small>
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Communication preference for critical alerts</label>
+                      <div class="login_input">
+                        <select type="text" id="critical_alerts_medium" placeholder="Medium for critical alerts" autocomplete="off" class="form-control placeholder-no-fix sltpdt" name="critical_alerts_medium">
+                          <option>Email</option>
+                          <option>Phone</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Communication preference for receiving reports</label>
+                      <div class="login_input">
+                        <select type="text" id="reports_medium" class="form-control placeholder-no-fix sltpdt">
+                          <option>Email</option>
+                          <option>Phone</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Phone for SMS alerts (Mobile number only)</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdphonealert">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="tab-heading-section">Hospital Details</div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">DHP Code</label>
+                      <div class="login_input">
+                        <input type="text" id="dhp_code" class="form-control placeholder-no-fix">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Hospital Type</label>
+                      <div class="login_input">
+                        <select type="text" class="form-control placeholder-no-fix" id="pdhospitaltype">
+                          <option>Hospital</option>
+                          <option>Clinic</option>
+                          <option>Center</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Hospital Name</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdhospital">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">City</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdcity">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">State</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdstate">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Country</label>
+                      <div class="login_input">
+                        <input type="text" class="form-control placeholder-no-fix" id="pdcountry">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Phone</label>
+                      <div class="login_input">
+                        <input type="text" readonly="readonly" class="form-control placeholder-no-fix" id="pdhospital_phone">
+                      </div>
+                    </div>
+                    <div class="form-group_login col-lg-6 col-sm-6">
+                      <label class="control-label visible-ie8 visible-ie9">Email</label>
+                      <div class="login_input">
+                        <input type="text" readonly="readonly" class="form-control placeholder-no-fix" id="pdhospital_email">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12">
+                  <div class="checkbox paddleft30">
+                    <label>
+                      <input class="checkshow" type="checkbox" id="pdnetwork"> Join SHS doctors network
+                    </label>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 text-center account-details-save">
+                  <button type="button" class="btn btn-warning btnwidth pdsave" id="pdsave">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="sub_users_list" style="border:none;">
+          <div class="col-lg-12">
+            <button type="button" id="add_sub_user" class="btn btn-warning mrg23" data-toggle="modal" data-target="#add_sub_user_modal">Add User</button>
+            <div class="panel panel-default">
+              <div class="panel-heading">Users List</div>
+              <div class="table-responsive">
+                <table class="table tbl-border widthset" id="sub_users_table">
+                  <thead>
+                    <tr>
+                      <th width="10%">First Name</th>
+                      <th width="10%">Last Name</th>
+                      <th width="18%">Email</th>
+                      <th width="13%">Level</th>
+                      <th width="11%">Active</th>
+                      <th width="11%">Admin</th>
+                      <th width="10%">Phone No</th>
+                      <th width="16%">Date Added</th>
+                      <th width="15%">Date Modified</th>
+                      <th width="12%">Clear Filter</th>
+                    </tr>
+                    <tr>
+                      <th width="10%"></th>
+                      <th width="10%"></th>
+                      <th width="18%"></th>
+                      <th width="13%">
+                        <select class="form-control pad-left-five icon-menu" id="filter_by_level">
+                          <option>Select</option>
+                          <option>Doctor</option>
+                          <option>Nurse</option>
+                          <option>Front Desk</option>
+                        </select>
+                      </th>
+                      <th width="11%">
+                        <select class="form-control pad-left-five" id="filter_by_active">
+                          <option>Select</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </th>
+                      <th width="11%">
+                        <select class="form-control pad-left-five" id="filter_by_admin">
+                          <option>Select</option>
+                          <option>Yes</option>
+                          <option>No</option>
+                        </select>
+                      </th>
+                      <th width="10%">
+                      </th>
+                      <th width="15%">
+                        <input class="form-control datetime-with-maxdate pad-left-five" id="filter_by_insert_ts" placeholder="select date" style="width: 77% !important;" type="text">
+                      </th>
+                      <th width="15%">
+                        <input class="form-control datetime-with-maxdate pad-left-five" id="filter_by_update_ts" placeholder="select date" style="width: 82% !important;" type="text">
+                      </th>
+                      <th width="10%"><button class="btn btn-warning" id="clear_user_filtere" type="button">Clear Filter</button></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="subuser_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="documents" style="border:none;">
+          <div class="col-lg-12">
+            <button type="button" id="add_document" class="btn btn-warning mrg23">Add Document</button>
+            <div class="panel panel-default">
+              <div class="panel-heading">Documents List</div>
+              <div class="table-responsive">
+                <table class="table" id="document_table">
+                  <thead>
+                    <tr>
+                      <th width="20%">Document Name</th>
+                      <th width="20%">Type</th>
+                      <th width="20%">Patient Name</th>
+                      <th width="20%">Doctor name</th>
+                      <th width="10%">Date Uploaded</th>
+                      <th width="10%">Status</th>
+                      <th width="10%">Download</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="documents_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" style="border:none;" id="misc_document">
+          <div class="col-lg-12">
+            <button type="button" id="add_misc_document" class="btn btn-warning mrg23">Add Document</button>
+            <div class="panel panel-default">
+              <div class="panel-heading">Documents List</div>
+              <div class="table-responsive">
+                <table class="table" id="misc_document_table">
+                  <thead>
+                    <tr>
+                      <th width="60%">Document Name</th>
+                      <th width="20%">Category</th>
+                      <th width="20%">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="misc_documents_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" style="border:none;" id="settings_tab">
+          <div class="tab-pane active" id="setting_results_inner" style="border:none;">
+            <div class="labmain">
+              <div class="col-md-12">
+                <div class="row setting-list-cards">
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="setting-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/change-password-icon.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Change Password</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/invoice-512.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Invoice Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/Communications.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Communication Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/Vaccinations1.jpg">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Vaccination Rule</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/alert-triangle-yellow-128.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Charting Template Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/mail-settings-128.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>E-Prescribe Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/bill-xxl.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Billing Preferance Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/icon-managing-medication.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Health Maintenance Alert</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/invoice-512.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Task Manager Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/tag-xxl.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Tags for Patient categorization</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/integration_big.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Integrations Tab</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/images.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Misc Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/images.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Print Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/images.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Locations</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/images.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Telemedicine Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 center setting_section_row">
+                    <div class="category-list-card pointer overview">
+                      <div class="category-card-img">
+                        <img src="images/images.png">
+                      </div>
+                      <div class="setting-card-name text-center">
+                        <h4>Medication Settings</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" id="setting_results_inner_category" style="border:none;margin-top:-15px;">
+            <div class="">
+              <div class="col-lg-13" style="">
+                <div class="">
+                  <div class="col-md-12 OtherExamsTitle">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    <span id="settingmain_title"></span>
+                    <span id="setting_back_button" class="glyphicon glyphicon-arrow-left" style="float:right; line-height: 40px">Back</span>
+                  </div>
+                </div>
+              </div>
+              <div class="table tbl-border setting_hide" id="setting_change_password" style="display: none;">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="form-group_login col-lg-6 col-sm-6">
+                        <label class="control-label visible-ie8 visible-ie9">Old Password</label>
+                        <div class="login_input">
+                          <input type="password" id="old_password_change" class="form-control parsley-validated ui-autocomplete-input">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="form-group_login col-lg-6 col-sm-6">
+                        <label class="control-label visible-ie8 visible-ie9">New Password</label>
+                        <div class="login_input">
+                          <input type="password" id="new_password_change" class="form-control placeholder-no-fix">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="form-group_login col-lg-6 col-sm-6">
+                        <label class="control-label visible-ie8 visible-ie9">Confirm Password</label>
+                        <div class="login_input">
+                          <input type="password" id="confirm_password_change" class="form-control placeholder-no-fix">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12">
+                      <br>
+                      <div class="col-lg-12 col-sm-12 mrg8 text-center account-details-save">
+                        <button type="button" class="btn btn-warning btnwidth" id="change_password">Change</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="table tbl-border setting_hide" id="setting_invoice" style="display: none;">
+                <div class="tab-heading-section">Add Diagnosis &amp; Procedure</div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3"><span>Add New</span></div>
+                    <div class="col-lg-9">
+                      <select class="form-control" id="choose_diagnosis_procedure">
+                        <option>Please Select</option>
+                        <option>Diagnosis</option>
+                        <option>Procedure</option>
+                        <option>Service</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div id="diagnosis_procedure_parent" style="display:none;">
+                  <div class="textareatmain row">
+                    <div class="col-lg-12">
+                      <div id="diagnosis_procedure_name" class="col-lg-3">Diagnosis Name</div>
+                      <div class="col-lg-3">
+                        <input type="text" id="diagnosis_procedure_name_val" class="form-control">
+                      </div>
+                      <div id="diagnosis_procedure_billing_code" class="col-lg-3">Hospital Billing Code</div>
+                      <div class="col-lg-3">
+                        <input type="text" id="diagnosis_procedure_billcode_val" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="textareatmain row">
+                    <div class="col-lg-12">
+                      <div class="col-lg-3" id="diagnosis_procedure_code">Hospital Diagnosis code</div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="diagnosis_procedure_code_val">
+                      </div>
+                      <div class="col-lg-3" id="diagnosis_procedure_icd">ICD-10 Code</div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="diagnosis_procedure_icd_val">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="textareatmain row">
+                    <div class="col-lg-12">
+                      <div class="col-lg-3" id="diagnosis_procedure_charges">Charges</div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="diagnosis_procedure_charges_val">
+                      </div>
+                      <div id="service_location" class="col-lg-3" style="display:none;">Location</div>
+                      <div class="col-lg-3" id="service_location_val_parent" style="display:none;">
+                        <input type="text" id="service_location_val" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="textareatmain row">
+                    <div class="col-lg-12">
+                      <div class="col-lg-3" id="diagnosis_procedure_description">Description:</div>
+                      <div class="col-lg-9">
+                        <textarea class="form-control" id="diagnosis_procedure_description_val"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="service_duration_parent" class="textareatmain row" style="display:none;">
+                    <div class="col-lg-12">
+                      <div class="col-lg-3">Session Duration</div>
+                      <div class="col-lg-3">
+                        <input type="text" class="form-control" id="service_duration_val">
+                      </div>
+                      <div class="col-lg-3">Choose Form(s) for this service</div>
+                      <div class="col-lg-3">
+                        <select class="form-control" id="service_form" multiple="multiple">
+                        </select>
+                      </div>
+                      <div class="col-lg-6" style="float:right;">
+                        <table class="table tbl-border" id="view_invoice_services">
+                          <thead>
+                            <tr>
+                              <th>Document Name</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="textareatmain row">
+                    <div class="col-lg-12 text-align">
+                      <span class="btn btn-warning pointer" id="add_more_diagnosis_procedure">Add</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="tab-heading-section text-center" style="">List of Procedure/Diagnosis</div>
+                  <table class="table tbl-border" id="list_of_procedure_diagnosis">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Hospital Diagnosis/Procedure Code</th>
+                        <th>Hospital Billing Code</th>
+                        <th>ICD-10 Code</th>
+                        <th>Description</th>
+                        <th>Charges</th>
+                        <th colspan="2"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="tab-heading-section"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align">*Signature Fields are not added to Emails.</div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group text-center">
+                      <!-- <button id="is_preview" type="button" class="btn btn-warning"><span id="is_save_label">Preview</span></button> -->
+                      <button id="is_save" class="btn btn-warning"><span id="is_save_label">Save</span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_communication" style="display: none;">
+                <table class="table tbl-border mrgtop1">
+                  <thead>
+                    <th colspan="2">Calendar setting</th>
+                  </thead>
+                  <tbody>
+                    <!-- <tr>
+                      <td>Default Office on calender</td>
+                      <td>
+                        <select id="default_calendar_office" class="form-control">
+                          <option>Northwest Office</option>
+                          <option>southwest Office</option>
+                          <option>Central Office</option>
+                          <option>Northeast Office</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Default duration of a new patient exam</td>
+                      <td>
+                        <div class="col-lg-6" style="padding-left:0px;">
+                          <input id="default_duration_exam" type="text" class="form-control">
+                        </div>
+                        <div class="col-lg-6" style="padding-top: 10px;">in minutes</div>
+                      </td>
+                    </tr> -->
+                    <tr>
+                      <td>Exam Calendar Increments</td>
+                      <td>
+                        <div class="col-lg-4">
+                          <select class="form-control" id="default_calendar_increment">
+                            <option>30</option>
+                            <option>25</option>
+                            <option>20</option>
+                            <option>15</option>
+                          </select>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Allow Appointments to Overlap</td>
+                      <td>
+                        <div class="col-lg-1">
+                          <input type="checkbox" id="appointment_overlap" class="form-control checkshow">
+                        </div>
+                        <div class="col-lg-11">
+                          check to overlap
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table tbl-border mrgtop1">
+                  <thead>
+                    <th colspan="2">Email setting</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Daily Agenda Emails:</td>
+                      <td>
+                        <div class="col-lg-1">
+                          <input type="checkbox" class="form-control checkshow" id="daily_agenda_mail">
+                        </div>
+                        <div class="col-lg-11" style="padding-left: 0px;">
+                          send a HIPPA compliant daily agenda email
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Daily Billing Problems Emails:</td>
+                      <td>
+                        <div class="col-lg-1">
+                          <input type="checkbox" class="form-control checkshow" id="daily_billing_problem_mail">
+                        </div>
+                        <div class="col-lg-11" style="padding-left: 0px;">
+                          send a daily billing problems email
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Online Scheduling Emails:</td>
+                      <td>
+                        <div class="col-lg-1">
+                          <input type="checkbox" class="form-control checkshow" id="online_scheduling_email">
+                        </div>
+                        <div class="col-lg-11" style="padding-left: 0px;">
+                          send an email each time an appointment is schedule online
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Including notes in Emails:</td>
+                      <td>
+                        <div class="col-lg-1">
+                          <input type="checkbox" class="form-control checkshow" id="include_notes_in_email">
+                        </div>
+                        <div class="col-lg-11" style="padding-left: 0px;">
+                          Reason and notes will be included in daily mail
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table tbl-border mrgtop1">
+                  <thead>
+                    <th>SMS Settings</th>
+                    <th>New Appointment</th>
+                    <th>Appointment Rescheduling</th>
+                    <th>Appointment Cancellation</th>
+                    <th>To Lab when new order is initiated</th>
+                    <th>When lab order results are availabel and uploaded</th>
+                  </thead>
+                  <tbody>
+                    <tr id="sms_to_doctor">
+                      <td width="25%">SMS to Doctor when::&nbsp;</td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow new_appointment">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow appointment_rescheduling">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow appointment_cancellation">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow lab_new_order">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow lab_upload_doctor">
+                      </td>
+                    <tr id="sms_to_hospital_admin">
+                      <td width="25%">SMS to Hospital Admin when::&nbsp;</td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow new_appointment">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow appointment_rescheduling">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow appointment_cancellation">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow lab_new_order">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow lab_upload_doctor">
+                      </td>
+                    </tr>
+                    <tr id="remainder_to_doctor_hours">
+                      <td width="25%">SMS reminder to Doctor 24 hours::&nbsp;</td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow new_appointment">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow appointment_rescheduling">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow appointment_cancellation">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow lab_new_order">
+                      </td>
+                      <td width="15%">
+                        <input type="checkbox" class="checkshow lab_upload_doctor">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table tbl-border mrgtop1">
+                  <thead>
+                    <tr>
+                      <th>Notifications Settings</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="row">
+                          <div class="col-lg-3 paddtopbottom6" style="padding-top: 6px; padding-bottom: 6px;">Show Due Task Notification On Every :: </div>
+                          <div class="col-lg-2">
+                            <select id="due_task_notification_popup" class="form-control">
+                              <option value="Never">Never</option>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                              <option>6</option>
+                              <option>7</option>
+                              <option>8</option>
+                              <option>9</option>
+                              <option>10</option>
+                              <option>11</option>
+                              <option>12</option>
+                              <option>13</option>
+                              <option>14</option>
+                              <option>15</option>
+                              <option>16</option>
+                              <option>17</option>
+                              <option>18</option>
+                              <option>19</option>
+                              <option>20</option>
+                              <option>21</option>
+                              <option>22</option>
+                              <option>23</option>
+                              <option>24</option>
+                            </select>
+                          </div>
+                          <div class="col-lg-2 paddtopbottom6" style="padding-top: 6px; padding-bottom: 6px;">Hours</div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table tbl-border mrgtop1">
+                  <thead>
+                    <th colspan="2">SMS To Patients</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Send An Appointment Reminder Email to your client</td>
+                      <td>
+                        <select id="appointment_remainder_to_client_email" class="form-control">
+                          <option>Never</option>
+                          <option>Same Day of appointment</option>
+                          <option>1 day before appointment</option>
+                          <option>2 days before appointment</option>
+                          <option>3 days before appointment</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>SMS Frequency for appointment reminders</td>
+                      <td>
+                        <select id="sms_freq_appointment_remainder_sms" class="form-control">
+                          <option>Never</option>
+                          <option>30 mts before appointment</option>
+                          <option>1 hour before appointment</option>
+                          <option>2 hours before appointment</option>
+                          <option>1 day before appointment</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>For appointment rescheduling, send sms</td>
+                      <td>
+                        <select id="appointment_rescheduling_sms" class="form-control">
+                          <option>Never</option>
+                          <option>Immediately</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>For appointment cancellation, send sms</td>
+                      <td>
+                        <select id="appointment_cancellation_sms" class="form-control">
+                          <option>Never</option>
+                          <option>Immediately</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>For new lab order results available, send sms</td>
+                      <td>
+                        <select id="new_lab_result_order_sms" class="form-control">
+                          <option>Never</option>
+                          <option>Immediately</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table tbl-border mrgtop1">
+                  <thead>
+                    <th>Message for missed appointment request </th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><textarea id="missed_appointment_request_message" rows="4" cols="166"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="textareatmain">
+                  <div class="form-group text-center">
+                    <button id="save_communication_setting" type="submit" class="btn btn-warning">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_vaccination_rule" style="display: none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <div class="row">Vaccination Name::</div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="row">
+                        <select class="form-control" id="immunization_name"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mrg-top5" id="immunization_no_of_dose">
+                    <div class="col-lg-3">
+                      <div class="row">Number of Dose::</div>
+                    </div>
+                    <div class="col-lg-1">
+                      <div class="row">
+                        <input type="text" value="0" id="dose_number" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-lg-1">
+                      <span style="color:green;" class="glyphicon glyphicon-plus" id="increment_dose"></span>
+                      <br>
+                      <span style="color: green; margin-top: 4px; margin-left: -1px;" id="decrement_dose" class="glyphicon glyphicon-minus"></span>
+                    </div>
+                    <div class="col-lg-7"><button class="btn btn-warning" style="float: right; margin-left: 5px;" id="set_default_rules">Set to Default</button></div>
+                  </div>
+                </div>
+                <div class="textareatmain row" id="immunization_dose_details_label">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <h4 class="theme-color mrgtop mrgbottom">Dose Details ::</h4>
+                    </div>
+                  </div>
+                </div>
+                <table class="table mrgtop1" id="immunization_details_table">
+                  <thead>
+                    <th width="5%">Dose</th>
+                    <th width="15%">Name</th>
+                    <th width="25%" style="padding-left: 22px;">Min Age</th>
+                    <th width="25%" style="padding-left: 22px;">Max Age</th>
+                    <th width="25%">Dose Interval</th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <div class="textareatmain">
+                  <div class="form-group text-center">
+                    <button id="save_immunization_setting" type="submit" class="btn btn-warning">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_charting_template" style="display: none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-lg-12">
+                    <div class="col-lg-4">
+                      <div class="row">If Template Not finalize within 24 hrs::</div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="row">
+                        <select class="form-control" id="charting_template_24">
+                          <option>Do Nothing</option>
+                          <option>Assign as a Task to Doctor.</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mrg-top5">
+                    <div class="col-lg-4">
+                      <div class="row">If Template Not finalize within 48 hrs::</div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="row">
+                        <select class="form-control" id="charting_template_48">
+                          <option>AutoSave</option>
+                          <option>Discard</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top: 5px;margin-bottom: 5px;" class="textareatmain row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <h4 style="padding: 8px 0px;" class="theme-color mrgtop mrgbottom">Charting Template Images ::</h4>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+
+                <div class="textareatmain row">
+                  <table class="table tbl-border" id="charting_template_images_configuration">
+                    <thead>
+                      <tr>
+                        <th>Specialization</th>
+                        <th>Image Name</th>
+                        <!-- <th>Image Width</th>
+                        <th>Image Height</th> -->
+                        <th>Preview</th>
+                        <th><span id="add_new_charting_templates_images" class="pointer">Add&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></span></th>
+                      </tr>
+                      <tbody></tbody>
+                    </thead>
+                  </table>
+                </div>
+                
+                <div class="textareatmain">
+                  <div class="form-group text-center">
+                    <button id="save_charting_template_setting" type="submit" class="btn btn-warning">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_e_prescribe" style="display: none;">
+                <div class="tab_box">
+                  <div class="panel panel-default e-prescribe_panel">
+                    <br />
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="col-sm-1">
+                          <div class="checkbox">
+                            <input class="checkshow" type="checkbox" id="update_existing_medications">
+                          </div>
+                        </div>
+                        <div class="col-sm-11">
+                          <label>E-prescribe or Update existing medications</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="col-sm-1">
+                          <div class="checkbox">
+                            <input class="checkshow" type="checkbox" id="send_an_rx_directly">
+                          </div>
+                        </div>
+                        <div class="col-sm-11">
+                          <label>Send an Rx directly to a patient's preferred pharmacy</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <div class="col-sm-1">
+                          <div class="checkbox">
+                            <input class="checkshow" type="checkbox" id="push_medications">
+                          </div>
+                        </div>
+                        <div class="col-sm-11">
+                          <label>Push medications to mobile app in patient smartphone</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 mrg8 text-center">
+                        <button class="btn btn-warning" type="button" id="save_e_prescribe">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_billing_preferance" style="display: none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-md-12">
+                    <div class="col-md-12">
+                      <input type="checkbox" id="enable_billing" class="checkshow">
+                      <label>Create and Edit invoices</label>
+                    </div>
+                    <div class="col-lg-12 mrg8 text-center">
+                      <button class="btn btn-warning" type="button" id="save_e_billing">Save</button>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+              <div class="setting_hide" id="setting_health_alert" style="display: none;">
+                <div class="textareatmain row" style="margin:0px;margin-top: 0px;margin-bottom: 0px;">
+                  <div class="col-lg-12">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <h4 class="theme-color mrgtop mrgbottom" style="padding: 8px 0px;">Alert Configuration ::</h4>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <h4 class="theme-color mrgtop mrgbottom"><button class="btn btn-warning" id="set_to_default_health_alerts" style="float:right">Set to Default</button></h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+                <table class="table mrgtop1" id="health_alerts_table">
+                  <thead>
+                    <th width="30%">Alert Name</th>
+                    <th width="10%">Gender</th>
+                    <th width="15%">Type</th>
+                    <th width="10%">Status</th>
+                    <th width="10%">Min Age</th>
+                    <th width="10%">Max Age</th>
+                    <th width="10%">Test Interval</th>
+                    <th width="5%"><a id="add_health_alerts">Add&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></a></th>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <div class="setting_hide" id="setting_task_manager" style="display: none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-lg-12">
+                    <div class="col-lg-4">
+                      <div class="row">AutoRemove Request if it is older than </div>
+                    </div>
+                    <div class="col-lg-2 paddright">
+                      <div class="row">
+                        <input type="text" class="form-control autoremove-task" id="task_manager_autoremove_request">&nbsp; Days.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain">
+                  <div class="form-group text-center">
+                    <button id="save_task_manager_setting" type="submit" class="btn btn-warning">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_patient_category_tags" style="display:none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-lg-12">
+                    <div class="">
+                      <div class="col-lg-3 paddside">Tags For Patient Category</div>
+                      <div class="col-lg-7 paddside">
+                        <input type="text" id="taginput_val" placeholder="Enter Tags Here and Hit Enter" class="form-control">
+                      </div>
+                      <div class="col-lg-2">
+                        <button class="btn btn-warning" id="add_tags_in_input">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12 mrgtop1 paddside">
+                    <div class="tab-heading blab patient-tags-list">Currently Availabel Tags</div>
+                    <div class="col-lg-12 paddside">
+                      <select multiple data-role="tagsinput" id="patient_tags_list">
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain">
+                  <div class="form-group text-center">
+                    <button id="save_patient_category_tags" type="submit" class="btn btn-warning">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="setting_integrations_tab" style="display:none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form role="form" class="form-inline lable-text-small ng-pristine ng-valid">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group full-input">
+                              <label for="select-multi-input">Type* :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <select class="form-control" id="lab_imaging_type">
+                                <option>Lab</option>
+                                <option>Imaging</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group full-input">
+                              <label for="select-multi-input">Lab/Imaging Name* :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_lab_name">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">State*</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <select class="form-control" id="la_state">
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">City* :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <select class="form-control" id="la_city"></select>
+                              <!-- <input type="text" class="form-control" id="la_city"> -->
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Address if known :</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_address">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label style="font-size:12px" for="select-multi-input">Your account number or reference id with the lab</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_reference">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Contact Person name*</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_contact_person_name">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Contact Person email*</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_contact_person_email">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Contact Person Phone*</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_contact_person_phone">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Services</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_services">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <div class="form-group">
+                              <label for="select-multi-input">Website</label>
+                            </div>
+                          </div>
+                          <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <div class="form-group full-input">
+                              <input type="text" class="form-control" id="la_website">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="row">
+                            <div style="margin-bottom:0px;font-size:16px;padding:6px;border-radius: 14px 14px 0px 0px;" class="tab-heading blab">Browse Lab</div>  
+                          </div>
+                          <div class="right-section-search row">
+                            <div class="form-group">
+                              <label style="font-weight: bold; font-size: 14px; color: rgb(51, 51, 51);float:left;margin-top:8px;">Select city : </label>
+                              <select style="float: left;margin-left:20px;width: 297px !important;" class="form-control placeholder-no-fix mrg5" id="addlab_cities" type="text"></select>
+                            </div>
+                            <div class="labsbycity" id="labsbycity">
+                              <div class="search-result-box">
+                                <ul>
+                                  <li>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                      <div class="data-search">No Data Found.</div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                            <div id="cityByLabPagination" style="margin-top: 1px;" class="col-lg-12 pagination-align cityByLabPagination"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="textareatmain">
+                  <div class="form-group text-center">
+                    <button id="la_save" type="submit" class="btn btn-warning">Save</button>
+                  </div>
+                </div>
+              </div>
+              <div class="setting_hide" id="misc_setting_tab" style="display: none;">
+                <div class="textareatmain row" style="margin:0px">
+                  <div class="col-md-12">
+                    <div class="col-md-12">
+                      <input type="checkbox" id="misc_front_disk" class="checkshow">
+                      <label>Front Disk Enable/Disalbe</label>
+                    </div>
+                    <div class="col-lg-12 mrg8 text-center">
+                      <button class="btn btn-warning" type="button" id="save_misc_setting">Save</button>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+              <div class="setting_hide" id="print_setting_tab" style="display: none;">
+                <div class="tab-heading-section">CUSTOMIZE PRINT</div>
+                <div class="textareatmain row" style="background-color: rgb(217, 217, 217); border-radius: 5px;">
+                  <div class="col-md-12">
+                    <div class="col-lg-6 invoice-logo-left">
+                      <div class="row invoice-logo-main-padding">
+                        <div class="col-lg-12 text-align invoice-upload-header">Upload Logo</div>
+                      </div>
+                      <div class="row invoice-padding-logo" style="padding-right: 0px; margin-right: -11px;">
+                        <fieldset class="fd-zone" id="zbasic">
+                          <legend class="legend">Drop a file inside…</legend>
+                          <div class="col-lg-12">Or click here to <em>Browse…</em></div>
+                          <div class="col-lg-12">
+                            <img id="preview_image" src="" class="preview-image">
+                          </div>
+                        </fieldset>
+                        <!-- <div class="col-lg-12 text-align"><input type="file" id="upload_logo" name="_attachments"></div> -->
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="row invoice-padding">
+                        <div class="col-lg-12 text-align invoice-upload-header">Add Your address</div>
+                      </div>
+                      <div class="row invoice-padding-address">
+                        <div class="col-lg-12">Hospital/Clinic Name </div>
+                        <div class="col-lg-12">
+                          <input type="text" class="form-control" id="invoice_hospital_name">
+                        </div>
+                      </div>
+                      <div class="row invoice-padding-address">
+                        <div class="col-lg-12">Hospital Address</div>
+                        <div class="col-lg-12">
+                          <input type="text" class="form-control" id="invoice_address_val">
+                        </div>
+                      </div>
+                      <div class="row invoice-padding-address">
+                        <div class="col-lg-6">Address 2</div>
+                        <div class="col-lg-6">Hospital Phone</div>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" id="invoice_sec_address_val">
+                        </div>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" id="invoice_hospital_phone">
+                        </div>
+                      </div>
+                      <div class="row invoice-padding-address">
+                        <div class="col-lg-4">City</div>
+                        <div class="col-lg-4">state</div>
+                        <div class="col-lg-4">Postal / ZIP Code</div>
+                        <div class="col-lg-4">
+                          <select id="invoice_address_city" class="form-control"></select>
+                        </div>
+                        <div class="col-lg-4">
+                          <select id="invoice_address_states" class="form-control"></select>
+                        </div>
+                        <div class="col-lg-4">
+                          <input type="text" class="form-control" id="invoice_address_zip">
+                        </div>
+                      </div>
+                      <div class="row invoice-padding-address">
+                        <div class="col-lg-6">Email</div>
+                        <div class="col-lg-6">Website</div>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" id="invoice_hospital_email">
+                        </div>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" id="invoice_hospital_website">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <label for="select-multi-input">Display Logo ::</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input type="checkbox" class="checkshow" id="is_display_logo">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <label for="select-multi-input"></label>
+                    </div>
+                    <div class="col-lg-9" style="font-size: 10px;">You must have an uploaded logo to display it.
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <label for="select-multi-input">Display this at chartnote print ::</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input type="checkbox" class="checkshow" id="is_display_chartnote_logo">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <label for="select-multi-input"></label>
+                    </div>
+                    <div class="col-lg-9" style="font-size: 10px;">You must have an uploaded logo to display it.
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <label for="select-multi-input">Authorised signatory ::</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input type="text" class="form-control" placeholder="Type signatory here" id="authorised_signatory">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <label for="select-multi-input"></label>
+                    </div>
+                    <div class="col-lg-9" style="font-size: 10px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">Footer &nbsp;::</div>
+                    <div class="col-lg-9">
+                      <textarea type="text" id="invoice_footer" class="form-control parsley-validated mrg5" style="width: 507px; height: 79px;"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">Standard Memo&nbsp;::</div>
+                    <div class="col-lg-9">
+                      <textarea class="form-control parsley-validated mrg5" id="invoice_standard_memo" type="text"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align">*Signature Fields are not added to Emails.</div>
+                <div class="textareatmain row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group text-center">
+                      <button id="is_preview" type="button" class="btn btn-warning"><span id="is_save_label">Preview</span></button>
+                      <button id="is_save_print" class="btn btn-warning"><span id="is_save_label">Save</span></button>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+              <div class="setting_hide" id="location_setting_tab" style="display: none;">
+                <div class="col-md-12" id="location_list_parent">
+                  <table class="table tbl-border">
+                    <thead>
+                      <tr>
+                        <th class="text-align">Address</th>
+                        <th class="text-align">City</th>
+                        <th class="text-align">State</th>
+                        <th class="text-align">PinCode</th>
+                        <th class="text-align">Email</th>
+                        <th class="text-align">Phone</th>
+                        <th class="text-align"><span class="glyphicon glyphicon-plus" id="add_new_location">Add</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr dir-paginate="x in location_data | itemsPerPage : 5" class="location-list" ng-class="{danger:x.main_office}">
+                        <td class="text-center location-address" data-primary="{{x.primary_address}}" data-secondary="{{x.secondary_address}}">{{x.primary_address}},{{x.secondary_address}}</td>
+                        <td class="text-center location-city">{{x.city}}</td>
+                        <td class="text-center location-state">{{x.state}}</td>
+                        <td class="text-center location-pincode">{{x.pincode}}</td>
+                        <td class="text-center location-email">{{x.email}}</td>
+                        <td class="text-center location-phone">{{x.phone}}</td>
+                        <td class="text-center"><span class="label label-warning pointer edit-location mrgright1">Edit</span><span class="label label-warning pointer remove-location">Remove</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+                    <dir-pagination-controls></dir-pagination-controls>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none;" id="setting_telemedicine" class="setting_hide">
+                <div style="margin:0px" class="textareatmain row">
+                  <div class="col-md-12">
+                    <div class="col-md-12">
+                      <input type="checkbox" class="checkshow" id="vcm_enable">
+                      <label>Enable / Disable Telemedicine setting</label>
+                    </div>
+                    <div class="col-lg-12 mrg8 text-center">
+                      <button id="save_telemedicine_setting" type="button" class="btn btn-warning" >Save</button>
+                    </div>
+                  </div>
+                </div>  
+              </div>
+              <div class="setting_hide" style="display: none;" id="medication_tab" style="border:none;">
+                <div class="col-lg-12">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">Medication Records<div style="float: right; width: 200px;margin-top: -7px;"><input class="form-control" id="search_medication_by_name" placeholder="Search Medication"></div><div class="" style="float:right;width:150px;">Search Medication</div></div>
+                    <div class="table-responsive">
+                      <table class="table tbl-border widthset"  id="medication_table">
+                        <thead>
+                          <tr>
+                            <th width="14%" class="text-center">Medication Name</th>
+                            <th width="10%" class="text-center">Disperse Form</th>
+                            <th width="10%" class="text-center">Dose</th>
+                            <th width="10%" class="text-center">Units</th>
+                            <th width="10%" class="text-center">Route</th>
+                            <th width="10%" class="text-center">
+                            <span id="add_favourite_medication" class="glyphicon glyphicon-plus theme-color" type="button"></span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                      <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="medication_records_pagination"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="audit_tab" style="border:none;">
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">Audit Records</div>
+              <div class="table-responsive">
+                <table class="table" id="audit_table">
+                  <thead>
+                    <tr>
+                      <th width="14%" class="text-center">Area</th>
+                      <th width="10%" class="text-center">Action Type</th>
+                      <th width="15%" class="text-center">Action Date</th>
+                      <th width="18%" class="text-center">By</th>
+                      <th width="18%" class="text-center">Patient</th>
+                      <th width="25%" class="text-center">Comments</th>
+                    </tr>
+                    <tr>
+                      <th width="14%" class="text-center">
+                        <select class="form-control" id="filter_by_audit_area">
+                          <option>Select</option>
+                          <option>Charting</option>
+                          <option>Careplan</option>
+                          <option>Medical History</option>
+                          <option>Medication</option>
+                          <option>Timeline</option>
+                        </select>
+                      </th>
+                      <th width="10%" class="text-center">
+                        <select class="form-control" id="filter_by_audit_action">
+                          <option>Select</option>
+                          <option>Access</option>
+                          <option>Insert</option>
+                          <option>Update</option>
+                        </select>
+                      </th>
+                      <th width="15%" class="text-center"><input type="text" id="filter_by_audit_date" class="form-control datetime-with-maxdate filter-audit-date"></th>
+                      <th width="18%" class="text-center"><input type="text" id="filter_by_audit_doctor" class="form-control"></th>
+                      <th width="18%" class="text-center"><input type="text" id="filter_by_audit_patient" class="form-control"></th>
+                      <th width="15%" class="text-center"><button id="clear_audit_filter" class="btn btn-default">Clear Filter</button></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+                <div class="col-lg-12 pagination-align" style="margin-top: 5px;" id="audit_records_pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="import_patient_tab" class="tab-pane">
+          <div style="margin-top: 10px;margin-bottom: 10px;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <button id="single_user_add" class="btn btn-warning btn-xs" type="button">Add Single Patient</button>
+            <button id="single_user_by_dhp_id" class="btn btn-default btn-xs" type="button">Add Patient By DHP ID</button>
+            <button id="import_from_csv" class="btn btn-default btn-xs" type="button">Import From CSV</button>
+          </div>
+          <!-- add single patient starts-->
+          <div id="single_user_add_parent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <form role="form" class="form-inline lable-text-small ng-pristine ng-valid">
+              <div class="col-md-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div style="margin-top: 10px;" class="row">
+                    <div class="col-md-4">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Physicians</label>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-group full-input">
+                        <select multiple="" id="isu_physicians" class="form-control"><option value="org.couchdb.user:adam1shs@gmail.com" phone="7878457845" email="adam1shs@gmail.com">adam lallana</option><option value="org.couchdb.user:afdafds@gmail.com" phone="9798441560" email="afdafds@gmail.com">hhff ghfh</option><option value="org.couchdb.user:ketan.rthd@gmail.com" phone="7046470470" email="ketan.rthd@gmail.com">Ketan R</option><option value="org.couchdb.user:ketan.rathod@tops-int.com" phone="9033453154" email="ketan.rathod@tops-int.com">Ketan Rathod</option><option value="org.couchdb.user:fghb@gmail.com" phone="9632587410" email="fghb@gmail.com">Ketan33 Rathod44</option><option value="org.couchdb.user:kbulusu1@sensoryhealth.com" phone="9963448633" email="kbulusu1@sensoryhealth.com">kiran2sub kiran2sub</option><option value="org.couchdb.user:nar@h.com" phone="8306037407" email="nar@h.com">NARENDRA DABHI</option><option value="org.couchdb.user:narendra.dabhi@tops-int.com" phone="9054047124" email="narendra.dabhi@tops-int.com">NARENDRA DABHI</option><option value="org.couchdb.user:nim@gmail.com" phone="9016541781" email="nim@gmail.com">Nimesh G</option><option value="org.couchdb.user:n@n.com" selected="selected">Nimesh Ganatra</option><option value="org.couchdb.user:nimesh.ganatra@tops-int.com" phone="9377320511" email="nimesh.ganatra@tops-int.com">Nimesh Ganatra</option><option value="org.couchdb.user:nirmal.patel@tops-int.com" phone="9898571971" email="nirmal.patel@tops-int.com">Nirmal Patel</option><option value="org.couchdb.user:raheemsub99@gmail.com" phone="8787457845" email="raheemsub99@gmail.com">raheeml raheem</option><option value="org.couchdb.user:rjpachaurishs@gmail.com" phone="7878451212" email="rjpachaurishs@gmail.com">rajesh pachauri</option><option value="org.couchdb.user:rkdurvasula@sensoryhealth.com" phone="9848862444" email="rkdurvasula@sensoryhealth.com">rak rak</option><option value="org.couchdb.user:drsshs@gmail.com" phone="7889568956" email="drsshs@gmail.com">ramanathan ddd</option><option value="org.couchdb.user:abcd@gmail.com" phone="0394829048" email="abcd@gmail.com">TestKr Abv</option><option value="org.couchdb.user:hfd@gmail.com" phone="96587451230" email="hfd@gmail.com">Tests dd dfsf</option><option value="org.couchdb.user:ethanbryant503@gmail.com" phone="9365214700" email="ethanbryant503@gmail.com">User144 Test88</option><option value="org.couchdb.user:rakeshdurvasula@gmail.com" phone="9848862444" email="rakeshdurvasula@gmail.com">viswanath viswanath</option><option value="org.couchdb.user:jenniwade14@yahoo.in" phone="9568741230" email="jenniwade14@yahoo.in">Yahoo User</option></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="form-group form-input-set col-lg-12">
+                      <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="single_user_critical">
+                      <label for="select-multi-input"> Mark As a Critical Patient</label>
+                    </div>
+                    <div class="form-group form-input-set col-lg-12">
+                      <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="single_user_alerts">
+                      <label for="select-multi-input">Receive Alerts</label>
+                      <span class="single-user-alerts-option-parent" id="single_user_alerts_option_parent"><span class="theme-color single-user-alerts-option-parent-span">Via</span>
+                      <select class="single-user-alerts-option form-control cuswidth25" id="single_user_alerts_option">
+                        <option value="Email">Email</option>
+                        <option value="SMS">SMS</option>
+                        <option value="Both">Both</option>
+                      </select>
+                      </span>
+                    </div>
+                    <div class="form-group form-input-set col-lg-12">
+                      <input type="checkbox" style="visibility:visible;margin-top: 10px;" id="single_user_reports">
+                      <label for="select-multi-input">Receive Reports</label>
+                      <span class="single-user-reports-frequency-parent" id="single_user_reports_frequency_parent"><span class="theme-color">Frequency</span>
+                      <select class="single-user-reports-frequency form-control cuswidth25" id="single_user_reports_frequency">
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                      </select>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-heading-section">Patient identifying details</div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">First Name*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="New Lab" class="form-control" id="isu_first_name" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Last Name*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_last_name" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label id="db_label" for="select-multi-input">Date of birth*</label>&nbsp;&nbsp;&nbsp;&nbsp;OR&nbsp;&nbsp;&nbsp;<span class="hospital-dhp-link-span" id="age_link">Enter Age</span>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control datetime-with-maxdate isu-dob-width" id="isu_date_of_birth" placeholder="YYYY-MM-DD">
+                        <input type="text" style="display:none" class="form-control" id="isu_age">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Sex*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div>
+                        <select class="form-control select2-input parsley-validated" id="isu_sex" data-required="true">
+                          <option value="">Select Sex</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Marital Status</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <select class="form-control select2-input parsley-validated" id="isu_status" data-required="true">
+                          <option value="">Select Marital Status</option>
+                          <option value="Married">Married</option>
+                          <option value="Single">Single</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Waist (Cms)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_waist" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Height* (Cms)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_height" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Weight* (Kg)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_weight" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">BMI</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" autocomplete="off" id="isu_BMI" class="form-control" readonly="readonly">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" value="" id="isu_patient_dhp_id" class="form-control">
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Blood Group</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <select id="isu_blood_group" class="form-control placeholder-no-fix">
+                          <option value="">Select Blood Group</option>
+                          <option value="A-">A-</option>
+                          <option value="A+">A+</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="O-">O-</option>
+                          <option value="O+">O+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="AB+">AB+</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-heading-section">Emergency Contact info</div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Name*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_ename" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Phone*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_ephone" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Relation*</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="text" class="form-control" id="isu_erelation" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-heading-section">Biometrics &amp; Medical History</div>
+              <div class="textareatmain">
+                <label for="select-multi-input">
+                  <h4>Procedures (medical procedures and surgeries) :</h4></label>
+                <div>
+                  <select class="form-control my_multiselect mrg5" id="isu_procedure" name="subjective" multiple="multiple"></select>
+                </div>
+              </div>
+              <div class="textareatmain">
+                <label for="select-multi-input">
+                  <h4>Medication :<small> (Enter multiple medications using comma separated. eg. Medication-1, Medication-2) </small></h4></label>
+                <textarea class="form-control parsley-validated mrg5" id="isu_medication" name="subjective" type="text"></textarea>
+              </div>
+              <div class="col-md-12">
+                <label for="select-multi-input">
+                  <h4>Allergies :</h4></label>
+                <div id="issu_add_item_parent" class="issu_add_item_parent">
+                  <div class="col-sm-12 save-allergies">
+                    <div class="col-sm-3" style="float: left">
+                      <select id="issu_name_allergies" type="text" class="issu_name_allergies form-control placeholder-no-fix"><optgroup label="Food"><option selected="selected" value="Select Allergies">Select Allergies</option><option value="Fruit">Fruit</option><option value="Garlic">Garlic</option><option value="Meat">Meat</option><option value="Milk">Milk</option><option value="Oats">Oats</option><option value="Peanut">Peanut</option><option value="Fish / Shellfish">Fish / Shellfish</option><option value="Soy">Soy</option><option value="Nut">Nut</option><option value="Wheat">Wheat</option><option value="Gluten">Gluten</option><option value="Egg">Egg</option><option value="Sulfites">Sulfites</option><option value="Casein">Casein</option></optgroup><optgroup label="Drug"><option value="Tetracycline">Tetracycline</option><option value="Dilantin">Dilantin</option><option value="Tegretol (carbamazepine)">Tegretol (carbamazepine)</option><option value="Penicillin">Penicillin</option><option value="cephalosporins">cephalosporins</option><option value="sulfonamides">sulfonamides</option><option value="Local anesthetics">Local anesthetics</option><option value="Non-steroidal anti-inflammatories (cromolyn sodium, nedocromil sodium, etc.)">Non-steroidal anti-inflammatories (cromolyn sodium, nedocromil sodium, etc.)</option><option value="I.V. contrast dye">I.V. contrast dye</option></optgroup><optgroup label="Environmental"><option value="BT,CT">BT,CT</option><option value="PT,APT">PT,APT</option><option value="Pollen">Pollen</option><option value="Cat">Cat</option><option value="Dog">Dog</option><option value="Insect sting">Insect sting</option><option value="Bee sting">Bee sting</option><option value="Mold">Mold</option><option value="Perfume">Perfume</option><option value="Cosmetics">Cosmetics</option><option value="Semen">Semen</option><option value="Latex">Latex</option><option value="House dust mites">House dust mites</option><option value="Nickel">Nickel</option><option value="Gold">Gold</option><option value="Chromium">Chromium</option><option value="Cobalt Chloride">Cobalt Chloride</option><option value="Formaldehyde">Formaldehyde</option><option value="Sun">Sun</option><option value="Phorographic developers">Phorographic developers</option></optgroup>
+                      </select>
+                    </div>
+                    <div class="col-sm-3" style="float: left">
+                      <select id="issu_name_severe" type="text" class="form-control issu_name_severe placeholder-no-fix"><option selected="selected" value="Select Severe">Select Severe</option><option value="Very Mild">Very Mild</option><option value="Mild">Mild</option><option value="Modest">Modest</option><option value="Severe">Severe</option>Severity</select>
+                    </div>
+                    <div class="col-sm-3" style="float: left">
+                      <select id="issu_name_reaction" type="text" class="form-control issu_name_reaction placeholder-no-fix"><option selected="selected" value="Select Reaction">Select Reaction</option>  <option value="Bloating/gas">Bloating/gas</option><option value="Bradycardia">Bradycardia</option><option value="Chest Pain">Chest Pain</option><option value="Conjunctivitis">Conjunctivitis</option><option value="Cough">Cough</option><option value="Diarrhea">Diarrhea</option><option value="Difficulty speaking or swallowing">Difficulty speaking or swallowing</option><option value="Dizziness/Lightheadedness">Dizziness/Lightheadedness</option><option value="Facial swelling">Facial swelling</option><option value="Hives">Hives</option><option value="Irregular Heartbeat">Irregular Heartbeat</option><option value="Itchiness">Itchiness</option><option value="Loss of consciousness">Loss of consciousness</option><option value="Nausea">Nausea</option><option value="Pain/cramping">Pain/cramping</option><option value="Rash">Rash</option><option value="Respiratory Distress">Respiratory Distress</option><option value="Runny nose">Runny nose</option><option value="Shortness of breath">Shortness of breath</option><option value="Tachycardia">Tachycardia</option><option value="Tongue swelling">Tongue swelling</option><option value="Vomiting">Vomiting</option>Reaction<option value="Wheezing">Wheezing</option></select>
+                    </div>
+                    <span style="margin-left:2px;margin-top:11px" class="glyphicon glyphicon-plus theme-color" id="add_new_one_allergies"></span>
+                  </div>
+                </div>               
+              </div>
+              <div class="col-md-12">
+                <label for="select-multi-input">
+                  <h4>Medical History :</h4>
+                </label>
+                <div>
+                  <div class="col-lg-6">
+                    <select id="isu_condition" type="text" class="form-control placeholder-no-fix my_multiselect" multiple="multiple" style="display: none;">
+                    </select><!-- <button type="button" class="ui-multiselect ui-widget ui-state-default ui-corner-all" aria-haspopup="true" style="width: 231px;"><span class="ui-icon ui-icon-triangle-2-n-s"></span><span>Select options</span></button> -->
+                  </div>  
+                  <!-- <textarea type="text" name="subjective" id="isu_condition" class="form-control parsley-validated mrg5"></textarea> -->  
+                </div>
+              
+                <div class="col-lg-6">
+                  <!-- <label for="select-multi-input" class="mrgleft1">
+                    <h4>Allergies :</h4>
+                  </label>  
+                  <select multiple="multiple" class="form-control placeholder-no-fix my_multiselect" type="text" id="isu_allergies">
+                    <optgroup label="Food">
+                     <option>Fruit</option>
+                     <option>Garlic</option>
+                     <option>Meat</option>
+                     <option>Milk</option>
+                     <option>Oats</option>
+                     <option>Peanut</option>
+                     <option>Fish / Shellfish</option>
+                     <option>Soy</option>
+                     <option>Nut</option>
+                     <option>Wheat</option>
+                     <option>Gluten</option>
+                     <option>Egg</option>
+                     <option>Sulfites</option>
+                     <option>Casein</option>
+                    </optgroup>
+                    <optgroup label="Drug">
+                      <option>Tetracycline</option>
+                      <option>Dilantin</option>
+                      <option>Tegretol (carbamazepine)</option>
+                      <option>Penicillin</option>
+                      <option>cephalosporins</option>
+                      <option>sulfonamides</option>
+                      <option>Local anesthetics</option>
+                      <option>Non-steroidal anti-inflammatories (cromolyn sodium, nedocromil sodium, etc.)</option>
+                      <option>I.V. contrast dye</option>
+                    </optgroup>
+                    <optgroup label="Environmental">
+                      <option>BT,CT</option>
+                      <option>PT,APT</option>
+                      <option>Pollen</option>
+                      <option>Cat</option>
+                      <option>Dog</option>
+                      <option>Insect sting</option>
+                      <option>Bee sting</option>
+                      <option>Mold</option>
+                      <option>Perfume</option>
+                      <option>Cosmetics</option>
+                      <option>Semen</option>
+                      <option>Latex</option>
+                      <option>House dust mites</option>
+                      <option>Nickel</option>
+                      <option>Gold</option>
+                      <option>Chromium</option>
+                      <option>Cobalt Chloride</option>
+                      <option>Formaldehyde</option>
+                      <option>Sun</option>
+                      <option>Phorographic developers</option>
+                    </optgroup>
+                  </select> -->
+                  <!-- <textarea type="text" name="subjective" id="isu_allergies" class="form-control parsley-validated mrg5"></textarea> -->
+                </div>
+              </div>
+              <div class="tab-heading-section">Family History</div>
+              <div class="col-md-12">
+                <div style="padding-left: 0px;" class="fmh-parent col-md-12">
+                  <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group form-input-set">
+                          <label for="select-multi-input">Relation</label>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group full-input">
+                          <!-- <input type="text" autocomplete="off" class="form-control isu-fmh-relation"> -->
+                          <select class="form-control isu-fmh-relation">
+                            <option value="Select">Select</option>
+                            <option value="Sister">Sister</option>
+                            <option value="Brother">Brother</option>
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                            <option value="Paternal Grand Father">Paternal Grand Father</option>
+                            <option value="Paternal Grand Mother">Paternal Grand Mother</option>
+                            <option value="Maternal Grand Father">Maternal Grand Father</option>
+                            <option value="Maternal Grand Mother">Maternal Grand Mother</option>
+                            <option value="Uncle">Uncle</option>
+                            <option value="Aunt">Aunt</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group form-input-set">
+                          <label for="select-multi-input">Condition</label>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group full-input">
+                          <!-- <input type="text" autocomplete="off" class="form-control isu-fmh-condition"> -->
+                          <select class="form-control isu-fmh-condition">
+                            <option value="Select">Select</option>
+                            <option value="Cancer">Cancer</option>
+                            <option value="Clotting Disorder">Clotting Disorder</option>
+                            <option value="Diabetes">Diabetes</option>
+                            <option value="Dementia/Alzheimers">Dementia/Alzheimers</option>
+                            <option value="Heart Disease">Heart Disease</option>
+                            <option value="Gastro Intestinal Disorders">Gastro Intestinal Disorders</option>
+                            <option value="High Cholesterol">High Cholesterol</option>
+                            <option value="Hypertension">Hypertension</option>
+                            <option value="Kidney Disease">Kidney Disease</option>
+                            <option value="Lung Disease">Lung Disease</option>
+                            <option value="Osteoporosis">Osteoporosis</option>
+                            <option value="Psychological Disorders">Psychological Disorders</option>
+                            <option value="Stroke/Brain attack">Stroke/Brain attack</option>
+                            <option value="Sudden Death Infant Syndrome (SIDS)">Sudden Death Infant Syndrome (SIDS)</option>
+                            <option value="Unknown Disease">Unknown Disease</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12" style="">
+                  <label class="label label-warning add_more_fmh pointer" style="float: right;">Add More</label>
+                </div>
+              </div>
+              <div class="tab-heading-section">Contact Information</div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Mobile No*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="isu_phone" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Email*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="isu_email" autocomplete="off">
+                      <small class="rght-float font-size"><span id="isu_email_not_provided" class="theme-color pointer">not Having EmailId.</span></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address1*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="isu_address1" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address2</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="isu_address2" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Pincode*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="isu_pincode" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Country*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group full-input">
+                      <input type="text" disabled="disabled" value="India" class="form-control" id="isu_country" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">State*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <select class="form-control placeholder-no-fix" id="isu_state"><option value="select state" selected="selected">Select State</option><option>Andaman and Nicobar Islands</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chandigarh</option><option>Chhattisgarh</option><option>Dadra and Nagar Haveli</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jammu and Kashmir</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Puducherry</option><option>Punjab</option><option>Rajasthan</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option></select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">City*</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <select class="form-control placeholder-no-fix" id="isu_city"><option value="select city" selected="selected">Select city</option></select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align">
+                <div class="form-group">
+                  <button id="isu_upload" type="button" class="btn btn-warning"><span id="save_patient_label">Save</span></button>
+                  <button id="isu_save_and_print" type="button" class="btn btn-warning"><span id="save_patient_lb">Save and Print</span></button>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <b>All the fields marked with * are mandatory.</b>
+              </div>
+            </form>
+          </div>
+          <!-- add single patient ends-->
+          <!-- add patient by dhp starts-->
+          <div style="display:none;" id="single_user_by_dhp_id_parent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <form role="form" class="form-inline lable-text-small ng-pristine ng-valid">
+              <div class="col-md-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div style="margin-top: 10px;" class="row">
+                    <div class="col-md-4">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Physicians</label>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-group full-input">
+                        <select id="physicians_by_dhp_id" multiple="" class="form-control"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div style="margin-top: 10px;" class="col-md-12">
+                      <div style="" class="form-group form-input-set">
+                        <input type="checkbox" id="critical_by_dhp_id" style="visibility:visible;margin-top: 10px;">
+                        <label for="select-multi-input">Mark As a Critical Patient</label>
+                      </div>
+                      <br>
+                      <div style="" class="form-group form-input-set">
+                        <input type="checkbox" id="user_by_dhp_alerts" style="visibility:visible;margin-top: 10px;">
+                        <label for="select-multi-input">Receive Alerts</label>
+                        <span id="user_by_dhp_alerts_option_parent" class="single-user-alerts-option-parent"><span class="theme-color single-user-alerts-option-parent-span">Via</span>
+                        <select id="user_by_dhp_alerts_option" class="single-user-alerts-option">
+                          <option value="Email">Email</option>
+                          <option value="SMS">SMS</option>
+                          <option value="Both">Both</option>
+                        </select>
+                        </span>
+                      </div>
+                      <br>
+                      <div style="" class="form-group form-input-set">
+                        <input type="checkbox" id="user_by_dhp_reports" style="visibility:visible;margin-top: 10px;">
+                        <label for="select-multi-input">Receive Reports</label>
+                        <span id="user_by_dhp_reports_frequency_parent" class="single-user-reports-frequency-parent"><span class="theme-color">Frequency</span>
+                        <select id="user_by_dhp_reports_frequency" class="single-user-reports-frequency">
+                          <option value="Daily">Daily</option>
+                          <option value="Weekly">Weekly</option>
+                          <option value="Monthly">Monthly</option>
+                        </select>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group form-input-set">
+                        <label for="select-multi-input">Patient DHP id</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group full-input">
+                        <input type="New Lab" id="patient_add_dhp_id" class="form-control" autocomplete="off">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align">
+                <div class="form-group">
+                  <button id="save_by_dhp_id" type="button" class="btn btn-warning">Save</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- add patient by dhp ends-->
+          <!-- import patients from csv -->
+          <div style="display:none;" id="import_from_csv_parent" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h5 class="modal-title col-lg-4">To download csv template <a target="_blank" href="template/importusers.csv" data-original-title="you will get a CSV template.." class="tooltip-test hoverchange">Click Here.</a></h5>
+            <div class="col-lg-5">
+              <p style="display: none; &quot;" id="filedata"></p>
+              <input type="file" value="" name="userfile" style="display:inline" class="" id="userfile">
+              <button style="float:none" class="btn btn-warning" id="import_patient">Import</button>
+            </div>
+            <div style="display:none;margin-top:9px" id="skipped_rows_parent1" class="col-lg-3">
+              <span>For skipped rows &nbsp;</span><a class="theme-link hoverchange" id="skipped_rows_link_patient">Click Here</a>
+              <div style="display:none"><input id="getemailid"></div>
+              <span class="" style="float: left; color: red; margin-left: 10px;display:none;" id="import_skipped_patient_rows_link_parent1">Skipped Rows During Last Import::<a id="import_skipped_rows_link_patient" class="link"></a></span>
+            </div>
+            <br>
+          </div>
+        </div>
+        <div style="border: medium none;" id="search_patient_tab" class="tab-pane">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 pull-right">
+              <input placeholder="Search Patients by First name or DHP ID..." class="SearchTextBox ui-autocomplete-input" id="search_patients_update_profile" autocomplete="off"><span class="glyphicon glyphicon-search search-patients"></span>
+            </div>
+          </div>
+          <div id="show_profile_name_not" class="row text-center theme-color default-patient-msg"><span class="glyphicon glyphicon-hand-right"></span>No Pantient selected.... Please search by Patient Name or DHP Code</div>
+          <div class="row">
+            <div id="edit_profile_parent" style="margin: 30px 0px 10px 10px; padding-right: 15px;display:none;" class="col-lg-12 col-md-12">
+              <div style="float: right;" class="col-lg-2 col-md-2">
+                <img style="height:100px;width:100px;" id="patient_profile_pic" src="">
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Name</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" readonly="readonly" class="form-control" id="edit_patient_name" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Patient DHP ID</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" readonly="readonly" class="form-control" id="edit_patient_dhp_id" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                   <div class="form-group form-input-set">
+                      <label for="select-multi-input">Email ID</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_emailid" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Phone</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_phone" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Marital Status</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <select data-required="true" id="edit_patient_maritalstatus" class="form-control" autocomplete="off">
+                        <option selected="selected" value="Select Marital Status">Select Marital Status</option>
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                      </select>
+                    </div>  
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Gender</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <select data-required="true" id="edit_patient_gender" class="form-control" autocomplete="off">
+                      <option selected="selected" value="Select Gender">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Height* (Cms)</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_height" autocomplete="off">
+                    </div>  
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Weight* (Kg)</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_weight" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Waist (Cms)</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_waist" autocomplete="off">
+                    </div>  
+                  </div>
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Blood Group</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                      <select id="edit_patient_bloodgroup" class="form-control  single-user-reports-frequency" autocomplete="off">
+                      <option selected="selected" value="Select Blood Group">Select Blood Group</option>
+                          <option value="A-">A-</option>
+                          <option value="A+">A+</option>
+                          <option value="B-">B-</option>
+                          <option value="B+">B+</option>
+                          <option value="O-">O-</option>
+                          <option value="O+">O+</option>
+                          <option value="AB+">AB+</option>
+                          <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-10 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-2 col-md-5">
+                    <div class="form-group form-input-set">
+                      <div class="form-group form-input-set">
+                        <h6><label id="dbl_label" for="select-multi-input">Enter Age*</label>&nbsp;&nbsp;&nbsp;&nbsp;OR&nbsp;&nbsp;&nbsp;<br><span class="hospital-dhp-link-span" id="edit_link">Date of birth</span></h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group full-input">
+                       <input type="text" style="display:none" class="form-control datetime-with-maxdate" id="issu_date_of_birth" placeholder="YYYY-MM-DD">
+                        <input type="text" class="form-control" id="issu_age">
+                    </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="tab-heading-section">Emergency Contact Info</div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Name*</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_emergency_name" autocomplete="off">
+                    </div>  
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Phone*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_emergency_phone" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Relation*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_emergency_relation" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="tab-heading-section">Contact Information</div>
+              </div>
+              <div class="col-lg-12 col-md-7">
+                <div class="row">              
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address1*</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_address1" autocomplete="off">
+                    </div>  
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Address2</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_address2" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Pincode*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_pincode" autocomplete="off">
+                    </div>
+                  </div>
+                </div>
+              </div>  
+              <div class="col-lg-12 col-md-7">
+                <div class="row">
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">Country*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <input type="text" class="form-control" id="edit_patient_country" autocomplete="off">
+                    </div>
+                  </div>              
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">State*</label>
+                    </div>
+                  </div>  
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <select id="edit_patient_state" class="form-control placeholder-no-fix">
+                      <option selected="selected" value="Select State">Select State</option>
+                      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Assam">Assam</option><option value="Bihar">Bihar</option><option value="Chandigarh">Chandigarh</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option><option value="Delhi">Delhi</option><option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option><option value="Himachal Pradesh">Himachal Pradesh</option><option value="Jammu and Kashmir">Jammu and Kashmir</option><option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Puducherry">Puducherry</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Uttarakhand">Uttarakhand</option><option value="West Bengal">West Bengal</option></select>
+                    </div>  
+                  </div>
+                  <div class="col-lg-1 col-md-5">
+                    <div class="form-group form-input-set">
+                      <label for="select-multi-input">City*</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6">
+                    <div class="form-group full-input">
+                      <select id="edit_patient_city" class="form-control placeholder-no-fix"> 
+                      <option selected="selected" value="Select city">Select city</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>      
+              <div style="text-align:center;" class="col-lg-10 col-md-7">
+                <button style="margin-left:125px;" class="btn btn-warning" id="update_patient_profile">Update</button>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Deleting Mics document -->
+  <div class="modal fade" id="delete_mics_document_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to delete this document ?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="delete_mics_document_confirm" index="" rev="">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_misc_document_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="misc_document_modal_close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add Misc Document</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+
+        <div class="modal-body row">
+          <div class="col-lg-12 col-md-12 col-sm-12 add-more-misc-documents-parent">
+            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12" style="padding-right: 0px; padding-left: 0px; padding-top: 10px;">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">&nbsp;</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Document Name</label>
+                  </div>
+                </div>
+                <div style="" class="col-md-12">
+                  <div class="form-group full-input">
+                    <input type="text" class="form-control misc-document-name">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Category</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group full-input">
+                    <select type="text" class="form-control misc-document-category">
+                      <option>Legal</option>
+                      <option>Financial</option>
+                      <option>Insurance</option>
+                      <option>Personal</option>
+                      <option>Patient Documents</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12" style="padding-right: 0px;">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Choose your file</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group full-input">
+                    <form class="misc-document-form" role="form" enctype="multipart/form-data" method="post" action="">
+                      <input type="hidden" name="_id" class="form-control misc-document-id">
+                      <input type="hidden" name="_rev" class="form-control misc-document-rev">
+                      <input type="file" value="" class="page-browse-box-right misc-document-userfile" name="_attachments">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 ">
+            <span class="label label-warning rght-float add-more-misc-documents pointer">Add More Misc Documents</span>
+          </div>
+        </div>
+      
+        <div class="modal-footer text-center">
+          <h6>*Please select pdf or image file and size not more than 3mb</h6>
+          <input type="hidden" name="doctor_id" class="form-control" id="m_doctor_id">
+          <input type="hidden" name="dhp_code" class="form-control" id="m_dhp_code">
+          <button type="submit" class="custom-default-button" id="misc_document_save"><span id="m_document_save_label">Save</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal templates for Practice Info starts -->
+  <div class="modal fade" id="add_sub_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add User</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal color_box" role="form">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="su_first_name">
+              </div>
+              <label for="inputPassword3" class="col-sm-2 control-label">Last Name</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="su_last_name">
+              </div>
+            </div>
+            <div class="form-group" id = "su_passform">
+              <label class="col-sm-2 control-label" for="inputPassword3">Password</label>
+              <div class="col-sm-4">
+                <input type="password" id="su_password" class="form-control">
+              </div>
+              <label class="col-sm-2 control-label" for="inputPassword3">Confirm Password</label>
+              <div class="col-sm-4">
+                <input type="password" id ="su_confirm_password" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Phone Number</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="su_phone_number">
+              </div>
+              <label for="inputPassword3" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="su_email" emailval = "">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Level</label>
+              <div class="col-sm-4">
+                <select data-required="true" id="su_level" class="form-control select2-input parsley-validated icon-menu">
+                  <option>Doctor</option>
+                  <option>Nurse</option>
+                  <option>Front Desk</option>
+                </select>
+              </div>
+              <label for="inputPassword3" class="col-sm-2 control-label">Active</label>
+              <div class="col-sm-4">
+                <select data-required="true" id="su_active" class="form-control select2-input parsley-validated">
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Admin</label>
+              <div class="col-sm-4">
+                <select data-required="true" id="su_admin" class="form-control select2-input parsley-validated">
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+          </form>
+          *It will take some time to process account creation.
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="su_save" index="" rev="">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="add_document_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="document_modal_close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add Document</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+
+       <!-- <form class="form-horizontal color_box" role="form" enctype="multipart/form-data" id=""  method="post" action=""> -->
+        <div class="modal-body color_box">
+          <div class="form-group row">
+            <div class="col-lg-6 paddleft">
+              <div class="col-sm-4 mrg-top5 paddleft">Patient Name ::</div>
+              <div class="col-sm-8 paddleft">
+                <input type="text" autocomplete="off" class="form-control ui-autocomplete-input" id="d_patient_name" placeholder="Search Patients by First Name">
+                <input type="text" autocomplete="off" class="form-control ui-autocomplete-input" id="d_patient_dhpid" placeholder="Search Patients by DHP ID" style="display: none;">
+                <input type="hidden" value="" name="user_id" class="form-control" id="d_patient_id">
+                <small class="rght-float font-size"><span id="d_patient_click_toggle" class="theme-color pointer">click here</span> to Search Patient By <span id="d_patient_toggle_lbl">DHP ID</span></small>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="col-sm-4 mrg-top5 paddright">Doctor Name ::</div>
+              <div class="col-sm-8 paddleft">
+                <input type="text" placeholder="Search by first name" id="d_doctor_name" class="form-control ui-autocomplete-input" autocomplete="off">
+                <input type="hidden" id="d_doctor_id" class="form-control" name="doctor_id" value="">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <div class="col-lg-3">
+              <div class="row">
+                <div class="col-lg-6 paddleft mrg-top5">Task Priority:</div>
+                <div class="col-lg-6 paddside ">
+                  <select class="form-control" id="document_task_priority">
+                    <option value="Regular">Regular</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 ">
+              <div class="row">
+                <div class="col-lg-6 document-due-label">Due Date:</div>
+                <div class="col-lg-6 paddside">
+                  <input type="text" class="form-control datetime-with-mintoday new-task-datepicker" id="document_task_due_date"></div>
+              </div>
+            </div>
+            <div class="col-lg-4 paddside">
+              <div class="row">
+                <div class="col-lg-6 document-due-label">Effective Date:</div>
+                <div class="col-lg-6 paddside">
+                  <input type="text" class="form-control datetime-with-mintoday new-task-datepicker" id="document_task_effective_date"></div>
+              </div>
+            </div>
+            <div class="col-lg-1 paddside">
+              <div class="row">
+                <div class="col-lg-12 paddtop6">
+                  <input type="checkbox" id="document_task_notify" class="checkshow">&nbsp; Notify
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-lg-1">Comments:</div>
+            <div class="col-lg-10"><textarea id="document_task_comment" class="form-control" style="margin-left: 21px;"></textarea></div>
+          </div>
+          
+          <div class="row add-more-documents-parent" style="margin-top: 21px;">
+            <div style="padding-top: 10px;" class="col-lg-1 col-md-6 col-sm-6 col-xs-12 paddside">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">&nbsp;</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="row" >
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Document Name</label>
+                  </div>
+                </div>
+                <div class="col-md-12" style="">
+                  <div class="form-group full-input">
+                    <input type="text" class="form-control d-name">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 paddleft">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Type</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group full-input">
+                    <select class="form-control select2-input parsley-validated d-type" name="document_type" data-required="true">
+                      <option>Lab-Results</option>
+                      <option>Imaging-Results</option>
+                      <option>Video</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 paddside d-category-parent">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Category</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group full-input">
+                    <select data-required="true" name="document_category" class="form-control select2-input parsley-validated d-category">
+                      <option>Blood</option>
+                      <option>Cardiology</option>
+                      <option>Kidneys & Electrolytes</option>
+                      <option>Nutrients</option>
+                      <option>Liver</option>
+                      <option>Sugars & Digestion</option>
+                      <option>Hormones</option>
+                      <option>Thyroid</option>
+                      <option>Inflammation & Autoimmunity</option>
+                      <option>Clotting</option>
+                      <option>Specialized Tests</option>
+                      <option>Infection</option>
+                      <option>Urine</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-input-set">
+                    <label for="select-multi-input">Choose your file</label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group full-input">
+                    <form class="uploaded-file">
+                      <input type="hidden" class="upload-doc-id" name="_id" value="">
+                      <input type="hidden" class="upload-doc-rev" name="_rev" value="">
+                      <input type="file" name="_attachments" class="page-browse-box-right document-userfile" value="" style="">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="label label-warning add-more-documents pointer" style="float: right;">Add More Document</span>
+          </div>
+        </div>
+
+        <div class="modal-footer text-center">
+          <input type="hidden" name="_id" class="form-control" id="_id">
+          <input type="hidden" name="_rev" class="form-control" id="_rev">
+          <button type="submit" class="custom-default-button" id="save_document"><span id="document_save_label">Save</span></button>
+        </div>
+      <!-- </form> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="password_reset_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Reset Password</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal color_box" role="form">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">New Password</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="rp_new_password">
+              </div>
+              <label for="inputPassword3" class="col-sm-2 control-label">Confirm Password</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="rp_confirm_password">
+              </div>
+            </div>
+          </form>
+          *It will take some time to process password reset.
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="rp_sub_user_save" index="">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Deleting Sub User -->
+  <div class="modal fade" id="delete_sub_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to delete this User ?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="delete_sub_user_confirm" index="" rev="">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Deleting Sub User -->
+  <div class="modal fade" id="set_to_default_alerts_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="alert_modal_message"></h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-default" id="set_to_default_alerts_yes" index="" rev="">Yes</button>
+          <button type="button" class="btn btn-warning" id="set_to_default_alerts_no" index="" rev="">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_health_alerts_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" id="close_health_alert_modal" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <span id="back_to_alert_configuration" class="label label-warning rght-float" style="display:none;">Back</span>
+          <h4 class="modal-title">Alert Configuration</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div id="health_alert_form" class="col-lg-12 Premrg">
+            <div class="row">
+              <div class="col-lg-3">Alert Name*:</div>
+              <div class="col-lg-9"><input type="text" id="health_alert_name" class="form-control"></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Grade:</div>
+              <div class="col-lg-3">
+                <select class="form-control" id="health_alert_grade">
+                  <option value="noselect">Select Grade</option>
+                  <option>A</option>
+                  <option>B</option>
+                  <option>C</option>
+                  <option>D</option>
+                </select>
+              </div>
+              <div class="col-lg-3">
+                <button class="btn btn-warning" id="include_risk_factors">Add Risk Factors</button>
+              </div>
+              <div class="col-lg-3">
+                <!-- <select class="form-control" id="health_alert_risk_factors" style="display:none;">
+                  <option value="noselect">Select Risk Factors</option>
+                  <option>Add New Risk Factors</option>
+                </select> -->
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Type*:</div>
+              <div class="col-lg-6">
+                <select class="form-control" id="health_alert_type">
+                  <option value="noselect">Select Type</option>
+                  <option>Recommendation</option>
+                  <option>Screening/Test</option>
+                </select>
+              </div>
+              <div class="col-lg-3"><input type="checkbox" class="checkshow" id="health_alert_every_visit"> &nbsp; Every Visit</div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Alert Code:</div>
+              <div class="col-lg-6"><input type="text" id="health_alert_code" class="form-control"></div>
+              <div class="col-lg-3"><input type="checkbox" class="checkshow" id="health_alert_status_active"> &nbsp; Status Active</div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Gender*:</div>
+              <div class="col-lg-9">
+                <select id="health_alert_gender" class="form-control">
+                  <option value="noselect">Select Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>All</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Recommendation:</div>
+              <div class="col-lg-9"><textarea id="health_alert_recommendation" class="form-control"></textarea></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">URL:</div>
+              <div class="col-lg-9"><input type="text" id="health_alert_url" class="form-control"></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Source:</div>
+              <div class="col-lg-9"><input type="text" id="health_alert_source" class="form-control"></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Min Age*:</div>
+              <div class="col-lg-2"><input type="text" id="health_alert_min_age" class="form-control"></div>
+              <div class="col-lg-7"><select id="health_alert_min_age_choice" class="form-control"><option value="noselect">Select</option><option>Days</option><option>Months</option><option>Years</option></select></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Max Age*:</div>
+              <div class="col-lg-2"><input type="text" id="health_alert_max_age" class="form-control"></div>
+              <div class="col-lg-7"><select id="health_alert_max_age_choice" class="form-control"><option value="noselect">Select</option><option>Days</option><option>Months</option><option>Years</option></select></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Test Interval:</div>
+              <div class="col-lg-2"><input id="health_alert_test_interval" type="text" class="form-control"></div>
+              <div class="col-lg-7"><select id="health_alert_test_interval_choice" class="form-control"><option value="noselect">Select</option><option>Days</option><option>Months</option><option>Years</option></select></div>
+            </div>
+          </div>
+          <div id="risk_factor_form" class="col-lg-12 Premrg" style="display:none;">
+            <div class="row" style="border-bottom:1px solid grey;padding-bottom:5px;">
+              <div class="col-lg-7">Enter new Risk Factor name in the textbox or Select from List below:</div>
+              <div class="col-lg-4"><input type="text" id="health_risk_factor_val" class="form-control"></div>
+              <div class="col-lg-1"><button class="btn btn-warning" id="add_health_risk_factor">Add</button></div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12" id="risk_factor_list"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+            <button class="btn btn-warning" id="save_health_alerts_configuration">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_charting_template_images_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Charting Templates Images</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div id="add_charting_template_images_form" class="col-lg-12 Premrg">
+            <div class="row">
+              <div class="col-lg-3">Specialization*:</div>
+              <div class="col-lg-5"><span id="select_box"><select id="charting_template_image_specialization" class="form-control"></select><input type="text" class="form-control" id="charting_template_image_specialization_by_text" style="display:none"></span></div>
+              <div class="col-lg-4"><small><span style="margin-left: 23px" id="click_toggle_third" class="pointer theme-color">Click here </span><span id="clk_toggle_lbl_third">to add new</span></small></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Image Name*:</div>
+              <div class="col-lg-9"><input type="text" id="charting_template_image_name" class="form-control"></div>
+            </div>
+            <div class="row mrgtop1" style="display: none;">
+              <div class="col-lg-3">Image Width*:</div>
+              <div class="col-lg-9"><input type="text" id="charting_template_image_width" class="form-control"></div>
+            </div>
+            <div class="row mrgtop1" style="display: none;">
+              <div class="col-lg-3">Image Height*:</div>
+              <div class="col-lg-9"><input type="text" id="charting_template_image_height" class="form-control"></div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="col-lg-3">Choose File*:</div>
+              <div class="col-lg-9"><input type="file" id="charting_template_image_file"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+            <button class="btn btn-warning" id="save_charting_template_images">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_location_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog bigmodal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add New Location</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row">
+          <div class="col-md-12" id="add_new_location_parent">
+            <div class="row mrgtop1">
+              <div class="form-group_login col-lg-2 col-sm-6">
+                <label class="control-label visible-ie8 visible-ie9">Primary Address*</label>
+              </div>
+              <div class="form-group_login col-lg-4 col-sm-4">
+                <div class="login_input">
+                  <input type="text" id="location_primary_address" class="form-control parsley-validated">
+                </div>                        
+              </div>
+              <div class="form-group_login col-lg-2 col-sm-6 paddright">
+                <label class="control-label visible-ie8 visible-ie9">Secondary Address</label>
+              </div>
+              <div class="form-group_login col-lg-4 col-sm-4">
+                <div class="login_input">
+                  <input type="text" id="location_secondary_address" class="form-control parsley-validated">
+                </div>                        
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="form-group_login col-lg-1 col-sm-6">
+                <label class="control-label visible-ie8 visible-ie9">State*</label>
+              </div>
+              <div class="form-group_login col-lg-3 col-sm-4">
+                <div class="login_input">
+                  <select class="form-control" id="location_state"></select>
+                </div>                        
+              </div>
+              <div class="form-group_login col-lg-1 col-sm-6">
+                <label class="control-label visible-ie8 visible-ie9">City*</label>
+              </div>
+              <div class="form-group_login col-lg-3 col-sm-4">
+                <div class="login_input">
+                  <select class="form-control" id="location_city"></select>
+                </div>                        
+              </div>
+              <div class="form-group_login col-lg-1 col-sm-6">
+                <label class="control-label visible-ie8 visible-ie9">PinCode*</label>
+              </div>
+              <div class="form-group_login col-lg-3 col-sm-4">
+                <div class="login_input">
+                  <input type="text" id="location_pincode" class="form-control parsley-validated">
+                </div>                        
+              </div>
+            </div>
+            <div class="row mrgtop1">
+              <div class="form-group_login col-lg-1 col-sm-6">
+                <label class="control-label visible-ie8 visible-ie9">Email*</label>
+              </div>
+              <div class="form-group_login col-lg-5 col-sm-4">
+                <div class="login_input">
+                  <input type="text" id="location_email" class="form-control parsley-validated">
+                </div>                        
+              </div>
+              <div class="form-group_login col-lg-1 col-sm-6">
+                <label class="control-label visible-ie8 visible-ie9">Phone*</label>
+              </div>
+              <div class="form-group_login col-lg-5 col-sm-4">
+                <div class="login_input">
+                  <input type="text" id="location_phone" class="form-control parsley-validated">
+                </div>                        
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group_login col-lg-5 col-sm-4">
+                <div class="login_input">
+                  <input type="checkbox" class="checkshow" id="location_main_office">&nbsp;Make this location as Main Office/HeadQuarter
+                </div>                        
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+            <button type="button" class="btn btn-warning btnwidth" id="location_save">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="remove_location_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to remove this Location?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="remove_location_confirm" index="" rev="">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="add_favourite_medication_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add Favourite Medications</h4>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body row" id = "medication_add_parent">
+          <div class="row medication_add_section">
+            <div class="col-lg-12">
+              <div style="padding-right: 0px; padding-left: 5px;" class="col-lg-3">Medication Name</div>
+              <div class="col-lg-3">Dispered form</div>
+              <div class="col-lg-2">Dose</div>
+              <div class="col-lg-2">Units</div>
+              <div class="col-lg-2">Route</div>
+            </div>
+            <div class="col-lg-12">
+              <div style="padding-right: 0px; padding-left: 5px;" class="col-lg-3">
+                <input type="text" placeholder="Medication name" id="medication_name" class="medication_name form-control">
+              </div>
+              <div class="col-lg-3" style="padding-right: 0px;">
+                <select id="medication_disperse" class="form-control medication_disperse">
+                  <option value="">Select</option>
+                  <option value="Tablet">Tablet</option>
+                  <option value="Capsule">Capsule</option>
+                  <option value="Vaccine">Vaccine</option>
+                  <option value="Syrup">Syrup</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="col-lg-2" style="padding-right: 0px;">
+                <input type="text" placeholder="dose" id="medication_doce" class="form-control medication_doce">
+              </div>
+              <div class="col-lg-2" style="padding-right: 0px;">
+                <select style="padding-right: 15px;" id="medication_unit" class="form-control medication_unit" style="padding-right: 9px;">
+                  <option value="Select">Select</option>
+                  <option value="mg">mg</option>
+                  <option value="ml">ml</option>
+                  <option value="drops">drops</option>
+                  <option value="mcg">mcg</option>
+                </select>
+              </div>
+              <div class="col-lg-2" style="padding-right: 4px;">
+                <input type="text" id="medic_route" class="form-control medic_route" placeholder="Route">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="float:right;margin-right:11px;">
+          <small>
+            <span class="pointer theme-color" id="more_medication_add" style="margin-left: 23px">ADD MORE</span>
+          </small>
+        </div>
+        <div class="modal-footer row text-center">
+          <div class="col-lg-12">
+            <button class="btn btn-warning" id="add_new_favourite_medication">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Model For Deleting Medication -->
+  <div class="modal fade" id="medication_delete_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Are You Sure you want to delete this Medication ?</h4>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="medication_delete_confirm" index="" rev="">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

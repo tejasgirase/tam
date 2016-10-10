@@ -1,0 +1,49 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="tab-pane" id="dc_template_list_parent">
+  <div class="tab_box" id="dc_template_list">
+    <div class="panel panel-default">
+      <div class="panel-heading">Charting Templates</div>
+      <div class="main_div">
+        <div class="main_div_in">
+          <div class="con_inmain">
+            <div class="search_box" style="">
+              <input type="text" style="float: left; margin-right: 16px; width: 495px; margin-left: 26px;" name="Name" placeholder="Search Charting Templates By Name" autocomplete="off" value="" id="search_practise_charting_template_out" class="top-form-control placeholder-no-fix ui-autocomplete-input">
+              <span style="float: left; margin-top: 8px; margin-right: 24px;">OR</span>
+              <!-- <input type="text" style="width: 493px;" name="Name" placeholder="Search Charting Templates By Specialization" autocomplete="off" value="" id="dc_search_template_from_specialization" class="top-form-control placeholder-no-fix ui-autocomplete-input"> -->
+              <select class="form-control" id="dc_search_template_from_specialization"  style="width:565 !important;"></select>
+            </div>
+            <div id="doctor_community_charting_templates_parent"> 
+              <div id="doctor_community_charting_templates_header" class="list-group">
+                <h3 class="list-group-item active text-align">Charting Templates</h3>
+              </div>
+              <div>
+                <table class="table tbl-border" id="doctor_community_charting_templates_list">
+                  <thead>
+                    <tr>
+                      <th class="text-align">Name</th>
+                      <th class="text-align">Specialization</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr dir-paginate="list in lists | itemsPerPage: 5">
+                      <td class="list-group-item col-md-6 text-align pointer hovercolor"><span doc_id="{{list.doc._id}}" class="pointer dc-charting-template">{{list.doc.template_name}}</span>
+                      </td>
+                      <td class="list-group-item col-md-6 text-align">{{list.doc.specialization}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="col-lg-12 pagination-align mrg-top5" id="DC_template_pagination">
+                  <dir-pagination-controls></dir-pagination-controls>
+                </div>
+                <!-- <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+                  <dir-pagination-controls></dir-pagination-controls>
+                </div> -->
+                <div id="no_record_found_msd" style="display:none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

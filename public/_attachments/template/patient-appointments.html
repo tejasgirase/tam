@@ -1,0 +1,325 @@
+<div class="common-ui-view" ui-view="dd-menu"></div>
+<div class="common-ui-view" ui-view="menu"></div>
+<div class="tab-pane row mrgtop1" id="appointment_calendar">
+  <div class="col-lg-3">
+    <h2 class="mytitle">New Appointment</h2>
+  </div>
+  <div class="col-lg-5"></div>
+  <div class="col-lg-4">
+    <h2 class="mytitle pointer fltr" id="appointment_summary">Today Summary <span class="glyphicon glyphicon-list-alt"></span></h2>
+  </div>
+  <div class="tab_box">
+    <div class="panel panel-default">
+      <div class="panel-heading">Appointment Calendar
+        <!-- <i class="uservoice pd_back" id="appointment_back">
+          <span class="glyphicon glyphicon-arrow-left">Back</span>
+        </i>&nbsp; -->
+        <i class="uservoice" id="print_calendar">
+          <span class="glyphicon glyphicon-print"></span>
+        </i>
+      </div>
+      <!--FullCalendar container div-->
+      <div class="row calendar-exp">
+        <div class="col-lg-3">
+          <button class="btn btn-warning" id="icaldownload">Export schedule to sync with your android phone</button>
+        </div>
+        <div class="col-lg-9">
+          <div class="row" id="muliptle_doctors_list_parent" style="display:none;">
+            <div class="col-lg-4 mrgupdown1 paddside140">Select Doctors From DHP</div>
+            <div class="col-lg-7 mrgupdown1">
+              <select id="muliptle_doctors_list" multiple="multiple" class="form-control"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='calendar' height="100%"></div>
+    </div>
+  </div>
+  <div id="createEventModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style = "min-height: 90px;">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3 id="myModalLabel1">Create Appointment</h3>
+          <div class="row">
+            <div class="col-lg-12">
+              <div data-example-id="single-button-dropdown" class="bs-example col-lg-6">
+              Pick a Preference:: &nbsp;&nbsp;&nbsp;
+                <div class="btn-group">
+                  <button id="color_code_value" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">Select Preference <span class="caret"></span></button>
+                  <ul class="dropdown-menu appointment-drp-menu" id="color_code_dropdown">
+                    <li><a backcolor="#378006" class="green-link">Regular Appointment</a></li>
+                    <li><a backcolor="#0000ff" class="blue-link">New Patient</a></li>
+                    <li><a backcolor="#ff0000" class="red-link">Critical Patient</a></li>
+                    <li><a backcolor="#eb8613" class="orange-link">Normal Appointment</a></li>
+                    <li><a backcolor="#7F00FF" class="purple-link">Routine Checkup</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <span class="theme-color">Tentative</span>
+                <input type="checkbox" class="checkshow" id="is_appointment_tentative">
+              </div>
+              <div class="col-lg-2">
+                <span class="theme-color">Repeat</span>
+                <input type="checkbox" class="checkshow" id="is_repeat">
+              </div>
+              <div class="col-lg-2">
+                <span style="margin-top: 4px;" id="removeAppointment" class="label label-warning pointer remove-appointment">Remove Appointment</span>
+                <select id="remove_preference" class="form-control" style="margin-top: 0px; padding-top: 6px;display:none;"><option>This Event</option><option>All Events</option></select>
+               <span style="margin-top: 4px;" id="add_new_patient_box"><input id="addNewPatient" class="checkshow" type="checkbox">
+                New Patient</span>
+               <!--  <span  id="addNewPatient" class="label label-warning pointer addNewPatient">Add New Patinet</span> -->
+              </div>
+            </div>
+          </div>
+          <div class="row repeat-app-parent" id="repeat_app_parent">
+            <div class="col-lg-12 repeat-app-container">
+              <div class="col-lg-12 repeat-rght-brdr">
+                <div class="row repeat-frst-div">
+                  <div class="col-lg-1">Repeat::</div>
+                  <div class="col-lg-4">
+                    <div class="col-lg-12 repeat-select">
+                      <select class="form-control" id="rpt_appoitment_type">
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option>Monthly</option>
+                      </select>  
+                    </div>
+                  </div>
+                  <div class="col-lg-2">Repeat Every::</div>
+                  <div id = "daily_repeat_count" class="col-lg-4 repeat-every">
+                    <div class="col-lg-6 repeat-every">
+                      <select class="form-control" id="rpt_count_days">
+                        <option selected="selected">1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-4 repeat-every-lbl">Days</div>
+                  </div>
+                  <div id = "weekly_repeat_count" class="col-lg-5 repeat-every" style="display:none;">
+                    <input type="checkbox" value="0" class="checkshow weekly_repeat">Sun
+                    <input type="checkbox" value="1" class="checkshow weekly_repeat">Mon
+                    <input type="checkbox" value="2" class="checkshow weekly_repeat">Tue
+                    <input type="checkbox" value="3" class="checkshow weekly_repeat">Wed
+                    <input type="checkbox" value="4" class="checkshow weekly_repeat">Thu
+                    <input type="checkbox" value="5" class="checkshow weekly_repeat">Fri
+                    <input type="checkbox" value="6" class="checkshow weekly_repeat">Sat
+                  </div>
+                  <div style="display:none;" class="col-lg-5 repeat-every" id="monthly_repeat_count">
+                    <input type="radio" checked="checked" class="checkshow" name="monthly_repeat" value="dMonth">Day Of the Month
+                    <input type="radio" class="checkshow" name="monthly_repeat" value="dWeek" style="display:none">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-1">Starts On</div>
+                  <div class="col-lg-4"><input id="rpt_start_day" type="text" class="form-control datetime-with-mintoday"></div>
+                  <div class="col-lg-1">Ends::</div>
+                  <div class="col-lg-2">
+                    <select class="form-control" id="rpt_end_day">
+                      <option>On</option>
+                      <option>After</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2 pad-right">
+                    <input id="rpt_end_val" type="text" class="form-control datetime-with-mintoday">
+                    <input id="rpt_end_after_val" type="number" min="1" class="form-control" style="display:none;">
+                  </div>
+                  <div class="col-lg-2 pad-lbl"><span id="rpt_end_after_label" style="display:none;">Occurances</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <input type = "hidden" id = "appointment_hidden_flag" value = "">
+          <div class="patient-add-new" style="display:none">
+            <div class="col-lg-6 margin-left0">Patient First Name
+              <input type="text" id="fd_appointment_patient_first_name" class="form-control"></div>
+            <div class="col-lg-6 margin-right0">Patient Last Name
+              <input type="text" id="fd_appointment_patient_last_name" class="form-control"></div>
+          </div>
+          <div class="patient-add-new" style="display:none">
+            <div class="col-lg-6 margin-left0">Physician 
+              <input type="text" id="fd_appointment_physician_list" class="form-control">
+            </div>
+            <div class="col-lg-6 margin-right0">Email Id 
+              <input type="text" id="fd_appointment_patient_email" class="form-control">
+              <span id="toggle_email_id" class="theme-color pointer patient-add-new font-size" style="position:absolute; margin-left: 291px;">not Having EmailId.</span>
+            </div>  
+          </div>
+          <div class="control-group patient-add-hide" id="search_patient_for_appointment_parent">
+            <label for="inputPatient" class="control-label">Patient:</label>
+            <div class="controls">
+              <input type="text" tyle="margin: 0 auto;" id="search_patient_for_appointment" class="form-control">
+            </div>
+          </div>
+          <div class="control-group patient-add-hide" id = "patient_email_appointment_parent">
+            <label for="inputPatient" class="control-label">Email ID:</label>
+            <div class="controls">
+              <input type="text" tyle="margin: 0 auto;" id="patient_email_appointment" class="form-control">
+            </div>
+          </div>
+          <div class="control-group col-lg-6 paddleft" id="patient_phone_appointment_parent">
+            <label for="inputPatient" class="control-label">Phone No:</label>
+            <div class="controls">
+              <input type="text" tyle="margin: 0 auto;" id="patient_phone_appointment" class="form-control">
+              <input type="text" tyle="margin: 0 auto;" id="fd_appointment_patient_phone" class="form-control" style="display:none">
+            </div>
+          </div>
+          <div class="control-group col-lg-6 paddright" id="location_appointment_parent">
+            <label for="inputPatient" class="control-label">Location:</label>
+            <div class="controls">
+              <select id="location_appointment" class="form-control"></select>
+            </div>
+          </div>
+          <div class="control-group col-lg-8 paddright no-display">
+            <div class="controls">
+              <span class="mrg-left5" id="location_address"></span>
+              <span class="mrg-left5" id="location_email"></span>
+              <span class="mrg-left5" id="location_phone"></span>
+            </div>
+          </div>
+          <!-- <div class="control-group">
+            <label class="control-label" for="inputPatient">Reminder Note:</label>
+            <div class="controls">
+              <input type="text" class="form-control" name="reminder_note" id="reminder_note" tyle="margin: 0 auto;">
+              <input type="hidden" id="apptStartTime"/>
+              <input type="hidden" id="apptEndTime"/>
+            </div>
+          </div> -->
+          <div class="control-group row" style="margin-left: 0px;">
+            <div class="col-lg-6" style="padding-left: 0px;"><label class="control-label">Note:</label></div>
+            <div class="col-lg-6" style="padding-left: 0px;"><label class="control-label">Consultant:</label></div>
+            <div class="col-lg-6" style="padding-left: 0px;">
+              <input type="text" tyle="margin: 0 auto;" id="reminder_note" name="reminder_note" class="form-control">
+              <input type="hidden" id="apptStartTime" value="Fri Sep 04 2015 23:00:00 GMT+0000">
+              <input type="hidden" id="apptEndTime" value="Fri Sep 04 2015 23:30:00 GMT+0000">
+              <input type="hidden" id="consultant_id_hidden" value="Fri Sep 04 2015 23:30:00 GMT+0000">
+            </div>
+            <div style="padding-left: 0px;" class="col-lg-6">
+              <select id="appointment_consultant_list" class="form-control"></select>
+            </div>
+          </div>
+          <div class="control-group row" style="margin-left: 0px;">
+             <div class="col-lg-6" style="padding-left: 0px;"><label class="control-label">Hospital Documents:</label></div>
+             <div class="col-lg-6" style="padding-left: 0px;"><label class="control-label">Services:</label></div>
+             <div class="col-lg-6" style="padding-left: 0px;">
+               <select class="form-control" id="micsdoc_view" style="margin-bottom: 15px;"></select>    
+             </div>
+             <div class="col-lg-6" style="padding-left: 0px;">
+               <select class="form-control" id="servicedoc_view"></select>
+             </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="when">When:</label>
+            <div class="controls controls-row" id="when" style="margin-top:5px;">
+            </div>
+          </div>  
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <button type="button" class="btn btn-warning" id="submitButton">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="block_time_day_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style = "min-height: 90px;">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3>Block Time of the Day</h3>
+          <span class="label label-warning fltr pointer" id="remove_blocked_time">Remove Blocked Time</span>
+        </div>
+        <div class="modal-body">
+          <div class="control-group">
+            <label class="control-label" for="blocked_duration">Blocked Duration:</label>
+            <span class="controls controls-row" id="blocked_duration" style="margin-top:5px;color:red">
+            </span>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Reason for Block:</label>
+            <div class="controls">
+              <textarea class="resize-none form-control" id="reason_for_block_time_day"></textarea>
+            </div>
+          </div>
+          <div class="control-group row" style="margin-left: 0px;">
+            <div class="col-lg-6" style="padding-left: 0px;">
+              <input type="hidden" id="block_start_time" value="">
+              <input type="hidden" id="block_end_time" value="">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-warning" id="save_block_time">Block Time</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="print_calendar_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style = "min-height: 90px;">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3>Print Appointments</h3>
+          <div class="alert-msg-box"></div>
+        </div>
+        <div class="modal-body">
+          <div class="control-group row">
+            <label class="control-label col-lg-2">Start date:</label>
+            <div class="controls col-lg-6">
+              <input type="text" class="form-control datetime" id="app_start_date" style="margin: 0 auto;" autocomplete="off">
+            </div>
+          </div><br>
+        <div class="control-group row">
+          <label class="control-label col-lg-2">End date:</label>
+          <div class="controls col-lg-6">
+            <input type="text" class="form-control datetime" id="app_end_date" style="margin: 0 auto;" autocomplete="off">
+          </div>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <button type="button" class="btn btn-warning" id="print_appointment">Print</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="appointment_summary_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="appointment_summary_title"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-lg-12 Premrg">
+          <table class="table tbl-border" id="appoitnment_summary_table">
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Patient DHP Id</th>
+                <th>Reminder Note</th>
+                <th>Time</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
