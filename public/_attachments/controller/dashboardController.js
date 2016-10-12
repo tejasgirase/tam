@@ -76,35 +76,34 @@ app.controller("dashboardController",function($scope,$state,tamsaFactories){
   // });
   $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
     success: function(data) {
-      console.log(data);
       pd_data = data;
-      console.log("data called");
       $scope.level = data.level;
       $scope.dhp_code = data.dhp_code;
-      // displayConfigurableModules();
+      displayConfigurableModules();
       $scope.$apply();
       tamsaFactories.sharedBindings();
       tamsaFactories.pdBack();
       tamsaFactories.displayDoctorInformation(data);
       dashboardEventBindings();
-      // getNotifications(data._id);
-      // getDueTasks();
-      // getTodaysAppointments();
-      // getEprescribe();
-      // getEbilling();
-      // getTotalNumberOfPatients();
+      getNotifications(data._id);
+      getDueTasks();
+      getTodaysAppointments();
+      getEprescribe();
+      getEbilling();
+      getTotalNumberOfPatients();
       getPendingRequestSummary();
-      // getReferCount();
+      getReferCount();
     },
-    error: function(status) {
-        console.log(status);
+    error: function(status,error,reason) {
+      console.log(status);
+      console.log(error);
+      console.log(reason);
     }
   });
 
   function displayConfigurableModules() {
     $.couch.db(db).view("tamsa/getMiscSetting", {
       success: function(data) {
-        console.log(data);  
         if(data.rows.length > 0) {
           if(data.rows[0].value.enable_front_disk) $scope.configurable_level = true;
           else $scope.configurable_level = false;
@@ -244,7 +243,6 @@ function getTodaysAppointments() {
 function getNotifications(key) {
   $.couch.db(db).view("tamsa/getDoctorReferral", {
     success: function(data) {
-      console.log(data);
       var notifications = '';
       for (var i = 0; i < data.rows.length; i++) {
         if (data.rows[i].key[2] == key) {

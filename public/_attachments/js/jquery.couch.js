@@ -572,7 +572,6 @@
          */
         openDoc: function(docId, options, ajaxOptions) {
           options = options || {};
-          // console.log(docId);
           // console.log(options);
           // console.log(ajaxOptions);
           // console.log(encodeOptions(options));
@@ -599,7 +598,7 @@
           }
           return ajax(
             // {url: this.uri + encodeDocId(docId) + encodeOptions(options),data:{openDocID:docId}},
-            {url: "/api/open"+encodeOptions(options),data:{_id:docId}},
+            {url: "/api/open"+encodeOptions(options),data:{_id:docId,db:name}},
             options,
             "The document could not be retrieved",
             ajaxOptions
@@ -619,24 +618,33 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         saveDoc: function(doc, options) {
+          console.log(doc);
+          console.log(options);
           options = options || {};
           var db = this;
           var beforeSend = fullCommit(options);
           doc.document_added_from = document_added_from || "";
           if (doc._id === undefined) {
             var method = "POST";
-            var uri = this.uri;
+            var uri = "/api/save";
           } else {
             var method = "PUT";
-            var uri = this.uri + encodeDocId(doc._id);
+            var uri = "/api/update";
           }
           var versioned = maybeApplyVersion(doc);
+          var master_doc = {
+            doc:toJSON(doc),
+            db:name
+          };
           return $.ajax({
-            type: method, url: uri + encodeOptions(options),
+            type: method,
+            url: uri + encodeOptions(options),
             contentType: "application/json",
-            dataType: "json", data: toJSON(doc),
+            dataType: "json",
+            data: toJSON(master_doc),
             beforeSend : beforeSend,
             complete: function(req) {
+              console.log(req);
               var resp = $.parseJSON(req.responseText);
               if (req.status == 200 || req.status == 201 || req.status == 202) {
                 doc._id = resp.id;
@@ -659,6 +667,34 @@
               }
             }
           });
+          // return $.ajax({
+          //   type: method, url: uri + encodeOptions(options),
+          //   contentType: "application/json",
+          //   dataType: "json", data: toJSON(doc),
+          //   beforeSend : beforeSend,
+          //   complete: function(req) {
+          //     var resp = $.parseJSON(req.responseText);
+          //     if (req.status == 200 || req.status == 201 || req.status == 202) {
+          //       doc._id = resp.id;
+          //       doc._rev = resp.rev;
+          //       if (versioned) {
+          //         db.openDoc(doc._id, {
+          //           attachPrevRev : true,
+          //           success : function(d) {
+          //             doc._attachments = d._attachments;
+          //             if (options.success) options.success(resp);
+          //           }
+          //         });
+          //       } else {
+          //         if (options.success) options.success(resp);
+          //       }
+          //     } else if (options.error) {
+          //       options.error(req.status, resp.error, resp.reason);
+          //     } else {
+          //       throw "The document could not be saved: " + resp.reason;
+          //     }
+          //   }
+          // });
         },
 
         /**
@@ -674,15 +710,27 @@
           docs.docs.map(function (doc){
             doc.document_added_from = document_added_from || "";
           });
+          var master_doc = {
+            docs:toJSON(docs),
+            db:name
+          };
           $.extend(options, {successStatus: 201, beforeSend : beforeSend});
           return ajax({
               type: "POST",
-              url: this.uri + "_bulk_docs" + encodeOptions(options),
-              contentType: "application/json", data: toJSON(docs)
+              url: "/api/bulksave" + encodeOptions(options),
+              contentType: "application/json", data: toJSON(master_doc)
             },
             options,
             "The documents could not be saved"
           );
+          //  return ajax({
+          //     type: "POST",
+          //     url: this.uri + "_bulk_docs" + encodeOptions(options),
+          //     contentType: "application/json", data: toJSON(docs)
+          //   },
+          //   options,
+          //   "The documents could not be saved"
+          // );
         },
 
         /**
@@ -816,10 +864,7 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         list: function(list, view, options, ajaxOptions) {
-          console.log("in list");
-          console.log(list);
           var list = list.split('/');
-          console.log(list);  
           var options = options || {};
           var type = 'GET';
           var data = null;
@@ -832,7 +877,8 @@
             data.list = list[1];
             data.view = view;
           }else {
-            console.log(options);
+            // options.start_len = options.startkey.length;
+            // options.end_len = options.endkey.length; 
             // var view_data = {
             //   key:          options.key,
             //   include_docs: options.include_docs,
@@ -842,17 +888,20 @@
             //   group:        options.group,
             //   descending:   options.descending
             // };
+            // var view_data = toJSON(options);
             data = {
               design_doc: list[0],
               list:       list[1],
               view:       view,
-              view_data:  options
+              view_data:  toJSON({"option_list":options}),
+              db:name
             };
           }
           return ajax({
             type: type,
             data: data,
-            url: "/api/list"
+            url: "/api/list",
+            db:name
             },
             ajaxOptions, 'An error occurred accessing the list'
           );
@@ -878,40 +927,35 @@
          * @param {ajaxSettings} options <a href="http://api.jquery.com/
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
-        view: function(name, options) {
-          var name = name.split('/');
+        view: function(vname, options) {
+          var vname = vname.split('/');
           var options = options || {};
           var type = "GET";
           var data= null;
-          console.log(options);
-          console.log(options["keys"]);
           if (options["keys"]) {
-            console.log("123");
             type = "POST";
             var keys = options["keys"];
             delete options["keys"];
             data = toJSON({ "keys": keys });
-            data.design_doc = name[0];
-            data.view = name[1];
+            data.design_doc = vname[0];
+            data.view = vname[1];
           }else {
-            console.log("456");
-            var view_data = {
-              key:          options.key,
-              include_docs: options.include_docs,
-              startkey:     options.startkey,
-              endkey:       options.endkey,
-              reduce:       options.reduce,
-              group:        options.group,
-              descending:   options.descending
-            };
+            // var view_data = {
+            //   key:          options.key,
+            //   include_docs: options.include_docs,
+            //   startkey:     options.startkey,
+            //   endkey:       options.endkey,
+            //   reduce:       options.reduce,
+            //   group:        options.group,
+            //   descending:   options.descending
+            // };
             data = {
-              design_doc: name[0],
-              view:       name[1],
-              view_data:  view_data
+              design_doc: vname[0],
+              view:       vname[1],
+              view_data:  toJSON({"option_list":options}),
+              db:name
             };
           }
-          console.log(data);
-          console.log(options);
           return ajax({
               type: type,
               data: data,
@@ -1055,7 +1099,6 @@
     return $.ajax($.extend($.extend({
       type: "GET", dataType: "json", cache : maybeUseCache(),
       beforeSend: function(xhr){
-        console.log("before send");
         if(ajaxOptions && ajaxOptions.headers){
           for (var header in ajaxOptions.headers){
             xhr.setRequestHeader(header, ajaxOptions.headers[header]);
@@ -1063,16 +1106,11 @@
         }
       },
       complete: function(req) {
-        console.log("complete");
-        console.log(req);
-        console.log(options);
         var resp;
         var reqDuration = (new Date()).getTime() - timeStart;
         try {
-          console.log("in try");
           resp = $.parseJSON(req.responseText);
         } catch(e) {
-          console.log("in err");
           if (options.error) {
             options.error(req.status, req, e);
           } else {
@@ -1084,18 +1122,13 @@
           options.ajaxStart(resp);
         }
         if (req.status == options.successStatus) {
-          console.log(1);
           if (options.beforeSuccess) options.beforeSuccess(req, resp, reqDuration);
-          console.log(resp);
-          console.log(options.success);
-          if (options.success){console.log("in success options");options.success(resp, reqDuration);}
+          if (options.success){options.success(resp, reqDuration);}
         } else if (options.error) {
-          console.log(2);
           options.error(req.status, resp && resp.error ||
                         errorMessage, resp && resp.reason || "no response",
                         reqDuration);
         } else {
-          console.log(3);
           throw errorMessage + ": " + resp.reason;
         }
       }

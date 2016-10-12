@@ -1,7 +1,6 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("inventoryController",function($scope,$state,tamsaFactories){
-  console.log("8"); 
   // $.couch.session({
   //   success: function(data) {
   //     if(data.userCtx.name == null)
@@ -52,7 +51,8 @@ function getInventoryDetails(selected_category,selected_manf,selected_prod){
       startkey : [0,pd_data.dhp_code],
       endkey : [0,pd_data.dhp_code,{},{},{},{},{}],
       include_docs: true,
-      reduce : false
+      reduce : false,
+      group: false
     });
   }
   else{

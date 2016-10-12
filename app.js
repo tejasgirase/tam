@@ -3,14 +3,16 @@ var fs         = require("fs");
 var express    = require("express");
 var app        = express();
 var path       = require("path");
+var bodyParser = require("body-parser");
 var cons       = require('consolidate');
 var Cloudant   = require('cloudant');
 var cloudant   = Cloudant("https://nirmalpatel59:nirmalpatel@nirmalpatel59.cloudant.com");
-var db         = cloudant.db.use("yhsqizvkmp");
-var medical_db = cloudant.db.use("meluha_db5");
 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments/"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'public/_attachments/'));
 app.set('view engine', 'html');
@@ -24,12 +26,14 @@ app.get("/my-account.html",function(req,res) {
 });
 
 app.get("/api/open",function(req,res) {
-	db.get(req.query._id,function(err, body) {
+	console.log(req.query.db);
+	var opendb = cloudant.db.use(req.query.db);
+	opendb.get(req.query._id,function(err, body) {
 		if(!err) {
 			res.send(body);
 		}else {
 			console.log(err);
-			res.send("test");
+			res.status(500).json({ error: err.error, reason:err.reason});
 		}
 	});
 });
@@ -48,39 +52,77 @@ app.get("/api/open",function(req,res) {
 // });
 
 app.get("/api/view",function(req,res) {
-	console.log("get");
-	console.log(req.query);
 	if(req.query.view_data.key) {
 		var mykey = req.query.view_data.key;
 	}
-	medical_db.view(req.query.design_doc,req.query.view,req.query.view_data,function(err, body) {
+	var view_data = JSON.parse(req.query.view_data);
+	var viewdb = cloudant.db.use(req.query.db);
+	viewdb.view(req.query.design_doc,req.query.view,view_data.option_list,function(err, body) {
 		if(!err) {
 			res.send(body);
 		}else {
-			console.log(err);
-			res.send("test23");
+			res.status(500).json({ error: err.error, reason:err.reason});
 		}
 	});
 });
 
 app.get("/api/list",function(req,res) {
-	console.log("list");
-	console.log(req.query);
-	medical_db.viewWithList(req.query.design_doc, req.query.view, req.query.list, req.query.view_data, function(err, body) {
+	var view_data = JSON.parse(req.query.view_data);
+	var listdb = cloudant.db.use(req.query.db);
+	listdb.viewWithList(req.query.design_doc, req.query.view, req.query.list, view_data.option_list, function(err, body) {
 	  if (!err) {
 	    res.send(body);
+	  }else {
+	  	res.status(500).json({ error: err.error, reason:err.reason});
 	  }
 	});
-	// medical_db.view(req.query.design_doc,req.query.view,req.query.view_data,function(err, body) {
-	// 	if(!err) {
-	// 		res.send(body);
-	// 	}else {
-	// 		console.log(err);
-	// 		res.send("test23");
-	// 	}
-	// });
 });
 
+
+app.post("/api/save",function(req,res) {
+	var savedb = cloudant.db.use(req.body.db);
+	savedb.insert(JSON.parse(req.body.doc),function(err, body) {
+		if(!err) {
+			res.send(body);
+		}else {
+			res.status(500).json({ error: err.error, reason:err.reason});
+		}
+	});
+});
+
+
+app.put("/api/update",function(req,res) {
+	var updatedb = cloudant.db.use(req.body.db);
+	updatedb.insert(JSON.parse(req.body.doc),function(err, body) {
+		if(!err) {
+			res.send(body);
+		}else {
+			res.status(500).json({ error: err.error, reason:err.reason});
+		}
+	});
+});
+
+app.post("/api/bulksave",function(req,res) {
+	var docs = [
+		{
+			"nirmal":"test",
+			"card":"123"
+		},
+		{
+			"nirmal":"paster",
+			"card":"456"
+		}
+	];
+	var updatedb = cloudant.db.use("meluha_db5");
+	updatedb.bulk({"docs":docs},function(err, body) {
+		if(!err) {
+			res.send(body);
+		}else {
+			console.log(err);
+			res.status(500).json({ error: err.error, reason:err.reason});
+		}
+	});
+});
 
 https.createServer({
   key: fs.readFileSync('key.pem'),
