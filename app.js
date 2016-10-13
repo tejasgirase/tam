@@ -26,7 +26,6 @@ app.get("/my-account.html",function(req,res) {
 });
 
 app.get("/api/open",function(req,res) {
-	console.log(req.query.db);
 	var opendb = cloudant.db.use(req.query.db);
 	opendb.get(req.query._id,function(err, body) {
 		if(!err) {
@@ -78,7 +77,6 @@ app.get("/api/list",function(req,res) {
 	});
 });
 
-
 app.post("/api/save",function(req,res) {
 	var savedb = cloudant.db.use(req.body.db);
 	savedb.insert(JSON.parse(req.body.doc),function(err, body) {
@@ -89,7 +87,6 @@ app.post("/api/save",function(req,res) {
 		}
 	});
 });
-
 
 app.put("/api/update",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
@@ -102,23 +99,24 @@ app.put("/api/update",function(req,res) {
 	});
 });
 
-app.post("/api/bulksave",function(req,res) {
-	var docs = [
-		{
-			"nirmal":"test",
-			"card":"123"
-		},
-		{
-			"nirmal":"paster",
-			"card":"456"
+app.post("/api/bulk",function(req,res) {
+	var bulk_data = JSON.parse(req.body.master_docs);
+	var bulksavedb = cloudant.db.use(req.body.db);
+	bulksavedb.bulk({"docs":bulk_data.docs},function(err, body) {
+		if(!err) {
+			res.status(201).send(body);
+		}else {
+			res.status(500).json({ error: err.error, reason:err.reason});
 		}
-	];
-	var updatedb = cloudant.db.use("meluha_db5");
-	updatedb.bulk({"docs":docs},function(err, body) {
+	});
+});
+
+app.post("/api/remove/:id",function(req,res) {
+	var bulksavedb = cloudant.db.use(req.query.db);
+	bulksavedb.insert(req.body,function(err, body) {
 		if(!err) {
 			res.send(body);
 		}else {
-			console.log(err);
 			res.status(500).json({ error: err.error, reason:err.reason});
 		}
 	});

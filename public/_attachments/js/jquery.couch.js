@@ -706,19 +706,21 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         bulkSave: function(docs, options) {
+          console.log(options);
           var beforeSend = fullCommit(options);
           docs.docs.map(function (doc){
             doc.document_added_from = document_added_from || "";
           });
           var master_doc = {
-            docs:toJSON(docs),
+            master_docs:toJSON(docs),
             db:name
           };
           $.extend(options, {successStatus: 201, beforeSend : beforeSend});
           return ajax({
               type: "POST",
-              url: "/api/bulksave" + encodeOptions(options),
-              contentType: "application/json", data: toJSON(master_doc)
+              url: "/api/bulk",
+              contentType: "application/json",
+              data: toJSON(master_doc)
             },
             options,
             "The documents could not be saved"
@@ -744,15 +746,25 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         removeDoc: function(doc, options) {
+          doc._deleted = true;
+          console.log(doc);
           return ajax({
-              type: "DELETE",
-              url: this.uri +
-                   encodeDocId(doc._id) +
-                   encodeOptions({rev: doc._rev})
+              type: "POST",
+              url:  "/api/remove/"+ encodeDocId(doc._id) + encodeOptions({rev: doc._rev,db: name}),
+              data: toJSON(doc)
             },
             options,
             "The document could not be deleted"
           );
+          // return ajax({
+          //     type: "DELETE",
+          //     url: this.uri +
+          //          encodeDocId(doc._id) +
+          //          encodeOptions({rev: doc._rev})
+          //   },
+          //   options,
+          //   "The document could not be deleted"
+          // );
         },
 
         /**
@@ -769,15 +781,28 @@
               doc._deleted = true;
             }
           );
+          var master_doc = {
+            master_docs:toJSON(docs),
+            db:name
+          };
           $.extend(options, {successStatus: 201});
           return ajax({
               type: "POST",
-              url: this.uri + "_bulk_docs" + encodeOptions(options),
-              data: toJSON(docs)
+              url: "/api/bulk" + encodeOptions(options),
+              contentType: "application/json", data: toJSON(master_doc)
             },
             options,
-            "The documents could not be deleted"
+            "The documents could not be saved"
           );
+          // $.extend(options, {successStatus: 201});
+          // return ajax({
+          //     type: "POST",
+          //     url: this.uri + "_bulk_docs" + encodeOptions(options),
+          //     data: toJSON(docs)
+          //   },
+          //   options,
+          //   "The documents could not be deleted"
+          // );
         },
 
         /**
@@ -1091,8 +1116,9 @@
       contentType: "application/json",
       headers:{"Accept": "application/json"}
     };
-
+    console.log(options);
     options = $.extend({successStatus: 200}, options);
+    console.log(options);
     ajaxOptions = $.extend(defaultAjaxOpts, ajaxOptions);
     errorMessage = errorMessage || "Unknown error";
     timeStart = (new Date()).getTime();
@@ -1106,11 +1132,14 @@
         }
       },
       complete: function(req) {
+        console.log(req);
         var resp;
         var reqDuration = (new Date()).getTime() - timeStart;
         try {
+          console.log("try");
           resp = $.parseJSON(req.responseText);
         } catch(e) {
+          console.log("catch");
           if (options.error) {
             options.error(req.status, req, e);
           } else {
@@ -1122,13 +1151,16 @@
           options.ajaxStart(resp);
         }
         if (req.status == options.successStatus) {
+          console.log("in if");
           if (options.beforeSuccess) options.beforeSuccess(req, resp, reqDuration);
           if (options.success){options.success(resp, reqDuration);}
         } else if (options.error) {
+          console.log("in else if");
           options.error(req.status, resp && resp.error ||
                         errorMessage, resp && resp.reason || "no response",
                         reqDuration);
         } else {
+          console.log("in else");
           throw errorMessage + ": " + resp.reason;
         }
       }

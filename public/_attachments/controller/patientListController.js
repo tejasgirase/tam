@@ -355,7 +355,6 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
   }
 
   function renderPatientDetailsOnPatientList(parentid,data,key){
-    console.log("called");
     if(data.rows.length == 1){  
       $("#"+parentid).find(".name_"+key+"").text(data.rows[0].value.first_nm+" "+data.rows[0].value.last_nm);
       $("#"+parentid).find(".city_"+key+"").text(data.rows[0].value.city);
@@ -367,8 +366,6 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
             if(Number(lengthimg) > 0) { 
               console.log("in");
               var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
-              console.log("url");
-              console.log(url);
               $("#"+parentid).find(".img_"+key+"").attr("src", url);
             }  
           });
