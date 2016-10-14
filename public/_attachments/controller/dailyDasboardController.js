@@ -2,11 +2,11 @@ var d    = new Date();
 var pd_data = {};
 var plController = {};
 app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFactories,$stateParams){
-  $.couch.session({
-    success: function(data) {
-      if(data.userCtx.name == null)
-         window.location.href = "index.html";
-      else {
+  // $.couch.session({
+  //   success: function(data) {
+  //     if(data.userCtx.name == null)
+  //        window.location.href = "index.html";
+  //     else {
         $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
@@ -24,9 +24,9 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
             return false;
           }
         });
-      }
-    }
-  });
+  //     }
+  //   }
+  // });
 
   function displayDailyDashboard(){
     getTelemedicineSummaryForDailyDashboard("Show From All Category");

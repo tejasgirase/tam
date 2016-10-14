@@ -2,11 +2,11 @@ var d    = new Date();
 var pd_data = {};
 var ebill_pref;
 app.controller("dashboardController",function($scope,$state,tamsaFactories){
-  $.couch.session({
-    success: function(data) {
-      if(data.userCtx.name == null)
-         window.location.href = "index.html";
-      else {
+  // $.couch.session({
+  //   success: function(data) {
+  //     if(data.userCtx.name == null)
+  //        window.location.href = "index.html";
+  //     else {
         //backbefore();
         $('.pd').hide('slow');
         resetmenu();
@@ -35,9 +35,9 @@ app.controller("dashboardController",function($scope,$state,tamsaFactories){
               console.log(status);
           }
         });
-      }
-    }
-  });
+  //     }
+  //   }
+  // });
 
   function displayConfigurableModules() {
     $.couch.db(db).view("tamsa/getMiscSetting", {

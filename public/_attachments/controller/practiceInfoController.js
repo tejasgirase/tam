@@ -5,10 +5,10 @@ var userinfo_medical = {};
 var plController = {};
 
 app.controller("practiceInfoController",function($scope,$state,$stateParams,$location,tamsaFactories){
-  $.couch.session({
-    success: function(data) {
-      if(data.userCtx.name == null) window.location.href = "index.html"
-      else {
+  // $.couch.session({
+  //   success: function(data) {
+  //     if(data.userCtx.name == null) window.location.href = "index.html"
+  //     else {
         $("#personal_details_in_link").closest(".panel").block({message: "Please Wait..."});
         $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
@@ -32,9 +32,9 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         tamsaFactories.pdBack();
         eventBindingsForPracticeInfo();
         tamsaFactories.sharedBindings();
-      }
-    }
-  });
+  //     }
+  //   }
+  // });
 
   function setPD(name) {
     pd_data = data;

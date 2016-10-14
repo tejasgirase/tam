@@ -2,13 +2,13 @@ var d    = new Date();
 var pd_data = {};
 var userinfo = {};
 var userinfo_medical = {};
-$.couch.session({
-  success: function(data) {
-    if(data.userCtx.name == null) {
-      //backafter();
-      window.location.href = "index.html";
-    }
-    else {
+// $.couch.session({
+//   success: function(data) {
+//     if(data.userCtx.name == null) {
+//       //backafter();
+//       window.location.href = "index.html";
+//     }
+//     else {
       $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
         success: function(data) {
           pd_data = data;
@@ -19,9 +19,9 @@ $.couch.session({
           return false;
         }
       });
-    }
-  }
-});
+//     }
+//   }
+// });
 
 app.controller("patientDetailsController",function($scope,$state,$stateParams,tamsaFactories){
   tamsaFactories.sharedBindings();
@@ -105,13 +105,13 @@ app.controller("patientDetailsController",function($scope,$state,$stateParams,ta
 });
 
 app.controller("patientMedicalHistoryController",function($scope,$state,$stateParams,tamsaFactories){
-  $.couch.session({
-    success: function(data) {
-      if(data.userCtx.name == null) {
-        //backafter();
-        window.location.href = "index.html";
-      }
-      else {
+  // $.couch.session({
+  //   success: function(data) {
+  //     if(data.userCtx.name == null) {
+  //       //backafter();
+  //       window.location.href = "index.html";
+  //     }
+  //     else {
         $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
@@ -946,9 +946,9 @@ app.controller("patientMedicalHistoryController",function($scope,$state,$statePa
             return false;
           }
         });
-      }
-    }
-  });
+  //     }
+  //   }
+  // });
 });
 
 // app.controller("patientReferralController",function($scope,$state,$stateParams,tamsaFactories){

@@ -4,11 +4,11 @@ var userinfo = {};
 var userinfo_medical = {};
 
 app.controller("patientAddMedicationController",function($scope,$state,$stateParams,tamsaFactories){
-  $.couch.session({
-    success: function(data) {
-      if(data.userCtx.name == null)
-         window.location.href = "index.html";
-      else {
+  // $.couch.session({
+  //   success: function(data) {
+  //     if(data.userCtx.name == null)
+  //        window.location.href = "index.html";
+  //     else {
         $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
@@ -21,9 +21,9 @@ app.controller("patientAddMedicationController",function($scope,$state,$statePar
             return false;
           },
         });
-      }
-    }
-  });
+  //     }
+  //   }
+  // });
 });
 
 function displayAddNewMedication(){

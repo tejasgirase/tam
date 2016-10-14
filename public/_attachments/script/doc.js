@@ -1,6 +1,10 @@
 // var pouchdb = new PouchDB('localpouch'),
 var document_added_from;
-
+var data = {
+  userCtx :{
+    "name":"n@n.com"
+  }
+};
 //var remoteCouch = attachments_url;
 //syncDom.setAttribute('data-sync-state', 'syncing');
 // pouchdb.changes({
@@ -93,11 +97,11 @@ $(document).ready(function(){
   var fieldArray = [];
   var pd_data;
 
-  $.couch.session({
-    success: function(data) {
-      if(data.userCtx.name == null)
-         window.location.href = "index.html";
-      else {
+  // $.couch.session({
+  //   success: function(data) {
+  //     if(data.userCtx.name == null)
+  //        window.location.href = "index.html";
+  //     else {
         $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
@@ -108,9 +112,9 @@ $(document).ready(function(){
             console.log(status);
           }
         });
-      }
-    }
-  });
+  //     }
+  //   }
+  // });
 
   // $("#practice_dashboard_link").click(function () {
   //   $('.pd').hide('slow');
