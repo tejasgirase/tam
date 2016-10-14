@@ -364,7 +364,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
           Object.keys(data.rows[0].value._attachments).forEach(function( name ) {
             var lengthimg = data.rows[0].value._attachments[name].length;
             if(Number(lengthimg) > 0) { 
-              var url = '/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
+              var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
               $("#"+parentid).find(".img_"+key+"").attr("src", url);
             }  
           });

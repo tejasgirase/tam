@@ -5,6 +5,7 @@ var data = {
     "name":"n@n.com"
   }
 };
+$.couch.urlPrefix = "https://handiffectleserionythent:3b7d6f6094557af528205e8533f5aeaf7015a2e2@nirmalpatel59.cloudant.com";
 //var remoteCouch = attachments_url;
 //syncDom.setAttribute('data-sync-state', 'syncing');
 // pouchdb.changes({

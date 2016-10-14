@@ -2203,7 +2203,7 @@ function getUserpicAndInfo(data) {
     if(data.rows[i].value.imgblob){
       $(".userpic").attr("src", data.rows[i].value.imgblob);
     }else if(data.rows[i].value._attachments){
-      url = '/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
+      url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
       $(".userpic").attr("src",url);
     }else{
 
