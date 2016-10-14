@@ -7,13 +7,12 @@ var userinfo_medical = {};
 // });
 
 app.controller("patientChartingTemplateController",function($scope,$state,$stateParams,tamsaFactories){
-  console.log("11"); 
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -50,14 +49,14 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 
   function displayCommunityTemplates(current_doc_id){
     $("#dc_charting_flag").val("Copy");
     $("#charting_link").addClass("active");
-    displayChartingTemplate(current_doc_id);
+    displayChartingTemplate(current_doc_id,tamsaFactories);
     eventBindingsForPatientChartingTemplates();
     saveAuditRecord("Charting","Access","Successfully accessed.");
   }
@@ -84,7 +83,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
     eventBindingsForPatientChartingTemplates();
     $.couch.db(db).openDoc($stateParams.template_id, {
       success:function (data) {
-        displayChartingTemplate(data._id,data.template_name,data.specialization);
+        displayChartingTemplate(data._id,tamsaFactories,data.template_name,data.Specialization);
       },
       error:function(data,error,reason){
         newAlert("danger",reason);
@@ -345,7 +344,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
     });
 
     $("#patient_charting_template_parent").on("click",".charting_template_results",function() {
-      displayChartingTemplate($(this).attr("doc_id"),$(this).parent().find("td:first").html(),$(this).parent().find("td:last").html());
+      displayChartingTemplate($(this).attr("doc_id"),tamsaFactories,$(this).parent().find("td:first").html(),$(this).parent().find("td:last").html());
     });
 
     $("#patient_charting_template_parent").on("click",".prior-btn-soapnote",function(){
@@ -959,7 +958,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
      },
      select: function( event, ui ) {
        $(this).val(ui.item.doc.template_name);
-       displayChartingTemplate(ui.item.id,ui.item.doc.template_name,ui.item.doc.specialization);
+       displayChartingTemplate(ui.item.id,tamsaFactories,ui.item.doc.template_name,ui.item.doc.specialization);
        return false;
      },
      response: function(event, ui) {
@@ -1008,7 +1007,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
       },
       select: function( event, ui ) {
         $(this).val(ui.item.doc.template_name);
-        displayChartingTemplate(ui.item.id);
+        displayChartingTemplate(ui.item.id,tamsaFactories);
         return false;
       },
       response: function(event, ui) {
@@ -1269,7 +1268,8 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
     $("#new_marker_mouser").val("Select Mouser");
   }
 
-  function saveChartingTemplateForPatient($obj,print_value){  
+  function saveChartingTemplateForPatient($obj,print_value){
+    tamsaFactories.blockScreen("Please wait...");
     $("#save_patient_charting_template, #partial_save_patient_charting_template").attr("disabled","disabled");
     $.couch.db(db).openDoc($obj.attr("doc_id"), {
       success:function(data) {
@@ -1428,6 +1428,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
                           return false;
                         }
                         $("#search_practise_charting_template, #search_community_charting_template").val("");
+                        tamsaFactories.unblockScreen();
                       },
                       error:function(data,error,reason){
                         newAlert("danger",reason);
@@ -1489,6 +1490,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
                       return false;
                     }
                     $("#search_practise_charting_template, #search_community_charting_template").val("");
+                    tamsaFactories.unblockScreen();
                   },
                   error:function(data,error,reason){
                     console.log(reason);
@@ -1498,6 +1500,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
               }
               $("#save_patient_charting_template, #partial_save_patient_charting_template").removeAttr("disabled");
               saveAuditRecord("Charting","Insert","Charting Successfully assign to Patient.");
+              tamsaFactories.unblockScreen();
             },
             error:function(data,error,reason){
               $("#save_patient_charting_template, #partial_save_patient_charting_template").removeAttr("disabled");
@@ -1514,6 +1517,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
               newAlert("success","Charting Template is partially Saved.");
               $("html, body").animate({scrollTop: 0}, 'slow');
               $("#back_to_choose_charting_template").trigger("click");
+              tamsaFactories.unblockScreen();
               return false;
             },
             error:function(data,error,reason){
@@ -1523,6 +1527,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
             }
           });
         }else {
+          tamsaFactories.unblockScreen();
           console.log("save is not pressed.");  
         }
         if($("#charting_referred_info").css("display") != "none" && $("#charting_referred_info").attr("refer_doc_id")){
@@ -1534,6 +1539,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
                 $.couch.db(db).saveDoc(data_refer,{
                   success:function(data){
                     console.log(data);
+                    tamsaFactories.unblockScreen();
                   },
                   error:function(data){
                     console.log(data);

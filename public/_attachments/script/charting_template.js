@@ -2659,7 +2659,7 @@ function cTemplatePartialSaveFieldArray($obj){
 	var section = [];
 	$obj.find(".ctemplate-display-sectionlist").each(function(){
 		var sect_name = $(this).find(".ctemplate-display-section-name").html();
-		if(sect_name != "History of Presenting Illness" && sect_name != "Past Medical History" && sect_name != "Family History") {
+		if(sect_name != "History of Presenting Illness" && sect_name != "Past Medical History" && sect_name != "Family History" && sect_name != "") {
 			console.log(sect_name);
 			var fields = [];
 			$(this).find(".ctemplate-display-fieldlist").each(function(){
@@ -4003,7 +4003,8 @@ function getChartingTemplatesBySelection($obj){
     });
 }
 
-function displayChartingTemplate(current_doc_id,template_name,specialization_name){
+function displayChartingTemplate(current_doc_id,tamsaFactories,template_name,specialization_name){
+	tamsaFactories.blockScreen("Please wait...");
 	$("#templatecommunity").hide();
 	$("#charting_section_selection ul").find("li").remove();
 	$("#dc_copy").attr("index",current_doc_id);
@@ -4039,11 +4040,38 @@ function displayChartingTemplate(current_doc_id,template_name,specialization_nam
 	}
 	$.couch.db(db).view("tamsa/getPartiallySavedChartingTemplateDetails", {
 	  success:function (data) {
-	    if(data.rows.length > 0) {
-	    	displayPartiallySavedChartingTemplate(data.rows[0].doc._id);
-	    }else {
-	      displaySelectedChartingTemplate(current_doc_id);
-	    }
+	  	if(data.rows.length > 0) {
+	  		if(data.rows[0].doc.doctor_id == pd_data._id){
+	  			displayPartiallySavedChartingTemplate(data.rows[0].doc._id,tamsaFactories);
+	  		}else{
+	  			$.couch.db(db).view("tamsa/getChartingTemplateSettings",{
+		      	success:function(chrtdata){
+			        if(chrtdata.rows.length > 0){
+			          if(chrtdata.rows[0].value.chartnote_checked){
+			          	if($.inArray(pd_data._id,chrtdata.rows[0].value.chartnote_doctor_list) != -1){
+			          		displayPartiallySavedChartingTemplate(data.rows[0].doc._id,tamsaFactories);
+						    	}else{
+						    		displaySelectedChartingTemplate(current_doc_id,tamsaFactories);	
+						    	}
+						    }else {
+						      displaySelectedChartingTemplate(current_doc_id,tamsaFactories);
+						    }
+						  }else{
+		            displaySelectedChartingTemplate(current_doc_id,tamsaFactories);
+			        }
+				    },
+			      error:function(data,error,reason){
+			        newAlert("danger",reason);
+			        $('body,html').animate({scrollTop: 0}, 'slow');
+			        return false;
+			      },
+			      key:pd_data.dhp_code,
+			      include_docs:true
+			    });
+	  		}
+	 		}else{
+				displaySelectedChartingTemplate(current_doc_id,tamsaFactories);
+			}
 	  },
 	  error:function(data,error,reason){
 	    newAlert("danger",reason);
@@ -4055,7 +4083,7 @@ function displayChartingTemplate(current_doc_id,template_name,specialization_nam
 	});
 }
 
-function displayPartiallySavedChartingTemplate(current_doc_id){
+function displayPartiallySavedChartingTemplate(current_doc_id,tamsaFactories){
 	$.couch.db(db).openDoc(current_doc_id, {
 	  success: function(data) {
 	  	$.couch.db(db).view("tamsa/getPatientChartingTemplate",{
@@ -4081,7 +4109,9 @@ function displayPartiallySavedChartingTemplate(current_doc_id){
 		  	  	  for (var i=0; i<data.sections.length; i++) {
 		  	  	  	if(i == 0) var backcolor = "theme-background"
 		  	  	  	else var backcolor = ""
-		  	  	  	if(data.sections[i].s_name != "History of Presenting Illness" && data.sections[i].s_name != "Past Medical History" && data.sections[i].s_name != "Family History") {
+		  	  	  	if(data.sections[i].s_name != "History of Presenting Illness" && data.sections[i].s_name != "Past Medical History" && data.sections[i].s_name != "Family History" && data.sections[i].s_name != "") {
+		  	  	  		console.log("testing for blank fields");
+		  	  	  		console.log(data.sections[i].s_name);
 			  	  	  	$('#charting_section_selection').find("ul").append('<li><span section_name="'+data.sections[i].s_name+'"  class="section_link '+backcolor+'">'+data.sections[i].s_name+'</span></li>');
 			  	  	  	// $('#charting_section_selection').append("<option>"+data.sections[i].s_name+"</option>");
 			  	  	  	ctemplate_activity_data += '<div class="ctemplate-display-sectionlist" style="">';
@@ -4140,6 +4170,7 @@ function displayPartiallySavedChartingTemplate(current_doc_id){
 		  	  	  enableSoapNoteDragDrop();
 		  	  	  setImagesForAnnotation(data);
 		  	  	  setPartialValuesForCharting(data);
+		  	  	  tamsaFactories.unblockScreen();
 			  	  },
 			  	  error:function(data,error,reason){
 			  	   	newAlert("danger",reason);
@@ -4531,7 +4562,7 @@ function generatePartialChartingTemplateResponse(responseArray,data,priordata,sn
 	}
 }
 
-function displaySelectedChartingTemplate(current_doc_id){
+function displaySelectedChartingTemplate(current_doc_id,tamsaFactories){
 	$.couch.db(db).openDoc(current_doc_id, {
 	  success: function(data) {
 	  	$.couch.db(db).view("tamsa/getPatientChartingTemplate",{
@@ -4605,6 +4636,7 @@ function displaySelectedChartingTemplate(current_doc_id){
 		  	  	  getChartingTemplatePlans();
 		  	  	  enableSoapNoteDragDrop();
 		  	  	  setImagesForAnnotation();
+		  	  	  tamsaFactories.unblockScreen();
 			  	  },
 			  	  error:function(status){
 			  	    console.log(status);

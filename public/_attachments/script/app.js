@@ -1601,6 +1601,7 @@ function getVaccineDetails(id){
     user_gender:userinfo.gender,
     user_id:userinfo.user_id
     }).success(function(data){
+      console.log(data);
       if(data.rows.length > 0){
         var  mh_vaccine = [];
         mh_vaccine.push('<ul class="mh_vaccine mh-vaccine">');
@@ -2202,7 +2203,7 @@ function getUserpicAndInfo(data) {
     if(data.rows[i].value.imgblob){
       $(".userpic").attr("src", data.rows[i].value.imgblob);
     }else if(data.rows[i].value._attachments){
-      url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
+      url = '/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
       $(".userpic").attr("src",url);
     }else{
 
@@ -5949,7 +5950,7 @@ function getAllExistingSpecializationList(id,template_id,callback){
       }else{
         $.couch.db(db).view("tamsa/getSpecializationList", {
           success:function(data){
-            if(data.rows.length > 0) {
+            if(data.rows.length > 0){
               var list = '';
               list += '<option value="Select Specialization">Select Specialization</option>';
               for (var i = 0; i < data.rows[0].value.specialization.length; i++) {
@@ -5960,8 +5961,8 @@ function getAllExistingSpecializationList(id,template_id,callback){
               if(id= "pdspecialization"){
                 $("#"+id).val(pd_data.specialization);
               }
-            }else {
-              console.log("specialization_list not found.");
+            }else{
+              console.log("specialization data not found");
             }
           },
           error:function(data,error,reason){

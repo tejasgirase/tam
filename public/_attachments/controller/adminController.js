@@ -4,13 +4,12 @@ var userinfo = {};
 var userinfo_medical = {};
 
 app.controller("adminController",function($scope,$state,$stateParams,tamsaFactories){
-  console.log("1");
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name === null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name === null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -25,9 +24,9 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
   
   var adminInterface = (function(){
     var activateCarePlan = function(showid,getCallBack) {
@@ -67,35 +66,37 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
 
     var activatePatientCategorizetionTags = function() {
       clearTagCaterizationTab();
-      tamsaFactories.blockScreen("Please Wait.....","#f2bb5c");
       $(".tab-pane").removeClass("active");
       $("#admin_patient_tag_tab").addClass("active");
       $("#patient_tags").tokenfield({"maxWidth":100,"beautify":false});
       $(".tokenfield").find(".close").css("visibility","hidden");
-      $.couch.db(replicated_db).view("tamsa/getAllHospitals", {
-        success:function(data) {
-          $("#admin_hospitals_for_patient_tags").html("<option value=''>All Hospitals</option>");
-          if(data.rows.length > 0 ) {
-            for(var i=0;i<data.rows.length;i++) {
-              $("#admin_hospitals_for_patient_tags").append("<option value='"+data.rows[i].key[0]+"'>"+data.rows[i].key[0] + " -- "+data.rows[i].key[1]+"</option>");
-            }
-            getPatientTagsForAllHospital();
-          }else {
-            $("#admin_hospitals_for_patient_tags").html("<option value=''>No Hospital Found.</option>");
-            console.log("OMG !!! Not a single hospital. HCTBP?");
-          }
-        },
-        error:function(data,error,reason){
-          newAlert("danger",reason);
-          $("html, body").animate({scrollTop: 0}, 'slow');
-          return false;
-        },
-        reduce:true,
-        group:true
-      });
+      $("#admin_hospitals_for_patient_tags").val("");
+      getPatientTagsForAllHospital();
+      configuration_links.getAllHospitalsDhpcode("admin_hospitals_for_patient_tags");
+      // $.couch.db(replicated_db).view("tamsa/getAllHospitals", {
+      //   success:function(data) {
+      //     $("#admin_hospitals_for_patient_tags").html("<option value=''>All Hospitals</option>");
+      //     if(data.rows.length > 0 ) {
+      //       for(var i=0;i<data.rows.length;i++) {
+      //         $("#admin_hospitals_for_patient_tags").append("<option value='"+data.rows[i].key[0]+"'>"+data.rows[i].key[0] + " -- "+data.rows[i].key[1]+"</option>");
+      //       }
+      //       getPatientTagsForAllHospital();
+      //     }else {
+      //       $("#admin_hospitals_for_patient_tags").html("<option value=''>No Hospital Found.</option>");
+      //       console.log("OMG !!! Not a single hospital. HCTBP?");
+      //     }
+      //   },
+      //   error:function(data,error,reason){
+      //     newAlert("danger",reason);
+      //     $("html, body").animate({scrollTop: 0}, 'slow');
+      //     return false;
+      //   },
+      //   reduce:true,
+      //   group:true
+      // });
     };
 
-    var getPatientTagsForSelectedHospital = function () {
+    var getPatientTagsForSelectedHospital = function (dhp_code) {
       $.couch.db(db).view("tamsa/getPatientCategoryTags", {
           success:function(data) {
             if(data.rows.length > 0) {
@@ -112,7 +113,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             $("html, body").animate({scrollTop: 0}, 'slow');
             return false;
           },
-          key:$("#admin_hospitals_for_patient_tags").val(),
+          key:dhp_code,
           include_docs:true
       });
     };
@@ -145,16 +146,16 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       });
     };
 
-    var getPatientTags = function() {
-      if($("#admin_hospitals_for_patient_tags").val()) {
-        var hname = $("#admin_hospitals_for_patient_tags").find(":selected").text().split(" -- ");
-        $("#hospital_label_name").html(hname[1]);
-        getPatientTagsForSelectedHospital();
-      }else {
-        $("#hospital_label_name").html("All Hospitals");
-        getPatientTagsForAllHospital();
-      }
-    };
+    // var getPatientTags = function() {
+    //   if($("#admin_hospitals_for_patient_tags").val()) {
+    //     var hname = $("#admin_hospitals_for_patient_tags").find(":selected").text().split(" -- ");
+    //     $("#hospital_label_name").html(hname[1]);
+    //     getPatientTagsForSelectedHospital();
+    //   }else {
+    //     $("#hospital_label_name").html("All Hospitals");
+    //     getPatientTagsForAllHospital();
+    //   }
+    // };
     
     var toggleTokenLabel= function($obj) {
       if($obj.hasClass("theme-background")) {
@@ -264,14 +265,16 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
     };
 
     var patientTagSectionBindings = function() {
-      $("#admin_interface").on("change","#admin_hospitals_for_patient_tags",function(){
-        getPatientTags();
-      });
       $("#admin_interface").on("click",".token",function(){
         toggleTokenLabel($(this));
       });
       $("#admin_interface").on("click","#export_patient_by_categories",function(){
         exportPatientBySelectedCategory();
+      });
+      $("#admin_interface").on("focusout","#admin_hospitals_for_patient_tags",function(){
+        if($(this).val() == ""){
+          getPatientTagsForAllHospital();
+        }
       });
       $('#patient_tags').on('tokenfield:removetoken', function () {
         return false;
@@ -283,7 +286,9 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
 
     return {
       patientTagSectionBindings:patientTagSectionBindings,
-      activatePatientCategorizetionTags:activatePatientCategorizetionTags
+      activatePatientCategorizetionTags:activatePatientCategorizetionTags,
+      getPatientTagsForAllHospital:getPatientTagsForAllHospital,
+      getPatientTagsForSelectedHospital:getPatientTagsForSelectedHospital
     };
   })();
 
@@ -1024,15 +1029,15 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       $("#admin_config_tab").on("click","#save_specialization_for_admin",function(){
         getSaveSpecializationAdmin();
       });
-      $("#admin_config_tab").on("change","#hospital_dhp_specialization",function(){
-        if($("#hospital_dhp_specialization").val() != "Select DHP CODE"){
-          getSpecializationForDHPCode($(this).val());
-        }else{
-          $("#token_hospital_parent").css("display","none");
-          $("#save_specialization_for_admin").attr("index","");
-          $("#save_specialization_for_admin").attr("rev","");
-        }
-      });
+      // $("#admin_config_tab").on("change","#hospital_dhp_specialization",function(){
+      //   if($("#hospital_dhp_specialization").val() != "Select DHP CODE"){
+      //     getSpecializationForDHPCode($(this).val());
+      //   }else{
+      //     $("#token_hospital_parent").css("display","none");
+      //     $("#save_specialization_for_admin").attr("index","");
+      //     $("#save_specialization_for_admin").attr("rev","");
+      //   }
+      // });
 
       $("#admin_config_tab").on("change","#pharmacy_list_state", function() {
         getCities($("#pharmacy_list_state").val(), "pharmacy_list_city", "select city");
@@ -1047,29 +1052,29 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             getLabTestValues($(this).val().trim());
          }
       });
-      $("#admin_config_tab").on("change","#hospital_dhp_lab", function() {
-        if($("#hospital_dhp_lab").val().trim() != "Select DHP CODE" && $("#hospital_dhp_lab").val().trim() != ""){
-         getLabTestContent($("#hospital_dhp_lab").val());
-        } 
-      });
+      // $("#admin_config_tab").on("change","#hospital_dhp_lab", function() {
+      //   if($("#hospital_dhp_lab").val().trim() != "Select DHP CODE" && $("#hospital_dhp_lab").val().trim() != ""){
+      //    getLabTestContent($("#hospital_dhp_lab").val());
+      //   } 
+      // });
 
-      $("#admin_config_tab").on("change","#dhp_code_medication", function() {
-        if($("#dhp_code_medication").val().trim() != "Select DHP CODE" && $("#dhp_code_medication").val().trim() != ""){
-         getMedicationListDetails($("#dhp_code_medication").val());
-        } 
-      });
+      // $("#admin_config_tab").on("change","#dhp_code_medication", function() {
+      //   if($("#dhp_code_medication").val().trim() != "Select DHP CODE" && $("#dhp_code_medication").val().trim() != ""){
+      //    getMedicationListDetails($("#dhp_code_medication").val());
+      //   } 
+      // });
 
-      $("#admin_config_tab").on("change","#dhp_code_pharmacy", function() {
-        if($("#dhp_code_pharmacy").val().trim() != "Select DHP CODE" && $("#dhp_code_pharmacy").val().trim() != ""){
-         getPharmacyContent($("#dhp_code_pharmacy").val());
-        } 
-      });
+      // $("#admin_config_tab").on("change","#dhp_code_pharmacy", function() {
+      //   if($("#dhp_code_pharmacy").val().trim() != "Select DHP CODE" && $("#dhp_code_pharmacy").val().trim() != ""){
+      //    getPharmacyContent($("#dhp_code_pharmacy").val());
+      //   } 
+      // });
 
-      $("#admin_config_tab").on("change","#lab_city_admin", function() {
-        if($("#lab_state_admin").val().trim() != "Select state" && $("#lab_city_admin").val().trim() != "Select city" && $("#lab_city_admin").val().trim() != "" && $("#lab_state_admin").val().trim() != ""){
-         getLabTestContent($("#lab_state_admin").val(),$("#lab_city_admin").val());
-        }
-      });
+      // $("#admin_config_tab").on("change","#lab_city_admin", function() {
+      //   if($("#lab_state_admin").val().trim() != "Select state" && $("#lab_city_admin").val().trim() != "Select city" && $("#lab_city_admin").val().trim() != "" && $("#lab_state_admin").val().trim() != ""){
+      //    getLabTestContent($("#lab_state_admin").val(),$("#lab_city_admin").val());
+      //   }
+      // });
 
       $("#admin_config_tab").on("click","#import_lab_imging",function(){
         if($("#dhp_code_lab").val().trim() != "Select DHP CODE" && $("#dhp_code_lab").val().trim() != ""){
@@ -1162,17 +1167,17 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       $("#specialization_tab").addClass("CategTextActive");
       $("#specialization_content").show();
       getSpecializationAll();
+      $("#hospital_dhp_specialization").val("");
+      getAllHospitalsDhpcode("hospital_dhp_specialization");
     };
     var getSpecializationAll = function(){
       $("#save_specialization_for_admin").attr("index","");
       $("#save_specialization_for_admin").attr("rev","");
       $("#token_hospital_parent").css("display","none");
-      $("#hospital_dhp_specialization").val("Select DHP CODE");
       $.couch.db(db).openDoc("specialization_list",{
         success:function(data){
           $('#specialization_tokenfield').tokenfield({"maxWidth":100,"beautify":false});
           $('#specialization_tokenfield').tokenfield('setTokens', data.specialization);
-          getAllHospitalsDhpcode("hospital_dhp_specialization");
         },
         error:function(data){
           if(data == 404) {
@@ -1186,25 +1191,93 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       });
     };
     var getAllHospitalsDhpcode = function(id){
-      $.couch.db(replicated_db).view("tamsa/getAllHospitals", {
-        success:function(hdata) {
-          if(hdata.rows.length > 0) {
-            var hospital_list = [];
-            hospital_list.push('<option>Select DHP CODE</option>');
-            for(var i=0;i<hdata.rows.length;i++){
-              hospital_list.push('<option value="'+hdata.rows[i].key[0]+'">'+hdata.rows[i].key[0]+' -- '+hdata.rows[i].key[1]+'</option>');
-            }
-            $("#"+id).append(hospital_list.join(''));
-          }
+      $("#"+id).autocomplete({
+        search: function(event, ui) { 
+           $("#"+id).addClass('myloader');
         },
-        error:function(data,error,reason){
-          newAlert("danger",reason);
-          $("html, body").animate({scrollTop: 0}, 'slow');
+        source: function( request, response ) {
+          $.couch.db(replicated_db).view("tamsa/getAllHospitals", {
+            success: function(data) {
+              response(data.rows);
+              $("#"+id).removeClass('myloader');
+            },
+            error: function(status) {
+              console.log(status);
+            },
+            startkey: [$("#"+id).val().trim()],
+            endkey: [$("#"+id).val().trim()+"\u9999", {}],
+            reduce:true,
+            group:true,
+            limit:5
+          });
+        },
+        focus: function(event, ui) {
           return false;
         },
-        reduce:true,
-        group:true
-      });
+        minLength: 1,
+        select: function( event, ui ) {
+          if(ui.item.key[1] == "No results found"){
+            if(id == "hospital_dhp_specialization"){
+              $("#token_hospital_parent").css("display","none");
+              $("#save_specialization_for_admin").attr("index","");
+              $("#save_specialization_for_admin").attr("rev","");
+            }else if(id == "dhp_code_pharmacy"){
+
+            }else if(id == "dhp_code_lab"){
+              
+            }else if(id == "dhp_code_medication"){
+              
+            }else if(id == "admin_hospitals_for_patient_tags"){
+              patientTagSections.getPatientTagsForAllHospital();
+            }
+            return false;
+          }else{
+            $(this).val(ui.item.key[2]);
+            if(id == "hospital_dhp_specialization"){
+              getSpecializationForDHPCode(ui.item.key[2]);
+            }else if(id == "dhp_code_pharmacy"){
+              getPharmacyContent(ui.item.key[2]);
+            }else if(id == "dhp_code_lab"){
+              // getSpecializationForDHPCode(ui.item.key[2]);
+            }else if(id == "dhp_code_medication"){
+              getMedicationListDetails(ui.item.key[2]);
+            }else if(id == "admin_hospitals_for_patient_tags"){
+              $("#hospital_label_name").html(ui.item.key[0]);
+              patientTagSections.getPatientTagsForSelectedHospital(ui.item.key[2]);
+            }
+          }
+          return false;
+        },
+        response: function(event, ui) {
+          if (!ui.content.length) {
+            $("#remove_patient_emailid").data("user_id", "");
+            var noResult = { key: ['','No results found'],label:"No results found" };
+            ui.content.push(noResult);
+            //$("#message").text("No results found");
+          }
+        },
+        open: function() {
+          //$("#"+search_id).removeClass('myloader');
+          $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+          $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+      }).
+      data("uiAutocomplete")._renderItem = function(ul, item) {
+        if (item.key[1] == "No results found") {
+          return $("<li></li>")
+            .data("item.autocomplete", item)
+            .append("<a>" + item.key[1]+ "</a>")
+            .appendTo(ul);
+        }
+        else {
+          return $("<li></li>")
+            .data("item.autocomplete", item)
+            .append("<a><img class='patient_image_link img-responsive' style='height:50px; width:50px;'  src='images/profile-pic.png' id='remove_patientsearch_pic_"+item.key[1]+"'>  " + item.key[0] + "<small class='rght-float pdhp-search-box'>"+item.key[1]+"</small></a>")
+            .appendTo(ul);
+        }
+      };    
     };
     var getSaveSpecializationAdmin = function(){
       $.blockUI();
@@ -1285,6 +1358,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       $("#pharmacy_tab").addClass("CategTextActive");
       $("#pharmacy_content").show();
       // clearPharmacyForm();
+      $("#dhp_code_pharmacy").val("");
       getAllHospitalsDhpcode("dhp_code_pharmacy");
       // getStates("pharmacy_list_state");
     };
@@ -1295,6 +1369,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       $(".rmv_tab").removeClass("CategTextActive");
       $("#medication_tab").addClass("CategTextActive");
       $("#medication_content").show();
+      $("#dhp_code_medication").val("");
       getAllHospitalsDhpcode("dhp_code_medication");
     };
 
@@ -1305,6 +1380,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       $(".rmv_tab").removeClass("CategTextActive");
       $("#labtest_tab").addClass("CategTextActive");
       $("#labtest_content").show();
+      $("#dhp_code_lab").val("");
       getAllHospitalsDhpcode("dhp_code_lab");
       getLabTestContent();
     };
@@ -2299,6 +2375,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       getActiveMedicationTab:getActiveMedicationTab,
       getActiveLabtestTab:getActiveLabtestTab,
       getActiveHospitalTab:getActiveHospitalTab,
+      getAllHospitalsDhpcode:getAllHospitalsDhpcode,
       getActiveConfigTabBindigs:getActiveConfigTabBindigs,
       getSpecializationAll:getSpecializationAll,
       getActiveConfigTab:getActiveConfigTab,

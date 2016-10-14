@@ -2,12 +2,12 @@ var d    = new Date();
 var pd_data = {};
 var plController = {};
 app.controller("patientListController",function($scope,$state,$compile,tamsaFactories,$stateParams){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -24,9 +24,9 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
             return false;
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 
   function getPatientConditions(start,end,data) {
     var critical_patient_data = [];
@@ -364,8 +364,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
           Object.keys(data.rows[0].value._attachments).forEach(function( name ) {
             var lengthimg = data.rows[0].value._attachments[name].length;
             if(Number(lengthimg) > 0) { 
-              console.log("in");
-              var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
+              var url = '/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
               $("#"+parentid).find(".img_"+key+"").attr("src", url);
             }  
           });

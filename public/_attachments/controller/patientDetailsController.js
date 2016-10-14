@@ -2,29 +2,26 @@ var d    = new Date();
 var pd_data = {};
 var userinfo = {};
 var userinfo_medical = {};
-
-// $.couch.session({
-//   success: function(data) {
-//     if(data.userCtx.name == null) {
-//       //backafter();
-//       window.location.href = "index.html";
-//     }
-//     else {
-      // $.couch.urlPrefix = "https://handiffectleserionythent:3b7d6f6094557af528205e8533f5aeaf7015a2e2@nirmalpatel59.cloudant.com";
-      // $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
-      //   success: function(data) {
-      //     pd_data = data;
-      //   },
-      //   error:function(data,error,reason){
-      //     console.log(error);
-      //     // newAlert("danger",reason);
-      //     // $("html, body").animate({scrollTop: 0}, 'slow');
-      //     return false;
-      //   }
-      // });
-//     }
-//   }
-// });
+$.couch.session({
+  success: function(data) {
+    if(data.userCtx.name == null) {
+      //backafter();
+      window.location.href = "index.html";
+    }
+    else {
+      $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+        success: function(data) {
+          pd_data = data;
+        },
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
+        }
+      });
+    }
+  }
+});
 
 app.controller("patientDetailsController",function($scope,$state,$stateParams,tamsaFactories){
   tamsaFactories.sharedBindings();
@@ -108,20 +105,21 @@ app.controller("patientDetailsController",function($scope,$state,$stateParams,ta
 });
 
 app.controller("patientMedicalHistoryController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null) {
-  //       //backafter();
-  //       window.location.href = "index.html";
-  //     }
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null) {
+        //backafter();
+        window.location.href = "index.html";
+      }
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = pd_data.level;
             $scope.patient_id = $stateParams.user_id;
             tamsaFactories.pdBack();
             tamsaFactories.getSearchPatient($stateParams.user_id, "patientImageLink", "", activePatientMedicalHistoryTab);
+            $scope.immunizataion_data =  [];
             $scope.$apply();
             function eventBindingsForPatientMedicalHistory(tamsaFactories){
               $("body").on("click","#add_new_procedures",function(){
@@ -690,12 +688,9 @@ app.controller("patientMedicalHistoryController",function($scope,$state,$statePa
                     $("#add_new_immunization_record").data("rev", data.rows[0].doc._rev);
                     $("#save_patient_immunization").data("immunizataion_data",data.rows[0].doc);
                     $scope.immunizataion_data = data.rows[0].doc.immunization_info;
-                    $scope.immunizataion_data_len = true;
-                    $scope.immunizataion_nodata = false;
                   }else{
+                    $scope.immunizataion_data =  [];
                     $("#save_patient_immunization").data("immunizataion_data","");
-                    $scope.immunizataion_data_len = false;
-                    $scope.immunizataion_nodata = true;
                   }
                   $scope.$apply();
                 },
@@ -951,9 +946,9 @@ app.controller("patientMedicalHistoryController",function($scope,$state,$statePa
             return false;
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 });
 
 // app.controller("patientReferralController",function($scope,$state,$stateParams,tamsaFactories){
@@ -1875,6 +1870,10 @@ function eventBindingsForPatientELabs(){
     saveLabOrder("e-order");
   });
 
+  $("#lab_results").on("change","#lo_laboratory",function(){
+    getServicesOfLaboratory($(this).val());
+  });
+
   $("#lab_results").on("click","#lo_save_print",function(){
     saveLabOrder("paper");
   });
@@ -1951,6 +1950,30 @@ function eventBindingsForPatientELabs(){
     maxWidth : 100,
     position: {
       at: 'center'
+    }
+  });
+}
+
+function getServicesOfLaboratory(id){
+  $.couch.db(db).openDoc(id,{
+    success:function(data){
+      console.log(data.services);
+      var servies = data.services;
+      var test = [];
+      if(data.services && data.services != ""){
+        var array_services = servies.split(",");
+        for (var i = 0; i < array_services.length; i++) {
+          test.push('<option>'+array_services[i]+'</option>');  
+        }
+      }else{
+        newAlert("danger","This lab dose't have servies, please add servies for this lab");
+        $('html, body').animate({scrollTop: 0}, 'slow'); 
+      }
+      $("#lo_tests").html(test.join(''));
+      $("#lo_tests").multiselect('refresh');
+    },
+    error:function(data){
+      console.log(data);
     }
   });
 }

@@ -5,15 +5,16 @@ var userinfo_medical = {};
 var plController = {};
 
 app.controller("practiceInfoController",function($scope,$state,$stateParams,$location,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null) window.location.href = "index.html"
-  //     else {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null) window.location.href = "index.html"
+      else {
         $("#personal_details_in_link").closest(".panel").block({message: "Please Wait..."});
         $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
+            $scope.admin = data.admin;
             $scope.$apply();
             displayPracticeInfo();
             tamsaFactories.displayDoctorInformation(pd_data);
@@ -31,9 +32,9 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         tamsaFactories.pdBack();
         eventBindingsForPracticeInfo();
         tamsaFactories.sharedBindings();
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 
   function setPD(name) {
     pd_data = data;
@@ -643,6 +644,14 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
       saveImmunizationSetting();
     });
 
+    $("#personal_details_tab").on("change","#show_template",function(){
+      if($("#show_template").is(":checked")){
+        getDoctorListForChartnote();
+      }else{
+        $(".show_doctor_list_template").hide();
+      }
+    });
+
     $("#personal_details_tab").on("click","#add_new_charting_templates_images",function(){
       addChartingImageConfiguration();
     });
@@ -1037,6 +1046,44 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     // };
     //setting tab event bindings end
     getAllExistingSpecializationList("charting_template_image_specialization");
+  }
+
+  function getDoctorListForChartnote(udata){
+    $("#doctor_list_template").html('');
+    $.couch.db(replicated_db).view("tamsa/getDoctorsList", {
+      success: function(data){
+        if(data.rows.length > 0){
+          var doc_list = [];
+          for(var i=0; i<data.rows.length;i++){
+            if(pd_data.level == "Doctor"){
+              doc_list.push("<option value ='"+data.rows[i].value+"'>"+data.rows[i].key[1] +"</option>");
+            }
+          }
+          $("#doctor_list_template").html(doc_list.join(''));
+          $("#doctor_list_template").multiselect({
+             selectedList: 2,
+             noneSelectedText: "Select Doctors"
+          });
+          $("#doctor_list_template").multiselect("refresh");
+          $(".show_doctor_list_template").show();
+          if(udata){
+            if(udata.rows[0].value.chartnote_doctor_list){
+              for (var i = 0; i < udata.rows[0].value.chartnote_doctor_list.length; i++){
+                  $("#doctor_list_template").multiselect("widget").find(":checkbox[value='"+udata.rows[0].value.chartnote_doctor_list[i]+"']").trigger("click");
+              };
+            }
+          }
+        }else{
+          newAlert("danger","No doctor available for this hospital");
+        }
+      },
+      error:function(data){
+        console.log(data);
+      },
+      startkey: [pd_data.dhp_code],
+      endkey: [pd_data.dhp_code,{}],
+      include_docs:true
+    });
   }
 
   function addMoreMedicationHtml(){
@@ -2138,8 +2185,8 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         $("html, body").animate({scrollTop: 0}, 'slow');
         return false;
       },
-      startkey: [$("#lab_imaging_type").val(), pd_data._id],
-      endkey:   [$("#lab_imaging_type").val(), pd_data._id, {}],
+      startkey: [$("#lab_imaging_type").val(), pd_data.dhp_code],
+      endkey:   [$("#lab_imaging_type").val(), pd_data.dhp_code, {}],
       reduce:   true,
       group:    true
     });
@@ -2983,6 +3030,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
 
 
   function getChartingTemplateSetting(){
+    tamsaFactories.blockScreen("Please wait...");
     $.couch.db(db).view("tamsa/getChartingTemplateSettings",{
       success:function(data){
         if(data.rows.length > 0){
@@ -2990,6 +3038,13 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
           $("#save_charting_template_setting").data("rev",data.rows[0].doc._rev);
           $("#charting_template_24").val(data.rows[0].doc.one_day_preference);
           $("#charting_template_48").val(data.rows[0].doc.two_days_preference);
+          if(data.rows[0].value.chartnote_checked){
+            $("#show_template").attr("checked","checked");
+            getDoctorListForChartnote(data);
+          }else{
+            $("#show_template").removeAttr("checked");
+            $(".show_doctor_list_template").hide();
+          }
           var output = [];
           if(data.rows[0].doc.image_details && data.rows[0].doc.image_details.length > 0){
             for(var i=0;i<data.rows[0].doc.image_details.length;i++){
@@ -3003,10 +3058,13 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
               output.push('</tr>');
             }
             $("#charting_template_images_configuration tbody").html(output.join(''));
+            tamsaFactories.unblockScreen();
           }else{
-            $("#charting_template_images_configuration tbody").html('<tr><td colspan="7" class="no-records">No records Found.</td></tr>');  
+            $("#charting_template_images_configuration tbody").html('<tr><td colspan="7" class="no-records">No records Found.</td></tr>');
+            tamsaFactories.unblockScreen();
           }
         }else{
+          unblockScreen();
           $("#charting_template_images_configuration tbody").html('<tr><td colspan="7" class="no-records">No records Found.</td></tr>');
         }
       },
@@ -3021,6 +3079,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
   }
 
   function saveChartingTemplateSetting(){
+    tamsaFactories.blockScreen("Please wait...");
     var image_details = [];
     $(".ct-image-configuration").each(function(){
       var img_data = {
@@ -3036,13 +3095,15 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     });
 
     var save_charting_template_data = {
-      doctype:             "charting_template_settings",
-      update_ts:           new Date(),
-      dhp_code:            pd_data.dhp_code,
-      doctor_id:           pd_data._id,
-      one_day_preference:  $("#charting_template_24").val(),
-      two_days_preference: $("#charting_template_48").val(),
-      image_details:       image_details
+      doctype:               "charting_template_settings",
+      update_ts:             new Date(),
+      dhp_code:              pd_data.dhp_code,
+      doctor_id:             pd_data._id,
+      chartnote_checked:     $("#show_template").is(":checked"),
+      chartnote_doctor_list: $("#doctor_list_template").val(),
+      one_day_preference:    $("#charting_template_24").val(),
+      two_days_preference:   $("#charting_template_48").val(),
+      image_details:         image_details
     };
 
     if($("#save_charting_template_setting").data("index")){
@@ -3056,6 +3117,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         newAlert("success", "Charting Template Settings saved Successfully.");
         $('body,html').animate({scrollTop: 0}, 'slow');
         getSpecializationDocStore();
+        tamsaFactories.unblockScreen();
       },
       error:function(data,error,reason){
         newAlert("danger", reason);

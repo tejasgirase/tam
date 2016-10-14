@@ -1,13 +1,12 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactories){
-  console.log("7"); 
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -22,9 +21,9 @@ app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactor
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 
   function displayFrontDesk(){
     $('#front-desk').show();

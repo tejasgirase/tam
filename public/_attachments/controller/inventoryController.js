@@ -1,12 +1,12 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("inventoryController",function($scope,$state,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -21,9 +21,9 @@ app.controller("inventoryController",function($scope,$state,tamsaFactories){
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 });
 
 function displayInventoryManagement(){
@@ -51,8 +51,7 @@ function getInventoryDetails(selected_category,selected_manf,selected_prod){
       startkey : [0,pd_data.dhp_code],
       endkey : [0,pd_data.dhp_code,{},{},{},{},{}],
       include_docs: true,
-      reduce : false,
-      group: false
+      reduce : false
     });
   }
   else{

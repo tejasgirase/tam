@@ -16,10 +16,8 @@
 <link rel="icon" href="images/favi_icon.png" />
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/jquery.couch.js"></script>
-<script src="js/json2.js"></script>
-<script src="js/sha1.js"></script>
-<!-- <script src="js/jquery.js?1.4.2"></script> -->
-<!-- <script src="js/jquery.dialog.js?0.11.0"></script> -->
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
@@ -123,28 +121,28 @@
       <h2>Login here</h2>
       <h5 align="center" class="text-danger" id="validationtext"></h5>
       <form>
-        <div class="form-group">
+       <div class="form-group">
         <label class="control-label visible-ie8 visible-ie9">Email</label>
         <div class="input-icon"> <span class="glyphicon glyphicon-user"></span>
-         <input type="text" name="username" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix enter" tabindex="1" id="username">
+         <input type="text" name="Username or email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix enter" tabindex="1" id="username">
         </div>
-        </div>
-        <div class="form-group"> 
+       </div>
+       <div class="form-group"> 
         <label class="control-label visible-ie8 visible-ie9">Password</label>
         <div class="input-icon"> <span class="glyphicon glyphicon-wrench"></span>
-         <input type="password" tabindex="2" name="password" placeholder="Password" autocomplete="off" class="form-control placeholder-no-fix enter" id="Password">
+         <input type="password" tabindex="2" name="Password" placeholder="Password" autocomplete="off" class="form-control placeholder-no-fix enter" id="Password">
         </div>
-        </div>
-        <div class="checkbox">
+       </div>
+       <div class="checkbox">
         <label>
          <input class="checkshow" type="checkbox" id="rememberme" tabindex="4">
          Remember me 
         </label>
-        </div>
-        <div class="forgetpass"><a data-toggle="modal" data-target="#forgot_password" class="active" tabindex="5">Forgot Password?</a> </div>
-        <div class="form-group">
+       </div>
+       <div class="forgetpass"><a data-toggle="modal" data-target="#forgot_password" class="active" tabindex="5">Forgot Password?</a> </div>
+       <div class="form-group">
         <button class="btn btn-warning" type="button" id="Login" tabindex="3">Login</button>
-        </div>
+       </div>
       </form>
      </div>
     </div>
@@ -254,13 +252,12 @@ function(e){  });
 <script type="text/javascript">
   var document_added_from;
   $(document).ready(function(){
-    // window.location = "my-account.html";
-    // $.couch.session({
-    //   success: function(data) {
-    //     if(data.userCtx.name)
-    //        window.location = "my-account.html";
-    //   }
-    // });
+    $.couch.session({
+      success: function(data) {
+        if(data.userCtx.name)
+           window.location = "my-account.html";
+      }
+    });
 
     $('#username').focus();
 
@@ -284,73 +281,32 @@ function(e){  });
     }
     
     $("#Login").click(function(){
-      var udata = {
-        "username": $("#username").val(),
-        "password": $("#Password").val()
-      };
-      $.ajax({
-        url:"https://192.168.0.66:55555/login",
-        type:"POST",
-        crossDomain: true,
-        data:udata,
-        success: function(data){
-          console.log(data);
-          if(data) {
-            setTimeout(function() {
-              $.ajax({
-                url:"https://192.168.0.66:55555/",
-                type:"GET",
-                crossDomain:true,
-                data:udata,
-                success:function(data){
-                  console.log(data);
-                },
-                error:function(data,error,reason){
-                  console.log(error);
-                }  
-              });
-            },10000);
-            // window.location = "my-account.html";
-          }else {
-            $("#validationtext").text("Credentials are not valid.");
+      $("#Login").addClass("ajax-loader-large");
+      var uname    = $("#username").val();
+      var password = $("#Password").val();
+      $.couch.login({
+          name: uname,
+          password: password,
+          success: function(data) {   
+            var expires_day = 365;
+            if ($('#rememberme').is(':checked')) {
+              $.cookie('pm[uname]', uname, { expires: expires_day });
+              $.cookie('pm[password]', password, { expires: expires_day });
+              $.cookie('pm[remember]', true, { expires: expires_day });
+            }
+            else {
+              // reset cookies.
+              $.cookie('pm[uname]', null);
+              $.cookie('pm[password]', null);
+              $.cookie('pm[remember]', false);
+            }
+            window.location = "my-account.html";
+          },
+          error: function(data, error, reason) {
+            $("#validationtext").text("Email or Password is incorrect.");
+            $("#Login").removeClass("ajax-loader-large");
           }
-        },
-        error: function(data,error,reason) {
-          if(data.status == 401) {
-            $("#validationtext").text("Email or Passowrd is wrong."); 
-          }else {
-            console.log(data.responseText);
-          }
-        }
       });
-
-    //   // window.location = "my-account.html";
-    //   // $("#Login").addClass("ajax-loader-large");
-    //   // var uname    = $("#username").val();
-    //   // var password = $("#Password").val();
-    //   // $.couch.login({
-    //   //     name: uname,
-    //   //     password: password,
-    //   //     success: function(data) {   
-    //   //       var expires_day = 365;
-    //   //       if ($('#rememberme').is(':checked')) {
-    //   //         $.cookie('pm[uname]', uname, { expires: expires_day });
-    //   //         $.cookie('pm[password]', password, { expires: expires_day });
-    //   //         $.cookie('pm[remember]', true, { expires: expires_day });
-    //   //       }
-    //   //       else {
-    //   //         // reset cookies.
-    //   //         $.cookie('pm[uname]', null);
-    //   //         $.cookie('pm[password]', null);
-    //   //         $.cookie('pm[remember]', false);
-    //   //       }
-    //   //       window.location = "my-account.html";
-    //   //     },
-    //   //     error: function(data, error, reason) {
-    //   //       $("#validationtext").text("Email or Password is incorrect.");
-    //   //       $("#Login").removeClass("ajax-loader-large");
-    //   //     }
-    //   // });
     });
 
     $("#forgot_password_save").click(function() {
@@ -372,7 +328,7 @@ function(e){  });
               newAlert('error', reason);
               $('html, body').animate({scrollTop: 0}, 'slow');
             }
-          });
+          })
         },
         error: function(status) {
           $("#validationtext").text("Invalid Email Id");

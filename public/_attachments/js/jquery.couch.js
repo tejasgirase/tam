@@ -572,9 +572,6 @@
          */
         openDoc: function(docId, options, ajaxOptions) {
           options = options || {};
-          // console.log(options);
-          // console.log(ajaxOptions);
-          // console.log(encodeOptions(options));
           if (db_opts.attachPrevRev || options.attachPrevRev) {
             $.extend(options, {
               beforeSuccess : function(req, doc) {
@@ -597,8 +594,7 @@
             });
           }
           return ajax(
-            // {url: this.uri + encodeDocId(docId) + encodeOptions(options),data:{openDocID:docId}},
-            {url: "/api/open"+encodeOptions(options),data:{_id:docId,db:name}},
+            {url: this.uri + encodeDocId(docId) + encodeOptions(options)},
             options,
             "The document could not be retrieved",
             ajaxOptions
@@ -618,33 +614,24 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         saveDoc: function(doc, options) {
-          console.log(doc);
-          console.log(options);
           options = options || {};
           var db = this;
           var beforeSend = fullCommit(options);
           doc.document_added_from = document_added_from || "";
           if (doc._id === undefined) {
             var method = "POST";
-            var uri = "/api/save";
+            var uri = this.uri;
           } else {
             var method = "PUT";
-            var uri = "/api/update";
+            var uri = this.uri + encodeDocId(doc._id);
           }
           var versioned = maybeApplyVersion(doc);
-          var master_doc = {
-            doc:toJSON(doc),
-            db:name
-          };
           return $.ajax({
-            type: method,
-            url: uri + encodeOptions(options),
+            type: method, url: uri + encodeOptions(options),
             contentType: "application/json",
-            dataType: "json",
-            data: toJSON(master_doc),
+            dataType: "json", data: toJSON(doc),
             beforeSend : beforeSend,
             complete: function(req) {
-              console.log(req);
               var resp = $.parseJSON(req.responseText);
               if (req.status == 200 || req.status == 201 || req.status == 202) {
                 doc._id = resp.id;
@@ -667,34 +654,6 @@
               }
             }
           });
-          // return $.ajax({
-          //   type: method, url: uri + encodeOptions(options),
-          //   contentType: "application/json",
-          //   dataType: "json", data: toJSON(doc),
-          //   beforeSend : beforeSend,
-          //   complete: function(req) {
-          //     var resp = $.parseJSON(req.responseText);
-          //     if (req.status == 200 || req.status == 201 || req.status == 202) {
-          //       doc._id = resp.id;
-          //       doc._rev = resp.rev;
-          //       if (versioned) {
-          //         db.openDoc(doc._id, {
-          //           attachPrevRev : true,
-          //           success : function(d) {
-          //             doc._attachments = d._attachments;
-          //             if (options.success) options.success(resp);
-          //           }
-          //         });
-          //       } else {
-          //         if (options.success) options.success(resp);
-          //       }
-          //     } else if (options.error) {
-          //       options.error(req.status, resp.error, resp.reason);
-          //     } else {
-          //       throw "The document could not be saved: " + resp.reason;
-          //     }
-          //   }
-          // });
         },
 
         /**
@@ -706,33 +665,19 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         bulkSave: function(docs, options) {
-          console.log(options);
           var beforeSend = fullCommit(options);
           docs.docs.map(function (doc){
             doc.document_added_from = document_added_from || "";
           });
-          var master_doc = {
-            master_docs:toJSON(docs),
-            db:name
-          };
           $.extend(options, {successStatus: 201, beforeSend : beforeSend});
           return ajax({
               type: "POST",
-              url: "/api/bulk",
-              contentType: "application/json",
-              data: toJSON(master_doc)
+              url: this.uri + "_bulk_docs" + encodeOptions(options),
+              contentType: "application/json", data: toJSON(docs)
             },
             options,
             "The documents could not be saved"
           );
-          //  return ajax({
-          //     type: "POST",
-          //     url: this.uri + "_bulk_docs" + encodeOptions(options),
-          //     contentType: "application/json", data: toJSON(docs)
-          //   },
-          //   options,
-          //   "The documents could not be saved"
-          // );
         },
 
         /**
@@ -746,25 +691,15 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         removeDoc: function(doc, options) {
-          doc._deleted = true;
-          console.log(doc);
           return ajax({
-              type: "POST",
-              url:  "/api/remove/"+ encodeDocId(doc._id) + encodeOptions({rev: doc._rev,db: name}),
-              data: toJSON(doc)
+              type: "DELETE",
+              url: this.uri +
+                   encodeDocId(doc._id) +
+                   encodeOptions({rev: doc._rev})
             },
             options,
             "The document could not be deleted"
           );
-          // return ajax({
-          //     type: "DELETE",
-          //     url: this.uri +
-          //          encodeDocId(doc._id) +
-          //          encodeOptions({rev: doc._rev})
-          //   },
-          //   options,
-          //   "The document could not be deleted"
-          // );
         },
 
         /**
@@ -781,28 +716,15 @@
               doc._deleted = true;
             }
           );
-          var master_doc = {
-            master_docs:toJSON(docs),
-            db:name
-          };
           $.extend(options, {successStatus: 201});
           return ajax({
               type: "POST",
-              url: "/api/bulk" + encodeOptions(options),
-              contentType: "application/json", data: toJSON(master_doc)
+              url: this.uri + "_bulk_docs" + encodeOptions(options),
+              data: toJSON(docs)
             },
             options,
-            "The documents could not be saved"
+            "The documents could not be deleted"
           );
-          // $.extend(options, {successStatus: 201});
-          // return ajax({
-          //     type: "POST",
-          //     url: this.uri + "_bulk_docs" + encodeOptions(options),
-          //     data: toJSON(docs)
-          //   },
-          //   options,
-          //   "The documents could not be deleted"
-          // );
         },
 
         /**
@@ -898,46 +820,15 @@
             var keys = options['keys'];
             delete options['keys'];
             data = toJSON({'keys': keys });
-            data.design_doc = list[0];
-            data.list = list[1];
-            data.view = view;
-          }else {
-            // options.start_len = options.startkey.length;
-            // options.end_len = options.endkey.length; 
-            // var view_data = {
-            //   key:          options.key,
-            //   include_docs: options.include_docs,
-            //   startkey:     options.startkey,
-            //   endkey:       options.endkey,
-            //   reduce:       options.reduce,
-            //   group:        options.group,
-            //   descending:   options.descending
-            // };
-            // var view_data = toJSON(options);
-            data = {
-              design_doc: list[0],
-              list:       list[1],
-              view:       view,
-              view_data:  toJSON({"option_list":options}),
-              db:name
-            };
           }
           return ajax({
-            type: type,
-            data: data,
-            url: "/api/list",
-            db:name
-            },
-            ajaxOptions, 'An error occurred accessing the list'
+              type: type,
+              data: data,
+              url: this.uri + '_design/' + list[0] +
+                   '/_list/' + list[1] + '/' + view + encodeOptions(options)
+              },
+              ajaxOptions, 'An error occurred accessing the list'
           );
-          // return ajax({
-          //     type: type,
-          //     data: data,
-          //     url: this.uri + '_design/' + list[0] +
-          //          '/_list/' + list[1] + '/' + view + encodeOptions(options)
-          //     },
-          //     ajaxOptions, 'An error occurred accessing the list'
-          // );
         },
 
         /**
@@ -952,8 +843,8 @@
          * @param {ajaxSettings} options <a href="http://api.jquery.com/
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
-        view: function(vname, options) {
-          var vname = vname.split('/');
+        view: function(name, options) {
+          var name = name.split('/');
           var options = options || {};
           var type = "GET";
           var data= null;
@@ -962,40 +853,15 @@
             var keys = options["keys"];
             delete options["keys"];
             data = toJSON({ "keys": keys });
-            data.design_doc = vname[0];
-            data.view = vname[1];
-          }else {
-            // var view_data = {
-            //   key:          options.key,
-            //   include_docs: options.include_docs,
-            //   startkey:     options.startkey,
-            //   endkey:       options.endkey,
-            //   reduce:       options.reduce,
-            //   group:        options.group,
-            //   descending:   options.descending
-            // };
-            data = {
-              design_doc: vname[0],
-              view:       vname[1],
-              view_data:  toJSON({"option_list":options}),
-              db:name
-            };
           }
           return ajax({
               type: type,
               data: data,
-              url: "/api/view"
+              url: this.uri + "_design/" + name[0] +
+                   "/_view/" + name[1] + encodeOptions(options)
             },
             options, "An error occurred accessing the view"
           );
-          // return ajax({
-          //     type: type,
-          //     data: data,
-          //     url: this.uri + "_design/" + name[0] +
-          //          "/_view/" + name[1] + encodeOptions(options)
-          //   },
-          //   options, "An error occurred accessing the view"
-          // );
         },
 
         /**
@@ -1116,9 +982,8 @@
       contentType: "application/json",
       headers:{"Accept": "application/json"}
     };
-    console.log(options);
+
     options = $.extend({successStatus: 200}, options);
-    console.log(options);
     ajaxOptions = $.extend(defaultAjaxOpts, ajaxOptions);
     errorMessage = errorMessage || "Unknown error";
     timeStart = (new Date()).getTime();
@@ -1132,14 +997,10 @@
         }
       },
       complete: function(req) {
-        console.log(req);
-        var resp;
         var reqDuration = (new Date()).getTime() - timeStart;
         try {
-          console.log("try");
-          resp = $.parseJSON(req.responseText);
+          var resp = $.parseJSON(req.responseText);
         } catch(e) {
-          console.log("catch");
           if (options.error) {
             options.error(req.status, req, e);
           } else {
@@ -1151,16 +1012,13 @@
           options.ajaxStart(resp);
         }
         if (req.status == options.successStatus) {
-          console.log("in if");
           if (options.beforeSuccess) options.beforeSuccess(req, resp, reqDuration);
-          if (options.success){options.success(resp, reqDuration);}
+          if (options.success) options.success(resp, reqDuration);
         } else if (options.error) {
-          console.log("in else if");
           options.error(req.status, resp && resp.error ||
                         errorMessage, resp && resp.reason || "no response",
                         reqDuration);
         } else {
-          console.log("in else");
           throw errorMessage + ": " + resp.reason;
         }
       }

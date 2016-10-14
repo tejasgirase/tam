@@ -4,13 +4,12 @@ var userinfo = {};
 var userinfo_medical = {};
 
 app.controller("billingTemplateController",function($scope,$state,$stateParams,tamsaFactories){
-  console.log("3"); 
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             bindingsForBillingTemplate();
@@ -21,9 +20,9 @@ app.controller("billingTemplateController",function($scope,$state,$stateParams,t
             return false;
           },
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 });
 
 function bindingsForBillingTemplate(){

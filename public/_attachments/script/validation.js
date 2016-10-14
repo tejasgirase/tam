@@ -1417,6 +1417,9 @@ function validateSaveLabDocument(){
   }else if(!phone_filter.test($("#la_contact_person_phone").val().trim())){
     newAlert("danger","Phone number is not valid.");
     return false;
+  }else if($("#la_services").val().trim() == ""){
+    newAlert("danger","Please enter services.");
+    return false;
   }else{
     return true;
   }

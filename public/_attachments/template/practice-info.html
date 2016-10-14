@@ -216,6 +216,7 @@
                           <option>Doctor</option>
                           <option>Nurse</option>
                           <option>Front Desk</option>
+                          <option>Senior Doctor</option>
                         </select>
                       </th>
                       <th width="11%">
@@ -1005,6 +1006,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-lg-12 mrgtop20" ng-if="admin == 'Yes' || level == 'Senior Doctor'">
+                    <div class="col-lg-4">
+                      <div class="row"> Show &amp; Review chart notes from other doctors::</div>
+                    </div>
+                    <div class="col-lg-1">
+                      <div class="row"><input type="checkbox" name="show_template" id="show_template" class="checkshow"></div>
+                    </div>
+                    <div class="col-lg-2 show_doctor_list_template" style="display:none">
+                      <div class="row">Select Doctors::</div>
+                    </div>
+                    <div class="col-lg-4 show_doctor_list_template" style="display:none">
+                      <div class="row"><select id="doctor_list_template" multiple="multiple" style="width:250px"></select></div>
+                    </div>
+                  </div>
                 </div>
 
                 <div style="margin-top: 5px;margin-bottom: 5px;" class="textareatmain row">
@@ -1526,7 +1541,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr dir-paginate="x in location_data | itemsPerPage : 5" class="location-list" ng-class="{danger:x.main_office}">
+                      <tr ng-show="!(location_data.length)">
+                        <td colspan="7">No Records are Found.</td>
+                      </tr>
+                      <tr dir-paginate="x in location_data | itemsPerPage : 5" class="location-list" ng-class="{danger:x.main_office}" ng-show="(location_data.length)">
                         <td class="text-center location-address" data-primary="{{x.primary_address}}" data-secondary="{{x.secondary_address}}">{{x.primary_address}},{{x.secondary_address}}</td>
                         <td class="text-center location-city">{{x.city}}</td>
                         <td class="text-center location-state">{{x.state}}</td>

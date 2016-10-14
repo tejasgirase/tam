@@ -1,13 +1,12 @@
 var pd_data = {};
 
 app.controller("doctorMenuController",function($scope,$state,$stateParams,tamsaFactories){
-  console.log("6"); 
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             console.log("called");
             $scope.level = data.level;
@@ -17,7 +16,7 @@ app.controller("doctorMenuController",function($scope,$state,$stateParams,tamsaF
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 });

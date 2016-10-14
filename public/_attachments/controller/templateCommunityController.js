@@ -1,12 +1,12 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("templateCommunityController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -20,9 +20,9 @@ app.controller("templateCommunityController",function($scope,$state,$stateParams
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 
   function getCommunityTemplates(){
     $(".tab-pane").removeClass("active");

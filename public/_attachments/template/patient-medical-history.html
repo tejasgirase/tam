@@ -153,19 +153,19 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr ng-if="immunizataion_nodata">
-                                <td colspan="7">No Records are Found.</td>
-                              </tr>
-                              <tr ng-if="immunizataion_data_len" dir-paginate="x in immunizataion_data | itemsPerPage : 5" class="immunization-list animate-if">
-                                <td class="text-center immunization-name">{{x.immunization_name}}</td>
-                                <td class="text-center immunization-dose">{{x.dose}}</td>
-                                <td class="text-center immunization-date">{{x.date}}</td>
+                              <tr dir-paginate="x in immunizataion_data | itemsPerPage : 5" class="immunization-list" ng-show="(immunizataion_data.length)">
+                                <td class="text-center immunization-name">{{((x.immunization_name) ? x.immunization_name : "NA")}}</td>
+                                <td class="text-center immunization-dose">{{((x.dose) ? x.dose : "NA")}}</td>
+                                <td class="text-center immunization-date">{{((x.date) ? x.date : "NA")}}</td>
                                 <td class="text-center immunization-injected-name">{{((x.injected_name) ? x.injected_name : "NA")}}</td>
                                 <td class="text-center immunization-notes">{{((x.notes) ? x.notes : 'NA')}}</td>
                                 <td class="text-center immunization-status">{{((x.status) ? x.status : 'NA')}}</td>
                                 <td class="text-center">
                                   <a class="mrgright1 link edit_immunization_record" data-toggle="tab" data-action="Edit" title="Edit"><span role="button" class="glyphicon glyphicon-edit"></span></a><a class="mrgright1 link delete_immunization_record" data-toggle="tab" title="Delete"><span data-toggle="modal" role="button" class="glyphicon glyphicon-trash"></span></a>
                                 </td>
+                              </tr>
+                              <tr ng-show="!(immunizataion_data.length)">
+                                <td colspan="7">No Records are Found.</td>
                               </tr>
                             </tbody>
                           </table>
@@ -991,100 +991,6 @@
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                       <div class="form-group">
                         <select multiple="multiple" class="form-control placeholder-no-fix my_multiselect" type="text" id="lo_tests">
-                          <optgroup label="Urine Test">
-                            <option>Albumin</option>
-                            <option>Sugar</option>
-                            <option>Microscopy</option>
-                            <option>Bile salt</option>
-                            <option>Bile pigments</option>
-                            <option>Urobilinogen</option>
-                            <option>Ketone Bodies</option>
-                            <option>BenceJones Protein</option>
-                            <option>Specific Gravity</option>
-                            <option>Pregnancy Test</option>
-                            <option>Complete Urine examination</option>
-                          </optgroup>
-                          <optgroup label="Hematology">
-                            <option>Hb/TC/DC/ESR</option>
-                            <option>Prothrombin time</option>
-                            <option>Absolute Eosinophil count</option>
-                            <option>Blood Group : ABO</option>
-                            <option>Blood Group : Rh</option>
-                            <option>Blood Picture (Peripheria smear)</option>
-                            <option>Platelet Count</option>
-                            <option>Absolute Eosinophil Count</option>1
-                          </optgroup>
-                          <optgroup label="MP/MF">
-                            <option>BT,CT</option>
-                            <option>PT,APT</option>
-                          </optgroup>
-                          <optgroup label="Infective profile">
-                            <option>Tridot</option>
-                            <option>HBS AG,HCV</option>
-                            <option>Widal</option>
-                            <option>PS for MP</option>
-                            <option>PF/PV Antigen</option>
-                            <option>VDRL</option>
-                          </optgroup>
-                          <optgroup label="BONE&amp;Joint Profile">
-                            <option>RA Test</option>
-                            <option>ALK Phosphatase</option>
-                            <option>C Reactive Protein</option>
-                            <option>ESR</option>
-                            <option>Urine for BJP</option>
-                            <option>ASO</option>
-                          </optgroup>
-                          <optgroup label="Diabetic Profile">
-                            <option>Fasting Blood Sugar</option>
-                            <option>Random Blood Sugar</option>
-                            <option>Post Pranidal Blood Sugar</option>
-                            <option>Micro Albuminuria</option>
-                            <option>Glyco Hb AIC</option>
-                            <option>Serum Cholesterol</option>
-                            <option>Serum Triglycerides</option>
-                            <option>HDL/LDL/VLDL</option>
-                          </optgroup>
-                          <optgroup label="Renal Profile">
-                            <option>Blood Urea</option>
-                            <option>Serum Creatinine</option>
-                            <option>Serum Uric Acid</option>
-                            <option>Serum Electrolytes</option>
-                          </optgroup>
-                          <optgroup label="Liver Profile">
-                            <option>Serum Bilirubin</option>
-                            <option>ALK Phosphatase</option>
-                            <option>SGOT</option>
-                            <option>SGPT</option>
-                            <option>A/G Ratio</option>
-                            <option>HBS.Ag.</option>
-                          </optgroup>
-                          <optgroup label="M.I. Profile">
-                            <option>CK-MB</option>
-                            <option>SGOT</option>
-                            <option>LDH</option>
-                            <option>Triponin-T</option>
-                          </optgroup>
-                          <optgroup label="Lipid Profile">
-                            <option>Lipid Profile</option>
-                          </optgroup>
-                          <optgroup label="Others">
-                            <option>Stool-OVA</option>
-                            <option>Stool-Cysts</option>
-                            <option>Stool-Occult Blood</option>
-                            <option>Sputum AFB</option>
-                          </optgroup>
-                          <optgroup label="Montoux Test">
-                            <option>T3 T4 TSH</option>
-                          </optgroup>
-                          <optgroup label="S.Amylase">
-                            <option>S.Amylase</option>
-                          </optgroup>
-                          <optgroup label="ECG">
-                            <option>ECG</option>
-                          </optgroup>
-                          <optgroup label="Serum Electrolytes">
-                            <option>Serum Electrolytes</option>
-                          </optgroup>
                         </select>
                       </div>
                     </div>

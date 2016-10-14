@@ -1,7 +1,6 @@
 // var pouchdb = new PouchDB('localpouch'),
 var document_added_from;
-// $.couch.urlPrefix = "http://192.168.0.66:5984";
-$.couch.urlPrefix = "https://handiffectleserionythent:3b7d6f6094557af528205e8533f5aeaf7015a2e2@nirmalpatel59.cloudant.com";
+
 //var remoteCouch = attachments_url;
 //syncDom.setAttribute('data-sync-state', 'syncing');
 // pouchdb.changes({
@@ -93,26 +92,26 @@ $(document).ready(function(){
   var override;
   var fieldArray = [];
   var pd_data;
-/*cloudant session comment starts*/
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-  //       $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-  //         success: function(data) {
-  //           pd_data = data;
-  //           getReplicationMasterSource();
-  //           generateDueTaskNotification();
-  //         },
-  //         error: function(status) {
-  //           console.log(status);
-  //         }
-  //       });
-  //     }
-  //   }
-  // });
-/*cloudant session comment ends*/
+
+  $.couch.session({
+    success: function(data) {
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+          success: function(data) {
+            pd_data = data;
+            getReplicationMasterSource();
+            generateDueTaskNotification();
+          },
+          error: function(status) {
+            console.log(status);
+          }
+        });
+      }
+    }
+  });
+
   // $("#practice_dashboard_link").click(function () {
   //   $('.pd').hide('slow');
   //   resetmenu();
@@ -637,7 +636,7 @@ $(document).ready(function(){
     $.fn.modal.Constructor.prototype.enforceFocus = function () { };
   });
   
-  // window.setInterval(function(){ getNotificationsMassege(); }, 60000);
+  window.setInterval(function(){ getNotificationsMassege(); }, 60000);
 
   // $("body").on("click","#upload_files_modal",function(){
   //   showUploadFilesModal();

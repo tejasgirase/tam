@@ -331,7 +331,9 @@ app.factory('tamsaFactories', function($state) {
                 userinfo = data.rows[0].doc;
                 userinfo.date_of_birth = moment(userinfo.date_of_birth).format("YYYY-MM-DD");
                 if(meddata.rows.length > 0){
-                  userinfo_medical = meddata.rows[0].doc;  
+                  userinfo_medical = meddata.rows[0].doc
+                }else{
+                  console.log("medical info doc not found");
                 }
                 $(".pd").show('slow');
                 $(".pd").css('display','inline-block'); 
@@ -1115,7 +1117,7 @@ app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvid
         templateUrl: 'template/footer.html',
       }
     }
-  });
+  })
   
   // modalStateProvider.state('dailydashboard.patient_charting_templates', {
   //   url: '/patient_charting_templates/:template_state/:template_id',

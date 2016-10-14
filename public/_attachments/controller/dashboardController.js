@@ -1,103 +1,41 @@
 var d    = new Date();
 var pd_data = {};
 var ebill_pref;
-// $.couch.urlPrefix = "http://192.168.0.66:5984";
-$.couch.urlPrefix = "https://nirmalpatel59:nirmalpatel@nirmalpatel59.cloudant.com";
 app.controller("dashboardController",function($scope,$state,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-  //       //backbefore();
-  //       $('.pd').hide('slow');
-  //       resetmenu();
-  //       $("#practice_dashboard").addClass("active");
-  //       $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-  //         success: function(data) {
-  //           pd_data = data;
-  //           $scope.level = data.level;
-  //           $scope.dhp_code = data.dhp_code;
-  //           displayConfigurableModules();
-  //           $scope.$apply();
-  //           tamsaFactories.sharedBindings();
-  //           tamsaFactories.pdBack();
-  //           tamsaFactories.displayDoctorInformation(data);
-  //           dashboardEventBindings();
-  //           getNotifications(data._id);
-  //           getDueTasks();
-  //           getTodaysAppointments();
-  //           //getEprescribe();
-  //           getEbilling();
-  //           getTotalNumberOfPatients();
-  //           getPendingRequestSummary();
-  //           getReferCount();
-  //         },
-  //         error: function(status) {
-  //             console.log(status);
-  //         }
-  //       });
-  //     }
-  //   }
-  // });
-  
-  $('.pd').hide('slow');
-  resetmenu();
-  $("#practice_dashboard").addClass("active");
-  // $.ajax({
-  //   url:"/api/open",
-  //   method:"GET",
-  //   data:{"openDocID":"org.couchdb.user:n@n.com"},
-  //   success:function(data) {
-  //     console.log(data);
-  //     pd_data = data;
-  //     console.log("data called");
-  //     return false;
-  //     // $scope.level = data.level;
-  //     // $scope.dhp_code = data.dhp_code;
-  //     // displayConfigurableModules();
-  //     // $scope.$apply();
-  //     // tamsaFactories.sharedBindings();
-  //     // tamsaFactories.pdBack();
-  //     // tamsaFactories.displayDoctorInformation(data);
-  //     // dashboardEventBindings();
-  //     // getNotifications(data._id);
-  //     // getDueTasks();
-  //     // getTodaysAppointments();
-  //     // //getEprescribe();
-  //     // getEbilling();
-  //     // getTotalNumberOfPatients();
-  //     // getPendingRequestSummary();
-  //     // getReferCount();
-  //   },
-  //   error:function() {
-
-  //   }
-  // });
-  $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com", {
+  $.couch.session({
     success: function(data) {
-      pd_data = data;
-      $scope.level = data.level;
-      $scope.dhp_code = data.dhp_code;
-      displayConfigurableModules();
-      $scope.$apply();
-      tamsaFactories.sharedBindings();
-      tamsaFactories.pdBack();
-      tamsaFactories.displayDoctorInformation(data);
-      dashboardEventBindings();
-      getNotifications(data._id);
-      getDueTasks();
-      getTodaysAppointments();
-      getEprescribe();
-      getEbilling();
-      getTotalNumberOfPatients();
-      getPendingRequestSummary();
-      getReferCount();
-    },
-    error: function(status,error,reason) {
-      console.log(status);
-      console.log(error);
-      console.log(reason);
+      if(data.userCtx.name == null)
+         window.location.href = "index.html";
+      else {
+        //backbefore();
+        $('.pd').hide('slow');
+        resetmenu();
+        $("#practice_dashboard").addClass("active");
+        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+          success: function(data) {
+            pd_data = data;
+            $scope.level = data.level;
+            $scope.dhp_code = data.dhp_code;
+            displayConfigurableModules();
+            $scope.$apply();
+            tamsaFactories.sharedBindings();
+            tamsaFactories.pdBack();
+            tamsaFactories.displayDoctorInformation(data);
+            dashboardEventBindings();
+            getNotifications(data._id);
+            getDueTasks();
+            getTodaysAppointments();
+            //getEprescribe();
+            getEbilling();
+            getTotalNumberOfPatients();
+            getPendingRequestSummary();
+            getReferCount();
+          },
+          error: function(status) {
+              console.log(status);
+          }
+        });
+      }
     }
   });
 
@@ -105,8 +43,8 @@ app.controller("dashboardController",function($scope,$state,tamsaFactories){
     $.couch.db(db).view("tamsa/getMiscSetting", {
       success: function(data) {
         if(data.rows.length > 0) {
-          if(data.rows[0].value.enable_front_disk) $scope.configurable_level = true;
-          else $scope.configurable_level = false;
+          if(data.rows[0].value.enable_front_disk) $scope.configurable_level = true
+          else $scope.configurable_level = false
           $scope.$apply();
         }else {
           return true;
@@ -117,7 +55,7 @@ app.controller("dashboardController",function($scope,$state,tamsaFactories){
         $("html, body").animate({scrollTop: 0}, 'slow');
         return false;
       },
-      key:[pd_data._id, pd_data.dhp_code],
+      key: [pd_data._id,pd_data.dhp_code],
       include_docs:true
     });
   }
@@ -203,8 +141,7 @@ function getReferCount(){
       return false;
     },
     key : pd_data._id,
-    reduce: true,
-    group:true
+    reduce: true
   });
 }
 
@@ -248,7 +185,7 @@ function getNotifications(key) {
         if (data.rows[i].key[2] == key) {
           notifications =  '<div class="col-lg-12"><div class="doc_msg"><i class="glyphicon glyphicon-remove icn referral_notification" r_id="'+data.rows[i].id+'"></i><p>Dr '+data.rows[i].value.doctor+' has completed the Referral</p></div></div>';
         }
-      }
+      };
       $("#notifications").html(notifications);
     },
     error: function(status, error, reason) {
@@ -401,10 +338,8 @@ function getEprescribe() {
 function getPendingRequestSummary() {
   $.couch.db(db).view("tamsa/getTaskManagerSettings",{
     success:function(tmdata){
-      var no_of_days;
-      if(tmdata.rows.length > 0) no_of_days = tmdata.rows[0].doc.request_autoremove_duration;
-      else no_of_days = 7;
-      // TODO :: uncomment after node-cloudant library completed
+      if(tmdata.rows.length > 0) var no_of_days = tmdata.rows[0].doc.request_autoremove_duration
+      else var no_of_days = 7
       $.couch.db(db).list("tamsa/getLatestRequestList", "getRequestList", {
       startkey:[pd_data._id],
       endkey:[pd_data._id,{},{}],
