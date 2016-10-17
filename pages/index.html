@@ -252,13 +252,14 @@ function(e){  });
 <script type="text/javascript">
   var document_added_from;
   $(document).ready(function(){
-    $.couch.session({
-      success: function(data) {
-        if(data.userCtx.name)
-           window.location = "my-account.html";
-      }
-    });
+    // $.couch.session({
+    //   success: function(data) {
+    //     if(data.userCtx.name)
+    //        window.location = "my-account.html";
+    //   }
+    // });
 
+    // window.location.href = window.location.href.split('#')[0];
     $('#username').focus();
 
     $('.enter').on('keydown', function(e) {
@@ -294,13 +295,15 @@ function(e){  });
         success: function(data){
           console.log(data);
           if(data) {
-            window.location = "my-account.html";
-            renderAccountPage();
+            // window.location = "my-account.html";
+            renderAccountPage(data);
           }else {
+            $("#Login").removeClass("ajax-loader-large");
             $("#validationtext").text("Credentials are not valid.");
           }
         },
         error: function(data,error,reason) {
+          $("#Login").removeClass("ajax-loader-large");
           if(data.status == 401) {
             $("#validationtext").text("Email or Passowrd is wrong."); 
           }else {
@@ -363,11 +366,25 @@ function(e){  });
     });
   });
 
-  function renderAccountPage() {
+  function renderAccountPage(data) {
     $.ajax({
-      url:"/api/myaccount",
+      url:"/myaccount",
       type:"GET",
+      data:data,
       success:function(data) {
+        if(data) {
+          window.location = "/myaccount";
+          // $.couch.db(db).openDoc(data.id, {
+          //   success:function(resdata) {
+
+          //   },
+          //   error:function(data,error,reason){
+          //     newAlert("danger",reason);
+          //     $("html, body").animate({scrollTop: 0}, 'slow');
+          //     return false;
+          //   }
+          // });
+        }
       },
       error:function(data,error,reason){
         newAlert("danger",reason);

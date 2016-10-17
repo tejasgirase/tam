@@ -15,17 +15,6 @@ var https        = require("https"),
 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
-// app.use(express.static("public/_attachments/controller"));
-// app.use(express.static("public/_attachments/fonts"));
-// app.use(express.static("public/_attachments/images"));
-// app.use(express.static("public/_attachments/img"));
-// app.use(express.static("public/_attachments/js"));
-// app.use(express.static("public/_attachments/json_template"));
-// app.use(express.static("public/_attachments/library"));
-// app.use(express.static("public/_attachments/script"));
-// app.use(express.static("public/_attachments/style"));
-// app.use(express.static("public/_attachments/template"));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
@@ -36,25 +25,33 @@ require("./src/config/passport")(app);
 function ensureAuthenticated(req, res, next) {
 	console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
-  	console.log("in if 28");
-     return next();
+   return next();
   } else {
-  	console.log("in else 30");
-     return res.send(401);
-  }
+    res.redirect("/");
+  }	
+}
+
+function ensureLoginAuthenticated(req, res, next) {
+	console.log(req.isAuthenticated());
+  if (!req.isAuthenticated()) {
+   return next();
+  } else {
+    res.redirect("/myaccount");
+  }	
 }
 
 app.engine('html', cons.swig);
-app.set('views', path.join(__dirname, 'public/_attachments/'));
+app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'html');
 
-app.get("/",function(req,res) {
+app.get("/",ensureLoginAuthenticated,function(req,res) {
+	console.log(req.user);
+	console.log(req.isAuthenticated());
 	res.render("index.html");
 });
 
 app.post("/api/login",passport.authenticate('local'), function(req,res) {
-	console.log(req.body);
-	res.send({"request_body":req.body});
+	res.send({"id":req.user});
 });
 
 // app.get("/my-account.html",ensureAuthenticated,function(req,res) {
@@ -62,10 +59,12 @@ app.post("/api/login",passport.authenticate('local'), function(req,res) {
 // });
 
 app.get("/myaccount",ensureAuthenticated,function(req,res) {
+	console.log(req.user);
+	console.log(req.isAuthenticated());
 	res.render("my-account.html");
 });
 
-app.get("/api/open",function(req,res) {
+app.get("/api/open",ensureAuthenticated,function(req,res) {
 	var opendb = cloudant.db.use(req.query.db);
 	opendb.get(req.query._id,function(err, body) {
 		if(!err) {
@@ -165,7 +164,7 @@ app.post("/api/remove/:id",function(req,res) {
 https.createServer({
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
-}, app).listen(55554,"192.168.0.66", function() {
+}, app).listen(3000,"192.168.0.66", function() {
 	console.log("server is running on port 55554");
 });
 

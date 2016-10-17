@@ -1116,9 +1116,9 @@
       contentType: "application/json",
       headers:{"Accept": "application/json"}
     };
-    console.log(options);
+    // console.log(options);
     options = $.extend({successStatus: 200}, options);
-    console.log(options);
+    // console.log(options);
     ajaxOptions = $.extend(defaultAjaxOpts, ajaxOptions);
     errorMessage = errorMessage || "Unknown error";
     timeStart = (new Date()).getTime();
@@ -1132,14 +1132,14 @@
         }
       },
       complete: function(req) {
-        console.log(req);
+        // console.log(req);
         var resp;
         var reqDuration = (new Date()).getTime() - timeStart;
         try {
-          console.log("try");
+          // console.log("try");
           resp = $.parseJSON(req.responseText);
         } catch(e) {
-          console.log("catch");
+          // console.log("catch");
           if (options.error) {
             options.error(req.status, req, e);
           } else {
@@ -1151,16 +1151,16 @@
           options.ajaxStart(resp);
         }
         if (req.status == options.successStatus) {
-          console.log("in if");
+          // console.log("in if");
           if (options.beforeSuccess) options.beforeSuccess(req, resp, reqDuration);
           if (options.success){options.success(resp, reqDuration);}
         } else if (options.error) {
-          console.log("in else if");
+          // console.log("in else if");
           options.error(req.status, resp && resp.error ||
                         errorMessage, resp && resp.reason || "no response",
                         reqDuration);
         } else {
-          console.log("in else");
+          // console.log("in else");
           throw errorMessage + ": " + resp.reason;
         }
       }
