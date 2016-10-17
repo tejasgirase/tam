@@ -34,6 +34,15 @@ function ensureAuthenticated(req, res, next) {
   }	
 }
 
+function ensureAPIAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+   return next();
+  } else {
+  	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.status(401).json({ error: "Login Required", reason:"Login Required"});
+  }	
+}
+
 function ensureLoginAuthenticated(req, res, next) {
 	console.log(req.isAuthenticated());
   if (!req.isAuthenticated()) {
@@ -57,6 +66,14 @@ app.post("/api/login",passport.authenticate('local'), function(req,res) {
 	res.send({"id":req.user});
 });
 
+app.post("/api/logout",function(req,res) {
+	if(req.user) {
+		req.session.destroy();
+		req.logout();
+		res.status("200").send({"message": "successfully logged out."});
+	}
+});
+
 // app.get("/my-account.html",ensureAuthenticated,function(req,res) {
 // 	res.render("my-account.html");
 // });
@@ -67,7 +84,7 @@ app.get("/myaccount",ensureAuthenticated,function(req,res) {
 	res.render("my-account.html");
 });
 
-app.get("/api/open",ensureAuthenticated,function(req,res) {
+app.get("/api/open",ensureAPIAuthenticated,function(req,res) {
 	var opendb = cloudant.db.use(req.query.db);
 	opendb.get(req.query._id,function(err, body) {
 		if(!err) {

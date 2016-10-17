@@ -2543,9 +2543,15 @@ function deleteSubUser() {
 }
 
 function newAlert (type, message) {
-  $("#alert-area").html("");
-  $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p> " + message + " </p></div>"));
-  $(".alert").delay(4000).fadeOut("slow", function () { $(this).remove(); });
+  if(message == "Login Required") {
+    $("#alert-area").html("");
+    $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p>Session Expired. Please Logged In again.</p></div>"));
+    $(".alert").delay(1000).fadeOut("slow", function () { $(this).remove(); window.location.href = "/";});
+  }else {
+    $("#alert-area").html("");
+    $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p> " + message + " </p></div>"));
+    $(".alert").delay(4000).fadeOut("slow", function () { $(this).remove(); });  
+  }
 }
 
 function newAlertForModal (type, message, id) {

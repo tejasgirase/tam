@@ -10,7 +10,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
   //     if(data.userCtx.name == null) window.location.href = "index.html"
   //     else {
         $("#personal_details_in_link").closest(".panel").block({message: "Please Wait..."});
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+        $.couch.db("_users").openDoc(pd_data._id, {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -29,9 +29,9 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
             return false;
           }
         });
-        tamsaFactories.pdBack();
-        eventBindingsForPracticeInfo();
-        tamsaFactories.sharedBindings();
+        // tamsaFactories.pdBack();
+        // eventBindingsForPracticeInfo();
+        // tamsaFactories.sharedBindings();
   //     }
   //   }
   // });
