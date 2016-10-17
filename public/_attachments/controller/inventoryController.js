@@ -770,7 +770,7 @@ function validateImportInventoryDetails(data){
     newAlert('danger', "Invalid CSV file. Please import valid csv file.");
     $('html, body').animate({scrollTop: 0}, 'slow');
     return false;
-  }else if(data[0][0] != "Category" || data[0][1] != "Product" || data[0][2]  != "Manf" || data[0][3]  != "Code (8 digit max)" || data[0][4]  != "Lot (8 digit max)" || data[0][5]  != "Qty (Remaining/ Total)" || data[0][6]  != "Expiration Date (DD/MM/YYYY)" || data[0][7]  != "Cost" || data[0][8]  != "Price" || data[0][9]  != "Status" || data[0][10]  != "Notes" || data[0][11]  != "Date Added to Inv (DD/MM/YYYY)"){
+  }else if(data[0][0] != "Category" || data[0][1] != "Product" || data[0][2]  != "Manf" || data[0][3]  != "Code (8 digit max)" || data[0][4]  != "Lot (8 digit max)" || data[0][5]  != "Qty (Remaining/ Total)" || data[0][6]  != "Expiration Date (YYYY-MM-DD)" || data[0][7]  != "Cost" || data[0][8]  != "Price" || data[0][9]  != "Status" || data[0][10]  != "Notes" || data[0][11]  != "Date Added to Inv (YYYY-MM-DD)"){
     newAlert('danger', "Invalid CSV file. Please import valid csv file.");
     $('html, body').animate({scrollTop: 0}, 'slow');
     return false;
