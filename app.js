@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var https       = require("https");
 var fs          = require("fs");
 var express     = require("express");
@@ -13,9 +14,35 @@ var Port        = config.PORT;
 var Local_ip    = config.LOCAL_IP;
 
 // app.use(express.static('public/'));
-app.use(express.static("public/_attachments/"));
+app.use(express.static("public/_attachments"));
+// app.use(express.static("public/_attachments/controller"));
+// app.use(express.static("public/_attachments/fonts"));
+// app.use(express.static("public/_attachments/images"));
+// app.use(express.static("public/_attachments/img"));
+// app.use(express.static("public/_attachments/js"));
+// app.use(express.static("public/_attachments/json_template"));
+// app.use(express.static("public/_attachments/library"));
+// app.use(express.static("public/_attachments/script"));
+// app.use(express.static("public/_attachments/style"));
+// app.use(express.static("public/_attachments/template"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(session({secret:'cloudant'}));
+var authRoutes = require("./src/routes/authRoutes");
+require("./src/config/passport")(app);
+
+function ensureAuthenticated(req, res, next) {
+	console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+  	console.log("in if 28");
+     return next();
+  } else {
+  	console.log("in else 30");
+     return res.send(401);
+  }
+}
 
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'public/_attachments/'));
@@ -25,7 +52,16 @@ app.get("/",function(req,res) {
 	res.render("index.html");
 });
 
-app.get("/my-account.html",function(req,res) {
+app.post("/api/login",passport.authenticate('local'), function(req,res) {
+	console.log(req.body);
+	res.send({"request_body":req.body});
+});
+
+// app.get("/my-account.html",ensureAuthenticated,function(req,res) {
+// 	res.render("my-account.html");
+// });
+
+app.get("/myaccount",ensureAuthenticated,function(req,res) {
 	res.render("my-account.html");
 });
 

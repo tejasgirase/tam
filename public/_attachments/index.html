@@ -282,31 +282,55 @@ function(e){  });
     
     $("#Login").click(function(){
       $("#Login").addClass("ajax-loader-large");
-      var uname    = $("#username").val();
-      var password = $("#Password").val();
-      $.couch.login({
-          name: uname,
-          password: password,
-          success: function(data) {   
-            var expires_day = 365;
-            if ($('#rememberme').is(':checked')) {
-              $.cookie('pm[uname]', uname, { expires: expires_day });
-              $.cookie('pm[password]', password, { expires: expires_day });
-              $.cookie('pm[remember]', true, { expires: expires_day });
-            }
-            else {
-              // reset cookies.
-              $.cookie('pm[uname]', null);
-              $.cookie('pm[password]', null);
-              $.cookie('pm[remember]', false);
-            }
+      var userdata = {
+        "username": $("#username").val(),
+        "password": $("#Password").val()
+      };
+      $.ajax({
+        url:"/api/login",
+        type:"POST",
+        crossDomain: true,
+        data:userdata,
+        success: function(data){
+          console.log(data);
+          if(data) {
             window.location = "my-account.html";
-          },
-          error: function(data, error, reason) {
-            $("#validationtext").text("Email or Password is incorrect.");
-            $("#Login").removeClass("ajax-loader-large");
+            renderAccountPage();
+          }else {
+            $("#validationtext").text("Credentials are not valid.");
           }
+        },
+        error: function(data,error,reason) {
+          if(data.status == 401) {
+            $("#validationtext").text("Email or Passowrd is wrong."); 
+          }else {
+            console.log(data.responseText);
+          }
+        }
       });
+      // $.couch.login({
+      //     name: uname,
+      //     password: password,
+      //     success: function(data) {   
+      //       var expires_day = 365;
+      //       if ($('#rememberme').is(':checked')) {
+      //         $.cookie('pm[uname]', uname, { expires: expires_day });
+      //         $.cookie('pm[password]', password, { expires: expires_day });
+      //         $.cookie('pm[remember]', true, { expires: expires_day });
+      //       }
+      //       else {
+      //         // reset cookies.
+      //         $.cookie('pm[uname]', null);
+      //         $.cookie('pm[password]', null);
+      //         $.cookie('pm[remember]', false);
+      //       }
+      //       window.location = "my-account.html";
+      //     },
+      //     error: function(data, error, reason) {
+      //       $("#validationtext").text("Email or Password is incorrect.");
+      //       $("#Login").removeClass("ajax-loader-large");
+      //     }
+      // });
     });
 
     $("#forgot_password_save").click(function() {
@@ -338,4 +362,19 @@ function(e){  });
       $("#forgot_password_eamil").val("");
     });
   });
+
+  function renderAccountPage() {
+    $.ajax({
+      url:"/api/myaccount",
+      type:"GET",
+      success:function(data) {
+      },
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
+      }
+    });  
+  }
+
 </script>

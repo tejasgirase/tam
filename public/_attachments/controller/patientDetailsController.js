@@ -9,7 +9,8 @@ var userinfo_medical = {};
 //       window.location.href = "index.html";
 //     }
 //     else {
-      $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+      $.couch.db("_users").openDoc("org.couchdb.user:n@n.com", {
+      // $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
         success: function(data) {
           pd_data = data;
         },
