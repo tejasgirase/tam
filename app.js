@@ -1,17 +1,20 @@
-var https        = require("https"),
-		fs           = require("fs"),
-		express      = require("express"),
-		PORT         = process.env.PORT || 55554,
-		app          = express(),
-		path         = require("path"),
-		bodyParser   = require("body-parser"),
-		cookieParser = require("cookie-parser"),
-		session      = require("express-session"),
-		passport     = require("passport"),
-		strategy     = require("passport-local").Strategy,
-		cons         = require('consolidate'),
-		Cloudant     = require('cloudant'),
-		cloudant     = Cloudant("https://nirmalpatel59:nirmalpatel@nirmalpatel59.cloudant.com");
+var https       = require("https");
+var fs          = require("fs");
+var express     = require("express");
+var app         = express();
+var cookieParser = require("cookie-parser");
+var session      = require("express-session");
+var passport     = require("passport");
+var strategy     = require("passport-local").Strategy;
+var path        = require("path");
+var bodyParser  = require("body-parser");
+var cons        = require('consolidate');
+var config      = require("./config");
+var Cloudant_ip = config.CLOUDENT_IP;
+var Cloudant    = require('cloudant');
+var cloudant    = Cloudant(Cloudant_ip);
+var Port        = config.PORT;
+var Local_ip    = config.LOCAL_IP;
 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
@@ -164,8 +167,8 @@ app.post("/api/remove/:id",function(req,res) {
 https.createServer({
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
-}, app).listen(3000,"192.168.0.66", function() {
-	console.log("server is running on port 55554");
+}, app).listen(Port,Local_ip, function() {
+	console.log("server is running on port "+Port);
 });
 
 // app.listen(3005,"192.168.0.66", function(){
