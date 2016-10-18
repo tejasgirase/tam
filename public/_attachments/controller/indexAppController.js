@@ -47,9 +47,19 @@ app.controller("indexAppController",function($scope,$state,$stateParams){
         crossDomain: true,
         data:userdata,
         success: function(data){
-          console.log(data);
           if(data) {
-            // window.location = "my-account.html";
+            var expires_day = 365;
+            if ($('#rememberme').is(':checked')) {
+              $.cookie('pm[uname]', uname, { expires: expires_day });
+              $.cookie('pm[password]', password, { expires: expires_day });
+              $.cookie('pm[remember]', true, { expires: expires_day });
+            }
+            else {
+              // reset cookies.
+              $.cookie('pm[uname]', null);
+              $.cookie('pm[password]', null);
+              $.cookie('pm[remember]', false);
+            }
             renderAccountPage(data);
           }else {
             $("#Login").removeClass("ajax-loader-large");

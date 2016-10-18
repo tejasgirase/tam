@@ -5466,7 +5466,7 @@ function addUserDhpCode(row) {
             newAlert("danger",reason);
             $("html, body").animate({scrollTop: 0}, 'slow');
             return false;
-          }`
+          }
       });
     }
    },
