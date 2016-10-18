@@ -4543,7 +4543,7 @@ function getAutoCompleteImages(uvalue,source) {
       if (data2.rows.length > 0) {
         $("#phone_"+uvalue).html(data2.rows[0].value.phone);
         if(data2.rows[0].value._attachments){
-          $("#"+source+uvalue).attr("src", '/'+personal_details_db+'/'+data2.rows[0].id+'/'+Object.keys(data2.rows[0].value._attachments)[0]);
+          $("#"+source+uvalue).attr("src", $.couch.urlPrefix+'/'+personal_details_db+'/'+data2.rows[0].id+'/'+Object.keys(data2.rows[0].value._attachments)[0]);
         }else if(data2.rows[0].value.imgblob){
           $("#"+source+uvalue).attr("src",data2.rows[0].value.imgblob);
         }else{
