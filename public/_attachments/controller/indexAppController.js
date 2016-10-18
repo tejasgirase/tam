@@ -50,8 +50,8 @@ app.controller("indexAppController",function($scope,$state,$stateParams){
           if(data) {
             var expires_day = 365;
             if ($('#rememberme').is(':checked')) {
-              $.cookie('pm[uname]', uname, { expires: expires_day });
-              $.cookie('pm[password]', password, { expires: expires_day });
+              $.cookie('pm[uname]', userdata.username, { expires: expires_day });
+              $.cookie('pm[password]', userdata.password, { expires: expires_day });
               $.cookie('pm[remember]', true, { expires: expires_day });
             }
             else {
