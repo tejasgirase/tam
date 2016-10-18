@@ -38,7 +38,9 @@ function ensureAPIAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
    return next();
   } else {
-  	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  	req.session.destroy();
+  	req.logout();
+  	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     res.status(401).json({ error: "Login Required", reason:"Login Required"});
   }	
 }

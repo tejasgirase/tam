@@ -673,8 +673,10 @@ function searchDHPPatientByNameAutocompleter(search_id,selectEvent,include_image
           response(data.rows);
           $("#"+search_id).removeClass('myloader');
         },
-        error: function(status) {
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         startkey: [keyval,$("#"+search_id).val().trim()],
         endkey: [keyval,$("#"+search_id).val().trim()+"\u9999"],
@@ -749,8 +751,10 @@ function searchPatientsByNameOrDHPIdAutocompleter(search_id,selectEvent,include_
           response(data.rows);
           $("#"+search_id).removeClass('myloader');
         },
-        error: function(status) {
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         startkey: [keyval,$("#"+search_id).val().trim()],
         endkey: [keyval,$("#"+search_id).val().trim()+"\u9999"],
@@ -827,8 +831,10 @@ function searchPatientByNameAutocompleter(search_id,selectEvent,include_image,do
           response(data.rows);
           $("#"+search_id).removeClass('myloader');
         },
-        error: function(status) {
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         startkey: [keyval,$("#"+search_id).val().trim()],
         endkey: [keyval,$("#"+search_id).val().trim()+"\u9999"],
@@ -896,8 +902,10 @@ function searchPatientByDHPIdAutocompleter(search_id,selectEvent,include_image,d
             $("#"+search_id).removeClass('myloader');
             response(data.rows);
           },
-          error: function(status) {
-            console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           },
           startkey:     [dhpcode,doctor_id,$("#"+search_id).val().trim()],
           endkey:       [dhpcode,doctor_id,$("#"+search_id).val().trim()+"\u9999"],
@@ -910,8 +918,10 @@ function searchPatientByDHPIdAutocompleter(search_id,selectEvent,include_image,d
             $("#"+search_id).removeClass('myloader');
             response(data.rows);
           },
-          error: function(status) {
-            console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           },
           startkey:     [dhpcode,$("#"+search_id).val().trim()],
           endkey:       [dhpcode,$("#"+search_id).val().trim()+"\u9999"],
@@ -982,8 +992,10 @@ function searchReferredPatientByNameAutocompleter(search_id,selectEvent,doctor_i
           response(data.rows);
           $("#"+search_id).removeClass('myloader');
         },
-        error: function(status) {
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         startkey: ["N",doctor_id,$("#"+search_id).val().trim()],
         endkey: ["N",doctor_id,$("#"+search_id).val().trim()+"\u9999"],
@@ -1042,8 +1054,10 @@ function searchReferredPatientByDHPIdAutocompleter(search_id,selectEvent,doctor_
             $("#"+search_id).removeClass('myloader');
             response(data.rows);
           },
-          error: function(status) {
-            console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           },
           startkey:     ["N",doctor_id,$("#"+search_id).val().trim()],
           endkey:       ["N",doctor_id,$("#"+search_id).val().trim()+"\u9999"],
@@ -1183,8 +1197,10 @@ function searchDHPDoctorsList(search_id,selectEvent,dhpcode){
           $("#"+search_id).removeClass('myloader');
           response(data.rows);
         },
-        error: function(status) {
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         startkey: [dhpcode, request.term],
         endkey:   [dhpcode, request.term + "\u9999"],
@@ -1262,8 +1278,10 @@ function getPatientProfileForUpdate(user_id){
         return false;
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key: user_id,
   });  
@@ -1574,8 +1592,10 @@ function getLabAndDiagnostics(){
         labCharts(hdl_reading, ldl_reading, tc_reading, tgl_reading, insertDate);
       } 
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [userinfo.user_id, {}],
     endkey: [userinfo.user_id],
@@ -1931,8 +1951,10 @@ function getLabResults(action,type) {
         updateLabResultWithSelectedResult(action);        
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [userinfo.user_id,type,{}],
     endkey: [userinfo.user_id,type],
@@ -2023,8 +2045,10 @@ function getOtherVideoDocuments(){
         $("#other_docs_table tbody").html(other_docs_table.join(''));
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key: userinfo.user_id,
     include_docs: true
@@ -2065,8 +2089,10 @@ function getAlerts() {
       $("#medium_alerts_records tbody").html(''+medium_alerts_records+'');
       $("#high_alerts_records tbody").html(high_alerts_records);
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [userinfo.user_id],
     endkey: [userinfo.user_id, {}, {}]
@@ -2127,8 +2153,10 @@ function getThresholdAlerts() {
         $("#"+data.rows[0].value.ReportFrequency).prop('checked', true);
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key: [pd_data._id, userinfo.user_id, 'Heart Failure']
   });
@@ -2188,8 +2216,10 @@ function getGenericThresholdAlerts() {
         $("#generic_"+data.rows[0].value.ReportFrequency).prop('checked', true);
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key: [pd_data._id, userinfo.user_id, 'Generic']
   });
@@ -2425,8 +2455,10 @@ function updateSubscribersFromUserInfo(userid){
               changeSubscriberDoc(user_data.rows[0].value, data.rows[0].doc);
             }
           },
-          error: function(data,error,reason) {
-            console.log(data);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           },
           startkey: [userid],
           endkey: [userid, {}, {}],
@@ -2435,8 +2467,10 @@ function updateSubscribersFromUserInfo(userid){
         });
       }
     },
-    error: function(data,error,reason) {
-      console.log(data);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key:userid
   });
@@ -2455,10 +2489,12 @@ function changeSubscriberDoc(user_doc, doc) {
       $('html, body').animate({scrollTop: 0}, 'slow');
       return false;
     },
-    error: function(data, error, reason) {
-      console.log(data);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     }
-  })
+  });
 }
 
 function getMedicationOnPatientDashboard(){
@@ -2519,13 +2555,17 @@ function deleteSubUser() {
                   success: function(data) {
                     getSubUsers();
                   },
-                  error: function(status) {
-                    console.log(status);
+                  error:function(data,error,reason){
+                    newAlert("danger",reason);
+                    $("html, body").animate({scrollTop: 0}, 'slow');
+                    return false;
                   }
             }); 
           },
-          error: function(status) {
-            console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           }
         });
 
@@ -2535,7 +2575,7 @@ function deleteSubUser() {
       newAlert('error', reason);
       $('html, body').animate({scrollTop: 0}, 'slow');
     }
-  })
+  });
 
 // added by narendra 23-11-15.
 
@@ -2544,10 +2584,15 @@ function deleteSubUser() {
 
 function newAlert (type, message) {
   if(message == "Login Required") {
+    console.log("in 1");
     $("#alert-area").html("");
     $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p>Session Expired. Please Logged In again.</p></div>"));
-    $(".alert").delay(1000).fadeOut("slow", function () { $(this).remove(); window.location.href = "/";});
+    $(".alert").delay(1000).fadeOut("slow", function () {
+      $(this).remove();
+      window.location.href = "/";
+    });
   }else {
+    console.log("in 2");
     $("#alert-area").html("");
     $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p> " + message + " </p></div>"));
     $(".alert").delay(4000).fadeOut("slow", function () { $(this).remove(); });  
@@ -2579,11 +2624,12 @@ function getPatientComplaints(selector) {
         }else {
           $('.'+selector).append('<li>'+data.rows[i].key[1]+'</li>').animate('slow');
         }
-        
-      };
+      }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [userinfo.user_id],
     endkey: [userinfo.user_id, {}],
@@ -2608,10 +2654,12 @@ function getPatientDiagnoses(selector) {
         }else {
           $('.'+selector).append('<li>'+data.rows[i].key[1]+'</li>').animate('slow');
         }
-      };
+      }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [userinfo.user_id],
     endkey: [userinfo.user_id, {}],
@@ -2710,7 +2758,7 @@ function completeRefferal(r_id) {
                         newAlert('error', reason);
                         $('html, body').animate({scrollTop: 0}, 'slow');
                       }
-                    })
+                    });
                   },
                   error: function(data, error, reason) {
                     newAlert('error', reason);
@@ -2735,20 +2783,22 @@ function completeRefferal(r_id) {
                 newAlert('error', reason);
                 $('html, body').animate({scrollTop: 0}, 'slow');
               }
-            })
+            });
           }
         },
-        error: function(status) {
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         key: [referral.doctor_id, referral.user_id]
       });
-
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     }
-
   });
 }
 
@@ -2927,8 +2977,10 @@ function viewLabImagingOrders(type){
         }
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key:[pd_data._id,userinfo.user_id]
   });
@@ -3099,8 +3151,10 @@ function getSubUsers() {
         $("#sub_users_table tbody").html(sub_users_table.join(''));
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [pd_data._id],
     endkey:   [pd_data._id, {}],
@@ -3141,8 +3195,10 @@ function getListdisplaySubUsers(data){
         $("#not_update_"+data.doc.first_name+""+data.doc.alert_phone).show();
       }
     },
-    error:function(status,error){
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     }
   });
 }
@@ -3472,8 +3528,10 @@ function changeTaskStatus($obj) {
                 }
               });
             },
-            error: function(status) {
-              console.log(status);
+            error:function(data,error,reason){
+              newAlert("danger",reason);
+              $("html, body").animate({scrollTop: 0}, 'slow');
+              return false;
             }
           });
         }      
@@ -3533,8 +3591,10 @@ function reassignTask() {
           }
         });
       },
-      error: function(status) {
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       }
     });
   }
@@ -3567,8 +3627,10 @@ function saveCvg() {
       getCvg();
       // getAnalyticsRange();
     },
-    error: function(data, error, reason) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     }
   });
 }
@@ -3659,8 +3721,10 @@ function getPharmacy() {
       }
       $("#pharmacy_rows tbody").html(pharmacy_rows);
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [pd_data.dhp_code],
     endkey: [pd_data.dhp_code,{}]
@@ -3717,8 +3781,10 @@ function PhSearch() {
       }
       $("#pharmacy_rows tbody").html(pharmacy_rows);
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key: [pd_data.dhp_code,$("#phs_city").val()]
   });
@@ -3980,8 +4046,10 @@ function openLabReport(lab_result_id) {
           $("#lab_result_medical_details, #labdetails").hide();
         }
       },
-      error: function(status) {
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       }
     });
   }
@@ -4050,14 +4118,18 @@ function saveUserPic() {
                                 success: function(data) {
                                   getUserpicAndInfo(data);
                                 },
-                                error: function(status) {
-                                  console.log(status);
+                                error:function(data,error,reason){
+                                  newAlert("danger",reason);
+                                  $("html, body").animate({scrollTop: 0}, 'slow');
+                                  return false;
                                 },
                                 key: userinfo.user_id
                               });  
                             },
                             error:function(data,error,reason){
-                              console.log(reason);
+                              newAlert("danger",reason);
+                              $("html, body").animate({scrollTop: 0}, 'slow');
+                              return false;
                             }
                           });   
                         }else{
@@ -4073,15 +4145,19 @@ function saveUserPic() {
                             success: function(data) {
                               getUserpicAndInfo(data);
                             },
-                            error: function(status) {
-                              console.log(status);
+                            error:function(data,error,reason){
+                              newAlert("danger",reason);
+                              $("html, body").animate({scrollTop: 0}, 'slow');
+                              return false;
                             },
                             key: userinfo.user_id
                           });
                         }
                       },
                       error:function(data,error,reason){
-                        console.log(reason);
+                        newAlert("danger",reason);
+                        $("html, body").animate({scrollTop: 0}, 'slow');
+                        return false;
                       }
                     });
                   },
@@ -4094,7 +4170,9 @@ function saveUserPic() {
                 });
               },
               error:function(data,error,reason){
-                console.log(reason);
+                newAlert("danger",reason);
+                $("html, body").animate({scrollTop: 0}, 'slow');
+                return false;
               }
             });
           }
@@ -4137,8 +4215,10 @@ function saveUserPicFromWebcam(){
               success: function(data) {
                 getUserpicAndInfo(data);
               },
-              error: function(status) {
-                console.log(status);
+              error:function(data,error,reason){
+                newAlert("danger",reason);
+                $("html, body").animate({scrollTop: 0}, 'slow');
+                return false;
               },
               key: userinfo.user_id
             });  
@@ -4436,8 +4516,10 @@ function getDocuments() {
       $("#document_table tbody").html(document_table.join(''));
     }
    },
-   error: function(status) {
-     console.log(status);
+   error:function(data,error,reason){
+     newAlert("danger",reason);
+     $("html, body").animate({scrollTop: 0}, 'slow');
+     return false;
    },
    startkey: [pd_data._id],
    endkey: [pd_data._id, {}, {}],
@@ -4551,8 +4633,10 @@ function getAutoCompleteImages(uvalue,source) {
         }
       }
     },
-    error: function(status2) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key: uvalue,
     limit: 1
@@ -4729,8 +4813,10 @@ function saveNSMonitoring(id){
             $.couch.db(db).removeDoc(extra_doc, {
                 success: function(data) {
                 },
-                error: function(status) {
-                  console.log(status);
+                error:function(data,error,reason){
+                  newAlert("danger",reason);
+                  $("html, body").animate({scrollTop: 0}, 'slow');
+                  return false;
                 }
             }); 
           };
@@ -4739,13 +4825,17 @@ function saveNSMonitoring(id){
           success: function(data) {
             getNSmonitoring(id);
           },
-          error: function(data, error, reason) {
-            console.log(error);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           }
         });
       },
-      error: function(status) {
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       key: [pd_data._id,userinfo.user_id],
       include_docs: true
@@ -4763,8 +4853,10 @@ function saveNSMonitoring(id){
             $.couch.db(db).removeDoc(extra_doc, {
                 success: function(data) {
                 },
-                error: function(status) {
-                  console.log(status);
+                error:function(data,error,reason){
+                  newAlert("danger",reason);
+                  $("html, body").animate({scrollTop: 0}, 'slow');
+                  return false;
                 }
             }); 
           };
@@ -4797,7 +4889,10 @@ function getNSmonitoring(id) {
           $.couch.db(db).removeDoc(doc, {
             success: function(data) {
             },
-            error: function(data, error, reason) {
+            error:function(data,error,reason){
+              newAlert("danger",reason);
+              $("html, body").animate({scrollTop: 0}, 'slow');
+              return false;
             }
           });
 
@@ -4903,8 +4998,10 @@ function addByDhpId() {
                     $("#patient_add_dhp_id").val("");
                     getTotalNumberOfPatients();
                   },
-                  error: function(status) {
-                    console.log(status);
+                  error:function(data,error,reason){
+                    newAlert("danger",reason);
+                    $("html, body").animate({scrollTop: 0}, 'slow');
+                    return false;
                   }
                 });
               }else{
@@ -4954,14 +5051,18 @@ function addByDhpId() {
                   newAlert("success", "Patient has been successfully subscribed to selected doctors.");
                   $("#patient_add_dhp_id").val("");
                 },
-                error: function(status) {
-                  console.log(status);
+                error:function(data,error,reason){
+                  newAlert("danger",reason);
+                  $("html, body").animate({scrollTop: 0}, 'slow');
+                  return false;
                 }
               });
             }
           },
           error:function(data,error,reason){
-            newAlert("danger", reason);
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           },
           key:data.rows[0].key[1] // user_id
         });
@@ -5010,14 +5111,18 @@ function addByDhpId() {
                   success: function(data) {
                     console.log("condition documents succeessfully added.");
                   },
-                  error: function(status) {
-                    console.log(status);
+                  error:function(data,error,reason){
+                    newAlert("danger",reason);
+                    $("html, body").animate({scrollTop: 0}, 'slow');
+                    return false;
                   }
                 });
               }
             },
             error:function(data,error,reason){
               newAlert("danger",reason);
+              $("html, body").animate({scrollTop: 0}, 'slow');
+              return false;
             },
             startkey: [userinfo.user_id, "From Doctor Note"],
             endkey:   [userinfo.user_id, "From Doctor Note",{}]
@@ -5028,8 +5133,10 @@ function addByDhpId() {
         newAlert("danger", "No Patient found with the given DHP code.");
       }
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [$("#patient_add_dhp_id").val().trim()],
     endkey: [$("#patient_add_dhp_id").val().trim(), {}],
@@ -5306,14 +5413,18 @@ function deleteUserId(user_id) {
            success: function(data) {
                console.log(data);
           },
-          error: function(status) {
-              console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           }
       });
     };
    },
-   error: function(status) {
-     console.log(status);
+   error:function(data,error,reason){
+     newAlert("danger",reason);
+     $("html, body").animate({scrollTop: 0}, 'slow');
+     return false;
    },
    key: user_id
   });
@@ -5327,8 +5438,10 @@ function addPatientDHPToSubscriberDoc() {
       addUserDhpCode(data.rows[i].doc);
     };
    },
-   error: function(status) {
-     console.log(status);
+   error:function(data,error,reason){
+     newAlert("danger",reason);
+     $("html, body").animate({scrollTop: 0}, 'slow');
+     return false;
    },
    reduce: false,
    include_docs: true
@@ -5349,14 +5462,18 @@ function addUserDhpCode(row) {
           success: function(data) {
               console.log(data);
           },
-          error: function(status) {
-              console.log(status);
-          }
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
+          }`
       });
     }
    },
-   error: function(status) {
-     console.log(status);
+   error:function(data,error,reason){
+     newAlert("danger",reason);
+     $("html, body").animate({scrollTop: 0}, 'slow');
+     return false;
    },
    key: row.user_id
   });
@@ -5653,7 +5770,9 @@ function saveAuditRecord(audit_area, action_type, comments) {
     success: function(data) {
       return true;
     },
-    error: function(data, error, reason) {
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
       return false;
     }
   });
@@ -5695,8 +5814,10 @@ function getServicesAndMicsDocuments(misc_doc_id,service_name,misc_select_id,ser
       }
       if(misc_doc_id && misc_doc_id != "") $("#"+misc_select_id).val(misc_doc_id)
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     startkey: [pd_data.dhp_code],
     endkey: [pd_data.dhp_code, {}],
@@ -6214,7 +6335,9 @@ function getReplicationMasterSource() {
       if(data.replication_source) document_added_from = data.replication_source
     },
     error:function(data,error,reason){
-      console.log(reason);
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     }
   });
 }
@@ -6492,8 +6615,10 @@ function getAllLabs() {
       };
       $("#lo_laboratory").html(labs);
     },
-    error: function(status) {
-      console.log(status);
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     },
     key:    ["Lab",pd_data.dhp_code,pd_data.city],
     reduce: false,

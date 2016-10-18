@@ -1077,8 +1077,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
           newAlert("danger","No doctor available for this hospital");
         }
       },
-      error:function(data){
-        console.log(data);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       startkey: [pd_data.dhp_code],
       endkey: [pd_data.dhp_code,{}],
@@ -1538,8 +1540,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
           $("#medication_table tbody").html(html.join(''));
         }
       },
-      error:function(data){
-        console.log(data);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       startkey: [pd_data.dhp_code],
       endkey:   [pd_data.dhp_code,{}, {}, {}],
@@ -1595,20 +1599,24 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
             doctype:"telemedicine_setting",
             dhp_code:pd_data.dhp_code,
             vcm_enable:true
-          }
+          };
           $.couch.db(db).saveDoc(doc,{
             success:function(data){
               console.log(data);
               getTelemedicineSettings();
             },
-            error:function(status){
-
+            error:function(data,error,reason){
+              newAlert("danger",reason);
+              $("html, body").animate({scrollTop: 0}, 'slow');
+              return false;
             }
           });
         }
       },
-      error:function(data,status,error){
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       key:pd_data.dhp_code
     });
@@ -1634,14 +1642,18 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
             success:function(data){
               getTelemedicineSettings();
             },
-            error:function(status){
-              console.log(status);
+            error:function(data,error,reason){
+              newAlert("danger",reason);
+              $("html, body").animate({scrollTop: 0}, 'slow');
+              return false;
             }
           });
         }  
       },
-      error:function(data,status,error){
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       key:pd_data.dhp_code
     });
@@ -3148,15 +3160,19 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
                 success:function(data){
                   console.log(data);
                 },
-                error:function(status){
-                  console.log(status);
+                error:function(data,error,reason){
+                  newAlert("danger",reason);
+                  $("html, body").animate({scrollTop: 0}, 'slow');
+                  return false;
                 }
               });
             }  
           }
         },
-        error:function(status){
-          console.log(status);
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
         },
         key:"specialization_list",
         include_docs:true
@@ -3381,8 +3397,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
           $("#list_of_procedure_diagnosis tbody").append(diagnosis_procedure_data.join(''));
         }
       },
-      error:function(status){
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       key:pd_data.dhp_code,
       include_docs:true
@@ -4190,8 +4208,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         }).multiselectfilter({
         });
       },
-      error:function(status){
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       }
     });
 
@@ -4209,8 +4229,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         }).multiselectfilter({
         });
       },
-      error:function(status){
-        console.log(status);
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       }
     });
     getAllergiesFromDoc("issu_name_allergies","issu_name_severe","issu_name_reaction");

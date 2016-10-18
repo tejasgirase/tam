@@ -109,8 +109,10 @@ $(document).ready(function(){
             getReplicationMasterSource();
             generateDueTaskNotification();
           },
-          error: function(status) {
-            console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           }
         });
   //     }
