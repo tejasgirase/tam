@@ -31,8 +31,10 @@ app.controller("dashboardController",function($scope,$state,tamsaFactories){
             getPendingRequestSummary();
             getReferCount();
           },
-          error: function(status) {
-              console.log(status);
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           }
         });
   //     }
@@ -166,7 +168,7 @@ function getTodaysAppointments() {
     },
     error:function(data,error,reason){
       console.log(error);
-      // newAlert("danger",reason);
+      newAlert("danger",reason);
       $("html, body").animate({scrollTop: 0}, 'slow');
       return false;
     },

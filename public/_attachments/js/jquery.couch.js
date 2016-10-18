@@ -618,8 +618,6 @@
          * jQuery.ajax/#jQuery-ajax-settings">jQuery ajax settings</a>
          */
         saveDoc: function(doc, options) {
-          console.log(doc);
-          console.log(options);
           options = options || {};
           var db = this;
           var beforeSend = fullCommit(options);
