@@ -15,7 +15,8 @@ var Cloudant    = require('cloudant');
 var cloudant    = Cloudant(Cloudant_ip);
 var Port        = config.PORT;
 var Local_ip    = config.LOCAL_IP;
-
+var multer = require('multer');
+var upload = multer();
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
 app.use(bodyParser.json());
@@ -158,6 +159,25 @@ app.put("/api/update",function(req,res) {
 			res.status(500).json({ error: err.error, reason:err.reason});
 		}
 	});
+});
+
+app.post("/api/upload", upload.single("_attachments"), function(req,res) {
+	if(req.file || req.file.mimetype || req.file.buffer) {
+		var savedb = cloudant.db.use(req.body.db),
+	    fname = req.file.originalname || "attach.jpeg",
+	    contenttype = req.file.mimetype || "image/jpeg";
+
+		savedb.attachment.insert(req.body._id, fname, req.file.buffer, contenttype,
+	    { rev: req.body._rev }, function(err, body) {
+	      if (!err) {
+	        res.send(body);
+	      } else {
+					res.status(500).json({ error: err.error, reason:err.reason});
+	      }
+	  });
+	}else {
+		res.status(500).json({ error: "Something is wrong contact your technical team.", reason:"Something is wrong contact your technical team."});
+	}
 });
 
 app.post("/api/bulk",function(req,res) {

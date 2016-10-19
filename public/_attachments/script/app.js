@@ -2584,7 +2584,6 @@ function deleteSubUser() {
 
 function newAlert (type, message) {
   if(message == "Login Required") {
-    console.log("in 1");
     $("#alert-area").html("");
     $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p>Session Expired. Please Logged In again.</p></div>"));
     $(".alert").delay(1000).fadeOut("slow", function () {
@@ -2592,7 +2591,6 @@ function newAlert (type, message) {
       window.location.href = "/";
     });
   }else {
-    console.log("in 2");
     $("#alert-area").html("");
     $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p> " + message + " </p></div>"));
     $(".alert").delay(4000).fadeOut("slow", function () { $(this).remove(); });  
@@ -4092,12 +4090,10 @@ function saveUserPic() {
             delete update_pic_date._attachments;
             $.couch.db(personal_details_db).saveDoc(update_pic_date,{
               success:function(udata){
-                console.log(udata);
                 $('#profile_pic_update_id').val(udata.id);
                 $('#profile_pic_update_rev').val(udata.rev);
                 $('#update_profile_pic').ajaxSubmit({
-                  // Submit the form with the attachment
-                  url: "/"+ personal_details_db +"/"+ udata.id,
+                  url: "/api/upload",
                   success: function(response) {
                     $.couch.db(personal_details_db).openDoc($('#profile_pic_update_id').val(),{
                       success:function(data){
@@ -6509,7 +6505,9 @@ function uploadDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id
   if($("#upload_patient_files").data("source") == "computer") {
     var form = new FormData(),
         request = new XMLHttpRequest();
+    form.append("_id",doc_id);
     form.append("_rev",doc_rev);
+    form.append("db",db_name);
     form.append("_attachments", img, filename);
     request.onreadystatechange = function() {
       if (request.readyState == 4 && request.status == 201) {
@@ -6517,7 +6515,8 @@ function uploadDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id
         getTimeLineRecords(0,"");
       }
     };
-    request.open("POST", "/"+db_name+"/"+doc_id, true);
+    // request.open("POST", "/"+db_name+"/"+doc_id, true);
+    request.open("POST", "/api/upload", true);
     request.send(form);
   }else if($("#upload_patient_files").data("source") == "webcam") {
     var canvas = document.createElement("canvas");
@@ -6531,13 +6530,15 @@ function uploadDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id
           request = new XMLHttpRequest();
       form.append("_rev",doc_rev);
       form.append("_attachments", blob, filename);
+      form.append("db",db_name);
       request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
           getUploadedMedicationList(patient_user_id);
           getTimeLineRecords(0,"");
         }
       };
-      request.open("POST", "/"+db_name+"/"+doc_id, true);
+      // request.open("POST", "/"+db_name+"/"+doc_id, true);
+      request.open("POST", "/api/upload", true);
       request.send(form);
     }, "image/png");
   }
