@@ -5,11 +5,22 @@ app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvid
   $urlRouterProvider.otherwise('/');
   $stateProvider
   .state('/', {
-    url: '/',
+    url: '',
     views: {
       'index-view': {
         templateUrl: 'template/login.html',
         controller: 'indexAppController'
+      },
+      'footer':{
+        templateUrl: 'template/footer.html',
+      }
+    }
+  }).state('/sign_up', {
+    url: '/signup',
+    views: {
+      'index-view': {
+        templateUrl: 'template/sign-up.html',
+        controller: 'signUpController'
       },
       'footer':{
         templateUrl: 'template/footer.html',
