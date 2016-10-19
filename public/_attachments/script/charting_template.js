@@ -3129,7 +3129,7 @@ function tlChartingTemplateResponseDisplay(data){
   		    success: function(data1){
   		      if (data1._attachments != undefined) {
   		        var imgname = Object.keys(data1._attachments)[0];
-  		        $('#'+data1._id).html("<img src='"+'/'+db+'/'+data1._id+"/" +imgname+"' height='100px'>");
+  		        $('#'+data1._id).html("<img src='"+$.couch.urlPrefix +'/'+db+'/'+data1._id+"/" +imgname+"' height='100px'>");
   		      }
   		    },
   		    error:function(data,error,reason){

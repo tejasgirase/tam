@@ -454,7 +454,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
         for (var i = 0; i < data.rows.length; i++) {
           var r_name = data.rows[i].value.first_nm+" "+data.rows[i].value.last_nm;
           var r_city = data.rows[i].value.city;
-          if(data.rows[i].value._attachments) var url = '/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0]
+          if(data.rows[i].value._attachments) var url = $.couch.urlPrefix +'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0]
         }
 
         $.couch.db(db).view("tamsa/getPatientConditionBySeverity", {

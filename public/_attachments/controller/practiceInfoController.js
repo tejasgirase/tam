@@ -1313,7 +1313,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
   function displayMiscDocuments(start,end,data){
     var misc_document_table = [];
     for (var i = start; i < end; i++) {
-        misc_document_table.push('<tr><td>'+data.rows[i].doc.document_name+'</td><td>'+data.rows[i].doc.document_category+'</td><td align="center"><a href="'+'/'+db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank"><span class="label label-warning">View</span></a><span class="label label-danger remove-misc-doc pointer" style = "margin-left:10px;" index="'+data.rows[i].doc._id+'" rev ="'+data.rows[i].doc._rev+'">Delete</span></td></tr>');
+        misc_document_table.push('<tr><td>'+data.rows[i].doc.document_name+'</td><td>'+data.rows[i].doc.document_category+'</td><td align="center"><a href="'+$.couch.urlPrefix +'/'+db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank"><span class="label label-warning">View</span></a><span class="label label-danger remove-misc-doc pointer" style = "margin-left:10px;" index="'+data.rows[i].doc._id+'" rev ="'+data.rows[i].doc._rev+'">Delete</span></td></tr>');
     };
     $("#misc_document_table tbody").html(misc_document_table.join(''));
   }
@@ -3474,7 +3474,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
                   if(data.rows[i].doc._id == ui.value){
                     tempval.push('<tr>');
                     tempval.push('<td docid = "'+ui.value+'">'+ui.text+'</td>');
-                    tempval.push('<td align="center"><a href="'+'/'+db+'/'+data.rows[i].doc._id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="_blank"><span class="label label-warning">View</span></a><span class="label label-warning send_hospital_doc">Send</span>');
+                    tempval.push('<td align="center"><a href="'+$.couch.urlPrefix +'/'+db+'/'+data.rows[i].doc._id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="_blank"><span class="label label-warning">View</span></a><span class="label label-warning send_hospital_doc">Send</span>');
                     tempval.push('</tr>');
                   }
                 }
