@@ -1,11 +1,12 @@
 var app = angular.module('tamsa_index', ['ui.router','angularUtils.directives.dirPagination']);
 
-app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvider){
+app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvider,$locationProvider){
   paginationTemplateProvider.setPath('template/dirPagination.tpl.html');
+  $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/');
   $stateProvider
   .state('/', {
-    url: '',
+    url: '/',
     views: {
       'index-view': {
         templateUrl: 'template/login.html',
@@ -15,7 +16,7 @@ app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvid
         templateUrl: 'template/footer.html',
       }
     }
-  }).state('/sign_up', {
+  }).state('/signup', {
     url: '/signup',
     views: {
       'index-view': {
