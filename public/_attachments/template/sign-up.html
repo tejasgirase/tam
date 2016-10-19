@@ -1,0 +1,263 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Sensory Health System</title>
+<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="images/favi_icon.png" />
+<link href="css/jquery.multiselect.filter.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-migrate-1.0.0.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src='js/jquery-ui-1.10.2.custom.min.js'></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script src="js/jquery.multiselect.min.js" type="text/javascript"></script>
+<script src="js/jquery.multiselect.filter.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
+<script type="text/javascript" src="js/jquery.couch.js"></script>
+<script type="text/javascript" src="js/jquery.dialog.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script> -->
+<!-- </head> -->
+<div class="login_bg">
+<div id = "boomr_div" style = "display:none;"></div>
+<!-- <noscript>
+  <div class="jumbotron">
+    <h3 class = "theme-color">Javascript is Disabled</h3>
+    <p>For full functionality of this site it is necessary to enable JavaScript.
+ Here are the <a href="//www.enable-javascript.com/" target="_blank" class = "noscript-msg">
+ instructions how to enable JavaScript in your web browser</a>.</p>
+  </div>
+ <style type="text/css">
+    .login_main, #footer_login { display:none; }
+    .ui-multiselect-menu, .ui-widget, .ui-widget-content, .ui-corner-all{ width: 310px !important}
+    .ui-multiselect, .ui-widget, .ui-state-default, .ui-corner-all { width: 310px !important}
+  </style>
+</noscript> -->
+  <div class="login_main">
+    <div class="logo"><img src="images/login_logo.png" alt="logo" /></div>
+    <div class="login_in">
+      <h2>Signup Form for Doctors</h2>
+      <h5 align="center" class="text-danger" id="validationtext"></h5>
+      <form>
+        <div class="col-lg-12 col-sm-12">
+          <div class="tab-heading-section">User Details</div>
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">First Name<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="first_name" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Last Name<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="last_name" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Password<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="password" id="Password" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Confirm Password<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="password" id="ConfirmPassword" class="form-control placeholder-no-fix" placeholde="Enter password again">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Email<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="Email" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Email address for alerts</label>
+            <div class="login_input">
+              <input type="text" id="Emailalerts" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Qualifications<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" class="form-control placeholder-no-fix" id="qualification">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Specialization<span class="vld">*</span><small style="font-size:10px;float:right"><span id = "toggle_click" class ="theme-color pointer" style="
+            ">Click here </span><span id="click_toggle_label">add new</span></small></label>
+            <div class="login_input">
+              <select id="Specialization"  class="form-control placeholder-no-fix" style="width:308px !important;"></select>
+              <input type="text" style="display:none;" class="form-control placeholder-no-fix" id="new_specialization">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Experience<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" class="form-control placeholder-no-fix" id="experience" placeholder="In Years"><!-- <span class="paddleft1">Years</span> -->
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Phone (Landline or mobile number)<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="Phone" class="form-control placeholder-no-fix" placeholder="10 or 11 digit phone number">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Phone for SMS alerts (Mobile number only)</label>
+            <div class="login_input">
+              <input type="text" id="Phonealerts" class="form-control placeholder-no-fix" placeholder="10 digit mobile number">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Communication preference for critical alerts</label>
+            <div class="login_input">
+              <select type="text" id="critical_alerts_medium" class="form-control placeholder-no-fix sltpdt">
+              <option>Email</option>
+              <option>Phone</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Communication preference for receiving reports</label>
+            <div class="login_input">
+              <select type="text" id="reports_medium" class="form-control placeholder-no-fix sltpdt">
+              <option>Email</option>
+              <option>Phone</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12">
+          <div class="tab-heading-section">Hospital Details</div>
+
+          <div class="form-group_login col-lg-12 col-sm-12" id="dhp_link_parent" style="display:none">
+            <div class="login_input">
+              <span id="dhp_link" class="hospital-dhp-link-span">having DHP Code ?</span>
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-8 col-sm-8" id="dhp_display">
+            <label class="control-label visible-ie8 visible-ie9">DHP Code</label>
+            <div class="login_input">
+              <input type="text" id="dhp_code" class="form-control placeholder-no-fix" placeholder="e.g. H-10 digit alphabetic code.">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-4 col-sm-4 hospital-dhp-link-parent" id="hospital_link_parent">
+            <div class="login_input">
+              <span id="hospital_link" class="hospital-dhp-link-span">not having DHP Code ?</span>
+            </div>
+          </div>
+          
+          <div id = "hospital_display">
+
+            <div class="form-group_login col-lg-6 col-sm-6">
+              <label class="control-label visible-ie8 visible-ie9">Hospital Type</label>
+              <div class="login_input">
+                <select type="text" id="hospital_type" class="form-control placeholder-no-fix sltpdt">
+                  <option>Hospital</option>
+                  <option>Clinic</option>
+                  <option>Center</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+              <label class="control-label visible-ie8 visible-ie9">Hospital Name</label>
+              <div class="login_input">
+                <input type="text" id="hospital_name" class="form-control placeholder-no-fix">
+              </div>
+            </div>
+
+            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+              <label class="control-label visible-ie8 visible-ie9">Country<span class="vld">*</span></label>
+              <div class="login_input">
+                <input type="text" id="Country" value="India" readonly="readonly" class="form-control placeholder-no-fix">
+              </div>
+            </div>
+
+            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+              <label class="control-label visible-ie8 visible-ie9">State<span class="vld">*</span></label>
+              <div class="login_input">
+                <!-- <input type="text" id="State" class="form-control placeholder-no-fix"> -->
+                <select id="State" class="form-control placeholder-no-fix">
+                  <option  selected="selected" value="Select State">Select State</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+              <label class="control-label visible-ie8 visible-ie9">City<span class="vld">*</span></label>
+              <div class="login_input">
+                <!-- <input type="text" id="City" class="form-control placeholder-no-fix"> -->
+                <select id="City" class="form-control placeholder-no-fix">
+                  <option selected="selected" value="Select City">Select City</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+              <label class="control-label visible-ie8 visible-ie9">Phone<span class="vld"></span></label>
+              <div class="login_input">
+                <input type="text" id="hospital_phone" class="form-control placeholder-no-fix">
+              </div>
+            </div>
+
+            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+              <label class="control-label visible-ie8 visible-ie9">Email<span class="vld"></span></label>
+              <div class="login_input">
+                <input type="text" id="hospital_email" class="form-control placeholder-no-fix">
+              </div>
+            </div>
+
+          </div> 
+        </div>
+
+        <div class="col-lg-12 col-sm-12">
+          <div class="checkbox">
+            <label>
+              <input class="checkshow" type="checkbox" id="Network" checked="true">
+              Join SHS doctors network</label>
+          </div>
+
+          <div class="login_btn1 mrgrgt">
+            <button class="btn btn-warning btnwidth" id="Signup" type="button">Sign Up</button>
+            <a href="/" class="btn btn-warning btnwidth" type="button">Cancel</a>
+          </div>
+
+          <div class="login_btn1">  
+          </div>
+
+          <div class="col-lg-6 col-sm-6">  
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+<!-- End code insertion by Kiran  -->
+
+</div>
+
+
