@@ -160,7 +160,7 @@ app.controller("telemedicineController",function($scope,$state,$stateParams,tams
                     patient_details_html.push('</td>');
                   patient_details_html.push('<td><span class="mrgright5 theme-green"><b>Document :: </b></span>');
                   if (data._attachments) {
-                    patient_details_html.push('<a target="blank" href='+'/'+db+'/'+data._id+"/"+Object.keys(data._attachments)[0]+'><span class="label label-warning">Download</span></a>');
+                    patient_details_html.push('<a target="blank" href='+$.couch.urlPrefix +'/'+db+'/'+data._id+"/"+Object.keys(data._attachments)[0]+'><span class="label label-warning">Download</span></a>');
                   }else {
                     patient_details_html.push('NA');  
                   }

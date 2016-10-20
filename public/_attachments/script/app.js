@@ -1815,7 +1815,7 @@ function getCommunicationHistoryMoreDetails($obj){
 
             temp.push('<td>'+doc_data.document_name+'</td>');
             temp.push('<td>'+data.comment+'</td>');
-            temp.push('<td><a target="_blank" href="'+'/'+db+'/'+doc_data._id+'/'+Object.keys(doc_data._attachments)[0]+'"><span class="label label-warning">View</span></a></td>');
+            temp.push('<td><a target="_blank" href="'+$.couch.urlPrefix +'/'+db+'/'+doc_data._id+'/'+Object.keys(doc_data._attachments)[0]+'"><span class="label label-warning">View</span></a></td>');
             temp.push('</tr></tbody></table></td></tr>');
             if($obj.parent().next().hasClass("comm-history-more-details-parent")){
               $obj.parent().next().remove();
@@ -2059,7 +2059,7 @@ function displayOtherVideos(start,end,data){
   var other_docs_table = [];
   for (var i = start; i < end; i++) {
     if (data.rows[i].doc._attachments) {
-      other_docs_table.push("<tr><td>"+data.rows[i].doc.document_type+"</td><td>"+data.rows[i].doc.document_name+"</td><td>"+data.rows[i].doc.doctor_name+"</td><td><a href='"+'/'+db+'/'+data.rows[i].id+"/"+Object.keys(data.rows[i].doc._attachments)[0]+"' target='blank'><span class='label label-warning'>Download</span></a></td></tr>");
+      other_docs_table.push("<tr><td>"+data.rows[i].doc.document_type+"</td><td>"+data.rows[i].doc.document_name+"</td><td>"+data.rows[i].doc.doctor_name+"</td><td><a href='"+$.couch.urlPrefix +'/'+db+'/'+data.rows[i].id+"/"+Object.keys(data.rows[i].doc._attachments)[0]+"' target='blank'><span class='label label-warning'>Download</span></a></td></tr>");
     }
   }
   $("#other_docs_table tbody").html(other_docs_table.join(''));
@@ -2285,7 +2285,7 @@ function getPatientProfileDetails(personal_info,medical_info) {
   if(personal_info.rows[0].value.imgblob){
     $("#patient_profile_pic").attr("src", personal_info.rows[0].value.imgblob);
   }else if(personal_info.rows[0].value._attachments){
-    url = '/'+personal_details_db+'/'+personal_info.rows[0].id+'/'+Object.keys(personal_info.rows[0].value._attachments)[0];
+    url = $.couch.urlPrefix +'/'+personal_details_db+'/'+personal_info.rows[0].id+'/'+Object.keys(personal_info.rows[0].value._attachments)[0];
     $("#patient_profile_pic").attr("src",url);
   } //if(!$("#edit_patient_name").val() == "" || !$("#edit_patient_dhp_id").val() == "" || !$("#edit_patient_emailid").val() == "" || !$("#edit_patient_phone").val() == "" || !$("#edit_patient_maritalstatus").val() == "" || !$("#edit_patient_gender").val() == "" || !$("#edit_patient_height").val() == "" || !$("#edit_patient_emergency_phone").val() == "" || !$("#edit_patient_emergency_relation").val() == "" || !$("#edit_patient_address1").val() == "" || !$("#edit_patient_weight").val() == "" || !$("#edit_patient_waist").val() == "" || !$("#edit_patient_bloodgroup").val() == "" || !$("#issu_age").val() == "" || !$("#edit_patient_emergency_name").val() == "" || !$("#edit_patient_address2").val() == "" || !$("#edit_patient_pincode").val() == "" || !$("#edit_patient_country").val() == "" || !$("#edit_patient_state").val() == "" || !$("#edit_patient_city").val() == "") {
   //   $("#infosybol").hide();
@@ -3863,7 +3863,7 @@ function openLabReport(lab_result_id) {
         data.lab_results_approved_by_dr ? lab_approve_data.push('<div class="col-lg-6" style="text-align: right; margin-top: 11px;"> <label style="width:70%;"> Lab Results approved by : </label><span>'+data.lab_results_approved_by_dr+'</span></div>') : lab_approve_data.push('');
         $('#labdetails').html(lab_approve_data.join(''));
         var url = "";
-        url     = '/'+db+'/'+lab_result_id+'/'+Object.keys(data._attachments)[0];
+        url     = $.couch.urlPrefix +'/'+db+'/'+lab_result_id+'/'+Object.keys(data._attachments)[0];
         if (data.Format == "PDF" || data._attachments[Object.keys(data._attachments)[0]].content_type == "application/pdf") {
           $("#lab_result_pdf").attr("href", url);
           $('div.media').media({width:780, height:420});
@@ -4092,78 +4092,44 @@ function saveUserPic() {
               success:function(udata){
                 $('#profile_pic_update_id').val(udata.id);
                 $('#profile_pic_update_rev').val(udata.rev);
-                $('#update_profile_pic').ajaxSubmit({
-                  url: "/api/upload",
-                  success: function(response) {
-                    $.couch.db(personal_details_db).openDoc($('#profile_pic_update_id').val(),{
-                      success:function(data){
-                        if(data.imgblob){
-                          var newdata = data; 
-                          delete newdata.imgblob;
-                          $.couch.db(personal_details_db).saveDoc(newdata,{
-                            success:function(mdata){
-                              $("#userpic_edit_save").removeClass("ajax-loader-large");
-                              $("#label_pic_upload").css("visibility","visible");
-                              $("#userpic_edit_modal").modal("hide");
-                              newAlert('success', 'Profile pic Updated Successfully !');
-                              $('html, body').animate({scrollTop: 0}, 'slow');
-                              $("#userpic_edit_save").removeAttr("disabled");
-                              clearUserProfilePicUpdate();
-
-                              $.couch.db(personal_details_db).view("tamsa/getPatientInformation",{
-                                success: function(data) {
-                                  getUserpicAndInfo(data);
-                                },
-                                error:function(data,error,reason){
-                                  newAlert("danger",reason);
-                                  $("html, body").animate({scrollTop: 0}, 'slow');
-                                  return false;
-                                },
-                                key: userinfo.user_id
-                              });  
-                            },
-                            error:function(data,error,reason){
-                              newAlert("danger",reason);
-                              $("html, body").animate({scrollTop: 0}, 'slow');
-                              return false;
-                            }
-                          });   
-                        }else{
-                          $("#userpic_edit_save").removeClass("ajax-loader-large");
-                          $("#label_pic_upload").css("visibility","visible");
-                          $("#userpic_edit_modal").modal("hide");
-                          newAlert('success', 'Profile pic Updated Successfully !');
-                          $('html, body').animate({scrollTop: 0}, 'slow');
-                          $("#userpic_edit_save").removeAttr("disabled");
-                          clearUserProfilePicUpdate();
-
-                          $.couch.db(personal_details_db).view("tamsa/getPatientInformation",{
-                            success: function(data) {
-                              getUserpicAndInfo(data);
-                            },
-                            error:function(data,error,reason){
-                              newAlert("danger",reason);
-                              $("html, body").animate({scrollTop: 0}, 'slow');
-                              return false;
-                            },
-                            key: userinfo.user_id
-                          });
-                        }
-                      },
-                      error:function(data,error,reason){
-                        newAlert("danger",reason);
-                        $("html, body").animate({scrollTop: 0}, 'slow');
-                        return false;
+                $.couch.db(personal_details_db).openDoc($('#profile_pic_update_id').val(),{
+                    success:function(data){
+                      if(data.imgblob){
+                        var newdata = data; 
+                        delete newdata.imgblob;
+                        $.couch.db(personal_details_db).saveDoc(newdata,{
+                          success:function(mdata){
+                            $("#userpic_edit_save").removeClass("ajax-loader-large");
+                            $("#label_pic_upload").css("visibility","visible");
+                            $("#userpic_edit_modal").modal("hide");
+                            newAlert('success', 'Profile pic Updated Successfully !');
+                            $('html, body').animate({scrollTop: 0}, 'slow');
+                            $("#userpic_edit_save").removeAttr("disabled");
+                            uploadProfilePicDataURIAsFile($("#userpic_edit_pic").get(0).files[0],personal_details_db,mdata.id,mdata.rev,$("#userpic_edit_pic").val(),userinfo.user_id,"File");
+                              
+                          },
+                          error:function(data,error,reason){
+                            newAlert("danger",reason);
+                            $("html, body").animate({scrollTop: 0}, 'slow');
+                            return false;
+                          }
+                        });   
+                      }else{
+                        $("#userpic_edit_save").removeClass("ajax-loader-large");
+                        $("#label_pic_upload").css("visibility","visible");
+                        $("#userpic_edit_modal").modal("hide");
+                        newAlert('success', 'Profile pic Updated Successfully !');
+                        $('html, body').animate({scrollTop: 0}, 'slow');
+                        $("#userpic_edit_save").removeAttr("disabled");
+                        uploadProfilePicDataURIAsFile($("#userpic_edit_pic").get(0).files[0],personal_details_db,udata.id,udata.rev,$("#userpic_edit_pic").val(),userinfo.user_id,"File");
                       }
-                    });
-                  },
-                  error: function(data, error, reason) {
-                    $("#userpic_edit_save").removeAttr("disabled");
-                    $("#userpic_edit_save").removeClass("ajax-loader-large");
-                    $("#label_pic_upload").css("visibility","visible");
-                    newAlertForModal('danger', reason, 'userpic_edit_modal');
-                  }
-                });
+                    },
+                    error:function(data,error,reason){
+                      newAlert("danger",reason);
+                      $("html, body").animate({scrollTop: 0}, 'slow');
+                      return false;
+                    }
+                  });
               },
               error:function(data,error,reason){
                 newAlert("danger",reason);
@@ -4183,6 +4149,22 @@ function saveUserPic() {
   }
 }
 
+function getUserInfoPic(){
+  $.couch.db(personal_details_db).view("tamsa/getPatientInformation",{
+    success: function(data) {
+      clearUserProfilePicUpdate();
+      getUserpicAndInfo(data);
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    },
+    key: userinfo.user_id
+  });
+}
+
+
 function saveUserPicFromWebcam(){
   $.couch.db(personal_details_db).view("tamsa/getPatientInformation",{
     success:function(data){
@@ -4191,33 +4173,22 @@ function saveUserPicFromWebcam(){
         update_pic_date = data.rows[0].value;
         if(update_pic_date._attachments){
           delete update_pic_date._attachments; 
+        }else if(update_pic_date.imgblob){
+          delete update_pic_date.imgblob; 
         }
-        Webcam.snap( function(data_uri) {
-          update_pic_date.imgblob = data_uri;
-        });
         $.couch.db(personal_details_db).saveDoc(update_pic_date,{
-          success:function(data){
-            $('#profile_pic_update_id').val(data.id);
-            $('#profile_pic_update_rev').val(data.rev);
+          success:function(udata){
+            $('#profile_pic_update_id').val(udata.id);
+            $('#profile_pic_update_rev').val(udata.rev);
             $("#userpic_edit_save").removeClass("ajax-loader-large");
             $("#label_pic_upload").css("visibility","visible");
             $("#userpic_edit_modal").modal("hide");
-            clearUserProfilePicUpdate();
+            var fname = "upload_"+moment().format("YYYY-MM-DD_hh:mm");
+            uploadProfilePicDataURIAsFile($("#my_camera_preview").find("img")[0],personal_details_db,udata.id,udata.rev,fname,userinfo.user_id,"WebFile");
+
             newAlert('success', 'Profile pic Updated Successfully !');
             $('html, body').animate({scrollTop: 0}, 'slow');
             $("#userpic_edit_save").removeAttr("disabled");
-
-            $.couch.db(personal_details_db).view("tamsa/getPatientInformation",{
-              success: function(data) {
-                getUserpicAndInfo(data);
-              },
-              error:function(data,error,reason){
-                newAlert("danger",reason);
-                $("html, body").animate({scrollTop: 0}, 'slow');
-                return false;
-              },
-              key: userinfo.user_id
-            });  
           },
           error:function(data,error,reason){
            newAlertForModal('danger', reason, 'userpic_edit_modal'); 
@@ -4232,6 +4203,51 @@ function saveUserPicFromWebcam(){
     key: userinfo.user_id
   });
 }
+
+function uploadProfilePicDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id,file) {
+  if(file =="File") {
+    var form = new FormData(),
+    request = new XMLHttpRequest();
+    form.append("_id",doc_id);
+    form.append("_rev",doc_rev);
+    form.append("db",db_name);
+    form.append("_attachments", img, filename);
+    request.onreadystatechange = function() {
+      if (request.readyState == 4 && request.status == 201) {
+        getUserInfoPic();
+      }
+    };
+    // request.open("POST", "/"+db_name+"/"+doc_id, true);
+    request.open("POST", "/api/upload", true);
+    request.send(form);
+  }else if(file =="WebFile") {
+    var canvas = document.createElement("canvas");
+    //var canvas = document.getElementById("upload_file_camera").querySelectorAll("canvas");
+    canvas.width  = "800";
+    canvas.height = "600";
+    var ctx       = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0,600,600);
+    canvas.toBlob(function(blob) {
+      var form    = new FormData(),
+          request = new XMLHttpRequest();
+      form.append("_rev",doc_rev);
+      form.append("_id",doc_id);
+      form.append("_attachments", blob, filename);
+      form.append("db",db_name);
+      request.onreadystatechange = function() {
+        console.log(request);
+        if (request.readyState == 4 && request.status == 200) {
+          getUserInfoPic(); 
+        }
+      };
+      // request.open("POST", "/"+db_name+"/"+doc_id, true);
+      request.open("POST", "/api/upload", true);
+      request.send(form);
+    }, "image/png");
+  }
+}
+
+
 
 function deleteHalfUpdatedProfilePic() {
   var id  = $('#profile_pic_update_id').val();
@@ -4266,6 +4282,7 @@ function clearUserProfilePicUpdate() {
   $("#userpic_edit_pic").val("");
   $("#profile_pic_update_id").val("");
   $("#profile_pic_update_rev").val("");
+  $("#my_camera_preview").html("");
 }
 
 function openAddDocumentModal(){
@@ -4527,7 +4544,7 @@ function displayDocuments(start,end,data){
   var document_table = [];
   for (var i = start; i < end; i++) {
     if (data.rows[i].key[2] == "0") {
-      document_table.push('<tr><td>'+data.rows[i].doc.document_name+'</td><td>'+data.rows[i].doc.document_type+'</td><td>'+data.rows[i].doc.patient_name+'</td><td>'+data.rows[i].doc.doctor_name+'</td><td>'+data.rows[i].doc.insert_ts.substring(0, 10)+'</td><td align="center" id="task_'+data.rows[i].id+'""></td><td><a class= "dwnld-hover" href="'+'/'+db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank" download><span doc_id='+data.rows[i].id+' class="glyphicon glyphicon-download-alt"></span></a></td></tr>');
+      document_table.push('<tr><td>'+data.rows[i].doc.document_name+'</td><td>'+data.rows[i].doc.document_type+'</td><td>'+data.rows[i].doc.patient_name+'</td><td>'+data.rows[i].doc.doctor_name+'</td><td>'+data.rows[i].doc.insert_ts.substring(0, 10)+'</td><td align="center" id="task_'+data.rows[i].id+'""></td><td><a class= "dwnld-hover" href="'+$.couch.urlPrefix +'/'+db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank" download><span doc_id='+data.rows[i].id+' class="glyphicon glyphicon-download-alt"></span></a></td></tr>');
     }
   };
   $("#document_table tbody").html(document_table.join(''));
@@ -6531,6 +6548,7 @@ function uploadDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id
       form.append("_rev",doc_rev);
       form.append("_attachments", blob, filename);
       form.append("db",db_name);
+      form.append("_id",doc_id);
       request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
           getUploadedMedicationList(patient_user_id);

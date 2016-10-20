@@ -408,7 +408,7 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
                       }
                       var url,age_with_dob;
                       if(data.rows[0].value._attachments){
-                        url = '/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
+                        url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
                       }else{
                         url = "images/userpic.png";
                       }

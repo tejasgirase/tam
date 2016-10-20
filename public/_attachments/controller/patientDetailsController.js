@@ -1727,7 +1727,7 @@ function displayUploadedMedication(start,end,data) {
       output.push('<td>'+Object.keys(data.rows[i].doc._attachments)[0]+'</td>');
       output.push('<td>'+((data.rows[i].doc.comments && data.rows[i].doc.comments.length > 0) ? data.rows[i].doc.comments[0].comment : "NA")+'</td>');
       output.push('<td>'+moment(data.rows[i].doc.insert_ts).format("YYYY-MM-DD hh:mm a")+'</td>');
-      output.push('<td><a class="dwnld-hover mrgright1" href="'+ $.couch.urlPrefix +'/'+ db+ '/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank"><span doc_id='+data.rows[i].id+' class="label label-warning">View</span></a><a class="dwnld-hover" href="'+'/'+ db+ '/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank" download><span doc_id='+data.rows[i].id+' class="label label-warning">Download</span></a></td>');
+      output.push('<td><a class="dwnld-hover mrgright1" href="'+ $.couch.urlPrefix +'/'+ db+ '/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank"><span doc_id='+data.rows[i].id+' class="label label-warning">View</span></a><a class="dwnld-hover" href="'+$.couch.urlPrefix +'/'+ db+ '/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank" download><span doc_id='+data.rows[i].id+' class="label label-warning">Download</span></a></td>');
     output.push('</tr>');
   }
   $("#uploaded_medication_list tbody").html(output.join(''));
