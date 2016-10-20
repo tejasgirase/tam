@@ -36,8 +36,7 @@ app.use(session({
     	auth: {
     		username: "nirmalpatel59",
     		password: "nirmalpatel"
-    	},
-    	cache: false
+    	}
     }
   })	
 }));
@@ -46,7 +45,7 @@ var authRoutes = require("./src/routes/authRoutes");
 require("./src/config/passport")(app);
 
 function ensureAuthenticated(req, res, next) {
-	console.log(req.session);
+	// console.log(req.session);
   if (req.isAuthenticated()) {
    return next();
   } else {
@@ -136,7 +135,7 @@ app.get("/api/list",function(req,res) {
 	});
 });
 
-app.post("/api/save",function(req,res) {
+app.post("/api/save",ensureAPIAuthenticated,function(req,res) {
 	var savedb = cloudant.db.use(req.body.db);
 	savedb.insert(JSON.parse(req.body.doc),function(err, body) {
 		if(!err) {
@@ -147,7 +146,7 @@ app.post("/api/save",function(req,res) {
 	});
 });
 
-app.put("/api/update",function(req,res) {
+app.put("/api/update",ensureAPIAuthenticated,function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	updatedb.insert(JSON.parse(req.body.doc),function(err, body) {
 		if(!err) {
@@ -158,7 +157,7 @@ app.put("/api/update",function(req,res) {
 	});
 });
 
-app.post("/api/upload", upload.single("_attachments"), function(req,res) {
+app.post("/api/upload", ensureAPIAuthenticated, upload.single("_attachments"), function(req,res) {
 	
 	if(req.file || req.file.mimetype || req.file.buffer) {
 		var savedb = cloudant.db.use(req.body.db),
@@ -178,7 +177,7 @@ app.post("/api/upload", upload.single("_attachments"), function(req,res) {
 	}
 });
 
-app.post("/api/bulk",function(req,res) {
+app.post("/api/bulk",ensureAPIAuthenticated,function(req,res) {
 	var bulk_data = JSON.parse(req.body.master_docs);
 	var bulksavedb = cloudant.db.use(req.body.db);
 	bulksavedb.bulk({"docs":bulk_data.docs},function(err, body) {
@@ -190,7 +189,7 @@ app.post("/api/bulk",function(req,res) {
 	});
 });
 
-app.post("/api/remove/:id",function(req,res) {
+app.post("/api/remove/:id",ensureAPIAuthenticated,function(req,res) {
 	var bulksavedb = cloudant.db.use(req.query.db);
 	bulksavedb.insert(req.body,function(err, body) {
 		if(!err) {
