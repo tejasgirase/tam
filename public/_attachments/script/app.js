@@ -4236,7 +4236,7 @@ function uploadProfilePicDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patie
       form.append("db",db_name);
       request.onreadystatechange = function() {
         console.log(request);
-        if (request.readyState == 4 && request.status == 200) {
+        if (request.readyState == 4 && request.status == 201) {
           getUserInfoPic(); 
         }
       };
@@ -6550,7 +6550,7 @@ function uploadDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id
       form.append("db",db_name);
       form.append("_id",doc_id);
       request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200) {
+        if (request.readyState == 4 && request.status == 201) {
           getUploadedMedicationList(patient_user_id);
           getTimeLineRecords(0,"");
         }
