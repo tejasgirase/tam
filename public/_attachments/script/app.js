@@ -1621,7 +1621,6 @@ function getVaccineDetails(id){
     user_gender:userinfo.gender,
     user_id:userinfo.user_id
     }).success(function(data){
-      console.log(data);
       if(data.rows.length > 0){
         var  mh_vaccine = [];
         mh_vaccine.push('<ul class="mh_vaccine mh-vaccine">');

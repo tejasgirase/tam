@@ -158,7 +158,6 @@ app.put("/api/update",ensureAPIAuthenticated,function(req,res) {
 });
 
 app.post("/api/upload", ensureAPIAuthenticated, upload.single("_attachments"), function(req,res) {
-	
 	if(req.file || req.file.mimetype || req.file.buffer) {
 		var savedb = cloudant.db.use(req.body.db),
 	    fname = req.file.originalname || "attach.jpeg",
@@ -175,6 +174,16 @@ app.post("/api/upload", ensureAPIAuthenticated, upload.single("_attachments"), f
 	}else {
 		res.status(500).json({ error: "Something is wrong contact your technical team.", reason:"Something is wrong contact your technical team."});
 	}
+});
+
+app.get("/api/attachment", function(req,res) {
+	var attachmentdb = cloudant.db.use(req.query.db);
+	attachmentdb.attachment.get(req.query.id,req.query.attachment_name).pipe(res);
+	// attachmentdb.attachment.get(req.query.id, req.query.attachment_name, function(err, body) {
+	//   if (!err) {
+	// 		res.sendFile(body);
+	//   }
+	// });
 });
 
 app.post("/api/bulk",ensureAPIAuthenticated,function(req,res) {
