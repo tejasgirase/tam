@@ -1,33 +1,52 @@
-var https       = require("https");
-var fs          = require("fs");
-var express     = require("express");
-var app         = express();
-var cookieParser = require("cookie-parser");
-var session      = require("express-session");
-var passport     = require("passport");
-var strategy     = require("passport-local").Strategy;
-var path        = require("path");
-var bodyParser  = require("body-parser");
-var cons        = require('consolidate');
-var config      = require("./config");
-var Cloudant_ip = config.CLOUDENT_IP;
-var Cloudant    = require('cloudant');
-var cloudant    = Cloudant(Cloudant_ip);
-var Port        = config.PORT;
-var Local_ip    = config.LOCAL_IP;
-var multer = require('multer');
-var upload = multer();
+var sessionstore  = require('sessionstore-cloudant');
+var https         = require("https");
+var fs            = require("fs");
+var express       = require("express");
+var app           = express();
+var cookieParser  = require("cookie-parser");
+var session       = require("express-session");
+// var CloudantStore = require('connect-cloudant')(session);
+var passport      = require("passport");
+var strategy      = require("passport-local").Strategy;
+var path          = require("path");
+var bodyParser    = require("body-parser");
+var cons          = require('consolidate');
+var config        = require("./config");
+var Cloudant_ip   = config.CLOUDENT_IP;
+var Cloudant      = require('cloudant');
+var cloudant      = Cloudant(Cloudant_ip);
+var Port          = config.PORT;
+var Local_ip      = config.LOCAL_IP;
+var multer        = require('multer');
+var upload        = multer();
+
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(session({secret:'cloudant'}));
+app.use(session({
+	secret:"cloudant",
+  store: sessionstore.createSessionStore({
+    type: 'couchdb',
+    host: 'https://nirmalpatel59.cloudant.com',  // optional
+    port: 443,                // optional
+    dbName: 'sessions',
+    options: {
+    	auth: {
+    		username: "nirmalpatel59",
+    		password: "nirmalpatel"
+    	},
+    	cache: false
+    }
+  })	
+}));
+// app.use(session({secret:'cloudant'}));
 var authRoutes = require("./src/routes/authRoutes");
 require("./src/config/passport")(app);
 
 function ensureAuthenticated(req, res, next) {
-	console.log(req.isAuthenticated());
+	console.log(req.session);
   if (req.isAuthenticated()) {
    return next();
   } else {
@@ -47,7 +66,6 @@ function ensureAPIAuthenticated(req, res, next) {
 }
 
 function ensureLoginAuthenticated(req, res, next) {
-	console.log(req.isAuthenticated());
   if (!req.isAuthenticated()) {
    return next();
   } else {
@@ -60,8 +78,6 @@ app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'html');
 
 app.get("/",ensureLoginAuthenticated,function(req,res) {
-	console.log(req.user);
-	console.log(req.isAuthenticated());
 	res.render("index.html");
 });
 
@@ -77,13 +93,7 @@ app.post("/api/logout",function(req,res) {
 	}
 });
 
-// app.get("/my-account.html",ensureAuthenticated,function(req,res) {
-// 	res.render("my-account.html");
-// });
-
 app.get("/myaccount",ensureAuthenticated,function(req,res) {
-	console.log(req.user);
-	console.log(req.isAuthenticated());
 	res.render("my-account.html");
 });
 
@@ -98,19 +108,6 @@ app.get("/api/open",ensureAPIAuthenticated,function(req,res) {
 		}
 	});
 });
-
-// app.post("/api/view",function(req,res) {
-// 	console.log(req.query);
-// 	medical_db.view("tamsa","getMiscSetting",{key: ["org.couchdb.user:n@n.com","H-testingdhp"],
-//       include_docs:true},function(err, body) {
-// 		if(!err) {
-// 			res.send(body);
-// 		}else {
-// 			console.log(err);
-// 			res.send("test23");
-// 		}
-// 	});
-// });
 
 app.get("/api/view",function(req,res) {
 	if(req.query.view_data.key) {
@@ -170,7 +167,7 @@ app.post("/api/upload", upload.single("_attachments"), function(req,res) {
 		savedb.attachment.insert(req.body._id, fname, req.file.buffer, contenttype,
 	    { rev: req.body._rev }, function(err, body) {
 	      if (!err) {
-	        res.send(body);
+	        res.status(201).send(body);
 	      } else {
 					res.status(500).json({ error: err.error, reason:err.reason});
 	      }
