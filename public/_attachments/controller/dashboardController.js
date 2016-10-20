@@ -2,44 +2,40 @@ var d    = new Date();
 var pd_data = {};
 var ebill_pref;
 app.controller("dashboardController",function($scope,$state,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        //backbefore();
+  $.couch.session({
+    success: function(data) {
+      console.log(data);
+      if(!data) {
+        window.location.href = "index.html";
+      }else {
         $('.pd').hide('slow');
         resetmenu();
         $("#practice_dashboard").addClass("active");
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.dhp_code = data.dhp_code;
-            displayConfigurableModules();
-            $scope.$apply();
-            tamsaFactories.sharedBindings();
-            tamsaFactories.pdBack();
-            tamsaFactories.displayDoctorInformation(data);
-            dashboardEventBindings();
-            getNotifications(data._id);
-            getDueTasks();
-            getTodaysAppointments();
-            //getEprescribe();
-            getEbilling();
-            getTotalNumberOfPatients();
-            getPendingRequestSummary();
-            getReferCount();
-          },
-          error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-        });
-  //     }
-  //   }
-  // });
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.dhp_code = data.dhp_code;
+        displayConfigurableModules();
+        $scope.$apply();
+        tamsaFactories.sharedBindings();
+        tamsaFactories.pdBack();
+        tamsaFactories.displayDoctorInformation(data);
+        dashboardEventBindings();
+        getNotifications(data._id);
+        getDueTasks();
+        getTodaysAppointments();
+        //getEprescribe();
+        getEbilling();
+        getTotalNumberOfPatients();
+        getPendingRequestSummary();
+        getReferCount();
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function displayConfigurableModules() {
     $.couch.db(db).view("tamsa/getMiscSetting", {

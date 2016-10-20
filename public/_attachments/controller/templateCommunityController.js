@@ -1,28 +1,25 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("templateCommunityController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.$apply();
-            tamsaFactories.pdBack();
-            tamsaFactories.sharedBindings();
-            getCommunityTemplates();
-            CommunityTemplatesEventBindings($state,$stateParams);
-          },
-          error: function(status) {
-            console.log(status);
-          }
-        });
-  //     }
-  //   }
-  // });
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "index.html";
+      else {
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.$apply();
+        tamsaFactories.pdBack();
+        tamsaFactories.sharedBindings();
+        getCommunityTemplates();
+        CommunityTemplatesEventBindings($state,$stateParams);
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function getCommunityTemplates(){
     $(".tab-pane").removeClass("active");

@@ -99,26 +99,21 @@ $(document).ready(function(){
   var fieldArray = [];
   var pd_data;
 
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            getReplicationMasterSource();
-            generateDueTaskNotification();
-          },
-          error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-        });
-  //     }
-  //   }
-  // });
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "index.html";
+      else {
+        pd_data = data;
+        getReplicationMasterSource();
+        generateDueTaskNotification();
+      }  
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   // $("#practice_dashboard_link").click(function () {
   //   $('.pd').hide('slow');

@@ -1,29 +1,26 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.$apply();
-            tamsaFactories.pdBack();
-            displayFrontDesk();
-            frontDeskEventBindings();
-            tamsaFactories.sharedBindings();
-            tamsaFactories.displayDoctorInformation(data);
-          },
-          error: function(status) {
-            console.log(status);
-          }
-        });
-  //     }
-  //   }
-  // });
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "index.html";
+      else {
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.$apply();
+        tamsaFactories.pdBack();
+        displayFrontDesk();
+        frontDeskEventBindings();
+        tamsaFactories.sharedBindings();
+        tamsaFactories.displayDoctorInformation(data);
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function displayFrontDesk(){
     $('#front-desk').show();

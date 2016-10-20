@@ -139,7 +139,7 @@
     session: function(options) {
       options = options || {};
       return ajax({
-        type: "GET", url: this.urlPrefix + "/_session",
+        type: "GET", url: "/api/session",
         beforeSend: function(xhr) {
             xhr.setRequestHeader('Accept', 'application/json');
         },
@@ -154,6 +154,22 @@
           }
         }
       });
+      // return ajax({
+      //   type: "GET", url: this.urlPrefix + "/_session",
+      //   beforeSend: function(xhr) {
+      //       xhr.setRequestHeader('Accept', 'application/json');
+      //   },
+      //   complete: function(req) {
+      //     var resp = $.parseJSON(req.responseText);
+      //     if (req.status == 200) {
+      //       if (options.success) options.success(resp);
+      //     } else if (options.error) {
+      //       options.error(req.status, resp.error, resp.reason);
+      //     } else {
+      //       throw "An error occurred getting session info: " + resp.reason;
+      //     }
+      //   }
+      // });
     },
 
     /**

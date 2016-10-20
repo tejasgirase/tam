@@ -1,36 +1,33 @@
 var d    = new Date();
 var pd_data = {};
 app.controller("taskManagerController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.$apply();
-            tamsaFactories.displayLoggedInUserDetails(pd_data);
-            tamsaFactories.pdBack();
-            if($stateParams.user_id) {
-              $.blockUI();
-              redirectToTask($stateParams.user_id, $stateParams.action, $stateParams.attachment_id);
-            }else {
-              displayTaskManager($stateParams.action);
-            }
-            tamsaFactories.sharedBindings();  
-            $("body").on("click",".task_link", function() {
-              redirectToTask($(this).attr("user_id"), $(this).attr("task"), $(this).attr("doc_id"));
-            });
-          },
-          error: function(status) {
-            console.log(status);
-          }
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "index.html";
+      else {
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.$apply();
+        tamsaFactories.displayLoggedInUserDetails(pd_data);
+        tamsaFactories.pdBack();
+        if($stateParams.user_id) {
+          $.blockUI();
+          redirectToTask($stateParams.user_id, $stateParams.action, $stateParams.attachment_id);
+        }else {
+          displayTaskManager($stateParams.action);
+        }
+        tamsaFactories.sharedBindings();  
+        $("body").on("click",".task_link", function() {
+          redirectToTask($(this).attr("user_id"), $(this).attr("task"), $(this).attr("doc_id"));
         });
-  //     }
-  //   }
-  // });
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function redirectToTask(user_id, task, attachment_id,category,getSearchPatient) {
     $.couch.db(db).view("tamsa/getDoctorSubscribers",{

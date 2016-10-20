@@ -5,36 +5,32 @@ var userinfo_medical = {};
 var plController = {};
 
 app.controller("practiceInfoController",function($scope,$state,$stateParams,$location,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null) window.location.href = "index.html"
-  //     else {
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "index.html";
+      else {
         $("#personal_details_in_link").closest(".panel").block({message: "Please Wait..."});
-        $.couch.db("_users").openDoc(pd_data._id, {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.admin = data.admin;
-            $scope.$apply();
-            displayPracticeInfo();
-            tamsaFactories.displayDoctorInformation(pd_data);
-            if($stateParams.user_id){
-              displaySearchPatient($stateParams.user_id);
-            }  
-            $("#personal_details_in_link").closest(".panel").unblock();
-          },
-          error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-        });
-        // tamsaFactories.pdBack();
-        // eventBindingsForPracticeInfo();
-        // tamsaFactories.sharedBindings();
-  //     }
-  //   }
-  // });
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.admin = data.admin;
+        $scope.$apply();
+        displayPracticeInfo();
+        tamsaFactories.displayDoctorInformation(pd_data);
+        if($stateParams.user_id){
+          displaySearchPatient($stateParams.user_id);
+        }  
+        tamsaFactories.pdBack();
+        eventBindingsForPracticeInfo();
+        tamsaFactories.sharedBindings();
+        $("#personal_details_in_link").closest(".panel").unblock();
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function setPD(name) {
     pd_data = data;

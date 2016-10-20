@@ -1,37 +1,32 @@
 app.controller("telemedicineController",function($scope,$state,$stateParams,tamsaFactories){
-	// $.couch.session({
-	//   success: function(data) {
-	//     if(data.userCtx.name == null)
-	//        window.location = "index.html";
-	//     else {
-	      $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-	        success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.$apply();
-            tamsaFactories.pdBack();
-            tamsaFactories.sharedBindings();
-						$(".tab-pane").removeClass("active");
-						$("#telemedicine_inquiry_tab").addClass("active");
-						$("#home").addClass("active");
-						$("#personal_details_in").addClass("active");
-						$("#lab_results_inner").addClass("active");
-            tamsaFactories.displayDoctorInformation(data);
-            telemedicineInqiuiriesEventBindings();
-						getDoctorTelemedicineInqueries(data._id);
-            if($stateParams.doc_id) {
-              $.blockUI();
-            }
-	        },
-	        error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-	      });
-	//     }
-	//   }
-	// });
+	$.couch.session({
+	  success: function(data) {
+	    if(!data)window.location = "index.html";
+	    else {
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.$apply();
+        tamsaFactories.pdBack();
+        tamsaFactories.sharedBindings();
+				$(".tab-pane").removeClass("active");
+				$("#telemedicine_inquiry_tab").addClass("active");
+				$("#home").addClass("active");
+				$("#personal_details_in").addClass("active");
+				$("#lab_results_inner").addClass("active");
+        tamsaFactories.displayDoctorInformation(data);
+        telemedicineInqiuiriesEventBindings();
+				getDoctorTelemedicineInqueries(data._id);
+        if($stateParams.doc_id) {
+          $.blockUI();
+        }
+	    }
+	  },  
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
 	function telemedicineInqiuiriesEventBindings() {
     $("#telemedicine_inquiry_list").on("click",".telemedicine_row", function() {

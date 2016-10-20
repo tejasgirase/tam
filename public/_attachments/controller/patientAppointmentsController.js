@@ -8,42 +8,37 @@ var userinfo_medical = {};
 
 
 app.controller("patientAppointmentsController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.$apply();
-            tamsaFactories.displayLoggedInUserDetails(pd_data);
-            tamsaFactories.sharedBindings();
-            tamsaFactories.displayDoctorInformation(data);
-            if($stateParams.request_id) {
-              activateRequestForPatientAppointments($stateParams.request_id);
-              tamsaFactories.pdBack();
-              $("#appointment_calendar").on("click",".back_to_request_approval_list", function() {
-                $state.go("task_manager");
-              });
-            }else if($stateParams.user_id) {
-            	tamsaFactories.getSearchPatient($stateParams.user_id, "patientImageLink", "", activatePatientAppointments);
-            }else  {
-            	displayDashboardAppointments();
-              tamsaFactories.pdBack();
-            }
-            $.unblockUI();
-          },
-          error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-        });
-  //     }
-  //   }
-  // });
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "index.html";
+      else {
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.$apply();
+        tamsaFactories.displayLoggedInUserDetails(pd_data);
+        tamsaFactories.sharedBindings();
+        tamsaFactories.displayDoctorInformation(data);
+        if($stateParams.request_id) {
+          activateRequestForPatientAppointments($stateParams.request_id);
+          tamsaFactories.pdBack();
+          $("#appointment_calendar").on("click",".back_to_request_approval_list", function() {
+            $state.go("task_manager");
+          });
+        }else if($stateParams.user_id) {
+        	tamsaFactories.getSearchPatient($stateParams.user_id, "patientImageLink", "", activatePatientAppointments);
+        }else  {
+        	displayDashboardAppointments();
+          tamsaFactories.pdBack();
+        }
+        $.unblockUI();
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function activateRequestForPatientAppointments(reqdocid){
     $(".tab-pane").removeClass("active");

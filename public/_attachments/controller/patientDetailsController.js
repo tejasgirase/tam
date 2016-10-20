@@ -2,27 +2,20 @@ var d    = new Date();
 var pd_data = {};
 var userinfo = {};
 var userinfo_medical = {};
-// $.couch.session({
-//   success: function(data) {
-//     if(data.userCtx.name == null) {
-//       //backafter();
-//       window.location.href = "index.html";
-//     }
-//     else {
-      $.couch.db("_users").openDoc("org.couchdb.user:n@n.com", {
-      // $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-        success: function(data) {
-          pd_data = data;
-        },
-        error:function(data,error,reason){
-          newAlert("danger",reason);
-          $("html, body").animate({scrollTop: 0}, 'slow');
-          return false;
-        }
-      });
-//     }
-//   }
-// });
+$.couch.session({
+  success: function(data) {
+    if(!data) {
+      window.location.href = "index.html";
+    }else {
+      pd_data = data;
+    }
+  },
+  error:function(data,error,reason){
+    newAlert("danger",reason);
+    $("html, body").animate({scrollTop: 0}, 'slow');
+    return false;
+  }        
+});
 
 app.controller("patientDetailsController",function($scope,$state,$stateParams,tamsaFactories){
   tamsaFactories.sharedBindings();

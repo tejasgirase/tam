@@ -96,6 +96,14 @@ app.get("/myaccount",ensureAuthenticated,function(req,res) {
 	res.render("my-account.html");
 });
 
+app.get("/api/session",function(req,res) {
+	if(req.user) {
+		res.send(req.user);
+	}else {
+		res.status(500).json({ error: err.error, reason:err.reason});
+	}
+});
+
 app.get("/api/open",ensureAPIAuthenticated,function(req,res) {
 	var opendb = cloudant.db.use(req.query.db);
 	opendb.get(req.query._id,function(err, body) {
