@@ -4152,8 +4152,8 @@ function saveUserPic() {
 function getUserInfoPic(){
   $.couch.db(personal_details_db).view("tamsa/getPatientInformation",{
     success: function(data) {
-      getUserpicAndInfo(data);
       clearUserProfilePicUpdate();
+      getUserpicAndInfo(data);
     },
     error:function(data,error,reason){
       newAlert("danger",reason);
@@ -4184,7 +4184,6 @@ function saveUserPicFromWebcam(){
             $("#label_pic_upload").css("visibility","visible");
             $("#userpic_edit_modal").modal("hide");
             var fname = "upload_"+moment().format("YYYY-MM-DD_hh:mm");
-            console.log($("#my_camera_preview").find("img")[0]);
             uploadProfilePicDataURIAsFile($("#my_camera_preview").find("img")[0],personal_details_db,udata.id,udata.rev,fname,userinfo.user_id,"WebFile");
 
             newAlert('success', 'Profile pic Updated Successfully !');
@@ -4206,8 +4205,6 @@ function saveUserPicFromWebcam(){
 }
 
 function uploadProfilePicDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patient_user_id,file) {
-  console.log(doc_id);
-  console.log("teasdf");
   if(file =="File") {
     var form = new FormData(),
     request = new XMLHttpRequest();
@@ -4238,8 +4235,9 @@ function uploadProfilePicDataURIAsFile(img,db_name,doc_id,doc_rev,filename,patie
       form.append("_attachments", blob, filename);
       form.append("db",db_name);
       request.onreadystatechange = function() {
+        console.log(request);
         if (request.readyState == 4 && request.status == 200) {
-          getUserInfoPic();
+          getUserInfoPic(); 
         }
       };
       // request.open("POST", "/"+db_name+"/"+doc_id, true);
