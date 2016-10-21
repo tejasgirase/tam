@@ -35,7 +35,7 @@ app.use(session({
     options: {
     	auth: {
     		username: "nirmalpatel59",
-    		password: "nirmalpatel"
+    		password: "nirmal"
     	}
     }
   })	

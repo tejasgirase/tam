@@ -1,7 +1,7 @@
 var passport = require("passport"),
 		LocalStrategy = require("passport-local").Strategy,
 		Cloudant = require("cloudant"),
-		cloudant = Cloudant("https://nirmalpatel59:nirmalpatel@nirmalpatel59.cloudant.com"),
+		cloudant = Cloudant("https://nirmalpatel59:nirmal@nirmalpatel59.cloudant.com"),
 		db = cloudant.db.use("yhsqizvkmp"),
 		sdb = cloudant.db.use("sessions");
 
