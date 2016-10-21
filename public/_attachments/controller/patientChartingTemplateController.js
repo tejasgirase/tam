@@ -1381,7 +1381,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
                 // }
               removePartiallySavedChartingTemplate(patient_charting_template_doc);
               saveNSMonitoring("charting_ns_monitor");
-              tamsaFactories.makePatientCritical($("#charting_critical_checkbox").is(':checked'),"charting_critical_checkbox",userinfo.user_id,pd_data._id); 
+              tamsaFactories.makePatientCritical($("#charting_critical_checkbox").is(':checked'),"charting_critical_checkbox",userinfo.user_id,pd_data._id,userinfo.patient_dhp_id); 
               if(vital_active == "Yes" && ($("#ct_Fasting_Glucose").val() || $("#ct_heartrate").val() || $("#ct_O2").val() || $("#ct_temp").val() || $("#ct_respiration_rate").val() || $("#ct_diastolic_bp").val() || $("#ct_systolic_bp").val() || $("#ct_bmi_weight").val() || $("#ct_bmi_height").val() || $("#ct_waist").val())) {
                 $.couch.db(db).saveDoc(selfcare_doc, {
                   success: function(selfcare_data) {

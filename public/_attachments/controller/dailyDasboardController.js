@@ -245,7 +245,7 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
           $.couch.db(db).view("tamsa/getPatientConditionBySeverity", {
             success: function(condata) {
               var schedule_data= [];
-              schedule_data.push('<tr data-user_id="'+data.user_id+'" data-index="'+data._id+'">');
+              schedule_data.push('<tr data-user_id="'+data.user_id+'" data-index="'+data._id+'" data-user_dhp_id="'+data.patient_dhp_id+'">');
               schedule_data.push('<td><span class="pointer get-patient-details-dd hovercolor">'+pdata.rows[0].doc.first_nm+" "+pdata.rows[0].doc.last_nm+'</span></td>');
               schedule_data.push('<td>'+data.color_preference+'</td>');
               if ($("#dd_scheduled_patients_label").hasClass("dd-list-hover")) {
@@ -434,7 +434,7 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
     $.couch.db(db).view("tamsa/getEprescribe", {
       success: function(edata) {
         for(var i=start;i<end;i++){
-          cp_data.push('<tr><td><a target="_blank" class="anchor-color hovercolor pointer view_patient_profile name_'+data.rows[i].user_id+'" ui-sref="medical_history({user_id:\''+data.rows[i].user_id+'\'})">'+data.rows[i].User_firstname+' '+data.rows[i].User_lastname+'</a></td><td>'+data.rows[i].patient_dhp_id+'</td><td>'+moment(data.rows[i].condition_ts).format("YYYY-MM-DD hh:mm")+'</td><td>Notes</td><td><select user_id="'+data.rows[i].user_id+'" class="form-control dd-critical-patient-action action_to_patient"><option>Select Action</option><option>Send notification (Appointment)</option>');
+          cp_data.push('<tr><td><a target="_blank" class="anchor-color hovercolor pointer view_patient_profile name_'+data.rows[i].user_id+'" ui-sref="medical_history({user_id:\''+data.rows[i].user_id+'\'})">'+data.rows[i].User_firstname+' '+data.rows[i].User_lastname+'</a></td><td>'+data.rows[i].patient_dhp_id+'</td><td>'+moment(data.rows[i].condition_ts).format("YYYY-MM-DD hh:mm")+'</td><td>Notes</td><td><select user_id="'+data.rows[i].user_id+'" user_dhp_id="'+data.rows[i].patient_dhp_id+'" class="form-control dd-critical-patient-action action_to_patient"><option>Select Action</option><option>Send notification (Appointment)</option>');
         
           if(edata.rows.length > 0 && (edata.rows[0].value.push_medications || edata.rows[0].value.send_an_rx_directly || edata.rows[0].value.update_existing_medications)) cp_data.push('<option>Update Medications</option>');
 
@@ -1052,6 +1052,7 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
             CONDITION_SEVERITY: condition_severity,
             doctype:            'Conditions',
             user_id:            $obj.closest("tr").data("user_id"),
+            patient_dhp_id:     $obj.closest("tr").data("user_dhp_id"),
             doctor_id:          pd_data._id,
             insert_ts:          new Date()
           }

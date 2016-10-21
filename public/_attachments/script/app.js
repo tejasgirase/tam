@@ -5099,6 +5099,7 @@ function addByDhpId() {
                       CONDITION_SEVERITY: 'High',
                       doctype:            'Conditions',
                       user_id:            data.rows[0].key[1],
+                      patient_dhp_id:     (data.rows[0].value.patient_dhp_id ? data.rows[0].value.patient_dhp_id : ""),
                       doctor_id:          cnval,
                       insert_ts:          new Date()
                     };
@@ -5112,6 +5113,7 @@ function addByDhpId() {
                     CONDITION_SEVERITY: 'High',
                     doctype:            'Conditions',
                     user_id:            data.rows[0].key[1],
+                    patient_dhp_id:     (data.rows[0].value.patient_dhp_id ? data.rows[0].value.patient_dhp_id : ""),
                     doctor_id:          physicians[i],
                     insert_ts:          new Date()
                   };
