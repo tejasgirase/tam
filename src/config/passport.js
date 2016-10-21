@@ -1,9 +1,10 @@
 var passport = require("passport"),
 		LocalStrategy = require("passport-local").Strategy,
-		Cloudant = require("cloudant"),
-		cloudant = Cloudant("https://nirmalpatel59:nirmalpatel@nirmalpatel59.cloudant.com"),
-		db = cloudant.db.use("yhsqizvkmp"),
-		sdb = cloudant.db.use("sessions");
+		Cloudant      = require("cloudant"),
+		config        = require("./../../config"),
+		cloudant      = Cloudant(config.CLOUDENT_IP),
+		db            = cloudant.db.use("yhsqizvkmp"),
+		sdb           = cloudant.db.use("sessions");
 
 module.exports = function(app) {
 	app.use(passport.initialize());
