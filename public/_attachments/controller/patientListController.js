@@ -69,7 +69,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
             critical_patient_data.push('<div class="row mrgtop15">');
           }
 
-          critical_patient_data.push('<div class="col-md-6 ContentText">BP:</div><div class="col-md-6 ContentTextVal ng-binding">'+(data.rows[i].selfcare_data.Value_Systolic_BP ? (data.rows[i].selfcare_data.Value_Systolic_BP+ "/" +data.rows[i].selfcare_data.Value_Diastolic_BP):"NA")+'</div><div class="col-md-6 ContentText">Weight:</div><div class="col-md-6 ContentTextVal ng-binding">'+(data.rows[i].weight ? data.rows[i].weight : "NA")+'</div></div><div class="row TexualContentWrapper"><select class="AppintmentTextBox mrg-left5 ServiceIcon action_to_patient" user_id="'+data.rows[i].user_id+'" doc_id= "'+(data.rows[i].doc_id ? data.rows[i].doc_id : "NA")+'"><option>Select Action</option><option>Send notification (Appointment)</option>');
+          critical_patient_data.push('<div class="col-md-6 ContentText">BP:</div><div class="col-md-6 ContentTextVal ng-binding">'+(data.rows[i].selfcare_data.Value_Systolic_BP ? (data.rows[i].selfcare_data.Value_Systolic_BP+ "/" +data.rows[i].selfcare_data.Value_Diastolic_BP):"NA")+'</div><div class="col-md-6 ContentText">Weight:</div><div class="col-md-6 ContentTextVal ng-binding">'+(data.rows[i].weight ? data.rows[i].weight : "NA")+'</div></div><div class="row TexualContentWrapper"><select class="AppintmentTextBox mrg-left5 ServiceIcon action_to_patient" user_id="'+data.rows[i].user_id+'" user_dhp_id="'+data.rows[i].patient_dhp_id+'" doc_id= "'+(data.rows[i].doc_id ? data.rows[i].doc_id : "NA")+'"><option>Select Action</option><option>Send notification (Appointment)</option>');
             
             if(edata.rows.length > 0 && (edata.rows[0].value.push_medications || edata.rows[0].value.send_an_rx_directly || edata.rows[0].value.update_existing_medications)) critical_patient_data.push('<option>Update Medications</option>');
 
@@ -511,7 +511,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
       }else{
         id="critical_patient_link";
       }
-      tamsaFactories.makePatientCritical(false,id,$obj.attr("user_id"),pd_data._id);
+      tamsaFactories.makePatientCritical(false,id,$obj.attr("user_id"),pd_data._id,$obj.attr("user_dhp_id"));
     }else if(action_type == "Patient critical") {
       var id = "";
       if($("#regular_patient_link").hasClass("ChoiceTextActive")){
@@ -519,7 +519,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
       }else{
         id ="critical_patient_link";
       }
-      tamsaFactories.makePatientCritical(true,id,$obj.attr("user_id"),pd_data._id);
+      tamsaFactories.makePatientCritical(true,id,$obj.attr("user_id"),pd_data._id,$obj.attr("user_dhp_id"));
     }
   }
 

@@ -412,7 +412,7 @@ app.factory('tamsaFactories', function($state) {
         include_docs:true
       });  
     },
-    makePatientCritical: function (action,id,user_id,doctor_id) {
+    makePatientCritical: function (action,id,user_id,doctor_id,patient_dhp_id) {
       var d                  = new Date();
       var condition_severity = '';
       var critical_checkbox  = '';
@@ -432,6 +432,7 @@ app.factory('tamsaFactories', function($state) {
         doctype:            'Conditions',
         user_id:            user_id,
         doctor_id:          doctor_id,
+        patient_dhp_id:     patient_dhp_id,
         insert_ts:          new Date()
       };
 
