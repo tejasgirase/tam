@@ -41,7 +41,7 @@ app.use(session({
   })	
 }));
 // app.use(session({secret:'cloudant'}));
-var authRoutes = require("./src/routes/authRoutes");
+var authRoutes = require("./src/routes/printRoutes");
 require("./src/config/passport")(app);
 
 function ensureAuthenticated(req, res, next) {
