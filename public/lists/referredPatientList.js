@@ -76,6 +76,7 @@ function(head, req) {
 			condition:            condition,
 			doc_id:               rows[i].value._id,
 			user_id:              rows[i].value.user_id,
+			patient_dhp_id:       (rows[i].value.patient_dhp_id ? rows[i].value.patient_dhp_id : "NA"),
 			insert_ts:            rows[i].value.insert_ts,
 			referral_sincerly:    rows[i].value.referral_sincerly ? rows[i].value.referral_sincerly : "NA",
 			referral_chart_notes: rows[i].value.referral_chart_notes ? rows[i].value.referral_chart_notes : "NA",

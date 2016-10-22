@@ -3128,8 +3128,8 @@ function tlChartingTemplateResponseDisplay(data){
     		$.couch.db(db).openDoc(data.values[0],{
   		    success: function(data1){
   		      if (data1._attachments != undefined) {
-  		        var imgname = Object.keys(data1._attachments)[0];
-  		        $('#'+data1._id).html("<img src='"+$.couch.urlPrefix +'/'+db+'/'+data1._id+"/" +imgname+"' height='100px'>");
+  		        var url = "/api/attachment?attachment_name="+Object.keys(data1._attachments)[0]+"&db="+db+"&id="+data1._id;
+  		        $('#'+data1._id).html("<img src='"+url+"' height='100px'>");
   		      }
   		    },
   		    error:function(data,error,reason){

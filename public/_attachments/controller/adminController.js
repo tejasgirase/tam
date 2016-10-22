@@ -460,7 +460,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             if(pdata.rows[0].value.imgblob){
               $("#remove_patient_profile_pic").attr("src", pdata.rows[0].value.imgblob);
             }else if(pdata.rows[0].value._attachments){
-              url = $.couch.urlPrefix+'/'+personal_details_db+'/'+pdata.rows[0].id+'/'+Object.keys(pdata.rows[0].value._attachments)[0];
+              var url = "/api/attachment?attachment_name="+Object.keys(pdata.rows[0].doc._attachments)[0]+"&db="+personal_details_db+"&id="+pdata.rows[0].id;
               $("#remove_patient_profile_pic").attr("src",url);
             }else {
               $("#remove_patient_profile_pic").attr("src","images/profile-pic.png");

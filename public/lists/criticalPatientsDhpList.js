@@ -16,8 +16,9 @@ function(head, req) {
 			if(newrows[i].value.user_id == rows[j].value.user_id){
 				//finalrows.push(rows[j].value.user_id);
 				finalrows.push({
-					condition: newrows[i].value.CONDITION,
-					user_id: rows[j].value.user_id
+					condition:      newrows[i].value.CONDITION,
+					user_id:        rows[j].value.user_id,
+					patient_dhp_id: (rows[i].value.patient_dhp_id ? rows[i].value.patient_dhp_id : "NA")
 				});
 				break;
 			}

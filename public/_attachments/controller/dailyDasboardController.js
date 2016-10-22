@@ -904,7 +904,8 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
           }
           timeline.push('</div>');
           var url = "";
-          url     = $.couch.urlPrefix+'/'+db+'/'+data.rows[i].value._id+'/'+Object.keys(data.rows[i].value._attachments)[0];
+          var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].value._attachments)[0]+"&db="+db+"&id="+data.rows[i].value._id;
+          // url     = $.couch.urlPrefix+'/'+db+'/'+data.rows[i].value._id+'/'+Object.keys(data.rows[i].value._attachments)[0];
           if (data.rows[i].value.Format == "PDF" || data.rows[i].value._attachments[Object.keys(data.rows[i].value._attachments)[0]].content_type == "application/pdf") {
             timeline.push("<div class=''><iframe width='220' height='160' class='media' src='"+url+"' scrolling='no'></iframe><div class='pdfcontainer' pdfurl='"+url+"'>Preview</div></div>");
           }else{
@@ -1306,7 +1307,8 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
                 if(data.rows[0].doc.imgblob){
                   $(".UserPanelThumpNail").html('<img src="'+data.rows[0].doc.imgblob+'" style="width: 112px;border: 1px solid grey;border-radius:55px;">');
                 }else if(data.rows[0].doc._attachments){
-                  url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].doc._attachments)[0];
+                  var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[i].id;
+                  // url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].doc._attachments)[0];
                   $(".UserPanelThumpNail").html('<img src="'+url+'" style="width: 112px; border: 1px solid grey;border-radius:55px;">');
                 }else{
                   $(".UserPanelThumpNail").html('<img src="images/profile-pic.png" style="width: 112px; border: 1px solid grey;border-radius:55px;">');

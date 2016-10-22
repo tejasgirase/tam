@@ -1814,7 +1814,8 @@ function getCommunicationHistoryMoreDetails($obj){
 
             temp.push('<td>'+doc_data.document_name+'</td>');
             temp.push('<td>'+data.comment+'</td>');
-            temp.push('<td><a target="_blank" href="'+$.couch.urlPrefix +'/'+db+'/'+doc_data._id+'/'+Object.keys(doc_data._attachments)[0]+'"><span class="label label-warning">View</span></a></td>');
+            var url = "/api/attachment?attachment_name="+Object.keys(doc_data._attachments)[0]+"&db="+db+"&id="+doc_data.id;
+            temp.push('<td><a target="_blank" href="'+url+'"><span class="label label-warning">View</span></a></td>');
             temp.push('</tr></tbody></table></td></tr>');
             if($obj.parent().next().hasClass("comm-history-more-details-parent")){
               $obj.parent().next().remove();
@@ -2058,7 +2059,8 @@ function displayOtherVideos(start,end,data){
   var other_docs_table = [];
   for (var i = start; i < end; i++) {
     if (data.rows[i].doc._attachments) {
-      other_docs_table.push("<tr><td>"+data.rows[i].doc.document_type+"</td><td>"+data.rows[i].doc.document_name+"</td><td>"+data.rows[i].doc.doctor_name+"</td><td><a href='"+$.couch.urlPrefix +'/'+db+'/'+data.rows[i].id+"/"+Object.keys(data.rows[i].doc._attachments)[0]+"' target='blank'><span class='label label-warning'>Download</span></a></td></tr>");
+      var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].doc._attachments)[0]+"&db="+db+"&id="+data.rows[i].id;
+      other_docs_table.push("<tr><td>"+data.rows[i].doc.document_type+"</td><td>"+data.rows[i].doc.document_name+"</td><td>"+data.rows[i].doc.doctor_name+"</td><td><a href='"+url+"' target='blank'><span class='label label-warning'>Download</span></a></td></tr>");
     }
   }
   $("#other_docs_table tbody").html(other_docs_table.join(''));
@@ -2232,7 +2234,8 @@ function getUserpicAndInfo(data) {
     if(data.rows[i].value.imgblob){
       $(".userpic").attr("src", data.rows[i].value.imgblob);
     }else if(data.rows[i].value._attachments){
-      url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
+      var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].doc._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[i].id;
+      // url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
       $(".userpic").attr("src",url);
     }else{
 
@@ -2284,7 +2287,8 @@ function getPatientProfileDetails(personal_info,medical_info) {
   if(personal_info.rows[0].value.imgblob){
     $("#patient_profile_pic").attr("src", personal_info.rows[0].value.imgblob);
   }else if(personal_info.rows[0].value._attachments){
-    url = $.couch.urlPrefix +'/'+personal_details_db+'/'+personal_info.rows[0].id+'/'+Object.keys(personal_info.rows[0].value._attachments)[0];
+    var url = "/api/attachment?attachment_name="+Object.keys(personal_info.rows[0].doc._attachments)[0]+"&db="+personal_details_db+"&id="+personal_info.rows[0].id;
+    // url = $.couch.urlPrefix +'/'+personal_details_db+'/'+personal_info.rows[0].id+'/'+Object.keys(personal_info.rows[0].value._attachments)[0];
     $("#patient_profile_pic").attr("src",url);
   } //if(!$("#edit_patient_name").val() == "" || !$("#edit_patient_dhp_id").val() == "" || !$("#edit_patient_emailid").val() == "" || !$("#edit_patient_phone").val() == "" || !$("#edit_patient_maritalstatus").val() == "" || !$("#edit_patient_gender").val() == "" || !$("#edit_patient_height").val() == "" || !$("#edit_patient_emergency_phone").val() == "" || !$("#edit_patient_emergency_relation").val() == "" || !$("#edit_patient_address1").val() == "" || !$("#edit_patient_weight").val() == "" || !$("#edit_patient_waist").val() == "" || !$("#edit_patient_bloodgroup").val() == "" || !$("#issu_age").val() == "" || !$("#edit_patient_emergency_name").val() == "" || !$("#edit_patient_address2").val() == "" || !$("#edit_patient_pincode").val() == "" || !$("#edit_patient_country").val() == "" || !$("#edit_patient_state").val() == "" || !$("#edit_patient_city").val() == "") {
   //   $("#infosybol").hide();
@@ -3862,7 +3866,8 @@ function openLabReport(lab_result_id) {
         data.lab_results_approved_by_dr ? lab_approve_data.push('<div class="col-lg-6" style="text-align: right; margin-top: 11px;"> <label style="width:70%;"> Lab Results approved by : </label><span>'+data.lab_results_approved_by_dr+'</span></div>') : lab_approve_data.push('');
         $('#labdetails').html(lab_approve_data.join(''));
         var url = "";
-        url     = $.couch.urlPrefix +'/'+db+'/'+lab_result_id+'/'+Object.keys(data._attachments)[0];
+        var url = "/api/attachment?attachment_name="+Object.keys(data._attachments)[0]+"&db="+db+"&id="+lab_result_id;
+        // url     = $.couch.urlPrefix +'/'+db+'/'+lab_result_id+'/'+Object.keys(data._attachments)[0];
         if (data.Format == "PDF" || data._attachments[Object.keys(data._attachments)[0]].content_type == "application/pdf") {
           $("#lab_result_pdf").attr("href", url);
           $('div.media').media({width:780, height:420});
@@ -4543,7 +4548,8 @@ function displayDocuments(start,end,data){
   var document_table = [];
   for (var i = start; i < end; i++) {
     if (data.rows[i].key[2] == "0") {
-      document_table.push('<tr><td>'+data.rows[i].doc.document_name+'</td><td>'+data.rows[i].doc.document_type+'</td><td>'+data.rows[i].doc.patient_name+'</td><td>'+data.rows[i].doc.doctor_name+'</td><td>'+data.rows[i].doc.insert_ts.substring(0, 10)+'</td><td align="center" id="task_'+data.rows[i].id+'""></td><td><a class= "dwnld-hover" href="'+$.couch.urlPrefix +'/'+db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].doc._attachments)[0]+'" target="blank" download><span doc_id='+data.rows[i].id+' class="glyphicon glyphicon-download-alt"></span></a></td></tr>');
+      var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].doc._attachments)[0]+"&db="+db+"&id="+data.rows[i].id;
+      document_table.push('<tr><td>'+data.rows[i].doc.document_name+'</td><td>'+data.rows[i].doc.document_type+'</td><td>'+data.rows[i].doc.patient_name+'</td><td>'+data.rows[i].doc.doctor_name+'</td><td>'+data.rows[i].doc.insert_ts.substring(0, 10)+'</td><td align="center" id="task_'+data.rows[i].id+'""></td><td><a class= "dwnld-hover" href="'+url+'" target="blank" download><span doc_id='+data.rows[i].id+' class="glyphicon glyphicon-download-alt"></span></a></td></tr>');
     }
   };
   $("#document_table tbody").html(document_table.join(''));
@@ -4637,7 +4643,8 @@ function getAutoCompleteImages(uvalue,source) {
       if (data2.rows.length > 0) {
         $("#phone_"+uvalue).html(data2.rows[0].value.phone);
         if(data2.rows[0].value._attachments){
-          $("#"+source+uvalue).attr("src", $.couch.urlPrefix+'/'+personal_details_db+'/'+data2.rows[0].id+'/'+Object.keys(data2.rows[0].value._attachments)[0]);
+          var url = "/api/attachment?attachment_name="+Object.keys(data2.rows[0].value._attachments)[0]+"&db="+personal_details_db+"&id="+data2.rows[0].id;
+          $("#"+source+uvalue).attr("src", url);
         }else if(data2.rows[0].value.imgblob){
           $("#"+source+uvalue).attr("src",data2.rows[0].value.imgblob);
         }else{
