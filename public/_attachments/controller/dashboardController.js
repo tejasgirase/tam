@@ -4,7 +4,6 @@ var ebill_pref;
 app.controller("dashboardController",function($scope,$state,tamsaFactories){
   $.couch.session({
     success: function(data) {
-      console.log(data);
       if(!data) {
         window.location.href = "index.html";
       }else {
