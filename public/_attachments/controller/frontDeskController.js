@@ -3,7 +3,7 @@ var pd_data = {};
 app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactories){
   $.couch.session({
     success: function(data) {
-      if(!data) window.location.href = "index.html";
+      if(!data) window.location.href = "/";
       else {
         pd_data = data;
         $scope.level = data.level;

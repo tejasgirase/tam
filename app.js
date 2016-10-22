@@ -108,7 +108,7 @@ app.get("/api/session",function(req,res) {
 	if(req.user) {
 		res.send(req.user);
 	}else {
-		res.status(500).json({ error: err.error, reason:err.reason});
+		res.status(500).json({ error: "Login Required", reason:"Login Required"});
 	}
 });
 

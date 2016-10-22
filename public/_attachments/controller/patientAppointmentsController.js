@@ -10,7 +10,7 @@ var userinfo_medical = {};
 app.controller("patientAppointmentsController",function($scope,$state,$stateParams,tamsaFactories){
   $.couch.session({
     success: function(data) {
-      if(!data) window.location.href = "index.html";
+      if(!data) window.location.href = "/";
       else {
         pd_data = data;
         $scope.level = data.level;
