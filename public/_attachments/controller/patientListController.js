@@ -364,12 +364,12 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
           Object.keys(data.rows[0].value._attachments).forEach(function( name ) {
             var lengthimg = data.rows[0].value._attachments[name].length;
             if(Number(lengthimg) > 0) { 
-              var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
-              $("#"+parentid).find(".img_"+key+"").attr("src", url);
+              // var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
+              $("#"+parentid).find(".img_"+key+"").attr("src", "/api/attachment?db="+personal_details_db+"&id="+data.rows[0].id+"&attachment_name="+Object.keys(data.rows[0].value._attachments)[0]);
             }  
           });
       }
-    }else if(data.rows.length == 0){
+    }else if(data.rows.length === 0){
       $("#"+parentid).find(".name_"+key+"").parent().parent().parent().parent().remove();
     }   
   }
