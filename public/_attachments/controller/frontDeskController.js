@@ -1081,7 +1081,8 @@ app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactor
               if(data.rows[0].doc.imgblob){
                 $(".UserPanelThumpNail").html('<img src="'+data.rows[0].doc.imgblob+'" style="width: 112px;border: 1px solid grey;border-radius:55px;">');
               }else if(data.rows[0].doc._attachments){
-                url = $.couch.urlPrefix+'/'+ personal_details_db + '/' +data.rows[0].id+'/'+Object.keys(data.rows[0].doc._attachments)[0];
+                var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[0].id;
+                // url = $.couch.urlPrefix+'/'+ personal_details_db + '/' +data.rows[0].id+'/'+Object.keys(data.rows[0].doc._attachments)[0];
                 $(".UserPanelThumpNail").html('<img src="'+url+'" style="width: 112px; border: 1px solid grey;border-radius:55px;">');
               }else{
                 $(".UserPanelThumpNail").html('<img src="images/profile-pic.png" style="width: 112px; border: 1px solid grey;border-radius:55px;">');

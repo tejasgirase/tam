@@ -214,10 +214,16 @@ function generateUploadedChartingTemplateData(data, i,action) {
       newtimeline.push("<div class='timelinecontents'>");
       newtimeline.push("<div><div index='"+data._id+"'></div>");
   }
-  var image_src = $.couch.urlPrefix +'/'+db+'/'+data._id+'/'+Object.keys(data._attachments)[0];
+  if(data._attachments){
+    var url = "/api/attachment?attachment_name="+Object.keys(data._attachments)[0]+"&db="+db+"&id="+data._id;
+  }else{
+    var url = "";
+  }
+  
+  // var image_src = $.couch.urlPrefix +'/'+db+'/'+data._id+'/'+Object.keys(data._attachments)[0];
   newtimeline.push('<div class="cc-timeline-charting-template-display row mrgbottom1" style="line-height:1.15 !important;font-size: 15px !important;"><div class="col-lg-6 theme-color"><h4>Comments::</h4><br><span>');
   newtimeline.push((data.comments && data.comments.length > 0) ? data.comments[0].comment: "NA");
-  newtimeline.push('</span></div><div class="col-lg-6 theme-color imgcontainer"><img height="220" width="300" src="'+image_src+'"></div></div>');
+  newtimeline.push('</span></div><div class="col-lg-6 theme-color imgcontainer"><img height="220" width="300" src="'+url+'"></div></div>');
   
   $('#timeline_year').html(updatedate.format('YYYY'));  
   if(i) {
@@ -428,7 +434,8 @@ function displayTimeLineRecords(data,type_view,seemoreclicked){
         }
         timeline.push('</div>');
         var url = "";
-        url     = $.couch.urlPrefix +'/'+db+'/'+data.rows[i].value._id+'/'+Object.keys(data.rows[i].value._attachments)[0];
+        url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].value._attachments)[0]+"&db="+db+"&id="+data.rows[i].value._id;
+        // url     = $.couch.urlPrefix +'/'+db+'/'+data.rows[i].value._id+'/'+Object.keys(data.rows[i].value._attachments)[0];
         if (data.rows[i].value.Format == "PDF" || data.rows[i].value._attachments[Object.keys(data.rows[i].value._attachments)[0]].content_type == "application/pdf") {
           timeline.push("<div class='co-lg-6'><iframe width='220' height='160' class='media' src='"+url+"' scrolling='no'></iframe><div class='pdfcontainer' pdfurl='"+url+"'>Preview</div></div>");
         }else{

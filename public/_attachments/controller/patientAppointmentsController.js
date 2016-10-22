@@ -403,7 +403,8 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
                       }
                       var url,age_with_dob;
                       if(data.rows[0].value._attachments){
-                        url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
+                        var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[0].id;
+                        // url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
                       }else{
                         url = "images/userpic.png";
                       }

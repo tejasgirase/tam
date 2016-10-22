@@ -364,7 +364,8 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
           Object.keys(data.rows[0].value._attachments).forEach(function( name ) {
             var lengthimg = data.rows[0].value._attachments[name].length;
             if(Number(lengthimg) > 0) { 
-              var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
+              var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].value._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[0].id;
+              // var url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
               $("#"+parentid).find(".img_"+key+"").attr("src", url);
             }  
           });
@@ -454,7 +455,8 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
         for (var i = 0; i < data.rows.length; i++) {
           var r_name = data.rows[i].value.first_nm+" "+data.rows[i].value.last_nm;
           var r_city = data.rows[i].value.city;
-          if(data.rows[i].value._attachments) var url = $.couch.urlPrefix +'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0]
+          if(data.rows[i].value._attachments) var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].value._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[i].id;
+            // var url = $.couch.urlPrefix +'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0]
         }
 
         $.couch.db(db).view("tamsa/getPatientConditionBySeverity", {

@@ -64,11 +64,12 @@ function(head, req) {
 					}
 
 					finalrows.push({
-						weight: weight,
-						selfcare_data: selfcare_data[0],
+						weight:             weight,
+						selfcare_data:      selfcare_data[0],
 						condition_severity: newrows[i].value.CONDITION_SEVERITY,
-						condition: newrows[i].value.CONDITION,
-						user_id: rows[j].value.user_id
+						condition:          newrows[i].value.CONDITION,
+						user_id:            rows[j].value.user_id,
+						patient_dhp_id:     (rows[j].value.patient_dhp_id ? rows[j].value.patient_dhp_id : "NA")
 					});
 				}
 				break;
