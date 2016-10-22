@@ -1,24 +1,19 @@
-var passport = require("passport"),
+var passport      = require("passport"),
 		LocalStrategy = require("passport-local").Strategy,
-		Cloudant = require("cloudant"),
-		cloudant = Cloudant("https://nirmalpatel59:nirmal@nirmalpatel59.cloudant.com"),
-		db = cloudant.db.use("yhsqizvkmp"),
-		sdb = cloudant.db.use("sessions");
+		Cloudant      = require("cloudant"),
+		config        = require("./../../config"),
+		cloudant      = Cloudant(config.CLOUDENT_IP),
+		db            = cloudant.db.use(config.USER_DB);
 
 module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
 	passport.serializeUser(function(user,cb) {
-		// console.log("$$$$$$$$$$$$$");
-		// console.log(user.username);
 		cb(null,user.username);
 	});
 
 	passport.deserializeUser(function(user,cb) {
-		// console.log("<<<<<<<<<<<<<<<<<<<<<<<");
-		// console.log(user);
-		// cb(null,user);
 		db.get("org.couchdb.user:"+user, function(err,body){
 			if(!err) {
 				cb(null,body);

@@ -2,31 +2,26 @@ var d    = new Date();
 var pd_data = {};
 var plController = {};
 app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFactories,$stateParams){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
-          success: function(data) {
-            pd_data = data;
-            $scope.level = data.level;
-            $scope.$apply();
-            displayDailyDashboard();
-            dailyDashboardEventBindings();
-            tamsaFactories.pdBack();
-            tamsaFactories.sharedBindings();
-            tamsaFactories.displayDoctorInformation(data);
-          },
-          error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-        });
-  //     }
-  //   }
-  // });
+  $.couch.session({
+    success: function(data) {
+      if(!data) window.location.href = "/";
+      else {
+        pd_data = data;
+        $scope.level = data.level;
+        $scope.$apply();
+        displayDailyDashboard();
+        dailyDashboardEventBindings();
+        tamsaFactories.pdBack();
+        tamsaFactories.sharedBindings();
+        tamsaFactories.displayDoctorInformation(data);
+      }
+    },
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    }
+  });
 
   function displayDailyDashboard(){
     getTelemedicineSummaryForDailyDashboard("Show From All Category");
@@ -648,13 +643,12 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
               telemedicine_inq.push('<tr>');
               telemedicine_inq.push('<td><a target="_blank" class="hovercolor pointer anchor-color dd_telemedicine_request" ui-sref="telemedicine({doc_id:\''+data._id+'\'})">'+pdata.rows[0].doc.first_nm+" "+pdata.rows[0].doc.last_nm+'</a></td>');
               telemedicine_inq.push('<td>'+data.Health_Issue_Description+'</td>');
-              telemedicine_inq.push('<td class="text-align"><span class="pointer dd_telemedicine_row">'+data.update_ts.substring(0, 10)+'</span></td>');
+              telemedicine_inq.push('<td class="text-align"><span class="pointer dd_telemedicine_row">'+(data.update_ts ? data.update_ts.substring(0, 10) : data.insert_ts.substring(0, 10))+'</span></td>');
               if(condata.rows.length > 0){
                 telemedicine_inq.push('<td class="text-align">Yes</td>');
               }else{
                 telemedicine_inq.push('<td class="text-align">No</td>');
               }
-              
               telemedicine_inq.push('<td class="text-align">Paid</td>');
               telemedicine_inq.push('<td class="text-align" data-doc_id="'+data._id+'"><select class="form-control dd-telemedicine-action"><option>Select Action</option><option>View Communication History</option><option>View Symptoms</option><option>View Patient History/Timeline</option><option>Respond</option></select></td></tr>');
               $("#dd_telemedicine tbody").append(telemedicine_inq.join(''));

@@ -45,7 +45,7 @@ var authRoutes = require("./src/routes/authRoutes");
 require("./src/config/passport")(app);
 
 function ensureAuthenticated(req, res, next) {
-	// console.log(req.session);
+	console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
    return next();
   } else {
@@ -65,18 +65,25 @@ function ensureAPIAuthenticated(req, res, next) {
 }
 
 function ensureLoginAuthenticated(req, res, next) {
+	console.log(req.isAuthenticated());
   if (!req.isAuthenticated()) {
    return next();
   } else {
     res.redirect("/myaccount");
   }	
 }
-
+app.use(function(req, res, next) {
+  if (!req.user)
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  next();
+});
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'html');
 
 app.get("/",ensureLoginAuthenticated,function(req,res) {
+	req.session.destroy();
+	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 	res.render("index.html");
 });
 
@@ -84,11 +91,12 @@ app.post("/api/login",passport.authenticate('local'), function(req,res) {
 	res.send({"id":req.user});
 });
 
-app.post("/api/logout",function(req,res) {
+app.get("/api/logout",function(req,res) {
 	if(req.user) {
-		req.session.destroy();
 		req.logout();
-		res.status("200").send({"message": "successfully logged out."});
+		res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+		res.redirect("/");
+		// res.status("201").send({"message": "successfully logged out."});
 	}
 });
 
@@ -100,7 +108,7 @@ app.get("/api/session",function(req,res) {
 	if(req.user) {
 		res.send(req.user);
 	}else {
-		res.status(500).json({ error: err.error, reason:err.reason});
+		res.status(500).json({ error: "Login Required", reason:"Login Required"});
 	}
 });
 

@@ -370,7 +370,7 @@ app.controller("patientListController",function($scope,$state,$compile,tamsaFact
             }  
           });
       }
-    }else if(data.rows.length == 0){
+    }else if(data.rows.length === 0){
       $("#"+parentid).find(".name_"+key+"").parent().parent().parent().parent().remove();
     }   
   }
