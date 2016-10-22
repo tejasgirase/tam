@@ -2,7 +2,7 @@ var app = angular.module('tamsa_index', ['ui.router','angularUtils.directives.di
 
 app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvider,$locationProvider){
   paginationTemplateProvider.setPath('template/dirPagination.tpl.html');
-  $locationProvider.html5Mode(true).hashPrefix('!');
+  // $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/');
   $stateProvider
   .state('/', {
