@@ -1,8 +1,6 @@
 var express = require("express"),
-		app = express(),
 		printRouter = express.Router();
+var printController = require("../controller/printController")();
 
-
-printRouter.route("/appointment", function(req,res) {
-	
-});
+printRouter.route("/appointment").get(printController.printAppointment);
+module.exports = printRouter;

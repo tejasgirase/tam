@@ -8,7 +8,8 @@ var userinfo_medical = {};
 
 
 app.controller("patientAppointmentsController",function($scope,$state,$stateParams,tamsaFactories){
-  $.couch.session({
+  $.couch.db(db).openDoc("org.couchdb.user:n@n.com",{
+    // $.couch.session({
     success: function(data) {
       if(!data) window.location.href = "/";
       else {
@@ -403,7 +404,7 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
                       }
                       var url,age_with_dob;
                       if(data.rows[0].value._attachments){
-                        var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[0].id;
+                        var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].value._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[0].id;
                         // url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[0].id+'/'+Object.keys(data.rows[0].value._attachments)[0];
                       }else{
                         url = "images/userpic.png";
@@ -1589,7 +1590,7 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
     } 
     var open_link = window.open('','_blank');
     open_link.document.open();
-    open_link.document.write("<iframe width='1100' height='1000' src='/_print/appointments?id="+pd_data._id+"&start="+sd+"&end="+ed+"&dhp_code="+pd_data.dhp_code+"'></iframe>");
+    open_link.document.write("<iframe width='1100' height='1000' src='/print/appointment?id="+pd_data._id+"&start="+sd+"&end="+ed+"&dhp_code="+pd_data.dhp_code+"'></iframe>");
     open_link.document.close();
     /*$.couch.db(db).view("tamsa/getAppointmentNotification", {
       success: function(data) {

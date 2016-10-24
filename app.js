@@ -77,6 +77,7 @@ app.use(function(req, res, next) {
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   next();
 });
+app.use("/print",authRoutes);
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'html');
