@@ -1,9 +1,13 @@
+var nconf           = require('nconf');
+nconf.argv().env().file({ file: 'config.json' });
 var passport      = require("passport"),
+		Username      = nconf.get("Username"),
+		UserPassword  = nconf.get("UserPassword"),
+		USER_DB       = nconf.get("USER_DB"),
 		LocalStrategy = require("passport-local").Strategy,
 		Cloudant      = require("cloudant"),
-		config        = require("./../../config"),
-		cloudant      = Cloudant(config.CLOUDENT_IP),
-		db            = cloudant.db.use(config.USER_DB);
+		cloudant      = Cloudant("https://"+Username+":"+UserPassword+"@"+Username+".cloudant.com"),
+		db            = cloudant.db.use(USER_DB);
 
 module.exports = function(app) {
 	app.use(passport.initialize());
