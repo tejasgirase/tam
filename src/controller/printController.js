@@ -41,6 +41,7 @@ var printController = function() {
 		// res.send(images_path);
 		// res.contentType("application/pdf");
 		function generateHTMLForPDF(data) {
+			//Tejas to check uncomment following
 		  // data.sort(function (a,b){
 		  //   return moment.utc(a.reminder_start).diff(moment.utc(b.reminder_start));
 		  // });
@@ -139,6 +140,7 @@ var printController = function() {
 		    output.push('<tbody>');
 		      for(var j=0;j<data.length;j++){
 		        output.push('<tr>');
+		        //Tejas to check uncomment following
 		        output.push('<td style="padding:4px;">'+"10-24-2016"+'</td>');
 		        output.push('<td style="padding:4px;">'+data[j].appointment_start_time + "<br>" +data[j].appointment_end_time+'</td>');
 		        output.push('<td style="padding:4px;">'+data[j].patient_name+'</td>');
@@ -163,6 +165,7 @@ var printController = function() {
 		function getPersonalInformation(appdata,temp) {
 		  pi_db.view('tamsa', 'getPatientInformation', {key:appdata.user_id, include_docs:true}, function(err,pdata) {
 		    if(pdata.rows.length > 0) {
+		    	//Tejas to check uncomment following
 		      temp.push({
 		        "appointment_date": '10-24-2016',
 		        "appointment_start_time": '08:50 pm',
