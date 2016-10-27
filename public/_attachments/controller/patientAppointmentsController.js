@@ -8,7 +8,7 @@ var userinfo_medical = {};
 
 
 app.controller("patientAppointmentsController",function($scope,$state,$stateParams,tamsaFactories){
-  $.couch.db(db).openDoc("org.couchdb.user:n@n.com",{
+  $.couch.db(replicated_db).openDoc("org.couchdb.user:n@n.com",{
     // $.couch.session({
     success: function(data) {
       if(!data) window.location.href = "/";

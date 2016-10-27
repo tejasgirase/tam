@@ -1620,7 +1620,8 @@ function eventBindingsForMedications(){
   });
 
   $("#past_history_new").on("click","#confirm_medication_edit_update",function(){
-    savecurrentMedication($(this).data("action"));
+    printMedication("154310522c92b018b645f71f5d0c4079")
+    // savecurrentMedication($(this).data("action"));
   });
 
   $("#past_history_new").on("click",".back_to_medication_list",function(){

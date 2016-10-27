@@ -7,11 +7,11 @@ moment              = require('moment');
 wkhtmltopdf.command = path.join(__dirname,"wkhtmltopdf");
 // sharingFactory      = require('./external_handler_functions'),
 app.use(express.static("public/_attachments"));
-var css_path   = path.join(__dirname,'css/');
-var images_path   = path.join(__dirname,'images/');
-
-var Cloudant      = require('cloudant');
-var cloudant      = Cloudant("https://willesiongleducentinglow:779b513d6d5d66522c3649362d16e3830fb1ca94@nirmalpatel59.cloudant.com");
+var css_path    = path.join(__dirname,'css/');
+var images_path = path.join(__dirname,'images/');
+var view_path   = path.join(__dirname,'../views/');
+var Cloudant    = require('cloudant');
+var cloudant    = Cloudant("https://willesiongleducentinglow:779b513d6d5d66522c3649362d16e3830fb1ca94@nirmalpatel59.cloudant.com");
 
 
 // var EH_IP       = nconf.get("External_Handler_IP");
@@ -41,10 +41,10 @@ var printController = function() {
 		// res.send(images_path);
 		// res.contentType("application/pdf");
 		function generateHTMLForPDF(data) {
-			//Tejas to check uncomment following
-		  // data.sort(function (a,b){
-		  //   return moment.utc(a.reminder_start).diff(moment.utc(b.reminder_start));
-		  // });
+			// Tejas to check uncomment following
+		  data.sort(function (a,b){
+		  	return moment.utc(a.reminder_start).diff(moment.utc(b.reminder_start));
+		  });
 
 		  var output = [];
 		  output.push('<link href="'+css_path+'bootstrap.css" rel="stylesheet" type="text/css"/>');
@@ -141,7 +141,7 @@ var printController = function() {
 		      for(var j=0;j<data.length;j++){
 		        output.push('<tr>');
 		        //Tejas to check uncomment following
-		        output.push('<td style="padding:4px;">'+"10-24-2016"+'</td>');
+		        output.push('<td style="padding:4px;">'+moment(data[j].appointment_date).format("MM-DD-YYYY")+'</td>');
 		        output.push('<td style="padding:4px;">'+data[j].appointment_start_time + "<br>" +data[j].appointment_end_time+'</td>');
 		        output.push('<td style="padding:4px;">'+data[j].patient_name+'</td>');
 		        output.push('<td style="padding:4px;">'+data[j].patient_email_id+'</td>');
@@ -167,9 +167,9 @@ var printController = function() {
 		    if(pdata.rows.length > 0) {
 		    	//Tejas to check uncomment following
 		      temp.push({
-		        "appointment_date": '10-24-2016',
-		        "appointment_start_time": '08:50 pm',
-		        "appointment_end_time": '10:30 pm',
+		        "appointment_date": moment(appdata.reminder_start).format("MM-DD-YYYY"),
+		        "appointment_start_time": moment(appdata.reminder_start).format("hh:mm a"),
+		        "appointment_end_time": moment(appdata.reminder_end).format("hh:mm a"),
 		        "reminder_start":appdata.reminder_start,
 		        "patient_name": pdata.rows[0].doc.first_nm + " " +pdata.rows[0].doc.last_nm,
 		        "patient_email_id": pdata.rows[0].doc.user_email,
@@ -211,8 +211,551 @@ var printController = function() {
 		  }
 		});
 	};
+
+	var printMedication = function(req,res) {
+		// res.send(images_path);
+		console.log("Routes enterasdasd");
+		// res.contentType("application/pdf");
+		function noMedicaitonBox(header,image_name,box_name) {
+		  var no_box = [];
+		  if(header) {
+		    no_box.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+		    no_box.push('<td valign="top" align="left">');
+		      no_box.push('<table width="22%" cellspacing="0" cellpadding="0" border="0">');
+		        no_box.push('<tbody>');
+		          no_box.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; background-color:#455a64; padding:10px 5px 10px 15px; color: #020202; font-size: 27px; line-height:1.42857;">');
+		            no_box.push('<td style="float:left;  width:79px; display: inline-block; padding-bottom:5px;"><img src="'+images_path+'images/'+image_name+'" style="padding-right:10px"></td>');
+		            no_box.push('<td style="color: #fff; font-size: 13px; padding-left:15px; padding-bottom:10px; text-align: right;"></td>');
+		            no_box.push('<td style="color: #fff; float:right; font-size: 20px; font-weight: bold; padding-left: 10px; text-align: right;">'+box_name+'</td>');
+		          no_box.push('</tr>');
+		          no_box.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#EBECEC; min-height:30px; padding:60px 10px 60px 10px; ">');
+		            no_box.push('<td width="100%" style="color: #4d8734; text-align:center; float:left; display: inline-block; font-size: 24px; font-weight: bold; ">Not</td>');
+		            no_box.push('<td width="100%" style="color: #4d8734; text-align:center; float:left; display: inline-block; font-size: 24px; font-weight: bold;">Applicable</td>');
+		          no_box.push('</tr>');
+		          no_box.push('<tr style=" display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-bottom:1px solid #c2c7cd; border-left:1px solid #c2c7cd; background:#EBECEC none repeat scroll 0 0;  padding:0 10px; color: #000; font-size: 19px; line-height:1.42857; text-align:center; font-style:italic;"> </tr>');
+		        no_box.push('</tbody>');
+		      no_box.push('</table>');
+		    no_box.push('</td>');
+		  }else {
+		    no_box.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+		    no_box.push('<td valign="top" align="left"><table cellpadding="0" cellspacing="0" border="0" width="22%" bgcolor="#EBECEC" style="background-color:#EBECEC;">');
+		        no_box.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; padding:10px 5px 10px 15px; color: #020202; font-size: 24px;">');
+		          no_box.push('<td colspan="3" style="color: #000; font-size: 16px; padding: 25px 0; text-align: center;">&nbsp;</td>');
+		        no_box.push('</tr>');
+		        no_box.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#EBECEC; min-height:30px; padding:10px; ">');
+		          no_box.push('<td width="100%;" style="color: #4d8734; text-align:center; float:left; display: inline-block; font-size: 24px; font-weight: bold;"> Not </td>');
+		          no_box.push('<td width="100%;" style="color: #4d8734; text-align:center; font-size: 20px; float:right; font-weight: bold;">Applicable</td>');
+		        no_box.push('</tr>');
+		        no_box.push('<tr style="display: inline-block; width:230px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#EBECEC; padding:8px 10px 5px 0px; ">');
+		          no_box.push('<td style="  float:left; color: #fff; display: inline-block; font-size: 24px; margin-right: 8px; text-align: center; width: 24px; padding-left:1px; height:54px;"></td>');
+		          no_box.push('<td style=" color: #020202; font-size: 20px; text-transform: uppercase; width:180px; float:left; padding-top:0px;"></td>');
+		          no_box.push('<td style=" font-size: 16px; padding-top:0; float: right; text-align: right;"></td>');
+		        no_box.push('</tr>');
+		        no_box.push('<tr style=" display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-bottom:1px solid #c2c7cd; border-left:1px solid #c2c7cd;background:#EBECEC;  padding:0 10px; color: #000; font-size: 19px; line-height:1.42857; text-align:center; font-style:italic;">');
+		          no_box.push('<td colspan="3" style="text-align:center">&nbsp;</td>');
+		        no_box.push('</tr>');
+		      no_box.push('</table>');
+		    no_box.push('</td>');
+		  }
+		  return no_box.join('');
+		}
+
+		function generateMedicationHTML(data,pdata) {
+	    var output = [];
+	      output.push('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+	      output.push('<html xmlns="http://www.w3.org/1999/xhtml">');
+	      output.push('<head>');
+	        output.push('<title>Medications</title>');
+	        output.push('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+	        output.push('<meta name="viewport" content="width=device-width, initial-scale=1.0 " />');
+	        output.push('<meta http-equiv="X-UA-Compatible" content="IE=edge" />');
+	        output.push('<meta name="format-detection" content="telephone=no" />');
+	        output.push('<style type="text/css"> body {margin: 0 !important; padding: 0 !important; -webkit-text-size-adjust: 100% !important; -ms-text-size-adjust: 100% !important; -webkit-font-smoothing: antialiased !important; } img {border: 0 !important; outline: none !important; display: inline-block !important; } </style>');
+	      output.push('</head>');
+	      output.push('<body style="margin:0px; padding:0px; font-family:Calibri; box-sizing:border-box;" bgcolor="#ffffff">');
+	        // output.push(generatePrintHeader(hdata,data.dhp_code));
+
+	        output.push('<div class="gm-template">');
+	          output.push('<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff">');
+	            output.push('<tr>');
+	              output.push('<td align="center" valign="top">');
+	                output.push('<table width="1024" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:auto;background-color:#ffffff;">');
+	                  output.push('<tr>');
+	                    output.push('<td valign="top" align="left">');
+	                      output.push('<table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">');
+	                        output.push('<tr>');
+	                          output.push('<td valign="top" align="left">');
+	                            output.push('<table border="0" align="left" cellpadding="0" cellspacing="0" style="">');
+	                              output.push('<tr>');
+	                                output.push('<td colspan="2" style="color:#7c868d; font-size:24px; text-transform:uppercase;">Patient Details</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td colspan="2" height="20" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td colspan="2" style="color:#000; font-size:18px; font-weight:bold; text-transform:uppercase;">'+pdata.first_nm+" "+pdata.last_nm+'</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td colspan="2" height="20" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; padding-bottom:10px;"><img src="'+images_path+'images/location.png" style="padding-right:10px"></td>');
+	                                output.push('<td style="display: inline-block; padding-bottom:10px; font-size:18px; color:#777; text-align:left;">'+pdata.address1+' ' +(pdata.address2 ? pdata.address2 : "")+'</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; padding-bottom:10px;"><img src="'+images_path+'images/call.png" style="padding-right:10px;"></td>');
+	                                output.push('<td style="display: inline-block; padding-bottom:10px; font-size:18px; text-align:left; color:#777;">'+pdata.phone+'</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; padding-bottom:10px;"><img src="'+images_path+'images/mail.png" style="padding-right:10px"></td>');
+	                                output.push('<td style="display: inline-block; padding-bottom:10px; font-size:18px; color:#777; text-align:left;">'+pdata.user_email+'</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                // output.push('<td style="display: inline-block; padding-bottom:10px;"><img src="'+images_path+'images/site.png" style="padding-right:10px;"></td>');
+	                                output.push('<td colspan="2" style="display: inline-block; padding-bottom:10px; font-size:18px; color:#777; text-align:left;">'+pdata.patient_dhp_id+'</td>');
+	                              output.push('</tr>');
+	                            output.push('</table>');
+	                          output.push('</td>');
+	                          output.push('<td valign="top" align="left">');
+	                            output.push('<table border="0" align="left" cellpadding="0" cellspacing="0" style="">');
+	                              // output.push('<tr>');
+	                              //   output.push('<td style="display:inline-block; color:#000; color: #5d9930; font-size:24px; text-transform:uppercase;">Medications</td>');
+	                              // output.push('</tr>');
+	                              // output.push('<tr>');
+	                              //   output.push('<td height="15" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                              // output.push('</tr>');
+	                              // output.push('<tr>');
+	                              //   output.push('<td style="display: inline-block; padding-bottom:10px; color: #455a64; font-size:18px;">#25879</td>');
+	                              // output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; padding-bottom:3px; color: #5d9930; font-size: 24px; margin-bottom:0; text-transform:uppercase;"> Date</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td height="10" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; padding-bottom:5px; color: #455a64; font-size: 18px;">'+data.medication_date+'</td>');
+	                              output.push('</tr>');
+	                            output.push('</table>');
+	                          output.push('</td>');
+	                          output.push('<td valign="top" align="right">');
+	                            output.push('<table border="0" align="right" cellpadding="0" cellspacing="0" style="">');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; color: #7c868d; font-size: 24px; font-weight: bold; margin-bottom:0; text-transform:uppercase;">Medications summary</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td height="20" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                              output.push('</tr>');
+	                              output.push('<tr>');
+	                                output.push('<td style="display: inline-block; background-color:#e4e7e8; padding: 10px 40px 20px 10px; color: #020202; font-size:18px; line-height:1.42857; padding-left:20px;" class="print">');
+	                                  for(var i=0;i<data.medlist.length;i++) {
+	                                    if(i!= 0) output.push('<br>');
+	                                    if(data.medlist[i].desperse_form == "Syrup") {
+	                                      output.push((i+1) +'. '+data.medlist[i].drug_name+' -'+data.medlist[i].quantity+' '+data.medlist[i].drug_strength+' '+data.medlist[i].drug_unit+' Bottle');
+	                                    }else {
+	                                      output.push((i+1) +'. '+data.medlist[i].drug_name+' - QTY '+data.medlist[i].quantity);
+	                                    }
+	                                  }
+	                              output.push('</tr>');
+	                            output.push('</table>');
+	                          output.push('</td>');
+	                        output.push('</tr>');
+	                      output.push('</table>');
+	                    output.push('</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td height="15" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td height="10" bgcolor="#455a64" style="line-height:0px; font-size:0px; background-color:#455a64;">&nbsp;</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td valign="top" align="left" bgcolor="#e9eff7" style="background-color:#e9eff7;">');
+	                      output.push('<table cellpadding="0" cellspacing="0" border="0" width="100%">');
+	                        output.push('<tr>');
+	                          output.push('<td colspan="9" height="10" bgcolor="#455a64" style="line-height:0px; font-size:0px; background-color:#455a64;">&nbsp;</td>');
+	                        output.push('</tr>');
+	                        output.push('<tr>');
+	                          output.push('<td colspan="9" height="10" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                        output.push('</tr>');
+
+	                        for(var i=0; i<data.med_info.length; i++) {
+	                          output.push('<tr>');
+	                          // output.push('<tr>');
+	                            if(data.med_info[i].medication_time.indexOf("morning") > -1) {
+	                              output.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+	                              output.push('<td valign="top" align="left">');
+	                                output.push('<table cellpadding="0" cellspacing="0" border="0" width="22%">');
+	                                  if(i == 0) {
+	                                    output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; background-color:#455a64;  padding:10px 5px 10px 15px; color: #020202; font-size: 27px; line-height:1.42857;">');
+	                                      output.push('<td style="float:left;  width:79px; display: inline-block; padding-bottom:5px;"> <img style="padding-right:10px" src="'+images_path+'images/sun1.png"></td>');
+	                                      output.push('<td style="color: #fff; font-size: 13px; padding-left:15px; padding-bottom:10px; text-align: right;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>');
+	                                      output.push('<td style="color: #fff; float:right; font-size: 20px; font-weight: bold; padding-left: 10px; text-align: right;">Morning</td>');
+	                                    output.push('</tr>');
+	                                  }else {
+	                                    output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; padding:10px 5px 10px 15px; color: #020202; font-size: 24px;">');
+	                                      output.push('<td colspan="3" style="color: #000; font-size: 16px; padding: 25px 0; text-align: center;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>'); 
+	                                    output.push('</tr>');
+	                                  }
+
+	                                  output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; min-height:30px; padding:10px; ">');
+	                                    output.push('<td colspan="2" style="color: #4d8734; float:left; display: inline-block; font-size: 24px; font-weight: bold;">'+data.med_info[i].drug+'</td>');
+	                                    output.push('<td style="color: #4d8734; text-align:right; font-size: 20px; float:right; font-weight: bold;">'+data.med_info[i].drug_strength+' '+data.med_info[i].drug_unit+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style="display: inline-block; width:230px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; padding:10px 10px 10px 0px; ">');
+	                                    output.push('<td style=" background: #4d8732 none repeat scroll 0 0; float:left; color: #fff; display: inline-block; font-size: 24px; margin-right: 8px; text-align: center; width: 24px; padding-left:1px; height:46px;">'+data.med_info[i].medication_time.length+'</td>');
+	                                    output.push('<td style=" color: #020202; font-size: 20px; text-transform: uppercase; width:180px; float:left; padding-top:10px;">times a day</td>');
+	                                    if(data.med_info[i].medication_time_quantity && data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("morning")] > -1){
+	                                      var images_path_med = "";
+	                                      if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("morning")] == "1"){
+	                                        images_path_med = "images/green-circle.png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("morning")] == "0.5"){
+	                                        images_path_med = "images/green-circle(3).png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("morning")] == "2"){
+	                                        images_path_med = "images/green-circle(1).png";
+	                                      }else{
+	                                        images_path_med = "images/green-circle.png";
+	                                      }
+	                                      output.push('<td style=" font-size: 16px; padding-top:0;margin-left:120px; float: left; text-align: left;"><img src="'+images_path+''+images_path_med+'" height="25px" width="25px"></td>');
+	                                    }
+	                                    output.push('<td style=" font-size: 16px; padding-top:0; float: right; text-align: right;">'+data.med_info[i].desperse_form+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style=" display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-bottom:1px solid #c2c7cd; border-left:1px solid #c2c7cd; background:#f1f7fc none repeat scroll 0 0;  padding:10px; color: #000; font-size: 19px; line-height:1.42857; text-align:center; font-style:italic;">');
+	                                    output.push('<td colspan="3" style="text-align:center"><b>Note: </b>'+data.med_info[i].medication_instructions+'</td>');
+	                                  output.push('</tr>');
+	                                output.push('</table>');
+	                              output.push('</td>');
+	                            }else {
+	                              if(i == 0) output.push(noMedicaitonBox(true,"sun1.png", "Morning"))
+	                              else  output.push(noMedicaitonBox(false, "", "Morning"))
+	                            }
+	                            if(data.med_info[i].medication_time.indexOf("afternoon") > -1) {
+	                              output.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+	                              output.push('<td valign="top" align="center">');
+	                                output.push('<table cellpadding="0" cellspacing="0" border="0" width="22%">');
+	                                    if(i == 0) {
+	                                      output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; background-color:#455a64;  padding:10px 5px 10px 15px; color: #020202; font-size: 27px; line-height:1.42857;">');
+	                                        output.push('<td style="float:left;  width:79px; display: inline-block; padding-bottom:5px;"> <img style="padding-right:10px" src="'+images_path+'images/sun2.png"></td>');
+	                                      
+	                                        output.push(' <td style="color: #fff; font-size: 13px; padding-left:15px; padding-bottom:10px; text-align: right;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>');
+	                                        output.push('<td style="color: #fff; float:right; font-size: 20px; font-weight: bold; padding-left: 10px; text-align: right;">Afternoon</td>');
+	                                      output.push('</tr>');
+	                                    }else {
+	                                      output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; padding:10px 5px 10px 15px; color: #020202; font-size: 24px;">');
+	                                        output.push('<td colspan="3" style="color: #000; font-size: 16px; padding: 25px 0; text-align: center;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>'); 
+	                                      output.push('</tr>');
+	                                    }
+	                                  output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; min-height:30px; padding:10px; ">');
+	                                    output.push('<td colspan="2" style="color: #4d8734; float:left; display: inline-block; font-size: 24px; font-weight: bold;">'+data.med_info[i].drug+'</td>');
+	                                    output.push('<td style="color: #4d8734; text-align:right; font-size: 20px; float:right; font-weight: bold;">'+data.med_info[i].drug_strength+' '+data.med_info[i].drug_unit+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style="display: inline-block; width:230px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; padding:10px 10px 10px 0px; ">');
+	                                    output.push('<td style=" background: #4d8732 none repeat scroll 0 0; float:left; color: #fff; display: inline-block; font-size: 24px; margin-right: 8px; text-align: center; width: 24px; padding-left:1px; height:46px;">'+data.med_info[i].medication_time.length+'</td>');
+	                                    output.push('<td style=" color: #020202; font-size: 20px; text-transform: uppercase; width:180px; float:left; padding-top:10px;">times a day</td>');
+	                                    if(data.med_info[i].medication_time_quantity && data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("afternoon")] > -1){
+	                                      var images_path_med = "";
+	                                      if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("afternoon")] == "1"){
+	                                        images_path_med = "images/green-circle.png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("afternoon")] == "0.5"){
+	                                        images_path_med = "images/green-circle(3).png.png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("afternoon")] == "2"){
+	                                        images_path_med = "images/green-circle(1).png";
+	                                      }else{
+	                                        images_path_med = "images/green-circle.png";
+	                                      }
+	                                      output.push('<td style=" font-size: 16px; padding-top:0;margin-left:120px; float: left; text-align: left;"><img src="'+images_path+''+images_path_med+'" height="25px" width="25px"></td>');
+	                                    }
+	                                    output.push('<td style=" font-size: 16px; padding-top:0; float: right; text-align: right;">'+data.med_info[i].desperse_form+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style=" display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-bottom:1px solid #c2c7cd; border-left:1px solid #c2c7cd; background:#f1f7fc none repeat scroll 0 0;  padding:10px; color: #000; font-size: 19px; line-height:1.42857; text-align:center; font-style:italic;">');
+	                                    output.push('<td colspan="3" style="text-align:center"><b>Note: </b>'+data.med_info[i].medication_instructions+'</td>');
+	                                  output.push('</tr>');
+	                                output.push('</table>');
+	                              output.push('</td>');
+	                            }
+	                            else {
+	                              if(i == 0) output.push(noMedicaitonBox(true,"sun2.png", "Afteroon"))
+	                              else  output.push(noMedicaitonBox(false, "", "Afteroon"))
+	                            }
+	                            if(data.med_info[i].medication_time.indexOf("evening") > -1) {
+	                              output.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+	                              output.push('<td valign="top" align="right">');
+	                                output.push('<table cellpadding="0" cellspacing="0" border="0" width="22%">');
+	                                     if(i == 0) {
+	                                      output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; background-color:#455a64;  padding:10px 5px 10px 15px; color: #020202; font-size: 27px; line-height:1.42857;">');
+	                                        output.push('<td style="float:left;  width:79px; display: inline-block; padding-bottom:5px;"> <img style="padding-right:10px" src="'+images_path+'images/sun3.png"></td>');
+	                                        output.push('<td style="color: #fff; font-size: 13px; padding-left:15px; padding-bottom:10px; text-align: right;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>');
+	                                        output.push('<td style="color: #fff; float:right; font-size: 20px; font-weight: bold; padding-left: 10px; text-align: right;">Evening</td>');
+	                                      output.push('</tr>');
+	                                    }else {
+	                                      output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; padding:10px 5px 10px 15px; color: #020202; font-size: 24px;">');
+	                                        output.push('<td colspan="3" style="color: #000; font-size: 16px; padding: 25px 0; text-align: center;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>'); 
+	                                      output.push('</tr>');
+	                                    }
+	                                  output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; min-height:30px; padding:10px; ">');
+	                                    output.push('<td style="color: #4d8734; float:left; display: inline-block; font-size: 24px; font-weight: bold;">'+data.med_info[i].drug+'</td>');
+	                                    output.push('<td style="color: #4d8734; text-align:right; font-size: 20px; float:right; font-weight: bold;">'+data.med_info[i].drug_strength+' '+data.med_info[i].drug_unit+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style="display: inline-block; width:230px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; padding:10px 10px 10px 0px; ">');
+	                                    output.push('<td style=" background: #4d8732 none repeat scroll 0 0; float:left; color: #fff; display: inline-block; font-size: 24px; margin-right: 8px; text-align: center; width: 24px; padding-left:1px; height:46px;">'+data.med_info[i].medication_time.length+'</td>');
+	                                    output.push('<td style=" color: #020202; font-size: 20px; text-transform: uppercase; width:180px; float:left; padding-top:10px;">times a day</td>');
+	                                    if(data.med_info[i].medication_time_quantity && data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("evening")] > -1){
+	                                      var images_path_med = "";
+	                                      if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("evening")] == "1"){
+	                                        images_path_med = "images/green-circle.png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("evening")] == "0.5"){
+	                                        images_path_med = "images/green-circle(3).png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("evening")] == "2"){
+	                                        images_path_med = "images/green-circle(1).png";
+	                                      }else{
+	                                        images_path_med = "images/green-circle.png";
+	                                      }
+	                                      output.push('<td style=" font-size: 16px; padding-top:0;margin-left:120px; float: left; text-align: left;"><img src="'+images_path+''+images_path_med+'" height="25px" width="25px"></td>');
+	                                    }
+	                                    output.push('<td style=" font-size: 16px; padding-top:0; float: right; text-align: right;">'+data.med_info[i].desperse_form+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style=" display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-bottom:1px solid #c2c7cd; border-left:1px solid #c2c7cd; background:#f1f7fc none repeat scroll 0 0;  padding:10px; color: #000; font-size: 19px; line-height:1.42857; text-align:center; font-style:italic;">');
+	                                    output.push('<td style="text-align:center"><b>Note: </b>'+data.med_info[i].medication_instructions+'</td>');
+	                                  output.push('</tr>');
+	                                output.push('</table>');
+	                              output.push('</td>');
+	                            }else {
+	                              if(i == 0) output.push(noMedicaitonBox(true,"sun3.png","Evening"))
+	                              else  output.push(noMedicaitonBox(false,"","Evening"))
+	                            }
+	                            if(data.med_info[i].medication_time.indexOf("night") > -1) {
+	                              output.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+	                              output.push('<td valign="top" align="left">');
+	                                output.push('<table cellpadding="0" cellspacing="0" border="0" width="22%">');
+	                                     if(i == 0) {
+	                                      output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; background-color:#455a64;  padding:10px 5px 10px 15px; color: #020202; font-size: 27px; line-height:1.42857;">');
+	                                        output.push('<td style="float:left;  width:79px; display: inline-block; padding-bottom:5px;"> <img style="padding-right:10px" src="'+images_path+'images/sun4.png"></td>');
+	                                        output.push('<td style="color: #fff; font-size: 13px; padding-left:15px; padding-bottom:10px; text-align: right;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>');
+	                                        output.push('<td style="color: #fff; float:right; font-size: 20px; font-weight: bold; padding-left: 10px; text-align: right;">Night</td>');
+	                                      output.push('</tr>');
+	                                    }else {
+	                                      output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-top:1px solid #c2c7cd; padding:10px 5px 10px 15px; color: #020202; font-size: 24px;">');
+	                                        output.push('<td colspan="3" style="color: #000; font-size: 16px; padding: 25px 0; text-align: center;">'+moment(data.med_info[i].drug_start_date).format("DD, MMM YYYY")+' TO '+moment(data.med_info[i].drug_end_date).format("DD, MMM YYYY")+'</td>'); 
+	                                      output.push('</tr>');
+	                                    }
+	                                  output.push('<tr style="display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; min-height:30px; padding:10px; ">');
+	                                    output.push('<td style="color: #4d8734; float:left; display: inline-block; font-size: 24px; font-weight: bold;">'+data.med_info[i].drug+'</td>');
+	                                    output.push('<td style="color: #4d8734; text-align:right; font-size: 20px; float:right; font-weight: bold;">'+data.med_info[i].drug_strength+' '+data.med_info[i].drug_unit+'</td>');
+	                                  output.push('</tr>');
+
+	                                  output.push('<tr style="display: inline-block; width:230px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd;  background:#fff; padding:10px 10px 10px 0px; ">');
+	                                    output.push('<td style=" background: #4d8732 none repeat scroll 0 0; float:left; color: #fff; display: inline-block; font-size: 24px; margin-right: 8px; text-align: center; width: 24px; padding-left:1px; height:46px;">'+data.med_info[i].medication_time.length+'</td>');
+	                                    output.push('<td style=" color: #020202; font-size: 20px; text-transform: uppercase; width:180px; float:left; padding-top:10px;">times a day</td>');
+	                                    if(data.med_info[i].medication_time_quantity && data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("night")] > -1){
+	                                      var images_path_med = "";
+	                                      if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("night")] == "1"){
+	                                        images_path_med = "images/green-circle.png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("night")] == "0.5"){
+	                                        images_path_med = "images/green-circle(3).png";
+	                                      }else if(data.med_info[i].medication_time_quantity[data.med_info[i].medication_time.indexOf("night")] == "2"){
+	                                        images_path_med = "images/green-circle(1).png";
+	                                      }else{
+	                                        images_path_med = "images/green-circle.png";
+	                                      }
+	                                      output.push('<td style=" font-size: 16px; padding-top:0;margin-left:120px; float: left; text-align: left;"><img src="'+images_path+''+images_path_med+'" height="25px" width="25px"></td>');
+	                                    }
+	                                    output.push('<td style=" font-size: 16px; padding-top:0; float: right; text-align: right;">'+data.med_info[i].desperse_form+'</td>');
+	                                  output.push('</tr>');
+	                                  output.push('<tr style=" display: inline-block; width:220px; border-left:1px solid #c2c7cd; border-right:1px solid #c2c7cd; border-bottom:1px solid #c2c7cd; border-left:1px solid #c2c7cd; background:#f1f7fc none repeat scroll 0 0;  padding:10px; color: #000; font-size: 19px; line-height:1.42857; text-align:center; font-style:italic;">');
+	                                    output.push('<td style="text-align:center"><b>Note: </b>'+data.med_info[i].medication_instructions+'</td>');
+	                                  output.push('</tr>');
+	                                output.push('</table>');
+	                              output.push('</td>');  
+	                            }else {
+	                              if(i == 0) output.push(noMedicaitonBox(true,"sun4.png","Night"))
+	                              else  output.push(noMedicaitonBox(false,"","Night"))
+	                            }
+	                            output.push('<td width="10" valign="top" align="left" style="line-height:0px; font-size:0px; width:10px;">&nbsp;</td>');
+	                          output.push('</tr>');
+	                          // if((i%2)== 0) {
+	                          output.push('<tr>');
+	                          // }else {
+	                          //   output.push('<tr style="page-break-after:always">');
+	                          // }
+	                            output.push('<td colspan="9" height="25" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                          output.push('</tr>');
+	                        }
+	                        output.push('<tr>');
+	                          output.push('<td colspan="9" height="25" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                        output.push('</tr>');
+	                      output.push('</table>');
+	                    output.push('</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td height="25" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td valign="top" align="left" style="display: inline-block; padding-bottom:10px; color: #000; font-size: 20px; font-weight: bold; margin-bottom:0; text-transform:uppercase;">Additional Notes:</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td valign="top" align="left">');
+	                      output.push('<table cellpadding="0" cellspacing="0" border="0" width="100%">');
+	                        output.push('<tr>');
+	                          output.push('<td class="print" style="background-color:#ebecec; padding:12px 16px; color: #231f20; font-size: 18px; line-height:1.42857; padding-left:20px;">NA</td>');
+	                        output.push('</tr>');
+	                      output.push('</table>');
+	                    output.push('</td>');
+	                  output.push('</tr>');
+	                  output.push('<tr>');
+	                    output.push('<td height="25" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                  output.push('</tr>');
+
+	                  if(data.pharmacy_name) {
+	                    output.push('<tr>');
+	                      output.push('<td height="25" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                    output.push('</tr>');
+	                    output.push('<tr>');
+	                      output.push('<td valign="top" align="left" style="display: inline-block; padding-bottom:10px; color: #000; font-size: 20px; font-weight: bold; margin-bottom:0; text-transform:uppercase;">Pharmacy Name:</td>');
+	                      output.push('<td valign="top" align="left" style="display: inline-block; padding-bottom:10px; color: #000; font-size: 20px; font-weight: bold; margin-bottom:0; color: #5d9930;margin-left:10px;">'+data.pharmacy_name+'</td>');
+	                      output.push('<td valign="top" align="right" style="display: inline-block; padding-bottom:10px; color: #000; font-size: 20px; font-weight: bold; margin-bottom:0; text-transform:uppercase;float:right;"><img src="'+images_path+'images/call.png" style="padding-right:10px;">'+data.pharmacy_phone+'</td>');
+	                    output.push('</tr>');
+	                    output.push('<tr>');
+	                      output.push('<td valign="top" align="left">');
+	                        output.push('<table cellpadding="0" cellspacing="0" border="0" width="100%">');
+	                          output.push('<tr>');
+	                            output.push('<td class="print" style="background-color:#ebecec; padding:12px 16px; color: #231f20; font-size: 18px; line-height:1.42857; padding-left:20px;">'+(data.pharmacy_instructions ? data.pharmacy_instructions : "NA")+'</td>');
+	                          output.push('</tr>');
+	                        output.push('</table>');
+	                      output.push('</td>');
+	                    output.push('</tr>');
+	                  }
+
+	                  output.push('<tr>');
+	                    output.push('<td height="25" style="line-height:0px; font-size:0px;">&nbsp;</td>');
+	                  output.push('</tr>');
+
+	                output.push('</table>');
+	              output.push('</td>');
+	            output.push('</tr>');
+	          output.push('</table>');
+	        output.push('</div>');
+	        output.push('<div style="display:none; white-space:nowrap; font:15px courier; color:#ffffff;">- - - - - - - - - - - - - - - - - -</div>');
+	      output.push('</body>');
+	      output.push('</html>');
+	    return output.join('');
+	  }
+	  function generatePrintHeader(hdata,dhp_code) {
+	    var tmp_img     = (hdata && hdata.invoice_image) ? hdata.invoice_image : "";
+	    var tmp_name    = (hdata && hdata.hospital_name) ? hdata.hospital_name : "";
+	    var tmp_add1    = (hdata && hdata.hospital_address) ? hdata.hospital_address : "";
+	    var tmp_add2    = (hdata && hdata.hospital_secondary_address) ? hdata.hospital_secondary_address : "";
+	    var tmp_city    = (hdata && hdata.hospital_city) ? hdata.hospital_city : "";
+	    var tmp_state   = (hdata && hdata.hospital_state) ? hdata.hospital_state : "";
+	    var tmp_pincode = (hdata && hdata.hospital_postal_zip_code) ? hdata.hospital_postal_zip_code : "";
+	    var tmp_phone   = (hdata && hdata.hospital_phone) ? hdata.hospital_phone : "";
+	    var tmp_email   = (hdata && hdata.hospital_email) ? hdata.hospital_email : "";
+	    var tmp_website = (hdata && hdata.hospital_website) ? hdata.hospital_website : "";
+	    var add_btm     = tmp_city +", "+ tmp_state +", India"+", "+ tmp_pincode;
+
+	    // var data = fs.readFileSync(view_path+'header.html', 'utf-8');
+	    var data = fs.readFileSync(view_path + 'header.html', 'utf-8');
+	    var newValue = data.replace(/hospital_logo_img/gim, tmp_img);
+	      newValue = newValue.replace(/hospital_name_for_print/gim, tmp_name);
+	      newValue = newValue.replace(/hospital_address_for_print/gim, tmp_add1);
+	      newValue = newValue.replace(/hospital_second_address_for_print/gim, tmp_add2);
+	      newValue = newValue.replace(/hospital_city_for_print/gim, add_btm);
+	      newValue = newValue.replace(/hospital_phone_for_print/gim, tmp_phone);
+	      newValue = newValue.replace(/hospital_email_for_print/gim, tmp_email);
+	      newValue = newValue.replace(/hospital_website_for_print/gim, tmp_website);
+	      newValue = newValue.replace(/hospital_dhpcode_for_print/gim, dhp_code);
+	      newValue = newValue.replace(/hospital_location_img/gim, images_path + "images/location.png");
+	      newValue = newValue.replace(/hospital_call_img/gim, images_path + "images/call.png");
+	      newValue = newValue.replace(/hospital_website_img/gim, images_path + "images/site.png");
+
+	    // var writedata = fs.writeFileSync(view_path+'header.html', newValue);
+	    // fs.writeFile('/home/tops/gits/tamsaplugins/tamsa_node/views/header2.html', "data", 'utf-8', function(err){
+	    //   if(err) res.send(err);
+	    //   else res.send("success");
+	    // });
+	    return newValue;
+	    // fs.writeFileSync('/home/tops/gits/tamsaplugins/tamsa_node/views/header2.html', "data", 'utf-8');
+	    // res.send("written");
+	  }
+
+	  function generateMedicationData(meddata, med_arr, med_info, hdata, med_count, i) {
+	    if(meddata) {
+	      med_arr.push({
+	        drug_name:meddata.drug,
+	        quantity:meddata.drug_quantity,
+	        desperse_form: meddata.desperse_form,
+	        drug_strength: meddata.drug_strength,
+	        drug_unit: meddata.drug_unit
+	      });
+	      med_info.push(meddata);
+	      if(med_count == (i + 1)) {
+	        var medTime           = {};
+	        medTime.med_info      = med_info;
+	        medTime.medlist       = med_arr;
+
+	        if(meddata.pharmacy_name) {
+	          medTime.pharmacy_name         = meddata.pharmacy_name;
+	          medTime.pharmacy_phone        = meddata.pharmacy_phone;
+	          medTime.pharmacy_instructions = meddata.pharmacy_instructions;    
+	        }
+	        medTime.dhp_code = meddata.dhp_code;
+	        medTime.medication_date = moment(medTime.update_ts).format("DD, MMM YYYY");
+	        pi_db.view("tamsa","getPatientInformation",{key:meddata.user_id,include_docs:true}, function(err, pdata) {
+	          if(pdata.rows.length > 0 ) {
+	            var output     = generateMedicationHTML(medTime,pdata.rows[0].doc);
+	            var changedata = generatePrintHeader(hdata,medTime.dhp_code);
+	            // wkhtmltopdf(changedata, options).pipe(res);
+
+	            fs.writeFile(view_path + 'header2.html', changedata, 'utf-8', function(err){
+	              if(!err) {
+	              	// var readdata = fs.readFileSync(view_path + "header2.html",'utf-8');
+	                // res.send(readdata);
+	                options["header-html"] = view_path + "header2.html";
+	                //console.log(options);
+                	// console.log(output);
+	                wkhtmltopdf(output, options).pipe(res);
+	              }else {
+	                res.send(err);
+	              }
+	            });
+	          }else {
+	            wkhtmltopdf("Patient Details are not Found!!!", options).pipe(res);
+	          }
+	        });
+	      }else {
+	        // res.send("in else");
+	      }
+	    }
+	  }
+
+		var prescription_id = req.query.ids;
+	  db.view('tamsa','getPrintSetting', {key:req.query.dhp_code,include_docs:true}, function(err,body) {
+	    if(!err) {
+	      if(body.rows.length > 0) {
+	        hdata = body.rows[0].doc;
+	        options["footer-center"] = body.rows[0].doc.footer;
+	      }
+	      var medTime = {},
+	          med_info = [],
+	          afternoon_arr = [],
+	          evening_arr = [],
+	          night_arr = [],
+	          med_arr = [];
+	      db.view("tamsa","getMedicationByPrescriptionId", {"key":req.query.ids, include_docs:true}, function(err,body_docs) {
+	        if(body_docs.rows.length > 0) {
+	          var med_count = body_docs.rows.length;
+	          for(var i=0;i<med_count; i++) {
+	            generateMedicationData(body_docs.rows[i].doc, med_arr, med_info,hdata,med_count,i);
+	          }
+	        }else {
+	          wkhtmltopdf("No Medication Details are Found.").pipe(res);
+	        }
+	      });
+	    }
+	  });
+	};
 	return {
-		printAppointment : printAppointment
+		printAppointment: printAppointment,
+		printMedication:  printMedication,
 	};
 };
 module.exports = printController;

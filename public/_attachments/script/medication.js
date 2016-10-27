@@ -473,7 +473,7 @@ function printMedication(prescription_id) {
   try{
     var open_link = window.open('','_blank');
     open_link.document.open();
-    open_link.document.write("<iframe width='1100' height='1000' src='/_print/medications?ids="+prescription_id+"'></iframe>");
+    open_link.document.write("<iframe width='1100' height='1000' src='/print/medications?ids="+prescription_id+"'></iframe>");
     open_link.document.close();
     // var printMedicationArray = getMedicationDetailsForPrint(doc);
     // console.log(printMedicationArray);
@@ -578,6 +578,7 @@ function saveMedication(data,medicationslist,favourite){
 }
 
 function savecurrentMedication(action) {
+  console.log("test");
   //$("#save_new_medication, #save_medication_new, #save_medication_for_patient_only").attr("disabled","disabled");
   $("#confirm_medication_edit_update_modal").modal("hide");
   var doc            = generalizeSaveMedicationData(action);
