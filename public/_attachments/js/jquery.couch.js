@@ -176,12 +176,8 @@
      * @private
      */
     userDb : function(callback) {
-      return $.couch.session({
-        success : function(resp) {
-          var userDb = $.couch.db(resp.info.authentication_db);
-          callback(userDb);
-        }
-      });
+      var userDb = $.couch.db("yhsqizvkmp");
+      return callback(userDb);
     },
 
     /**
@@ -202,7 +198,6 @@
       user_doc.type = "user";
       var user_prefix = "org.couchdb.user:";
       user_doc._id = user_doc._id || user_prefix + user_doc.name;
-
       return $.couch.userDb(function(db) {
         db.saveDoc(user_doc, options);
       });
@@ -637,14 +632,18 @@
           options = options || {};
           var db = this;
           var beforeSend = fullCommit(options);
-          doc.document_added_from = document_added_from || "";
-          if (doc._id === undefined) {
+          //  doc.document_added_from = document_added_from || "";
+          if (doc._id ===  undefined) {
             var method = "POST";
             var uri = "/api/save";
-          } else {
+          }else if(doc.type == "user"){
+            var method = "PUT";
+            var uri = "/api/signup";
+          }else{
             var method = "PUT";
             var uri = "/api/update";
           }
+
           var versioned = maybeApplyVersion(doc);
           var master_doc = {
             doc:toJSON(doc),

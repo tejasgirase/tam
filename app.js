@@ -21,6 +21,10 @@ var Port             = nconf.get("PORT");
 var Local_ip         = nconf.get("LOCAL_IP");
 var multer           = require('multer');
 var upload           = multer();
+//password encryption
+var crypto = require('crypto'),
+algorithm = 'aes-256-ctr',
+password = 'd6F3Efeq';
 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
@@ -46,6 +50,21 @@ app.use(session({
 var authRoutes = require("./src/routes/printRoutes");
 require("./src/config/passport")(app);
 
+
+function encrypt(text){
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+ 
 function ensureAuthenticated(req, res, next) {
 	console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
@@ -115,7 +134,7 @@ app.get("/api/session",function(req,res) {
 	}
 });
 
-app.get("/api/open",ensureAPIAuthenticated,function(req,res) {
+app.get("/api/open",function(req,res) {
 	var opendb = cloudant.db.use(req.query.db);
 	opendb.get(req.query._id,function(err, body) {
 		if(!err) {
@@ -154,7 +173,7 @@ app.get("/api/list",function(req,res) {
 	});
 });
 
-app.post("/api/save",ensureAPIAuthenticated,function(req,res) {
+app.post("/api/save",function(req,res) {
 	var savedb = cloudant.db.use(req.body.db);
 	savedb.insert(JSON.parse(req.body.doc),function(err, body) {
 		if(!err) {
@@ -165,7 +184,23 @@ app.post("/api/save",ensureAPIAuthenticated,function(req,res) {
 	});
 });
 
-app.put("/api/update",ensureAPIAuthenticated,function(req,res) {
+app.put("/api/signup",function(req,res) {
+	var updatedb = cloudant.db.use(req.body.db);
+	var data     = JSON.parse(req.body.doc);
+	var password = encrypt(data.password);
+	data.password = password;
+	console.log(data);
+	updatedb.insert(data,function(err, body) {
+		if(!err) {
+			res.send(body);
+		}else {
+			res.status(500).json({ error: err.error, reason:err.reason});
+		}
+	});
+});
+
+
+app.put("/api/update",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	updatedb.insert(JSON.parse(req.body.doc),function(err, body) {
 		if(!err) {

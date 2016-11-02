@@ -430,6 +430,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       phone:                  $("#Phone").val(),
       alert_phone:            $("#Phonealerts").val(),
       specialization:         specialization_value,
+      document_added_from:    "test",
       qualification:          $("#qualification").val(),
       experience:             $("#experience").val(),
       city:                   $("#City").val(),
@@ -490,19 +491,37 @@ app.controller("signUpController",function($scope,$state,$stateParams){
                    return false;
                 },
                 error: function(data, error, reason) {
-                  if(data == "404"){
-                    console.log(userDoc);
-                    $.couch.db(db).saveDoc(userDoc, {
+                  if(data == 500){
+                    $.couch.signup(userDoc,$("#Password").val(), {
                       success: function(data) {
-                        $.cookie('pm[message]', "Thank you for sign up. You will shorlty receive confirmation mail.");
-                        window.location = "index.html";
+                        $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
+                        window.location = "/";
                       },
-                      error: function(data,error,reason) {
-                        $("#validationtext").text(reason);
-                        $('html, body').animate({scrollTop: 0}, 'slow');
+                      error: function(data, error, reason) {
+                        if (data == '409') {
+                          $("#validationtext").text("User already exist");
+                          $('html, body').animate({scrollTop: 0}, 'slow');
+                        }
+                        else {
+                          $("#validationtext").text(reason);
+                          $('html, body').animate({scrollTop: 0}, 'slow');
+                        }
                       }
-                    });      
-                  }else{
+                    });
+                  }
+                  // if(data == "404"){
+                  //   $.couch.db(db).saveDoc(userDoc, {
+                  //     success: function(data) {
+                  //       $.cookie('pm[message]', "Thank you for sign up. You will shorlty receive confirmation mail.");
+                  //       window.location = "index.html";
+                  //     },
+                  //     error: function(data,error,reason) {
+                  //       $("#validationtext").text(reason);
+                  //       $('html, body').animate({scrollTop: 0}, 'slow');
+                  //     }
+                  //   });      
+                  // }
+                  else{
                     $("#validationtext").text(reason);
                     $('html, body').animate({scrollTop: 0}, 'slow');
                     return false;

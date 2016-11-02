@@ -72,6 +72,7 @@ app.controller("indexAppController",function($scope,$state,$stateParams){
             $("#validationtext").text("Email or Passowrd is wrong."); 
           }else {
             console.log(data.responseText);
+            $("#validationtext").text("Email or Passowrd is wrong.");
           }
         }
       });
