@@ -22,10 +22,10 @@ var Local_ip         = nconf.get("LOCAL_IP");
 var multer           = require('multer');
 var upload           = multer();
 //password encryption
-var crypto = require('crypto'),
-algorithm = 'aes-256-ctr',
-password = 'd6F3Efeq';
-
+var cryptLib = require('cryptlib'),
+iv = "EK9Hd0Ahf5PJ8eS8", //16 bytes = 128 bit 
+key = "b16920894899c7780b5fc7161560a412"; //32 bytes = 256 bits 
+ 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
 app.use(bodyParser.json());
@@ -49,21 +49,6 @@ app.use(session({
 // app.use(session({secret:'cloudant'}));
 var authRoutes = require("./src/routes/printRoutes");
 require("./src/config/passport")(app);
-
-
-function encrypt(text){
-  var cipher = crypto.createCipher(algorithm,password)
-  var crypted = cipher.update(text,'utf8','hex')
-  crypted += cipher.final('hex');
-  return crypted;
-}
- 
-function decrypt(text){
-  var decipher = crypto.createDecipher(algorithm,password)
-  var dec = decipher.update(text,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
-}
  
 function ensureAuthenticated(req, res, next) {
 	console.log(req.isAuthenticated());
@@ -187,7 +172,7 @@ app.post("/api/save",function(req,res) {
 app.put("/api/signup",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	var data     = JSON.parse(req.body.doc);
-	var password = encrypt(data.password);
+	var password = cryptLib.encrypt(data.password, key, iv);
 	data.password = password;
 	console.log(data);
 	updatedb.insert(data,function(err, body) {

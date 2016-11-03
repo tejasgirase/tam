@@ -8,10 +8,9 @@ var passport      = require("passport"),
 		Cloudant      = require("cloudant"),
 		cloudant      = Cloudant("https://"+Username+":"+UserPassword+"@"+Username+".cloudant.com"),
 		db            = cloudant.db.use(USER_DB);
-		var crypto = require('crypto'),
-		algorithm = 'aes-256-ctr',
-		password = 'd6F3Efeq';
-
+		var cryptLib = require('cryptlib'),
+		iv = "EK9Hd0Ahf5PJ8eS8", //16 bytes = 128 bit 
+		key = "b16920894899c7780b5fc7161560a412";//32 bytes = 256 bits 
 module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
@@ -35,8 +34,10 @@ module.exports = function(app) {
 	function(username, password, cb) {
 		db.get("org.couchdb.user:"+username, function(err,body){
 			if(!err) {
-				var eny_password = decrypt(body.password);
-				if(password == eny_password) {
+				var encrypt_password = cryptLib.encrypt(password, key, iv);
+				console.log(encrypt_password);
+				console.log(body.password);
+				if(encrypt_password == body.password) {
 					var user = {
 						username: body.email,
 						password:body.password
@@ -50,11 +51,4 @@ module.exports = function(app) {
 			}
 		});
 	}));
-
-	function decrypt(text){
-	  var decipher = crypto.createDecipher(algorithm,password)
-	  var dec = decipher.update(text,'hex','utf8')
-	  dec += decipher.final('utf8');
-	  return dec;
-	}
 };
