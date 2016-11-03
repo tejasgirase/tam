@@ -214,7 +214,7 @@ var printController = function() {
 
 	var printMedication = function(req,res) {
 		// res.send(images_path);
-		console.log("Routes enterasdasd");
+		// console.log("Routes enterasdasd");
 		// res.contentType("application/pdf");
 		function noMedicaitonBox(header,image_name,box_name) {
 		  var no_box = [];
