@@ -1,10 +1,10 @@
 {
-"LOCAL_IP":          "192.168.0.66",
+"LOCAL_IP":          "192.168.0.70",
 	"PORT":              55554,
-	"Username":          "nirmalpatel59",
-	"UserPassword":      "nirmal",
-	"CLOUDENT_API_KEY":  "willesiongleducentinglow",
-	"CLOUDENT_PASSWORD": "779b513d6d5d66522c3649362d16e3830fb1ca94",
+	"Username":          "sensoryhealthsystems",
+	"UserPassword":      "SHS_Cloudant1234",
+	"CLOUDENT_API_KEY":  "irldeadifecondecturponda",
+	"CLOUDENT_PASSWORD": "0b86279b5be376c211c43493d854d7bf1e4db832",
 	"USER_DB":           "yhsqizvkmp",
 	"DB":                "meluha_db5"
 }

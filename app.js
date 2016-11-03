@@ -25,7 +25,7 @@ var upload           = multer();
 var cryptLib = require('cryptlib'),
 iv = "EK9Hd0Ahf5PJ8eS8", //16 bytes = 128 bit 
 key = "b16920894899c7780b5fc7161560a412"; //32 bytes = 256 bits 
- 
+
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
 app.use(bodyParser.json());
@@ -35,17 +35,19 @@ app.use(session({
 	secret:"cloudant",
   store: sessionstore.createSessionStore({
     type: 'couchdb',
-    host: 'https://nirmalpatel59.cloudant.com',  // optional
+    host: 'https://sensoryhealthsystems.cloudant.com',  // optional
     port: 443,                // optional
     dbName: 'sessions',
     options: {
     	auth: {
-    		username: "willesiongleducentinglow",
-    		password: "779b513d6d5d66522c3649362d16e3830fb1ca94"
+    		username: Username,
+    		password: UserPassword
     	}
     }
   })	
 }));
+// username: "irldeadifecondecturponda",
+//     		password: "0b86279b5be376c211c43493d854d7bf1e4db832"
 // app.use(session({secret:'cloudant'}));
 var authRoutes = require("./src/routes/printRoutes");
 require("./src/config/passport")(app);

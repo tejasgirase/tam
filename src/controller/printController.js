@@ -11,7 +11,7 @@ var css_path    = path.join(__dirname,'css/');
 var images_path = path.join(__dirname,'images/');
 var view_path   = path.join(__dirname,'../views/');
 var Cloudant    = require('cloudant');
-var cloudant    = Cloudant("https://willesiongleducentinglow:779b513d6d5d66522c3649362d16e3830fb1ca94@nirmalpatel59.cloudant.com");
+var cloudant    = Cloudant("https://irldeadifecondecturponda:0b86279b5be376c211c43493d854d7bf1e4db832@sensoryhealthsystems.cloudant.com");
 
 
 // var EH_IP       = nconf.get("External_Handler_IP");
