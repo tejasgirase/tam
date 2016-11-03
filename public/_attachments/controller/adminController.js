@@ -4,12 +4,12 @@ var userinfo = {};
 var userinfo_medical = {};
 
 app.controller("adminController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name === null)
-  //        window.location.href = "index.html";
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+  $.couch.session({
+    success: function(data) {
+      if(data.name === null)
+         window.location.href = "index.html";
+      else {
+        $.couch.db(replicated_db).openDoc("org.couchdb.user:"+data.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;
@@ -24,9 +24,9 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             console.log(status);
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
   
   var adminInterface = (function(){
     var activateCarePlan = function(showid,getCallBack) {

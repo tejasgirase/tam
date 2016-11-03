@@ -102,7 +102,7 @@ app.controller("indexAppController",function($scope,$state,$stateParams){
     });
 
     $("#forgot_password_save").click(function() {
-      $.couch.db("_users").openDoc("org.couchdb.user:"+$("#forgot_password_eamil").val(), {
+      $.couch.db(replicated_db).openDoc("org.couchdb.user:"+$("#forgot_password_eamil").val(), {
         success: function(data) {
           var fp_user  = {
             operation_case: "2",

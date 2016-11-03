@@ -99,14 +99,14 @@ app.controller("patientDetailsController",function($scope,$state,$stateParams,ta
 });
 
 app.controller("patientMedicalHistoryController",function($scope,$state,$stateParams,tamsaFactories){
-  // $.couch.session({
-  //   success: function(data) {
-  //     if(data.userCtx.name == null) {
-  //       //backafter();
-  //       window.location.href = "index.html";
-  //     }
-  //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+  $.couch.session({
+    success: function(data) {
+      if(data.name == null) {
+        //backafter();
+        window.location.href = "index.html";
+      }
+      else {
+        $.couch.db(replicated_db).openDoc("org.couchdb.user:"+data.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = pd_data.level;
@@ -940,9 +940,9 @@ app.controller("patientMedicalHistoryController",function($scope,$state,$statePa
             return false;
           }
         });
-  //     }
-  //   }
-  // });
+      }
+    }
+  });
 });
 
 // app.controller("patientReferralController",function($scope,$state,$stateParams,tamsaFactories){

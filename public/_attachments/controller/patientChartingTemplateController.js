@@ -12,7 +12,7 @@ app.controller("patientChartingTemplateController",function($scope,$state,$state
   //     if(data.userCtx.name == null)
   //        window.location.href = "index.html";
   //     else {
-        $.couch.db("_users").openDoc("org.couchdb.user:"+data.userCtx.name+"", {
+        $.couch.db(replicated_db).openDoc("org.couchdb.user:"+data.userCtx.name+"", {
           success: function(data) {
             pd_data = data;
             $scope.level = data.level;

@@ -126,7 +126,7 @@ app.get("/myaccount",ensureAuthenticated,function(req,res) {
 	res.render("my-account.html");
 });
 
-app.get("/api/session",function(req,res) {
+app.get("/api/session",ensureAuthenticated,function(req,res) {
 	if(req.user) {
 		res.send(req.user);
 	}else {
