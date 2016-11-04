@@ -18,6 +18,10 @@ gulp.task('forever_start',["couchpush"], function() {
   return run('forever start app.js').exec();
 });
 
+gulp.task('forever_restart',["couchpush"], function() {
+  return run('forever restart app.js').exec();
+});
+
 gulp.task('forever_stop',function() {
   return run('forever stop app.js').exec();
 });

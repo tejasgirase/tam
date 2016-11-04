@@ -18,7 +18,6 @@ var UserPassword     = nconf.get("UserPassword");
 var Cloudant         = require('cloudant');
 var cloudant         = Cloudant("https://"+Username+":"+UserPassword+"@"+Username+".cloudant.com");
 var Port             = nconf.get("PORT");
-var Local_ip         = nconf.get("LOCAL_IP");
 var multer           = require('multer');
 var upload           = multer();
 //password encryption
@@ -253,7 +252,7 @@ app.post("/api/remove/:id",ensureAPIAuthenticated,function(req,res) {
 https.createServer({
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
-}, app).listen(Port,Local_ip, function() {
+}, app).listen(Port, function() {
 	console.log("server is running on port "+Port);
 });
 
