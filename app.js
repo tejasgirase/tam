@@ -174,9 +174,10 @@ app.post("/api/save",function(req,res) {
 app.put("/api/signup",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	var data     = JSON.parse(req.body.doc);
-	var password = cryptLib.encrypt(data.password, key, iv);
-	data.password = password;
-	console.log(data);
+	if(data.password){
+		var password = cryptLib.encrypt(data.password, key, iv);
+		data.password = password;
+	}
 	updatedb.insert(data,function(err, body) {
 		if(!err) {
 			res.send(body);

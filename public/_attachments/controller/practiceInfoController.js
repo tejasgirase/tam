@@ -330,7 +330,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
       
       if ($("#su_save").attr('index') && $("#su_save").attr('rev')) {
         if(subUserValidation("edit")){
-          saveSubUser();
+          saveSubUser("edit");
           $("#su_save").removeAttr("disabled");
         }else{
           $("#su_save").removeAttr("disabled");
@@ -338,7 +338,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         }
       }else{
         if(subUserValidation("save")){
-          saveSubUser();
+          saveSubUser("save");
           $("#su_save").removeAttr("disabled");
         }else{
           $("#su_save").removeAttr("disabled");
