@@ -29,11 +29,13 @@ key = "b16920894899c7780b5fc7161560a412"; //32 bytes = 256 bits
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
+    resave: true,
+    saveUninitialized: true,
 	secret:"cloudant",
-  store: sessionstore.createSessionStore({
+  	store: sessionstore.createSessionStore({
     type: 'couchdb',
     host: 'https://sensoryhealthsystems.cloudant.com',  // optional
     port: 443,                // optional
