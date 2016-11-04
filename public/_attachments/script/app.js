@@ -2545,44 +2545,29 @@ function deleteSubUser() {
     doctype:        "cronRecords",
     processed:      "No"
   };
-  
-  $.couch.db(db).saveDoc(doc, {
+  $.couch.db(replicated_db).openDoc(delete_index, {
     success: function(data) {
-      $('#delete_sub_user').modal("hide");
-      newAlert('success', 'User Deleted Successfully !');
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      //setTimeout(function(){
-        $.couch.db(replicated_db).openDoc(delete_index, {
-          success: function(data) {
-            $.couch.db(replicated_db).removeDoc(data, {
-                  success: function(data) {
-                    getSubUsers();
-                  },
-                  error:function(data,error,reason){
-                    newAlert("danger",reason);
-                    $("html, body").animate({scrollTop: 0}, 'slow');
-                    return false;
-                  }
-            }); 
-          },
-          error:function(data,error,reason){
-            newAlert("danger",reason);
-            $("html, body").animate({scrollTop: 0}, 'slow');
-            return false;
-          }
-        });
-
-      //},80000);
+      $.couch.db(replicated_db).removeDoc(data, {
+            success: function(data) {
+              $('#delete_sub_user').modal("hide");
+              newAlert('success', 'User Deleted Successfully !');
+              $('html, body').animate({scrollTop: 0}, 'slow');
+              getSubUsers();
+            },
+            error:function(data,error,reason){
+              newAlert("danger",reason);
+              $("html, body").animate({scrollTop: 0}, 'slow');
+              return false;
+            }
+      }); 
     },
-    error: function(data, error, reason) {
-      newAlert('error', reason);
-      $('html, body').animate({scrollTop: 0}, 'slow');
+    error:function(data,error,reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
     }
   });
-
 // added by narendra 23-11-15.
-
-
 }
 
 function newAlert (type, message) {
@@ -3005,34 +2990,23 @@ function displayViewOrders_chart(start,end,data){
   $("#view_orders_table_charting tbody").html(order_list.join(''));
 }
 
-function saveSubUser(action) {
+function saveSubUser(actiona) {
   var d  = new Date();
-  var signup_user = {
-    first_name:             $("#su_first_name").val(),
-    last_name:              $("#su_last_name").val(),
-    phone:                  $("#su_phone_number").val(),
-    alert_phone:            $("#su_phone_number").val(),
-    level:                  $("#su_level").val(),
-    active:                 $("#su_active").val(),
-    admin:                  $("#su_admin").val(),
-    action:                 '',
-    processed:              "No",
-    doctype:                "cronRecords",
-  };
-
-  if($("#su_save").attr('index') && $("#su_save").attr('rev')) {
-    signup_user.operation_case = "14";
-    signup_user.update_id      = $("#su_save").attr('index');
-    signup_user.update_rev     = $("#su_save").attr('rev');
-    signup_user.update_ts      = d;
-  }
-  else {
-    signup_user.operation_case         = "1";
+  if(!$("#su_save").attr('index') && !$("#su_save").attr('rev')) {
+    var signup_user = {
+      first_name:             $("#su_first_name").val(),
+      last_name:              $("#su_last_name").val(),
+      phone:                  $("#su_phone_number").val(),
+      alert_phone:            $("#su_phone_number").val(),
+      level:                  $("#su_level").val(),
+      active:                 $("#su_active").val(),
+      admin:                  $("#su_admin").val(),
+      action:                 '',
+    };
     signup_user.insert_ts              = d;
     signup_user.update_ts              = d;
     signup_user.random_code            = getPcode(6, "alphabetic");
     signup_user.email                  = $("#su_email").val();
-    signup_user.password               = $("#su_password").val();
     signup_user.name                   = $("#su_email").val();
     signup_user.alert_email            = $("#su_email").val();
     signup_user.specialization         = $("#pdspecialization").val();
@@ -3086,21 +3060,19 @@ function checkPatientEmailWithSubUserSignup(signupuser){
         return false;
       },
       error: function(data, error, reason) {
-        if(data == "404"){
-          $.couch.db(db).saveDoc(signupuser, {
-            success: function(data) {
-              newAlert('success', 'User Saved Successfully !');
-              $('html, body').animate({scrollTop: 0}, 'slow');
-              $("#add_sub_user_modal").modal("hide");
-              setTimeout(function(){
+        if(data == 505){
+          $.couch.signup(signupuser,$("#su_password").val(), {
+              success: function(data) {
+                newAlert('success', 'User Saved Successfully !');
+                $('html, body').animate({scrollTop: 0}, 'slow');
+                $("#add_sub_user_modal").modal("hide");
                 getSubUsers();
-              },80000);
-            },
-            error: function(data, error, reason) {
-              newAlertForModal('danger', reason,'add_sub_user_modal');
-              $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
-            }
-          });
+              },
+              error: function(data, error, reason) {
+                newAlertForModal('danger', reason,'add_sub_user_modal');
+                $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
+              }
+            });
         }else{
           newAlertForModal('danger', reason,'add_sub_user_modal');
           $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');  
@@ -3108,20 +3080,34 @@ function checkPatientEmailWithSubUserSignup(signupuser){
       }
     });
   }else{
-    $.couch.db(db).saveDoc(signupuser, {
-      success: function(data) {
-        newAlert('success', 'User Saved Successfully !');
-        $('html, body').animate({scrollTop: 0}, 'slow');
-        $("#add_sub_user_modal").modal("hide");
-        setTimeout(function(){
-          getSubUsers();
-        },80000);
+    $.couch.db(replicated_db).openDoc($("#su_save").attr('index'), {
+      success: function(data){
+        data.first_name  = $("#su_first_name").val();
+        data.last_name   = $("#su_last_name").val();
+        data.phone       = $("#su_phone_number").val();
+        data.alert_phone = $("#su_phone_number").val();
+        data.level       = $("#su_level").val();
+        data.active      = $("#su_active").val();
+        data.admin       = $("#su_admin").val();
+        data.update_ts   = d;
+        $.couch.db(replicated_db).saveDoc(data, {
+          success: function(data) {
+            newAlert('success', 'User Saved Successfully !');
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            $("#add_sub_user_modal").modal("hide");
+            getSubUsers();
+          },
+          error: function(data, error, reason) {
+            newAlertForModal('danger', reason,'add_sub_user_modal');
+            $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
+          }
+        });
       },
-      error: function(data, error, reason) {
+      error:function(data,status,reason){
         newAlertForModal('danger', reason,'add_sub_user_modal');
         $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
       }
-    });
+    }); 
   }
 }
 
@@ -4612,27 +4598,29 @@ function resetPasswordSubUser() {
     $("#rp_new_password").focus();
   }
   else{
-    var reset_password = {
-      user_id:      $("#rp_sub_user_save").attr("index"),
-      new_password: $("#rp_new_password").val(),
-      operation_case: "16",
-      doctype:        "cronRecords",
-      processed:      "No"
-    }
-
-    $.couch.db(db).saveDoc(reset_password, {
-      success: function(data) {
-        $("#password_reset_user_modal").modal("hide");
-        $("#rp_new_password").val("");
-        $("#rp_confirm_password").val("")
-        newAlert('success', 'Saved successfully !');
-        $('html, body').animate({scrollTop: 0}, 'slow');
+    //case  16
+    $.couch.db(replicated_db).openDoc($("#rp_sub_user_save").attr("index"), {
+      success: function(data){
+         $.couch.signup(data,$("#rp_new_password").val(), {
+          success: function(data) {
+            $("#password_reset_user_modal").modal("hide");
+            $("#rp_new_password").val("");
+            $("#rp_confirm_password").val("");
+            newAlert('success', 'User Saved Successfully !');
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            $("#add_sub_user_modal").modal("hide");
+          },
+          error: function(data, error, reason) {
+            newAlertForModal('danger', reason,'add_sub_user_modal');
+            $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
+          }
+        });
       },
-      error: function(data, error, reason) {
-        newAlertForModal('success', reason, 'password_reset_user_modal');
-        $('html, body').animate({scrollTop: 0}, 'slow');
+      error:function(data,status,reason){
+        newAlertForModal('danger', reason,'add_sub_user_modal');
+        $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
       }
-    })
+    });
   }
 
 }
