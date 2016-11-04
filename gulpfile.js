@@ -14,6 +14,14 @@ gulp.task('couchpush', function() {
   return run('couchapp push ./public/ '+COUCH_URL).exec();
 });
 
+gulp.task('forever_start',["couchpush"], function() {
+  return run('forever start app.js').exec();
+});
+
+gulp.task('forever_stop',function() {
+  return run('forever stop app.js').exec();
+});
+
 gulp.task("serve",["couchpush"],function() {
 	var options = {
 		script:"app.js",

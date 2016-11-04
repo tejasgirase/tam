@@ -818,7 +818,7 @@ app.controller("riskCalculatorController",function($scope,$state,$stateParams,ta
          doctype:            "SelfCare",
          insert_ts:          new Date(),
          user_id:            userinfo.user_id
-        }
+        };
         var usermedhis_doc = {
          "doctype":               "UserMedHis",
          "user_id":               userinfo.user_id,
@@ -843,7 +843,7 @@ app.controller("riskCalculatorController",function($scope,$state,$stateParams,ta
          "tc_reading":            "",
          "update_ts":             "",
          "insert_ts":             new Date()
-        }
+        };
         var temp_score = calculateRiskFromMetabolicParams(rdata,"current_risk_score",$('#waist_mets').val(),$('#triglyceride_mets').val(),$('#hdl_cholesterol_mets').val(),$('#bp_systolic_mets').val(),$('#bp_diastolic_mets').val(),$('#fasting_glucose_mets').val(),$('#age_mets').val(),$("#two_hr_post_glucose").val(),$("#diabetic_condition").val());
         if($("#calculate_metabolics_risk_score").data("past_metabolic_score") == "") {
           var past_met_score = ($("#calculate_metabolics_risk_score").data("current_metabolic_score") ? $("#calculate_metabolics_risk_score").data("current_metabolic_score") : "");
