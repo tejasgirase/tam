@@ -23,7 +23,8 @@ var upload           = multer();
 //password encryption
 var cryptLib = require('cryptlib'),
 iv = "EK9Hd0Ahf5PJ8eS8", //16 bytes = 128 bit 
-key = "b16920894899c7780b5fc7161560a412"; //32 bytes = 256 bits 
+key = cryptLib.getHashSha256('sterceSllAfOterceSehT', 32);
+var service = require("./src/services/common.service");
 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
@@ -33,7 +34,7 @@ app.use(cookieParser());
 app.use(session({
     resave: true,
     saveUninitialized: true,
-	secret:"cloudant",
+		secret:"cloudant",
   	store: sessionstore.createSessionStore({
     type: 'couchdb',
     host: 'https://sensoryhealthsystems.cloudant.com',  // optional
@@ -99,6 +100,28 @@ app.get("/",ensureLoginAuthenticated,function(req,res) {
 
 app.post("/api/login",passport.authenticate('local'), function(req,res) {
 	res.send({"id":req.user});
+});
+
+app.get("/api/forgot",function(req,res) {
+	// res.send(req.query.emailid);
+	var opendb = cloudant.db.use(req.query.db);
+	opendb.get("org.couchdb.user:"+req.query.emailid,function(err, body) {
+		if(!err) {
+			var temp_pass = service.getPcode(6, "alphabetic");
+			console.log(temp_pass);
+			body.password = cryptLib.encrypt(temp_pass, key, iv);
+			console.log(body.password);
+			opendb.insert(body,function(err,data) {
+				if(!err) {
+					res.send(data);
+				}else {
+					res.status(500).json({ error: err.error, reason:err.reason});
+				}
+			});
+		}else {
+			res.status(500).json({ error: err.error, reason:err.reason});
+		}
+	});
 });
 
 app.get("/api/logout",function(req,res) {

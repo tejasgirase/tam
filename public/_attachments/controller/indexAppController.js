@@ -101,33 +101,67 @@ app.controller("indexAppController",function($scope,$state,$stateParams){
       // });
     });
 
-    $("#forgot_password_save").click(function() {
-      $.couch.db(replicated_db).openDoc("org.couchdb.user:"+$("#forgot_password_eamil").val(), {
-        success: function(data) {
-          var fp_user  = {
-            operation_case: "2",
-            new_password:   getPcode(6, "alphabetic"),
-            user_id:        data._id,
-            processed:      "No",
-            doctype:        "cronRecords",
-          };
+    $("#forgot_password_link").on("click",function(){
+      $("#forgot_password").modal("show");
+      $("#forgot_password_email").val("");
+    });
 
-          $.couch.db(db).saveDoc(fp_user, {
-            success: function(data) {
+    $("#forgot_password_save").click(function() {
+      if(validateForgotPassWord()) {
+        $.ajax({
+          url:"/api/forgot",
+          type:"GET",
+          data:{
+            emailid:$("#forgot_password_email").val(),
+            db:replicated_db
+          },
+          success:function(data) {
+            if(data) {
               $("#validationtext").text("You will shortly receive your new password on your email address.");
-            },
-            error: function(data, error, reason) {
-              newAlert('error', reason);
-              $('html, body').animate({scrollTop: 0}, 'slow');
+              $('#forgot_password').modal("hide");
+              $("#forgot_password_email").val("");
+            }else {
+              newAlertForModal('danger', 'No User Found with provided Email Id.','forgot_password');
+              $('html, body, #forgot_password').animate({scrollTop: 0}, 'slow');
+              $("#forgot_password_email").focus();
+              return false;
             }
-          })
-        },
-        error: function(status) {
-          $("#validationtext").text("Invalid Email Id");
-        }
-      });
-      $('#forgot_password').modal("hide");
-      $("#forgot_password_eamil").val("");
+          },
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $('#forgot_password').modal("hide");
+            $("#forgot_password_email").val("");
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
+          }
+        });
+      }else {
+        console.log("In Else for forgot password validation");
+      }
+      // $.couch.db(replicated_db).openDoc("org.couchdb.user:"+$("#forgot_password_email").val(), {
+      //   success: function(data) {
+      //     var fp_user  = {
+      //       operation_case: "2",
+      //       new_password:   getPcode(6, "alphabetic"),
+      //       user_id:        data._id,
+      //       processed:      "No",
+      //       doctype:        "cronRecords",
+      //     };
+
+      //     $.couch.db(db).saveDoc(fp_user, {
+      //       success: function(data) {
+      //         $("#validationtext").text("You will shortly receive your new password on your email address.");
+      //       },
+      //       error: function(data, error, reason) {
+      //         newAlert('error', reason);
+      //         $('html, body').animate({scrollTop: 0}, 'slow');
+      //       }
+      //     });
+      //   },
+      //   error: function(status) {
+      //     $("#validationtext").text("Invalid Email Id");
+      //   }
+      // });
     });
   });
 
@@ -158,4 +192,39 @@ app.controller("indexAppController",function($scope,$state,$stateParams){
       }
     });  
   }
+
+  function validateForgotPassWord() {
+    var email_filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if($("#forgot_password_email").val() === "") {
+      console.log("1");
+      newAlertForModal('danger', 'Email Id can not be empty.','forgot_password');
+      $('html, body, #forgot_password').animate({scrollTop: 0}, 'slow');
+      $("#forgot_password_email").focus();
+      return false;
+    }else if(!email_filter.test($("#forgot_password_email").val())) {
+      console.log("2");
+      newAlertForModal('danger', 'Invalid Email Id.','forgot_password');
+      $('html, body, #forgot_password').animate({scrollTop: 0}, 'slow');
+      $("#forgot_password_email").focus();
+      return false;
+    }else {
+      return true;
+    }
+  }
+
+  function newAlert (type, message) {
+    $("#alert-area").html("");
+    $("#alert-area").append($("<div class='suc-err-msg alert alert-"+type+" fade in' data-alert><a class='close' data-dismiss='alert'>&times;</a><p> " + message + " </p></div>"));
+    $(".alert").delay(4000).fadeOut("slow", function () { $(this).remove(); });
+  }
+
+  function newAlertForModal (type, message, id) {
+    if($(".alert-test").length){
+      return;
+    }else{
+      $("#" + id).find(".alert-msg-box").append($("<div class='alert-test alert-"+type+" fade in' data-alert><p style = 'color:red'> " + message + " </p></div>"));
+      $(".alert-test").delay(6000).fadeOut("slow", function () { $(this).remove(); });  
+    }
+  }
+
 });

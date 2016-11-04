@@ -10,7 +10,8 @@ var passport      = require("passport"),
 		db            = cloudant.db.use(USER_DB);
 		var cryptLib = require('cryptlib'),
 		iv = "EK9Hd0Ahf5PJ8eS8", //16 bytes = 128 bit 
-		key = "b16920894899c7780b5fc7161560a412";//32 bytes = 256 bits 
+		// key = "b16920894899c7780b5fc7161560a412";//32 bytes = 256 bits 
+		key = cryptLib.getHashSha256('sterceSllAfOterceSehT', 32);
 module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());

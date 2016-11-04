@@ -50,7 +50,7 @@
   </p>
 </div>
  <style type="text/css">
-    .container-parent, #forgot_password { display:none; }
+    .container-parent{ display:none; }
   </style>
 </noscript>
 <div class="modal fade" id="forgot_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -59,11 +59,12 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title">Enter Your Email Address</h4>
+        <div class="alert-msg-box"></div>
       </div>
       <div class="modal-body">
         <div class="form-group">
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="forgot_password_eamil" placeholder="Enter your email address here..">
+            <input type="text" class="form-control" id="forgot_password_email" placeholder="Enter your email address here..">
           </div>
           <div class="col-sm-2">
             <button class="btn btn-warning" type="button" id="forgot_password_save">Send</button>
