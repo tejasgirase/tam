@@ -3060,7 +3060,7 @@ function checkPatientEmailWithSubUserSignup(signupuser){
         return false;
       },
       error: function(data, error, reason) {
-        if(data == 505){
+        if(data == 500){
           $.couch.signup(signupuser,$("#su_password").val(), {
               success: function(data) {
                 newAlert('success', 'User Saved Successfully !');

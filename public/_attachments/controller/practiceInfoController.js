@@ -3291,7 +3291,6 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     $("#charting_template_image_file").val("").data("img-data", "");
   }
 
-
   function changeUserPassword() {
     $("#change_password").attr("disabled","disabled");
     if (validateResetPassword()) {
