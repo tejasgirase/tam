@@ -1,6 +1,26 @@
+var nconf = require('nconf');
+nconf.argv().env().file({ file: 'config.json' });
+var mailgun = require('mailgun-js')({apiKey: nconf.get("MAIL_API_KEY"), domain: nconf.get("MAIL_DOMAIN")});
 var service = {};
 service.getPcode = getPcode;
+service.sendMail = sendMail;
 module.exports = service;
+
+function sendMail(res,data,from,to,subject,contentType,content,attachment) {
+  var message;
+  if (contentType == "html") {
+    message= {from: from, to: to, subject: subject, html:content};
+  }else if(contentType == "text"){
+    message= {from: from, to: to, subject: subject, text:content};
+  }
+  mailgun.messages().send(message, function (error, body) {
+    if(!error){
+      res.send(data);
+    }else{
+      res.status(500).json({ error: "Not able to send the email.", reason:"Not able to send the email."});
+    }
+  });
+}
 
 function getNumber(type) {
 	var letters,pool;

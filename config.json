@@ -8,6 +8,7 @@
 	"DB":                "meluha_db5",
 	"MAIL_API_KEY":      "key-2e1c148b591cdd5767904c9e482b34ce",
 	"MAIL_DOMAIN":       "mg.sensoryhealthsystems.com",
+	"MAIL_ID":           "Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>",
 	"IV":                "EK9Hd0Ahf5PJ8eS8",
 	"SECRET_KEY":        "sterceSllAfOterceSehT"
 }

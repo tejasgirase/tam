@@ -114,7 +114,8 @@ app.get("/api/forgot",function(req,res) {
 			console.log(body.password);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
-					res.send(data);
+					service.sendMail(res,data,nconf.get("MAIL_ID"),req.query.emailid,"New Password","text","Your New Password has been set to "+original_pass);
+					// res.send(data);
 				}else {
 					res.status(500).json({ error: err.error, reason:err.reason});
 				}
