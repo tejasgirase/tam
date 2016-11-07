@@ -5,5 +5,9 @@
 	"CLOUDENT_API_KEY":  "irldeadifecondecturponda",
 	"CLOUDENT_PASSWORD": "0b86279b5be376c211c43493d854d7bf1e4db832",
 	"USER_DB":           "yhsqizvkmp",
-	"DB":                "meluha_db5"
+	"DB":                "meluha_db5",
+	"MAIL_API_KEY":      "key-2e1c148b591cdd5767904c9e482b34ce",
+	"MAIL_DOMAIN":       "mg.sensoryhealthsystems.com",
+	"IV":                "EK9Hd0Ahf5PJ8eS8",
+	"SECRET_KEY":        "sterceSllAfOterceSehT"
 }

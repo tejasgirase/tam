@@ -6058,8 +6058,8 @@ function getPatientAllergies (obj) {
         patient_allergies.push('');
         for(var i=0;i<userinfo_medical.Allergies.length;i++){
           var element = userinfo_medical.Allergies[i];
-          var arry =element.split(",");
-          patient_allergies.push("<li>Allergies name:"+arry[0]+"</li><li>Severe:"+(arry[1] ? arry[1] : "N/A")+"</li><li>Reaction:"+(arry[2] ? arry[2] : "N/A")+"</li>");
+          // var arry =element.split(",");
+          patient_allergies.push("<li>Allergies name:"+element.allergies+"</li><li>Severe:"+(element.severe ? element.severe : "N/A")+"</li><li>Reaction:"+(element.reaction ? element.reaction : "N/A")+"</li>");
         }
       }else{
         patient_allergies.push("No Allergies are found.");

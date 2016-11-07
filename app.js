@@ -1,29 +1,30 @@
 var nconf           = require('nconf');
 nconf.argv().env().file({ file: 'config.json' });
-var sessionstore     = require('sessionstore-cloudant');
-var https            = require("https");
-var fs               = require("fs");
-var express          = require("express");
-var app              = express();
-var cookieParser     = require("cookie-parser");
-var session          = require("express-session");
-// var CloudantStore = require('connect-cloudant')(session);
-var passport         = require("passport");
-var strategy         = require("passport-local").Strategy;
-var path             = require("path");
-var bodyParser       = require("body-parser");
-var cons             = require('consolidate');
-var Username         = nconf.get("Username");
-var UserPassword     = nconf.get("UserPassword");
-var Cloudant         = require('cloudant');
-var cloudant         = Cloudant("https://"+Username+":"+UserPassword+"@"+Username+".cloudant.com");
-var Port             = nconf.get("PORT");
-var multer           = require('multer');
-var upload           = multer();
+var sessionstore      = require('sessionstore-cloudant');
+var https             = require("https");
+var fs                = require("fs");
+var express           = require("express");
+var app               = express();
+var cookieParser      = require("cookie-parser");
+var session           = require("express-session");
+// var CloudantStore  = require('connect-cloudant')(session);
+var passport          = require("passport");
+var strategy          = require("passport-local").Strategy;
+var path              = require("path");
+var bodyParser        = require("body-parser");
+var cons              = require('consolidate');
+var Username          = nconf.get("Username");
+var CLOUDENT_API_KEY  = nconf.get("CLOUDENT_API_KEY");
+var CLOUDENT_PASSWORD = nconf.get("CLOUDENT_PASSWORD");
+var Cloudant          = require('cloudant');
+var cloudant          = Cloudant("https://"+CLOUDENT_API_KEY+":"+CLOUDENT_PASSWORD+"@"+Username+".cloudant.com");
+var Port              = nconf.get("PORT");
+var multer            = require('multer');
+var upload            = multer();
 //password encryption
 var cryptLib = require('cryptlib'),
-iv = "EK9Hd0Ahf5PJ8eS8", //16 bytes = 128 bit 
-key = cryptLib.getHashSha256('sterceSllAfOterceSehT', 32);
+iv = nconf.get("IV"), //16 bytes = 128 bit 
+key = cryptLib.getHashSha256(nconf.get('SECRET_KEY'), 32);
 var service = require("./src/services/common.service");
 
 // app.use(express.static('public/'));
@@ -43,8 +44,8 @@ app.use(session({
     dbName: 'sessions',
     options: {
     	auth: {
-    		username: Username,
-    		password: UserPassword
+    		username: CLOUDENT_API_KEY,
+    		password: CLOUDENT_PASSWORD
     	}
     }
   })	
@@ -104,13 +105,12 @@ app.post("/api/login",passport.authenticate('local'), function(req,res) {
 });
 
 app.get("/api/forgot",function(req,res) {
-	// res.send(req.query.emailid);
 	var opendb = cloudant.db.use(req.query.db);
 	opendb.get("org.couchdb.user:"+req.query.emailid,function(err, body) {
 		if(!err) {
-			var temp_pass = service.getPcode(6, "alphabetic");
-			console.log(temp_pass);
-			body.password = cryptLib.encrypt(temp_pass, key, iv);
+			var original_pass = service.getPcode(6, "alphabetic");
+			console.log(original_pass);
+			body.password = cryptLib.encrypt(original_pass, key, iv);
 			console.log(body.password);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
