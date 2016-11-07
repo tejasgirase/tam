@@ -15,11 +15,11 @@ gulp.task('couchpush', function() {
 });
 
 gulp.task('forever_start',["couchpush"], function() {
-  return run('forever start -l forever.log -o out.log -e err.log app.js').exec();
+  return run('forever start -a -l forever.log -o out.log -e err.log app.js').exec();
 });
 
 gulp.task('forever_restart',["couchpush"], function() {
-  return run('forever restart -l forever.log -o out.log -e err.log app.js').exec();
+  return run('forever restart -a -l forever.log -o out.log -e err.log app.js').exec();
 });
 
 gulp.task('forever_stop',function() {

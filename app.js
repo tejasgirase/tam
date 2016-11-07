@@ -32,9 +32,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
 		secret:"cloudant",
+		cookie:{expires:60000*10,httpOnly:false},
   	store: sessionstore.createSessionStore({
     type: 'couchdb',
     host: 'https://sensoryhealthsystems.cloudant.com',  // optional
@@ -75,13 +76,13 @@ function ensureAPIAuthenticated(req, res, next) {
 }
 
 function ensureLoginAuthenticated(req, res, next) {
-	console.log(req.isAuthenticated());
   if (!req.isAuthenticated()) {
    return next();
   } else {
     res.redirect("/myaccount");
   }	
 }
+
 app.use(function(req, res, next) {
   if (!req.user)
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -137,7 +138,7 @@ app.get("/myaccount",ensureAuthenticated,function(req,res) {
 	res.render("my-account.html");
 });
 
-app.get("/api/session",ensureAuthenticated,function(req,res) {
+app.get("/api/session",ensureAPIAuthenticated,function(req,res) {
 	if(req.user) {
 		res.send(req.user);
 	}else {
