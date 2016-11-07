@@ -3294,37 +3294,62 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
   function changeUserPassword() {
     $("#change_password").attr("disabled","disabled");
     if (validateResetPassword()) {
-      $.couch.login({
-        name: $("#pdemail").val(),
-        password: $("#old_password_change").val(),
-        success: function(data) {   
-          var reset_password = {
-            user_id:      pd_data._id,
-            new_password: $("#new_password_change").val(),
-            operation_case: "16",
-            doctype:        "cronRecords",
-            processed:      "No"
-          }
-          $.couch.db(db).saveDoc(reset_password, {
-            success: function(data) {
-                newAlert("success", "You will shortly receive password chnage confirmation mail.");
-                $("#old_password_change").val("");
-                $("#confirm_password_change").val("");
-                $("#new_password_change").val("");
-                $("#change_password").removeAttr("disabled");
-            },
-            error: function(data, error, reason) {
-              newAlert("danger", error);
-              $("#change_password").removeAttr("disabled");
-            }
-          });
+      $.ajax({
+        url:"/api/change_password",
+        type:"POST",
+        data:{
+          password:$("#old_password_change").val(),
+          db:replicated_db,
+          new_password:$("#new_password_change").val()
         },
-        error: function(data, error, reason) {
-          newAlert("danger", "Old password is wrong.");
-          $("#change_password").removeAttr("disabled");
+        success:function(data){
+          if(data) {
+            newAlert("success", "You will shortly receive password chnage confirmation mail.");
+            $("#old_password_change").val("");
+            $("#confirm_password_change").val("");
+            $("#new_password_change").val("");
+            $("#change_password").removeAttr("disabled");
+          }else {
+            console.log("something wrong with API.");
+          }
+        },
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
           return false;
         }
-      });
+      })
+      // $.couch.login({
+      //   name: $("#pdemail").val(),
+      //   password: $("#old_password_change").val(),
+      //   success: function(data) {   
+      //     var reset_password = {
+      //       user_id:      pd_data._id,
+      //       new_password: $("#new_password_change").val(),
+      //       operation_case: "16",
+      //       doctype:        "cronRecords",
+      //       processed:      "No"
+      //     }
+      //     $.couch.db(db).saveDoc(reset_password, {
+      //       success: function(data) {
+      //           newAlert("success", "You will shortly receive password chnage confirmation mail.");
+      //           $("#old_password_change").val("");
+      //           $("#confirm_password_change").val("");
+      //           $("#new_password_change").val("");
+      //           $("#change_password").removeAttr("disabled");
+      //       },
+      //       error: function(data, error, reason) {
+      //         newAlert("danger", error);
+      //         $("#change_password").removeAttr("disabled");
+      //       }
+      //     });
+      //   },
+      //   error: function(data, error, reason) {
+      //     newAlert("danger", "Old password is wrong.");
+      //     $("#change_password").removeAttr("disabled");
+      //     return false;
+      //   }
+      // });
     }else{
       $("#change_password").removeAttr("disabled");
       return false;

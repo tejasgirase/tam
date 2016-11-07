@@ -197,6 +197,28 @@ app.post("/api/save",function(req,res) {
 	});
 });
 
+
+app.post("/api/change_password",function(req,res) {
+	console.log(req.body.password);
+	var updatedb = cloudant.db.use(req.body.db);
+	var password = cryptLib.encrypt(req.body.password, key, iv);
+
+	if(req.user.password == password){
+		var data = req.user;
+		data.password = cryptLib.encrypt(req.body.new_password, key, iv);
+		updatedb.insert(data,function(err, body) {
+			if(!err) {
+				service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Password Change","text","Your New Password has been set to " + req.body.new_password);
+				// res.send(body);
+			}else {
+				res.status(500).json({ error: err.error, reason:err.reason});
+			}
+		});
+	}else {
+		res.status(500).json({ error: "Your current password is wrong.", reason:"Your current password is wrong."});
+	}
+});
+
 app.put("/api/signup",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	var data     = JSON.parse(req.body.doc);
