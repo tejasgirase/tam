@@ -657,7 +657,6 @@
             data: toJSON(master_doc),
             beforeSend : beforeSend,
             complete: function(req) {
-              console.log(req);
               var resp = $.parseJSON(req.responseText);
               if (req.status == 200 || req.status == 201 || req.status == 202) {
                 doc._id = resp.id;

@@ -1595,13 +1595,13 @@ function getPastAllegies(id){
   if(userinfo_medical && userinfo_medical.Allergies){
     var allg = [];
     if(userinfo_medical.Allergies.String){
-      $("#"+id+" tbody").html(userinfo_medical.Allergies);  
+      $("#"+id+" tbody").html(userinfo_medical.Allergies);
     }else{
       var data = {"rows":userinfo_medical.Allergies};
       paginationConfiguration(data,"charting_current_allergies_list_pagination",5,displayPastAllegies);
     }
   }else{
-    $("#"+id).html("No allgies found");
+    $("#"+id).html("No allergies found");
   }
 }
 
@@ -1614,9 +1614,8 @@ function displayPastAllegies(start,end,data){
 
 function getPastAllegiesArray(element){
   var allg = [];
-  var arry =element.split(",");
-    allg.push("<tr><td>"+arry[0]+"</td><td>"+(arry[1] ? arry[1] : "N/A")+"</td><td>"+(arry[2] ? arry[2] : "N/A")+"</td></tr>");
-    $("#charting_current_allergies_list tbody").append(allg.join(''));
+  allg.push("<tr><td>"+element.allergies+"</td><td>"+(element.severe ? element.severe : "NA")+"</td><td>"+(element.reaction ? element.reaction : "NA")+"</td></tr>");
+  $("#charting_current_allergies_list tbody").append(allg.join(''));
 }
 
 function getPastMedicationHistory(id){

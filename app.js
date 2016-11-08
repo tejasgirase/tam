@@ -204,17 +204,14 @@ app.post("/api/change_password",function(req,res) {
 			data,original_pass;
 
 	if(req.body.doc && req.body.doc.super_user_id) {
-		console.log("in if");
 		data = req.body.doc;
 		data.password = password;
 		original_pass = req.body.password;
 	}else if(req.user.password == password) {
-		console.log("in else if");
 		data = req.user;
 		data.password = cryptLib.encrypt(req.body.new_password, key, iv);
 		original_pass = req.body.new_password;
 	}else {
-		console.log("in else");
 		res.status(500).json({ error: "Your current password is wrong.", reason:"Your current password is wrong."});
 	}
 	if(data){

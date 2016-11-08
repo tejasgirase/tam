@@ -2060,10 +2060,10 @@ function getChartingMedicalInfoModel($obj){
   	$('.charting_medicalinfo_title').html('Allergies Information');
   	if(userinfo_medical.Allergies.length > 0){
   		ct_medical_info.push('<table class="table"><thead><tr><th>Allergies Name</th><th>Severe:</th><th>Reaction:</th></tr></thead><tbody>');
-  		for(var i=0;i<userinfo_medical.Allergies.length;i++){
+  		for(var i=0;i<userinfo_medical.Allergies.length;i++) {
   			 var element = userinfo_medical.Allergies[i];
-        var arry =element.split(",");
-        ct_medical_info.push("<tr><td>"+arry[0]+"</td><td>"+(arry[1] ? arry[1] : "N/A")+"</td><td>"+(arry[2] ? arry[2] : "N/A")+"</td></tr>");
+        // var arry =element.split(",");
+        ct_medical_info.push("<tr><td>"+element.allergies+"</td><td>"+(element.severe ? element.severe : "NA")+"</td><td>"+(element.reaction ? element.reaction : "NA")+"</td></tr>");
   		}
   		ct_medical_info.push('</tbody></table>');
   	}else{

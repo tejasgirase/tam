@@ -152,6 +152,8 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
           $("#dd_current_task_table tbody").append(current_task_Data.join(''));
           $compile($(".view_task"))($scope);
         }else{
+          console.log();
+          console.log("1");
           newAlert("danger","No Patient Found.");
           $('html, body').animate({scrollTop: 0}, 'slow');
           return false;
@@ -173,6 +175,7 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
         if(pdata.rows.length > 0){
           $("#dd_select_patient_task").append('<option value="'+pdata.rows[0].doc.user_id+'">'+pdata.rows[0].doc.first_nm+"<br>"+pdata.rows[0].doc.last_nm+'</option>');
         }else{
+          console.log("2");
           newAlert("danger","No Patient Found.");
           $('html, body').animate({scrollTop: 0}, 'slow');
           return false;
@@ -664,6 +667,7 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
             group:true
           });
         }else{
+          console.log("3");
           newAlert("danger","No Patient Found.");
           $('html, body').animate({scrollTop: 0}, 'slow');
           return false;
@@ -690,6 +694,7 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
     if($obj.val() == "View Communication History"){
       $.couch.db(db).openDoc($obj.parent().data("doc_id"),{
         success:function(data){
+          console.log(data);
           openDailyDashboardModal();
           var history_data = [];
           history_data.push('<table class="table tbl-border"><thead><tr><th>Past Response</th><th>Date</th></tr></thead><tbody>');
@@ -762,7 +767,9 @@ app.controller("dailyDasboardController",function($scope,$state,$compile,tamsaFa
                       history_data.push('<li>'+meddata.rows[0].doc.Allergies+'</li>');
                     }else{
                       for(var i=0;i<meddata.rows[0].doc.Allergies.length;i++){
-                          history_data.push('<li>'+meddata.rows[0].doc.Allergies[i]+'</li>');  
+                        if(meddata.rows[0].doc.Allergies[i].allergies) {
+                          history_data.push('<li>'+meddata.rows[0].doc.Allergies[i].allergies+'</li>');  
+                        }
                       }
                     }
                   }else{
