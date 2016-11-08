@@ -111,10 +111,9 @@ app.get("/api/forgot",function(req,res) {
 			var original_pass = service.getPcode(6, "alphabetic");
 			console.log(original_pass);
 			body.password = cryptLib.encrypt(original_pass, key, iv);
-			console.log(body.password);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
-					service.sendMail(res,data,nconf.get("MAIL_ID"),req.query.emailid,"New Password","text","Your New Password has been set to "+original_pass);
+					service.sendMail(res,data,nconf.get("MAIL_ID"),(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
 					// res.send(data);
 				}else {
 					res.status(500).json({ error: err.error, reason:err.reason});
@@ -199,7 +198,6 @@ app.post("/api/save",function(req,res) {
 
 
 app.post("/api/change_password",function(req,res) {
-	console.log(req.body.password);
 	var updatedb = cloudant.db.use(req.body.db);
 	var password = cryptLib.encrypt(req.body.password, key, iv);
 
