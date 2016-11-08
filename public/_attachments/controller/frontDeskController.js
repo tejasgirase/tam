@@ -361,8 +361,8 @@ app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactor
       read_receipt:        "N",
       doctor_id:           $("#fd_appointment_physician_list").data("doctor_id"),
       dhp_code:            pd_data.dhp_code,
-      color_code:          $("#fd_color_code_value:first-child").css("background-color"),
-      color_preference:    $("#fd_color_code_value:first-child").text(),
+      color_code:          ($("#fd_color_code_value:first-child").attr("backcolorString") ? $("#fd_color_code_value:first-child").attr("backcolorString") : ""),
+      color_preference:    ($("#fd_color_code_value:first-child").text() ? $("#fd_color_code_value:first-child").text() : ""),
       tentative:           $("#is_fd_appointment_tentative").prop("checked"),
       master_recurring_id: "",
       hospital_document:   $('#fd_hospital_document_list').val(),
@@ -804,6 +804,7 @@ app.controller("frontDeskController",function($scope,$state,$compile,tamsaFactor
     $("#fd_color_code_value:first-child").text($obj.text());
     $("#fd_color_code_value:first-child").val($obj.text());
     $("#fd_color_code_value:first-child").css("background-color",$obj.attr("backcolor"));
+    $("#fd_color_code_value:first-child").attr("backcolorString",$obj.attr("backcolor"));
   }
 
   function emailNotProvidToggle($obj){
