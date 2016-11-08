@@ -7,6 +7,7 @@
 	"CLOUDANT_PORT":     443,
 	"USER_DB":           "yhsqizvkmp",
 	"DB":                "meluha_db5",
+	"PI_DB":             "meluha_db5_pi",
 	"SESSION_DB":        "sessions",
 	"MAIL_API_KEY":      "key-2e1c148b591cdd5767904c9e482b34ce",
 	"MAIL_DOMAIN":       "mg.sensoryhealthsystems.com",
