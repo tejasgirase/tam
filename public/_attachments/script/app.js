@@ -4607,7 +4607,7 @@ function resetPasswordSubUser() {
           data:{
             password:pwd,
             db:replicated_db,
-            data:data,
+            doc:data,
             new_password:pwd
           },
           success:function(data){

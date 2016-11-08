@@ -199,22 +199,28 @@ app.post("/api/save",function(req,res) {
 
 
 app.post("/api/change_password",function(req,res) {
-	var updatedb = cloudant.db.use(req.body.db);
-	var password = cryptLib.encrypt(req.body.password, key, iv);
+	var updatedb = cloudant.db.use(req.body.db),
+			password = cryptLib.encrypt(req.body.password, key, iv),
+			data,original_pass;
 
-	if(req.user.password == password){
-		var data = req.user;
-		data.password = cryptLib.encrypt(req.body.new_password, key, iv);
-	}else if(req.body.data || req.body.new_password){
-		var data = req.body.data;
+	if(req.body.doc && req.body.doc.super_user_id) {
+		console.log("in if");
+		data = req.body.doc;
 		data.password = password;
+		original_pass = req.body.password;
+	}else if(req.user.password == password) {
+		console.log("in else if");
+		data = req.user;
+		data.password = cryptLib.encrypt(req.body.new_password, key, iv);
+		original_pass = req.body.new_password;
 	}else {
+		console.log("in else");
 		res.status(500).json({ error: "Your current password is wrong.", reason:"Your current password is wrong."});
 	}
 	if(data){
 		updatedb.insert(data,function(err, body) {
 			if(!err) {
-				service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Password Change","text","Your New Password has been set to " + req.body.new_password);
+				service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Password Change","text","Your New Password has been set to " + original_pass);
 				// res.send(body);
 			}else {
 				res.status(500).json({ error: err.error, reason:err.reason});
