@@ -3155,39 +3155,9 @@ function displaySubUsers(start,end,data){
   var sub_users_table = [];
   for (var i = start; i < end; i++) {
 
-      sub_users_table.push('<tr class="sub-user-row"><td>'+data.rows[i].doc.first_name+'</td><td>'+data.rows[i].doc.last_name+'</td><td>'+data.rows[i].doc.email+'</td><td>'+data.rows[i].doc.level+'</td><td>'+data.rows[i].doc.active+'</td><td>'+data.rows[i].doc.admin+'</td><td>'+data.rows[i].doc.phone+'</td><td>'+(data.rows[i].doc.insert_ts ? moment(data.rows[i].doc.insert_ts).format("YYYY-MM-DD") : "NA")+'</td><td>'+(data.rows[i].doc.update_ts ? moment(data.rows[i].doc.update_ts).format("YYYY-MM-DD") : "NA")+'</td><td>'+'<span class="glyphicon glyphicon-trash delete_sub_user" data-target="#delete_sub_user" role="button" class="dropdown-toggle" data-toggle="modal" index="'+data.rows[i].id+'" rev="'+data.rows[i].doc._rev+'" title="Delete User"></span><span class="glyphicon glyphicon-pencil edit_sub_user" data-target="#add_sub_user_modal" role="button" class="dropdown-toggle" data-toggle="modal" title="Edit User" index="'+data.rows[i].id+'"></span><span class="glyphicon glyphicon glyphicon-repeat password_reset_user" data-target="#password_reset_user_modal" role="button" class="dropdown-toggle" data-toggle="modal" index="'+data.rows[i].id+'" title="Reset Password"></span><span class="not-update glyphicon glyphicon-warning-sign" id="not_update_'+data.rows[i].doc.first_name+''+data.rows[i].doc.alert_phone+'" title="Data is Pending" style="display:none"></span></td></tr>');
-    var list_users = getListdisplaySubUsers(data.rows[i]);
+      sub_users_table.push('<tr class="sub-user-row"><td>'+data.rows[i].doc.first_name+'</td><td>'+data.rows[i].doc.last_name+'</td><td>'+data.rows[i].doc.email+'</td><td>'+data.rows[i].doc.level+'</td><td>'+data.rows[i].doc.active+'</td><td>'+data.rows[i].doc.admin+'</td><td>'+data.rows[i].doc.phone+'</td><td>'+(data.rows[i].doc.insert_ts ? moment(data.rows[i].doc.insert_ts).format("YYYY-MM-DD") : "NA")+'</td><td>'+(data.rows[i].doc.update_ts ? moment(data.rows[i].doc.update_ts).format("YYYY-MM-DD") : "NA")+'</td><td>'+'<span class="glyphicon glyphicon-trash delete_sub_user" data-target="#delete_sub_user" role="button" class="dropdown-toggle" data-toggle="modal" index="'+data.rows[i].id+'" rev="'+data.rows[i].doc._rev+'" title="Delete User"></span><span class="glyphicon glyphicon-pencil edit_sub_user" data-target="#add_sub_user_modal" role="button" class="dropdown-toggle" data-toggle="modal" title="Edit User" index="'+data.rows[i].id+'"></span><span class="glyphicon glyphicon glyphicon-repeat password_reset_user" data-target="#password_reset_user_modal" role="button" class="dropdown-toggle" data-toggle="modal" index="'+data.rows[i].id+'" title="Reset Password"></span></span></td></tr>');
   }
   $("#sub_users_table tbody").html(sub_users_table.join(''));
-}
-
-function getListdisplaySubUsers(data){
-  $.couch.db(db).view("tamsa/getCronRecords", {
-    success:function(pdata){
-      var showPending = false;
-      for (var j = 0; j < pdata.rows.length; j++) {
-        if(pdata.rows[j].value.operation_case == "14"){
-          if(pdata.rows[j].value.update_id == data.id){
-            showPending = true;
-            continue;
-          }
-        }else if(pdata.rows[j].value.operation_case == "16"){
-          if(pdata.rows[j].value.user_id == data.id){
-            showPending = true;
-            continue;
-          }
-        }
-      } 
-      if(showPending){
-        $("#not_update_"+data.doc.first_name+""+data.doc.alert_phone).show();
-      }
-    },
-    error:function(data,error,reason){
-      newAlert("danger",reason);
-      $("html, body").animate({scrollTop: 0}, 'slow');
-      return false;
-    }
-  });
 }
 
 function getTaskList() {

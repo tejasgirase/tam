@@ -301,6 +301,7 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
       $("#color_code_value:first-child").css("background-color","#5bc0de");
       $("#color_code_value:first-child").css("border-color","#5bc0de");
       $("#color_code_value:first-child").text("Select Preference");
+      $("#color_code_value:first-child").attr("backcolorString","");
       $('.appointment-popover').remove();
     });
 
@@ -308,6 +309,7 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
       $("#color_code_value:first-child").text($(this).text());
       $("#color_code_value:first-child").val($(this).text());
       $("#color_code_value:first-child").css("background-color",$(this).attr("backcolor"));
+      $("#color_code_value:first-child").attr("backcolorString",$(this).attr("backcolor"));
     });
   }
 
@@ -1317,8 +1319,8 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
         read_receipt:        "N",
         doctor_id:           pd_data._id,
         dhp_code:            pd_data.dhp_code,
-        color_code:          $("#color_code_value:first-child").css("background-color"),
-        color_preference:    $("#color_code_value:first-child").text(),
+        color_code:          ($("#color_code_value:first-child").attr("backcolorString") ? $("#color_code_value:first-child").attr("backcolorString") : ""),
+        color_preference:    ($("#color_code_value:first-child").text() ? $("#color_code_value:first-child").text() : ""),
         tentative:           $("#is_appointment_tentative").prop("checked"),
         master_recurring_id: masterid,
         consultant_id:       $("#appointment_consultant_list").val()
@@ -1360,8 +1362,8 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
           read_receipt:        "N",
           doctor_id:           pd_data._id,
           dhp_code:            pd_data.dhp_code,
-          color_code:          $("#color_code_value:first-child").css("background-color"),
-          color_preference:    $("#color_code_value:first-child").text(),
+          color_code:          ($("#color_code_value:first-child").attr("backcolorString") ? $("#color_code_value:first-child").attr("backcolorString") : ""),
+          color_preference:    ($("#color_code_value:first-child").text() ? $("#color_code_value:first-child").text() : ""),
           tentative:           $("#is_appointment_tentative").prop("checked"),
           master_recurring_id: masterid
         };
@@ -1405,8 +1407,8 @@ app.controller("patientAppointmentsController",function($scope,$state,$statePara
       read_receipt:        "N",
       doctor_id:           $("#removeAppointment").data("associated_resource"),
       dhp_code:            pd_data.dhp_code,
-      color_code:          $("#color_code_value:first-child").css("background-color"),
-      color_preference:    $("#color_code_value:first-child").text(),
+      color_code:          ($("#color_code_value:first-child").attr("backcolorString") ? $("#color_code_value:first-child").attr("backcolorString") : ""),
+      color_preference:    ($("#color_code_value:first-child").text() ? $("#color_code_value:first-child").text() : ""),
       tentative:           $("#is_appointment_tentative").prop("checked"),
       master_recurring_id: "",
       hospital_document:   ($('#micsdoc_view').val() != "Select Hospital Documents") ? $('#micsdoc_view').val() : "",
