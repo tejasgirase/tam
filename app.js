@@ -1,26 +1,27 @@
 var nconf           = require('nconf');
 nconf.argv().env().file({ file: 'config.json' });
-var sessionstore      = require('sessionstore-cloudant');
-var https             = require("https");
-var fs                = require("fs");
-var express           = require("express");
-var app               = express();
-var cookieParser      = require("cookie-parser");
-var session           = require("express-session");
-// var CloudantStore  = require('connect-cloudant')(session);
-var passport          = require("passport");
-var strategy          = require("passport-local").Strategy;
-var path              = require("path");
-var bodyParser        = require("body-parser");
-var cons              = require('consolidate');
-var Username          = nconf.get("Username");
-var CLOUDENT_API_KEY  = nconf.get("CLOUDENT_API_KEY");
-var CLOUDENT_PASSWORD = nconf.get("CLOUDENT_PASSWORD");
-var Cloudant          = require('cloudant');
-var cloudant          = Cloudant("https://"+CLOUDENT_API_KEY+":"+CLOUDENT_PASSWORD+"@"+Username+".cloudant.com");
-var Port              = nconf.get("PORT");
-var multer            = require('multer');
-var upload            = multer();
+var sessionstore  = require('sessionstore-cloudant'),
+https             = require("https"),
+fs                = require("fs"),
+express           = require("express"),
+app               = express(),
+cookieParser      = require("cookie-parser"),
+session           = require("express-session"),
+passport          = require("passport"),
+strategy          = require("passport-local").Strategy,
+path              = require("path"),
+bodyParser        = require("body-parser"),
+cons              = require('consolidate'),
+Username          = nconf.get("Username"),
+CLOUDANT_API_KEY  = nconf.get("CLOUDANT_API_KEY"),
+CLOUDANT_PASSWORD = nconf.get("CLOUDANT_PASSWORD"),
+CLOUDANT_PORT     = nconf.get("CLOUDANT_PORT"),
+SESSION_DB        = nconf.get("SESSION_DB"),
+Cloudant          = require('cloudant'),
+cloudant          = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com"),
+Port              = nconf.get("PORT"),
+multer            = require('multer'),
+upload            = multer();
 //password encryption
 var cryptLib = require('cryptlib'),
 iv = nconf.get("IV"), //16 bytes = 128 bit 
@@ -33,19 +34,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    resave: false,
+    resave:            false,
     saveUninitialized: false,
-		secret:"cloudant",
-		cookie:{expires:60000*10,httpOnly:false},
+		secret: "cloudant",
+		cookie: {expires:60000*10,httpOnly:false},
   	store: sessionstore.createSessionStore({
-    type: 'couchdb',
-    host: 'https://sensoryhealthsystems.cloudant.com',  // optional
-    port: 443,                // optional
-    dbName: 'sessions',
+    type:    'couchdb',
+    host:    'https://'+Username+'.cloudant.com',  // optional
+    port:    CLOUDANT_PORT,                // optional
+    dbName:  SESSION_DB,
     options: {
     	auth: {
-    		username: CLOUDENT_API_KEY,
-    		password: CLOUDENT_PASSWORD
+    		username: CLOUDANT_API_KEY,
+    		password: CLOUDANT_PASSWORD
     	}
     }
   })	
