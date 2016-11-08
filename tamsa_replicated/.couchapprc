@@ -1,0 +1,10 @@
+{
+  "env": {
+    "remote": {
+      "db":"https://nirmalpatel59:nirmalpatel@nirmalpatel59.cloudant.com/yhsqizvkmp"
+    },
+    "origin": {
+      "db":"http://nirmal:nirmal@192.168.0.66:5984/yhsqizvkmp"
+    }
+  }
+}

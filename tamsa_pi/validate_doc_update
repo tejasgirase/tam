@@ -1,0 +1,25 @@
+function(newDoc, oldDoc, userCtx, secObj) {
+	if (newDoc.doctype == "UserInfo") {
+		if(!(newDoc.initial)){
+			if (newDoc.first_nm.trim().length == 0) {
+				throw({forbidden: 'First Name can not be blank'});
+			}
+			if (newDoc.last_nm.trim().length == 0) {
+				throw({forbidden: 'Last Name can not be blank'});
+			}
+			if (newDoc.country.trim().length == 0) {
+				throw({forbidden: 'Country Name can not be empty'});
+			}
+			if (newDoc.state.trim().length == 0) {
+				throw({forbidden: 'State Name can not be empty'});
+			}
+			if (newDoc.city.trim().length == 0) {
+				throw({forbidden: 'City name can not be empty'});
+			}
+			var phone_filter = /^(\+\d{1,3}[- ]?)?\d{10}$|^(\+\d{1,3}[- ]?)?\d{11}$/;
+			if(!phone_filter.test(newDoc.phone)) {
+			    throw({forbidden: 'Not a valid phone number.'});
+			}
+		}
+	}	
+}
