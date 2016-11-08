@@ -4601,18 +4601,31 @@ function resetPasswordSubUser() {
     //case  16
     $.couch.db(replicated_db).openDoc($("#rp_sub_user_save").attr("index"), {
       success: function(data){
-         $.couch.signup(data,$("#rp_new_password").val(), {
-          success: function(data) {
-            $("#password_reset_user_modal").modal("hide");
-            $("#rp_new_password").val("");
-            $("#rp_confirm_password").val("");
-            newAlert('success', 'User Saved Successfully !');
-            $('html, body').animate({scrollTop: 0}, 'slow');
-            $("#add_sub_user_modal").modal("hide");
+        $.ajax({
+          url:"/api/change_password",
+          type:"POST",
+          data:{
+            password:pwd,
+            db:replicated_db,
+            data:data,
+            new_password:pwd
           },
-          error: function(data, error, reason) {
-            newAlertForModal('danger', reason,'add_sub_user_modal');
-            $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
+          success:function(data){
+            if(data) {
+              $("#password_reset_user_modal").modal("hide");
+              $("#rp_new_password").val("");
+              $("#rp_confirm_password").val("");
+              newAlert('success', 'User Password Change Successfully !');
+              $('html, body').animate({scrollTop: 0}, 'slow');
+              $("#add_sub_user_modal").modal("hide");
+            }else {
+              console.log("something wrong with API.");
+            }
+          },
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
           }
         });
       },

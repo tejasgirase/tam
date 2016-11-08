@@ -204,6 +204,13 @@ app.post("/api/change_password",function(req,res) {
 	if(req.user.password == password){
 		var data = req.user;
 		data.password = cryptLib.encrypt(req.body.new_password, key, iv);
+	}else if(req.body.data || req.body.new_password){
+		var data = req.body.data;
+		data.password = password;
+	}else {
+		res.status(500).json({ error: "Your current password is wrong.", reason:"Your current password is wrong."});
+	}
+	if(data){
 		updatedb.insert(data,function(err, body) {
 			if(!err) {
 				service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Password Change","text","Your New Password has been set to " + req.body.new_password);
@@ -212,8 +219,6 @@ app.post("/api/change_password",function(req,res) {
 				res.status(500).json({ error: err.error, reason:err.reason});
 			}
 		});
-	}else {
-		res.status(500).json({ error: "Your current password is wrong.", reason:"Your current password is wrong."});
 	}
 });
 
@@ -221,12 +226,13 @@ app.put("/api/signup",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	var data     = JSON.parse(req.body.doc);
 	if(data.password){
-		var password = cryptLib.encrypt(data.password, key, iv);
-		data.password = password;
+		var new_password = data.password;
+		var password     = cryptLib.encrypt(data.password, key, iv);
+		data.password    = password;
 	}
 	updatedb.insert(data,function(err, body) {
 		if(!err) {
-			res.send(body);
+			service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Account Created","text","Hello "+data.first_name+" "+data.last_name+" \nWelcome to Sensory Health System. \n Your password for this account is : "+new_password+"\n To Log in go to following link http://www.digitalhealthpulse.com"	);
 		}else {
 			res.status(500).json({ error: err.error, reason:err.reason});
 		}
