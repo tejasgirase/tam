@@ -128,14 +128,16 @@ app.get("/api/forgot",function(req,res) {
 
 app.get("/api/logout",function(req,res) {
 	if(req.user) {
-		req.logout();
-		res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-		res.redirect("/");
+		res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  	req.logout();
+  	res.redirect("/");
 		// res.status("201").send({"message": "successfully logged out."});
 	}
 });
 
 app.get("/myaccount",ensureAuthenticated,function(req,res) {
+
+	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 	res.render("my-account.html");
 });
 
