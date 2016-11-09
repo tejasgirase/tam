@@ -1,13 +1,6 @@
-var db                   = "meluha_db5";
-var attachments_url      = '//www.babybeeps.com/'+db+'/';
-//var attachments_url    = 'http://192.168.0.66:5984/'+db+'/';
-var personal_details_db  = db+"_pi";
-var attachments_url_pi   = '//www.babybeeps.com/'+personal_details_db+'/';
-//var attachments_url_pi = 'http://192.168.0.66:5984/'+personal_details_db+'/';
-var csv_user_db          = db;
-var monitering_db        = "vasudevas";
-var replicated_db        = "yhsqizvkmp";
-var payment_url          = "//topsdemo.in/tamsa_scripts/script/payemt.php";
+var db              = "meluha_db5",
+personal_details_db = db+"_pi",
+replicated_db       = "yhsqizvkmp";
 
 /* 
 While working on local environment, Please comment the live urls and uncomment your local urls.
