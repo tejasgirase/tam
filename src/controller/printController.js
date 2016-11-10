@@ -2,15 +2,17 @@ var express         = require('express'),
 app                 = express(),
 nconf           = require('nconf');
 nconf.argv().env().file({ file: 'config.json' });
-var Username          = nconf.get("Username"),
-CLOUDANT_API_KEY  = nconf.get("CLOUDANT_API_KEY"),
-CLOUDANT_PASSWORD = nconf.get("CLOUDANT_PASSWORD"),
+var Username        = nconf.get("Username"),
+CLOUDANT_API_KEY    = nconf.get("CLOUDANT_API_KEY"),
+CLOUDANT_PASSWORD   = nconf.get("CLOUDANT_PASSWORD"),
+medical_db          = nconf.get("DB"),
+pi_db               = nconf.get("PI_DB"),
 path                = require('path'),
 wkhtmltopdf         = require('wkhtmltopdf'),
 fs                  = require("fs"),
 moment              = require('moment');
 wkhtmltopdf.command = path.join(__dirname,"wkhtmltopdf");
-// sharingFactory      = require('./external_handler_functions'),
+// sharingFactory   = require('./external_handler_functions'),
 app.use(express.static("public/_attachments"));
 var css_path    = path.join(__dirname,'css/'),
 		images_path = path.join(__dirname,'images/'),
@@ -25,8 +27,8 @@ var css_path    = path.join(__dirname,'css/'),
 // var EH_DB       = nconf.get("External_Handler_DB");
 // var EH_PI_DB    = nconf.get("External_Handler_PI_DB");
 
-var db    = cloudant.db.use("meluha_db5");
-var pi_db = cloudant.db.use("meluha_db5_pi");
+var db    = cloudant.db.use(medical_db);
+var pi_db = cloudant.db.use(pi_db);
 
 var app_count,
 temp = [],
