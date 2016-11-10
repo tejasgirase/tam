@@ -1,5 +1,10 @@
 var express         = require('express'),
 app                 = express(),
+nconf           = require('nconf');
+nconf.argv().env().file({ file: 'config.json' });
+var Username          = nconf.get("Username"),
+CLOUDANT_API_KEY  = nconf.get("CLOUDANT_API_KEY"),
+CLOUDANT_PASSWORD = nconf.get("CLOUDANT_PASSWORD"),
 path                = require('path'),
 wkhtmltopdf         = require('wkhtmltopdf'),
 fs                  = require("fs"),
@@ -7,11 +12,11 @@ moment              = require('moment');
 wkhtmltopdf.command = path.join(__dirname,"wkhtmltopdf");
 // sharingFactory      = require('./external_handler_functions'),
 app.use(express.static("public/_attachments"));
-var css_path    = path.join(__dirname,'css/');
-var images_path = path.join(__dirname,'images/');
-var view_path   = path.join(__dirname,'../views/');
-var Cloudant    = require('cloudant');
-var cloudant    = Cloudant("https://irldeadifecondecturponda:0b86279b5be376c211c43493d854d7bf1e4db832@sensoryhealthsystems.cloudant.com");
+var css_path    = path.join(__dirname,'css/'),
+		images_path = path.join(__dirname,'images/'),
+		view_path   = path.join(__dirname,'../views/'),
+		Cloudant    = require('cloudant'),
+		cloudant    = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com");
 
 
 // var EH_IP       = nconf.get("External_Handler_IP");
