@@ -7,6 +7,7 @@ service.sendMail = sendMail;
 module.exports = service;
 
 function sendMail(res,data,from,to,subject,contentType,content,attachment) {
+  console.log("in send mail");
   var message;
   if (contentType == "html") {
     message= {from: from, to: to, subject: subject, html:content};

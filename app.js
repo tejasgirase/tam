@@ -1,6 +1,7 @@
 var nconf           = require('./config');
 // nconf.argv().env().file({ file: 'config.json' });
-var sessionstore  = require('sessionstore-cloudant'),
+// var sessionstore  = require('sessionstore-cloudant'),
+var sessionstore  = require('sessionstore'),
 https             = require("https"),
 fs                = require("fs"),
 express           = require("express"),
@@ -17,8 +18,11 @@ CLOUDANT_API_KEY  = nconf.CLOUDANT_API_KEY,
 CLOUDANT_PASSWORD = nconf.CLOUDANT_PASSWORD,
 CLOUDANT_PORT     = nconf.CLOUDANT_PORT,
 SESSION_DB        = nconf.SESSION_DB,
-Cloudant          = require('cloudant'),
-cloudant          = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com"),
+//TODO conditional variables
+// Cloudant          = require('cloudant'),
+// cloudant          = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com"),
+Cloudant          = require('nano'),
+cloudant          = Cloudant("http://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@192.168.0.66:5984"),
 Port              = nconf.PORT,
 multer            = require('multer'),
 upload            = multer();
@@ -34,13 +38,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    resave:            false,
-    saveUninitialized: false,
-		secret: "cloudant",
-		cookie: {expires:60000*10,httpOnly:false},
-  	store: sessionstore.createSessionStore({
+  resave:            false,
+  saveUninitialized: false,
+	secret: "cloudant",
+	cookie: {expires:60000*10,httpOnly:true},
+	store: sessionstore.createSessionStore({
     type:    'couchdb',
-    host:    'https://'+Username+'.cloudant.com',  // optional
+    host:    "http://192.168.0.66",  // optional
     port:    CLOUDANT_PORT,                // optional
     dbName:  SESSION_DB,
     options: {
@@ -112,8 +116,10 @@ app.get("/api/forgot",function(req,res) {
 			var original_pass = service.getPcode(6, "alphabetic");
 			console.log(original_pass);
 			body.password = cryptLib.encrypt(original_pass, key, iv);
+			console.log(body.password);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
+					console.log("done");
 					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
 					// res.send(data);
 				}else {
