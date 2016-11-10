@@ -1,5 +1,5 @@
-var nconf           = require('nconf');
-nconf.argv().env().file({ file: 'config.json' });
+var nconf           = require('./config');
+// nconf.argv().env().file({ file: 'config.json' });
 var sessionstore  = require('sessionstore-cloudant'),
 https             = require("https"),
 fs                = require("fs"),
@@ -12,20 +12,20 @@ strategy          = require("passport-local").Strategy,
 path              = require("path"),
 bodyParser        = require("body-parser"),
 cons              = require('consolidate'),
-Username          = nconf.get("Username"),
-CLOUDANT_API_KEY  = nconf.get("CLOUDANT_API_KEY"),
-CLOUDANT_PASSWORD = nconf.get("CLOUDANT_PASSWORD"),
-CLOUDANT_PORT     = nconf.get("CLOUDANT_PORT"),
-SESSION_DB        = nconf.get("SESSION_DB"),
+Username          = nconf.Username,
+CLOUDANT_API_KEY  = nconf.CLOUDANT_API_KEY,
+CLOUDANT_PASSWORD = nconf.CLOUDANT_PASSWORD,
+CLOUDANT_PORT     = nconf.CLOUDANT_PORT,
+SESSION_DB        = nconf.SESSION_DB,
 Cloudant          = require('cloudant'),
 cloudant          = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com"),
-Port              = nconf.get("PORT"),
+Port              = nconf.PORT,
 multer            = require('multer'),
 upload            = multer();
 //password encryption
 var cryptLib = require('cryptlib'),
-iv = nconf.get("IV"), //16 bytes = 128 bit 
-key = cryptLib.getHashSha256(nconf.get('SECRET_KEY'), 32);
+iv = nconf.IV, //16 bytes = 128 bit 
+key = cryptLib.getHashSha256(nconf.SECRET_KEY, 32);
 var service = require("./src/services/common.service");
 
 // app.use(express.static('public/'));
@@ -114,7 +114,7 @@ app.get("/api/forgot",function(req,res) {
 			body.password = cryptLib.encrypt(original_pass, key, iv);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
-					service.sendMail(res,data,nconf.get("MAIL_ID"),(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
+					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
 					// res.send(data);
 				}else {
 					res.status(500).json({ error: err.error, reason:err.reason});
@@ -219,7 +219,7 @@ app.post("/api/change_password",function(req,res) {
 	if(data){
 		updatedb.insert(data,function(err, body) {
 			if(!err) {
-				service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Password Change","text","Your New Password has been set to " + original_pass);
+				service.sendMail(res,body,nconf.MAIL_ID,(data.alert_email ? data.alert_email : data.email),"Password Change","text","Your New Password has been set to " + original_pass);
 				// res.send(body);
 			}else {
 				res.status(500).json({ error: err.error, reason:err.reason});
@@ -238,7 +238,7 @@ app.put("/api/signup",function(req,res) {
 	}
 	updatedb.insert(data,function(err, body) {
 		if(!err) {
-			service.sendMail(res,body,nconf.get("MAIL_ID"),(data.alert_email ? data.alert_email : data.email),"Account Created","text","Hello "+data.first_name+" "+data.last_name+" \nWelcome to Sensory Health System. \n Your password for this account is : "+new_password+"\n To Log in go to following link http://www.digitalhealthpulse.com"	);
+			service.sendMail(res,body,nconf.MAIL_ID,(data.alert_email ? data.alert_email : data.email),"Account Created","text","Hello "+data.first_name+" "+data.last_name+" \nWelcome to Sensory Health System. \n Your password for this account is : "+new_password+"\n To Log in go to following link http://www.digitalhealthpulse.com"	);
 		}else {
 			res.status(500).json({ error: err.error, reason:err.reason});
 		}

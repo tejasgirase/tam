@@ -1,6 +1,6 @@
-var nconf = require('nconf');
-nconf.argv().env().file({ file: 'config.json' });
-var mailgun = require('mailgun-js')({apiKey: nconf.get("MAIL_API_KEY"), domain: nconf.get("MAIL_DOMAIN")});
+var nconf = require('./../../config');
+// nconf.argv().env().file({ file: 'config.json' });
+var mailgun = require('mailgun-js')({apiKey: nconf.MAIL_API_KEY, domain: nconf.MAIL_DOMAIN});
 var service = {};
 service.getPcode = getPcode;
 service.sendMail = sendMail;

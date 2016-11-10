@@ -1,12 +1,12 @@
-var express         = require('express'),
-app                 = express(),
-nconf           = require('nconf');
-nconf.argv().env().file({ file: 'config.json' });
-var Username        = nconf.get("Username"),
-CLOUDANT_API_KEY    = nconf.get("CLOUDANT_API_KEY"),
-CLOUDANT_PASSWORD   = nconf.get("CLOUDANT_PASSWORD"),
-medical_db          = nconf.get("DB"),
-pi_db               = nconf.get("PI_DB"),
+var express = require('express'),
+app         = express(),
+nconf       = require('./../../config');
+// nconf.argv().env().file({ file: 'config.json' });
+var Username        = nconf.Username,
+CLOUDANT_API_KEY    = nconf.CLOUDANT_API_KEY,
+CLOUDANT_PASSWORD   = nconf.CLOUDANT_PASSWORD,
+medical_db          = nconf.DB,
+pi_db               = nconf.PI_DB,
 path                = require('path'),
 wkhtmltopdf         = require('wkhtmltopdf'),
 fs                  = require("fs"),
@@ -21,11 +21,11 @@ var css_path    = path.join(__dirname,'css/'),
 		cloudant    = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com");
 
 
-// var EH_IP       = nconf.get("External_Handler_IP");
-// var EH_Username = nconf.get("External_Handler_Username");
-// var EH_Password = nconf.get("External_Handler_Password");
-// var EH_DB       = nconf.get("External_Handler_DB");
-// var EH_PI_DB    = nconf.get("External_Handler_PI_DB");
+// var EH_IP       = nconf.External_Handler_IP;
+// var EH_Username = nconf.External_Handler_Username;
+// var EH_Password = nconf.External_Handler_Password;
+// var EH_DB       = nconf.External_Handler_DB;
+// var EH_PI_DB    = nconf.External_Handler_PI_DB;
 
 var db    = cloudant.db.use(medical_db);
 var pi_db = cloudant.db.use(pi_db);

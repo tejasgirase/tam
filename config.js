@@ -1,0 +1,17 @@
+module.exports = {
+	"PORT":              process.env.PORT,
+	"Username":          process.env.Username,
+	"UserPassword":      process.env.UserPassword,
+	"CLOUDANT_API_KEY":  process.env.CLOUDANT_API_KEY,
+	"CLOUDANT_PASSWORD": process.env.CLOUDANT_PASSWORD,
+	"CLOUDANT_PORT":     process.env.CLOUDANT_PORT,
+	"USER_DB":           process.env.USER_DB,
+	"DB":                process.env.DB,
+	"PI_DB":             process.env.PI_DB,
+	"SESSION_DB":        process.env.SESSION_DB,
+	"MAIL_API_KEY":      process.env.MAIL_API_KEY,
+	"MAIL_DOMAIN":       process.env.MAIL_DOMAIN,
+	"MAIL_ID":           process.env.MAIL_ID || "Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>",
+	"IV":                process.env.IV || "EK9Hd0Ahf5PJ8eS8",
+	"SECRET_KEY":        process.env.SECRET_KEY,
+};

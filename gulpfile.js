@@ -1,14 +1,14 @@
 var gulp    = require("gulp");
 var nodemon = require("gulp-nodemon");
 var run     = require('gulp-run');
-var nconf   = require('nconf');
-nconf.argv().env().file({ file: 'config.json' });
+var nconf   = require('./config.js');
+// nconf.argv().env().file({ file: 'config.json' });
 
-var Username     = nconf.get("Username");
-var UserPassword = nconf.get("UserPassword");
-var medical_db   = nconf.get("DB");
-var pi_db        = nconf.get("PI_DB");
-var user_db      = nconf.get("USER_DB");
+var Username     = nconf.Username;
+var UserPassword = nconf.UserPassword;
+var medical_db   = nconf.DB;
+var pi_db        = nconf.PI_DB;
+var user_db      = nconf.USER_DB;
 var COUCH_URL    = "https://"+Username+":"+UserPassword+"@"+Username+".cloudant.com/";
 
 // use gulp-run to start a pipeline

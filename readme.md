@@ -1,24 +1,25 @@
 ## Make Sure nodejs is installed on deployment server
 
-Step 0 : npm install forever -g
-
 Step 1 : cd /path/to/your/project
 
 Step 2 : sudo npm install
 
-Step 3 : set all variables in config.json file
+Step 3 : Make sur all necessary ENV variables are set as described below.
 
-Step 4 : push public folder (which is couchapp) into db_5 (Other repos like pi_db and users db has to be pushed manually for now later will automate everything using gulp)
+Step 4 : gulp forever_start
+			   (couchapp push for db5, db5_pi, users db and then only start node server as deamon with forever)
 
-step 4 : forever start app.js
+Step 5 : gulp forever_restart
+				 (run this when you want your changes to be updated on server)
+
 
 #### As of Now we are maintaining two config files. one for front end code(jquery code) and one for Node JS(3rd tier).
 
-##### Followings are Configuration Options availabel at config.json (NODE JS)
-FilePath :-> public/config.json
+##### For Followings Configuration Options, Environemnt variable must be created (NODE JS)
+FilePath :-> config.js
 
 
-|Field|Description|Example|
+|ENV Variable|Description|Example|
 |---|---|---|
 |"PORT"|Port On Which Express Server Will Listen|55554|
 |"Username"|Cloudant Username|"nirmalpatel59"|
@@ -33,13 +34,13 @@ FilePath :-> public/config.json
 |"MAIL_API_KEY"|Mailgun Api Key|"key-2e1c148b591cdd5767904c9e482b34ce"|
 |"MAIL_DOMAIN"|Mailgun Domain Name|"mg.sensoryhealthsystems.com"|
 |"MAIL_ID"|Sender Mail ID|"Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>"|
-|"IV"|Initialization Vector |"EK9Hd0Ahf5PJ8eS8"|
-|"SECRET_KEY"|Secret Key|"sterceSllAfOterceSehT"|
+|"IV"|Initialization Vector (Used for Encryption)|"EK9Hd0Ahf5PJ8eS8"|
+|"SECRET_KEY"|Secret Key (Used for Encryption)|"sterceSllAfOterceSehT"|
 
 
 
 ##### Followings are Configuration Options availabel at config.js (Jquery)
-FilePath :->  public/_attachments/script/config.json
+FilePath :->  public/_attachments/script/config.js
 
 |Field|Description|Example|
 |---|---|---|
