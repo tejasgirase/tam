@@ -1,7 +1,5 @@
 var nconf           = require('./config');
-// nconf.argv().env().file({ file: 'config.json' });
-// var sessionstore  = require('sessionstore-cloudant'),
-var sessionstore  = require('sessionstore'),
+var sessionstore  = require(nconf.SESSION_MODULE),
 https             = require("https"),
 fs                = require("fs"),
 express           = require("express"),
@@ -18,14 +16,11 @@ CLOUDANT_API_KEY  = nconf.CLOUDANT_API_KEY,
 CLOUDANT_PASSWORD = nconf.CLOUDANT_PASSWORD,
 CLOUDANT_PORT     = nconf.CLOUDANT_PORT,
 SESSION_DB        = nconf.SESSION_DB,
-//TODO conditional variables
-// Cloudant          = require('cloudant'),
-// cloudant          = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com"),
-Cloudant          = require('nano'),
-cloudant          = Cloudant("http://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@192.168.0.66:5984"),
+Cloudant          = require(nconf.APP_MODULE),
+cloudant          = Cloudant(nconf.DB_PROTOCOL+"://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+nconf.DB_URL),
 Port              = nconf.PORT,
 multer            = require('multer'),
-upload            = multer();
+upload            = multer();	
 //password encryption
 var cryptLib = require('cryptlib'),
 iv = nconf.IV, //16 bytes = 128 bit 
@@ -41,11 +36,11 @@ app.use(session({
   resave:            false,
   saveUninitialized: false,
 	secret: "cloudant",
-	cookie: {expires:60000*10,httpOnly:true},
+	cookie: {expires:60000*10,httpOnly:((nconf.DB_PROTOCOL == "http") ? true : false)},
 	store: sessionstore.createSessionStore({
     type:    'couchdb',
-    host:    "http://192.168.0.66",  // optional
-    port:    CLOUDANT_PORT,                // optional
+    host:    nconf.DB_PROTOCOL+"://"+nconf.DB_URL,
+    port:    CLOUDANT_PORT,
     dbName:  SESSION_DB,
     options: {
     	auth: {
@@ -120,7 +115,7 @@ app.get("/api/forgot",function(req,res) {
 			opendb.insert(body,function(err,data) {
 				if(!err) {
 					console.log("done");
-					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
+					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? "nirmal.patel@tops-int.com" : "nirmal.patel@tops-int.com"),"New Password","text","Your New Password has been set to "+original_pass);
 					// res.send(data);
 				}else {
 					res.status(500).json({ error: err.error, reason:err.reason});

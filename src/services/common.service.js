@@ -1,13 +1,12 @@
 var nconf = require('./../../config');
 // nconf.argv().env().file({ file: 'config.json' });
-var mailgun = require('mailgun-js')({apiKey: nconf.MAIL_API_KEY, domain: nconf.MAIL_DOMAIN});
 var service = {};
 service.getPcode = getPcode;
 service.sendMail = sendMail;
 module.exports = service;
 
 function sendMail(res,data,from,to,subject,contentType,content,attachment) {
-  console.log("in send mail");
+  var mailgun = require('mailgun-js')({apiKey: nconf.MAIL_API_KEY, domain: nconf.MAIL_DOMAIN});
   var message;
   if (contentType == "html") {
     message= {from: from, to: to, subject: subject, html:content};

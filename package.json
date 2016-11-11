@@ -17,6 +17,7 @@
     "cryptlib": "^1.0.3",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "gulp-env": "^0.4.0",
     "gulp-forever-monitor": "0.0.3",
     "mailgun-js": "^0.7.13",
     "moment": "2.11.1",
