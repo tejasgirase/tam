@@ -3,7 +3,6 @@ var nodemon     = require("gulp-nodemon");
 var run         = require('gulp-run');
 var nconf       = require('./config.js');
 var env         = require("gulp-env");
-var runSequence = require('run-sequence');
 // nconf.argv().env().file({ file: 'config.json' });
 
 // use gulp-run to start a pipeline
