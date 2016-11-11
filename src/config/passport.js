@@ -1,17 +1,19 @@
 var nconf           = require('./../../config');
-// nconf.argv().env().file({ file: 'config.json' });
 var passport      = require("passport"),
-		Username      = nconf.Username,
-		UserPassword  = nconf.UserPassword,
-		USER_DB       = nconf.USER_DB,
-		LocalStrategy = require("passport-local").Strategy,
-		Cloudant      = require("cloudant"),
-		cloudant      = Cloudant("https://"+Username+":"+UserPassword+"@"+Username+".cloudant.com"),
-		db            = cloudant.db.use(USER_DB);
-		var cryptLib = require('cryptlib'),
-		iv = nconf.IV, //16 bytes = 128 bit 
-		// key = "b16920894899c7780b5fc7161560a412";//32 bytes = 256 bits 
-		key = cryptLib.getHashSha256(nconf.SECRET_KEY, 32);
+		Username          = nconf.Username,
+		UserPassword      = nconf.UserPassword,
+		USER_DB           = nconf.USER_DB,
+		CLOUDANT_API_KEY  = nconf.CLOUDANT_API_KEY,
+		CLOUDANT_PASSWORD = nconf.CLOUDANT_PASSWORD,
+		CLOUDANT_PORT     = nconf.CLOUDANT_PORT,
+		LocalStrategy     = require("passport-local").Strategy,
+		Cloudant          = require(nconf.APP_MODULE),
+		cloudant          = Cloudant(nconf.DB_PROTOCOL+"://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+nconf.DB_URL),
+		db                = cloudant.db.use(USER_DB);
+		var cryptLib      = require('cryptlib'),
+		iv                = nconf.IV, //16 bytes = 128 bit 
+		key               = cryptLib.getHashSha256(nconf.SECRET_KEY, 32);
+
 module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
@@ -24,7 +26,7 @@ module.exports = function(app) {
 		db.get("org.couchdb.user:"+user, function(err,body){
 			if(!err) {
 				cb(null,body);
-			}	
+			}
 		});
 	});
 

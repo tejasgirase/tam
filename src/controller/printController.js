@@ -17,9 +17,8 @@ app.use(express.static("public/_attachments"));
 var css_path    = path.join(__dirname,'css/'),
 		images_path = path.join(__dirname,'images/'),
 		view_path   = path.join(__dirname,'../views/'),
-		Cloudant    = require('cloudant'),
-		cloudant    = Cloudant("https://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+Username+".cloudant.com");
-
+		Cloudant    = require(nconf.APP_MODULE),
+		cloudant    = Cloudant(nconf.DB_PROTOCOL+"://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+nconf.DB_URL),
 
 // var EH_IP       = nconf.External_Handler_IP;
 // var EH_Username = nconf.External_Handler_Username;
