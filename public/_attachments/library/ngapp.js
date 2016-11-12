@@ -305,7 +305,7 @@ app.factory('tamsaFactories', function($state) {
         //   }
         // });
       });
-      $("body").on("keypress", "#advance_paid, #total_cash_paid, #total_online_paid, #total_bill_discount, #diagnosis_procedure_charges_val, .sbr_charges, .prod_cost, .prod_price, #edit_prodp, #edit_cost, #code,#lot, #edit_code, #edit_lot, .editqty_num, #qty_t, .min-age-value, .max-age-value, .dose-interval-value, #task_manager_autoremove_request, #pdphone,  .drug_quantity, .drug_strength, #ct_systolic_bp, #ct_diastolic_bp, #ct_heartrate, #ct_Fasting_Glucose, #ct_O2, #ct_temp, #ct_respiration_rate, #ct_bmi_weight, #ct_bmi_height, #ct_bmi_value, #ct_waist, #location_phone",function (e) {
+      $("body").on("keypress", "#advance_paid, #total_cash_paid, #total_online_paid, #total_bill_discount, #diagnosis_procedure_charges_val, .sbr_charges, .prod_cost, .prod_price, #edit_prodp, #edit_cost, #code,#lot, #edit_code, #edit_lot, .editqty_num, #qty_t, .min-age-value, .max-age-value, .dose-interval-value, #task_manager_autoremove_request, #pdphone,  .drug_quantity, .drug_strength, #ct_systolic_bp, #ct_diastolic_bp, #ct_heartrate, #ct_Fasting_Glucose, #ct_O2, #ct_temp, #ct_respiration_rate, #ct_bmi_weight, #ct_bmi_height, #ct_bmi_value, #ct_waist, #location_phone,#admin_subscriptions_duration",function (e) {
         return allowOnlyNumbers(e);
       });
 

@@ -12,6 +12,8 @@
           <div class="col-md-4 remove_hide ChoiceText" id="admin_patient_tag_link">Patient Tag Reporting</div>
           <div class="col-md-4 ChoiceLineSep"></div>          
           <div class="col-md-4 remove_hide ChoiceText" id="admin_remove_patient_link">Remove Patients</div>
+          <div class="col-md-4 ChoiceLineSep"></div>          
+          <div class="col-md-4 remove_hide ChoiceText" id="admin_Subscription_plan_link">subscription Plan</div>
         </div>
 
         <div class="tab-pane" id="admin_remove_patient_tab" style="border: medium none;">
@@ -120,7 +122,6 @@
             </div>
           </div> 
         </div>
-
         <div class="tab-pane" id="admin_telemedicine_tab" style="border: medium none;">
           <div class="row">
 						<div class="col-lg-12">
@@ -174,7 +175,6 @@
 						</div>
           </div> 
         </div>  
-        
         <div class="tab-pane" id="admin_patient_tag_tab" style="border: medium none;">
           <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
             <span class="glyphicon glyphicon-th-list"></span>
@@ -222,7 +222,6 @@
             </div>
           </div>
         </div>
-
         <div id="admin_config_tab" class="tab-pane mrgtop">
           <div class="col-md-12 CategContainer">
             <div class="row">
@@ -525,6 +524,114 @@
               <span id="settingmain_title">Hospital List</span>
             </div>
           </div>
+        </div>
+        <div id="admin_subscription_tab" class="tab-pane mrgtop">
+        <div>
+          <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+            <span class="glyphicon glyphicon-th-list"></span>
+            <span id="settingmain_title">Subscription Plans</span>
+          </div>
+          <div class="col-md-12">
+            <div class="col-lg-2">Subscription Tags:</div>
+            <div class="col-lg-3">
+              <input id="admin_subscriptions_tags" class="form-control ui-autocomplete-input" placeholder="subscriptions Tag" autocomplete="off">
+            </div>
+            <div class="col-lg-2">Subscription Amount:</div>
+            <div class="col-lg-3">
+              <input id="admin_subscriptions_amount" class="form-control ui-autocomplete-input" placeholder="Amount" autocomplete="off">
+            </div>
+            <div class="col-lg-2">
+              <button class="btn btn-warning" type="button" id="add_subscription_plan">Add</button>
+            </div>
+          </div>
+          <div class="col-md-12 mrgtop15">
+            <div class="col-lg-2">Duration:</div>
+            <div class="col-lg-1">
+              <input id="admin_subscriptions_duration" class="form-control ui-autocomplete-input" placeholder="Time" autocomplete="off">
+            </div>
+            <div class="col-lg-2">
+            <select class="form-control" id="admin_subscriptions_duration_option">
+              <option>Month</option><option>Year</option>
+            </select>
+            </div>
+          </div>
+          <div class="col-md-12 mrgtop15">
+            <table class="table tbl-border" id="admin_subscription_list">
+              <thead>
+                <tr>
+                  <th class="text-align" width="30%">subscription Tag</th>
+                  <th class="text-align" width="30%">Price</th>
+                  <th class="text-align" width="30%">Duration</th>
+                  <th class="text-align" width="30%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr dir-paginate = "x in subscription_data | itemsPerPage: 5">
+                  <td class="text-align">{{x.subscription_tag}}</td>
+                  <td class="text-align">{{x.subscription_amount}}</td>
+                  <td class="text-align">{{x.duration_time}}{{x.duration_in}}</td>
+                  <td class="text-align">{{x}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+              <dir-pagination-controls></dir-pagination-controls>
+            </div>
+          </div>
+        </div>
+        <div class="mrgtop15">
+          <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
+            <span class="glyphicon glyphicon-th-list"></span>
+            <span id="settingmain_title">Additional Plan Tags</span>
+          </div>
+          <div class="col-md-12">
+            <div class="col-lg-2">Additional Plan Tags:</div>
+            <div class="col-lg-3">
+              <input id="admin_additional_plan_tags" class="form-control ui-autocomplete-input" placeholder="Additional Plan Tag" autocomplete="off">
+            </div>
+            <div class="col-lg-2">Additional Plan Amount:</div>
+            <div class="col-lg-3">
+              <input id="admin_additional_amount_tags" class="form-control ui-autocomplete-input" placeholder="Amount" autocomplete="off">
+            </div>
+            <div class="col-lg-2">
+              <button class="btn btn-warning" type="button" id="add_additional_plan">Add</button>
+            </div>
+          </div>
+          <div class="col-md-12 mrgtop15">
+            <div class="col-lg-2">Duration:</div>
+            <div class="col-lg-1">
+              <input id="admin_additional_duration" class="form-control ui-autocomplete-input" placeholder="Time" autocomplete="off">
+            </div>
+            <div class="col-lg-2">
+            <select class="form-control" id="admin_additional_duration_option">
+              <option>Month</option><option>Year</option>
+            </select>
+            </div>
+          </div>
+          <div class="col-md-12 mrgtop15">
+            <table class="table tbl-border" id="admin_additional_plan_list">
+              <thead>
+                <tr>
+                  <th class="text-align" width="30%">Additional Tag</th>
+                  <th class="text-align" width="30%">Price</th>
+                  <th class="text-align" width="30%">Duration</th>
+                  <th class="text-align" width="30%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr dir-paginate = "x in additional_data | itemsPerPage: 5">
+                  <td class="text-align">{{x.additional_tag}}</td>
+                  <td class="text-align">{{x.additional_amount}}</td>
+                  <td class="text-align">{{x.duration_time}}{{x.duration_in}}</td>
+                  <td class="text-align">{{x}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
+              <dir-pagination-controls></dir-pagination-controls>
+            </div>
+          </div>
+        </div>
         </div>
       </div> 
     </div>
