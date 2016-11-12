@@ -1,6 +1,7 @@
-var nconf           = require('./config');
+var nconf         = require('./config');
 var sessionstore  = require(nconf.SESSION_MODULE),
 https             = require("https"),
+http              = require("http"),
 fs                = require("fs"),
 express           = require("express"),
 app               = express(),
@@ -309,13 +310,18 @@ app.post("/api/remove/:id",ensureAPIAuthenticated,function(req,res) {
 		}
 	});
 });
-
-https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-}, app).listen(Port, function() {
-	console.log("server is running on port "+Port);
-});
+if(nconf.DB_PROTOCOL == "http") {
+	http.createServer(app).listen(Port, function() {
+		console.log("server is running on port "+Port);
+	});
+}else {
+	https.createServer({
+	  key: fs.readFileSync('key.pem'),
+	  cert: fs.readFileSync('cert.pem')
+	}, app).listen(Port, function() {
+		console.log("server is running on port "+Port);
+	});
+}
 
 // app.listen(3005,"192.168.0.66", function(){
 // 	console.log("server is listening on port 3005");
