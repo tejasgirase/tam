@@ -122,8 +122,8 @@ ul.footerlink li + li:before { padding: 0 10px; color: #979797; content: "|\00a0
 /*login*/
 
 .logo { text-align: center; }
-.login_main { margin: 0 auto; width: 714px; }
-.login_in { border: #c5c5c5 solid 1px; display: inline-block; width: 104%; background: #fff; border-radius: 6px; margin: 35px 0 35px 0; padding: 2%; }
+.login_main { margin: 0 auto; width: 90%; }
+.login_in { border: #c5c5c5 solid 1px; display: inline-block; background: #fff; border-radius: 6px; margin: 35px 0 35px 0; padding: 2%; }
 .login_in h2 { border-bottom: #999 dashed 2px; text-align: center; font-size: 30px; font-family: 'open_sanssemibold'; text-transform: uppercase; background: #fff; padding: 0 2% 2% 2%; margin-top: 0px; color: #eb8613; }
 .login_check { float: left; }
 .login_check label { padding-left: 0px; font-weight: normal; margin-right: 5px; }
@@ -366,7 +366,6 @@ ul.footerlink { text-align: center; padding-bottom: 10px; }
 .my_account_arrow { display: none; }
 .main_div1 { width: auto !important; overflow: inherit; }
 .main_div_in1 { width: auto !important; }
-.login_main { width: 100%; }
 #footer { position: relative; }
 }
  @media (max-width: 320px) {
@@ -2975,3 +2974,25 @@ span.sticky-nav-active { color: #ccc; }
 .height130 {height: 130px !important;}
 .font12{font-size: 12px}
 .colorred{color: red}
+.subscr_height, .prac_height {min-height: 200px;}
+.accinfo_height {min-height: 500px;}
+.aggr_height {height:300px;}
+.signup_content_parent {margin-top: 0px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-bottom: 2px solid #92b485; border-left: 2px solid #92b485; border-right: 2px solid #92b485;}
+.signup_content_header{margin-bottom: 0px;margin-top: 0px !important; border: 2px solid #92b485;}
+.signup-inner-tab-left {
+  border-top-left-radius: 4px !important;
+  border-left: 2px solid rgb(146, 180, 133) !important;
+  border-top: 2px solid rgb(146, 180, 133) !important;
+  /*border-bottom: 1px solid rgb(146, 180, 133) !important;*/
+}
+.signup-inner-tab-mid {
+	border-left: 2px solid rgb(146, 180, 133) !important;
+	border-top: 2px solid rgb(146, 180, 133) !important;
+	/*border-bottom: 1px solid rgb(146, 180, 133) !important;*/
+}
+.signup-inner-tab-right {
+	border-right: 2px solid rgb(146, 180, 133) !important;
+	border-top-right-radius: 4px !important;
+	border-top: 2px solid rgb(146, 180, 133) !important;
+	/*border-bottom: 1px solid rgb(146, 180, 133) !important;*/
+}
