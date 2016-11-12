@@ -112,11 +112,9 @@ app.get("/api/forgot",function(req,res) {
 			var original_pass = service.getPcode(6, "alphabetic");
 			console.log(original_pass);
 			body.password = cryptLib.encrypt(original_pass, key, iv);
-			console.log(body.password);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
-					console.log("done");
-					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? "nirmal.patel@tops-int.com" : "nirmal.patel@tops-int.com"),"New Password","text","Your New Password has been set to "+original_pass);
+					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
 					// res.send(data);
 				}else {
 					res.status(500).json({ error: err.error, reason:err.reason});
