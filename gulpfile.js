@@ -6,6 +6,61 @@ var env         = require("gulp-env");
 // nconf.argv().env().file({ file: 'config.json' });
 
 // use gulp-run to start a pipeline
+ 
+function cloudConfiguration() {
+  env({
+    vars: {
+    	APP_ENVIRONMENT:"Cloud",
+			APP_MODULE:'cloudant',
+			DB_PROTOCOL:'https',
+			DB_URL:'sensoryhealthsystems.cloudant.com',
+			PORT:'55554',
+			SESSION_MODULE:"sessionstore-cloudant",
+			Username:'sensoryhealthsystems',
+			UserPassword:'SHS_Cloudant1234',
+			CLOUDANT_API_KEY:'irldeadifecondecturponda',
+			CLOUDANT_PASSWORD:'0b86279b5be376c211c43493d854d7bf1e4db832',
+			CLOUDANT_PORT:'443',
+			USER_DB:'yhsqizvkmp',
+			DB:'meluha_db5',
+			PI_DB:'meluha_db5_pi',
+			SESSION_DB:'sessions',
+			// MAIL_API_KEY:'key-2e1c148b591cdd5767904c9e482b34ce',
+			MAIL_DOMAIN:'mg.sensoryhealthsystems.com',
+			MAIL_ID:'Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>',
+			IV:'EK9Hd0Ahf5PJ8eS8',
+			SECRET_KEY:'sterceSllAfOterceSehT',
+		}
+  });
+}
+
+function FSConfiguration() {
+  env({
+    vars: {
+    	APP_ENVIRONMENT:"FS",
+			APP_MODULE:'nano',
+			DB_PROTOCOL:'http',
+			DB_URL:'localhost:5984',
+			SESSION_MODULE:"sessionstore",
+			PORT:'55555',
+			Username:'nirmal',
+			UserPassword:'nirmal',
+			CLOUDANT_API_KEY:'nirmal',
+			CLOUDANT_PASSWORD:'nirmal',
+			CLOUDANT_PORT:'5984',
+			USER_DB:'yhsqizvkmp',
+			DB:'meluha_db5',
+			PI_DB:'meluha_db5_pi',
+			SESSION_DB:'sessions',
+			// MAIL_API_KEY:'key-2e1c148b591cdd5767904c9e482b34ce',
+			MAIL_DOMAIN:'mg.sensoryhealthsystems.com',
+			MAIL_ID:'Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>',
+			IV:'EK9Hd0Ahf5PJ8eS8',
+			SECRET_KEY:'sterceSllAfOterceSehT',
+		}
+  });
+}
+
 gulp.task('couchpush_db5', function() {
 	var COUCH_URL    = process.env.DB_PROTOCOL+"://"+process.env.Username+":"+process.env.UserPassword+"@"+process.env.DB_URL + "/";
   return run('couchapp push ./public/ '+ COUCH_URL + process.env.DB).exec();
@@ -33,63 +88,28 @@ gulp.task('forever_stop',function() {
   return run('forever stop app.js').exec();
 });
 
-gulp.task('cloud_configuration_setup', function() {
-  env({
-    vars: {
-    	APP_ENVIRONMENT:"Cloud",
-			APP_MODULE:'cloudant',
-			DB_PROTOCOL:'https',
-			DB_URL:'sensoryhealthsystems.cloudant.com',
-			PORT:'55554',
-			SESSION_MODULE:"sessionstore-cloudant",
-			Username:'sensoryhealthsystems',
-			UserPassword:'SHS_Cloudant1234',
-			CLOUDANT_API_KEY:'irldeadifecondecturponda',
-			CLOUDANT_PASSWORD:'0b86279b5be376c211c43493d854d7bf1e4db832',
-			CLOUDANT_PORT:'443',
-			USER_DB:'yhsqizvkmp',
-			DB:'meluha_db5',
-			PI_DB:'meluha_db5_pi',
-			SESSION_DB:'sessions',
-			// MAIL_API_KEY:'key-2e1c148b591cdd5767904c9e482b34ce',
-			MAIL_DOMAIN:'mg.sensoryhealthsystems.com',
-			MAIL_ID:'Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>',
-			IV:'EK9Hd0Ahf5PJ8eS8',
-			SECRET_KEY:'sterceSllAfOterceSehT',
-		}
-  });
+gulp.task('start_cloud_configuration_setup', function() {
+	cloudConfiguration();
   gulp.start("forever_start");
 });
 
+gulp.task('start_fs_configuration_setup', function() {
+	FSConfiguration();
+  gulp.start("forever_start");
+});
+
+gulp.task('cloud_configuration_setup', function() {
+	cloudConfiguration();
+  gulp.start("forever_restart");
+});
+
 gulp.task('fs_configuration_setup', function() {
-  env({
-    vars: {
-    	APP_ENVIRONMENT:"FS",
-			APP_MODULE:'nano',
-			DB_PROTOCOL:'http',
-			DB_URL:'localhost:5984',
-			SESSION_MODULE:"sessionstore",
-			PORT:'55555',
-			Username:'nirmal',
-			UserPassword:'nirmal',
-			CLOUDANT_API_KEY:'nirmal',
-			CLOUDANT_PASSWORD:'nirmal',
-			CLOUDANT_PORT:'5984',
-			USER_DB:'yhsqizvkmp',
-			DB:'meluha_db5',
-			PI_DB:'meluha_db5_pi',
-			SESSION_DB:'sessions',
-			// MAIL_API_KEY:'key-2e1c148b591cdd5767904c9e482b34ce',
-			MAIL_DOMAIN:'mg.sensoryhealthsystems.com',
-			MAIL_ID:'Sensory Health Systems Admin <noreply@sensoryhealthsystems.com>',
-			IV:'EK9Hd0Ahf5PJ8eS8',
-			SECRET_KEY:'sterceSllAfOterceSehT',
-		}
-  });
+	FSConfiguration();
   gulp.start("forever_restart");
 });
 
 // gulp.task('start',["cloud_configuration_setup"]);
+gulp.task('start',[process.env.NODE_ENV === 'FS' ? 'start_fs_configuration_setup' : 'start_cloud_configuration_setup']);
 gulp.task('restart',[process.env.NODE_ENV === 'FS' ? 'fs_configuration_setup' : 'cloud_configuration_setup']);
 
 // gulp.task("serve",["couchpush_db5","couchpush_db5_pi","couchpush_users"],function() {

@@ -1,6 +1,7 @@
-var nconf           = require('./config');
+var nconf         = require('./config');
 var sessionstore  = require(nconf.SESSION_MODULE),
 https             = require("https"),
+http              = require("http"),
 fs                = require("fs"),
 express           = require("express"),
 app               = express(),
@@ -111,11 +112,9 @@ app.get("/api/forgot",function(req,res) {
 			var original_pass = service.getPcode(6, "alphabetic");
 			console.log(original_pass);
 			body.password = cryptLib.encrypt(original_pass, key, iv);
-			console.log(body.password);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
-					console.log("done");
-					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? "nirmal.patel@tops-int.com" : "nirmal.patel@tops-int.com"),"New Password","text","Your New Password has been set to "+original_pass);
+					service.sendMail(res,data,nconf.MAIL_ID,(body.alert_email ? body.alert_email : body.email),"New Password","text","Your New Password has been set to "+original_pass);
 					// res.send(data);
 				}else {
 					res.status(500).json({ error: err.error, reason:err.reason});
@@ -309,13 +308,18 @@ app.post("/api/remove/:id",ensureAPIAuthenticated,function(req,res) {
 		}
 	});
 });
-
-https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-}, app).listen(Port, function() {
-	console.log("server is running on port "+Port);
-});
+if(nconf.DB_PROTOCOL == "http") {
+	http.createServer(app).listen(Port, function() {
+		console.log("server is running on port "+Port);
+	});
+}else {
+	https.createServer({
+	  key: fs.readFileSync('key.pem'),
+	  cert: fs.readFileSync('cert.pem')
+	}, app).listen(Port, function() {
+		console.log("server is running on port "+Port);
+	});
+}
 
 // app.listen(3005,"192.168.0.66", function(){
 // 	console.log("server is listening on port 3005");
