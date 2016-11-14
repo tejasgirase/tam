@@ -2396,48 +2396,118 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
     var getActiveSubscriptionTab = function() {
       $(".tab-pane").removeClass("active");
       $("#admin_subscription_tab").addClass("active");
+      $.blockUI({
+        message: '<h1>Please Wait........</h1>',
+        css:{
+          color: "#f2bb5c"
+        }
+      });
       getAllSubscriptionPlan();
     };
     var subscriptionPlansBindings = function(){
-      $("#admin_subscription_tab").on("click","#add_subscription_plan",function(){
-        var subscriptionss_amo = $("#admin_subscriptions_amount").val(),
-            subscriptionss_tag = $("#admin_subscriptions_tags").val(),
-            duration_time = $("#admin_subscriptions_duration").val(),
-            duration_in = $("#admin_subscriptions_duration_option").val(),
-            tag = "add_subscription_plan",
-            msg = "subscription";
-        if(validationOnSave(msg,subscriptionss_amo,subscriptionss_tag,duration_time,duration_in)){
-          if($("#add_subscription_plan").attr("index")){
-            var index = $("#add_subscription_plan").attr("index");
-            addSubscriptionsPlans(tag,index,subscriptionss_tag,subscriptionss_amo,duration_time,duration_in);
+      $("#admin_subscription_tab").on("click","#add_additional_plan_modal",function(){
+        clearModalFields();
+        console.log($(this).attr("tag"));
+        $("#additional_title").html("Add Additional Plan");
+        $("#save_edit_additional").attr("tag",$(this).attr("tag"));
+      });
+      $("#admin_subscription_tab").on("click","#add_subscription_plan_modal",function(){
+        clearModalFields();
+        console.log($(this).attr("tag"));
+        $("#subscription_title").html("Add Subscription Plan");
+        $("#save_edit_subscription").attr("tag",$(this).attr("tag"));
+      });
+
+      $("#admin_subscription_tab").on("click",".edit_subscription_tag",function(){
+        $("#edit_subscription_name").val($(this).parent().parent().find("td.subscription_name").html());
+        $("#edit_subscription_amount").val($(this).parent().parent().find("td.subscription_amount").html());
+        $("#edit_subscription_duration_option").val($(this).parent().parent().find("span.subscription_duration_option").html());
+        $("#edit_subscription_duration_time").val($(this).parent().parent().find("span.subscription_duration_time").html());
+        $("#save_edit_subscription").attr("index",$(this).attr("index"));
+        $("#save_edit_subscription").attr("tag","");
+      });
+      $("#admin_subscription_tab").on("click",".edit_additional_tag",function(){
+        $("#additional_title").html("Edit Additional Plan");
+        $("#edit_additional_tag").val($(this).parent().parent().find("td.additional_name").html());
+        $("#edit_additional_amount").val($(this).parent().parent().find("td.additional_amount").html());
+        $("#edit_additional_duration_option").val($(this).parent().parent().find("span.additional_duration_option").html());
+        $("#edit_additional_duration_time").val($(this).parent().parent().find("span.additional_duration_time").html());
+        $("#save_edit_additional").attr("index",$(this).attr("index"));
+        $("#save_edit_additional").attr("tag","");
+      });
+      $("#admin_subscription_tab").on("click",".delete_subscription_tag",function(){
+          $("#delete_subscription_confirm").attr("index",$(this).attr("index"));
+          $("#delete_subscription_confirm").attr("tag",$(this).attr("tag"));
+      });
+      $("#delete_subscription_modal").on("click","#delete_subscription_confirm",function(){
+          var index = $(this).attr("index"),
+              tag = $(this).attr("tag");
+          deleteSubscriptionTag(index,tag);
+      });
+      $("#edit_subscription_modal").on("click","#save_edit_subscription",function(){
+        var edit_subscription_name = $("#edit_subscription_name").val(),
+            edit_subscription_amount = $("#edit_subscription_amount").val(),
+            edit_subscription_duration_option = $("#edit_subscription_duration_option").val(),
+            edit_subscription_duration_time = $("#edit_subscription_duration_time").val(),
+            msg   = "subscription",
+            tag   = $(this).attr("tag"),
+            index = $(this).attr("index");
+        if(validationOnSave(msg,edit_subscription_amount,edit_subscription_name,edit_subscription_duration_time,edit_subscription_duration_option)){
+          $.blockUI();
+          if(tag == "subscription"){
+            console.log("add new");
+            if($("#add_subscription_plan_modal").attr("index")){
+              var index = $("#add_subscription_plan_modal").attr("index");
+              addSubscriptionsPlans(tag,index,edit_subscription_name,edit_subscription_amount,edit_subscription_duration_time,edit_subscription_duration_option);
+            }else{
+              saveNewSubscriptionsPlans(tag,edit_subscription_name,edit_subscription_amount,edit_subscription_duration_time,edit_subscription_duration_option);
+            }
           }else{
-            saveNewSubscriptionsPlans(tag,subscriptionss_tag,subscriptionss_amo,duration_time,duration_in);
+            console.log("edit");
+            saveEditSubscriptionTags(index,msg,edit_subscription_amount,edit_subscription_name,edit_subscription_duration_time,edit_subscription_duration_option);
           }
         }
       });
-      $("#admin_subscription_tab").on("click","#add_additional_plan",function(){
-        var additional_amo = $("#admin_additional_amount_tags").val(),
-            additional_tag = $("#admin_additional_plan_tags").val(),
-            duration_time = $("#admin_subscriptions_duration").val(),
-            duration_in = $("#admin_subscriptions_duration_option").val(),
-            tag = "add_additional_plan",
-            msg = "additional";
-       if(validationOnSave(msg,additional_amo,additional_tag,duration_time,duration_in)){
-          if($("#add_additional_plan").attr("index")){
-            var index = $("#add_additional_plan").attr("index");
-            addSubscriptionsPlans(tag,index,additional_tag,additional_amo,duration_time,duration_in);
+      $("#edit_additional_modal").on("click","#save_edit_additional",function(){
+        var edit_additional_tag = $("#edit_additional_tag").val(),
+            edit_additional_amount = $("#edit_additional_amount").val(),
+            edit_additional_duration_option = $("#edit_additional_duration_option").val(),
+            edit_additional_duration_time = $("#edit_additional_duration_time").val(),
+            msg   = "additional",
+            tag   = $(this).attr("tag"),
+            index = $(this).attr("index");
+        if(validationOnSave(msg,edit_additional_amount,edit_additional_tag,edit_additional_duration_time,edit_additional_duration_option)){
+          $.blockUI();
+          if(tag == "additional"){
+            console.log("add new");
+            if($("#add_additional_plan_modal").attr("index")){
+              var index = $("#add_additional_plan_modal").attr("index");
+              addSubscriptionsPlans(tag,index,additional_tag,additional_amo,duration_time,duration_in);
+            }else{
+              saveNewSubscriptionsPlans(tag,additional_tag,additional_amo,duration_time,duration_in);
+            }
           }else{
-            saveNewSubscriptionsPlans(tag,additional_tag,additional_amo,duration_time,duration_in);
+            console.log("add edit");
+            saveEditSubscriptionTags(index,msg,edit_additional_amount,edit_additional_tag,edit_additional_duration_time,edit_additional_duration_option);
           }
         }
       });
-    };
+    }
+    var clearModalFields = function(){
+      $("#edit_subscription_name").val("");
+      $("#edit_subscription_amount").val("");
+      $("#edit_subscription_duration_time").val("");
+      $("#edit_additional_tag").val("");
+      $("#edit_additional_amount").val("");
+      $("#edit_additional_duration_time").val("");
+    }
+
     var validationOnSave = function(msg,tagamount,tagname,duration_time,duration_in){
         if(tagname.trim() == ""){
           newAlert("danger",msg+" tag Name can't empty");
           return false;
         }else if(tagamount.trim() == ""){ 
-          newAlert("danger",msg+" tag amount can't empty");
+          newAlert("danger",msg+" tag Amount can't empty");
           return false;
         }else if(duration_time.trim() == ""){ 
           newAlert("danger",msg+" tag time can't empty");
@@ -2446,18 +2516,121 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
           return true;
         }
     }
-    var addSubscriptionsPlans = function(tagID,index,tagname,amount,duration_time,duration_in){
-      $.couch.db(db).openDoc(index,{
+
+    var saveEditSubscriptionTags = function(index,msg,tagamount,tagname,duration_time,duration_in){
+      $.couch.db(db).openDoc("subscription_list",{
         success:function(data){
-          if(tagID == "add_additional_plan"){
+          if(data){
+            if(msg == "subscription"){
+              if(data.subscription_plans){
+                if(checkValideFieldsInDb(msg,data.subscription_plans,tagname,duration_time,duration_in,index)){
+                  for (var i = 0; i < data.subscription_plans.length; i++) {
+                    if(i == index){
+                      data.subscription_plans[i].subscription_tag    = tagname
+                      data.subscription_plans[i].subscription_amount = tagamount
+                      data.subscription_plans[i].duration_time     = duration_time
+                      data.subscription_plans[i].duration_in       = duration_in
+                      break;
+                    }
+                  }
+                  saveNewPlansDocsSubscription(data);
+                  $("#edit_subscription_modal").modal("hide");
+                }
+              }
+            }else{
+              if(data.additional_plans){
+                if(checkValideFieldsInDb(msg,data.subscription_plans,tagname,duration_time,duration_in,index)){
+                  for (var i = 0; i < data.additional_plans.length; i++) {
+                    if(i == index){
+                      data.additional_plans[i].additional_tag    = tagname
+                      data.additional_plans[i].additional_amount = tagamount
+                      data.additional_plans[i].duration_time     = duration_time
+                      data.additional_plans[i].duration_in       = duration_in
+                      break;
+                    }
+                  };
+                  saveNewPlansDocsSubscription(data);
+                  $("#edit_additional_modal").modal("hide");
+                }
+              }
+            }
+          }
+        },
+        error:function(data,error,status){
+          console.log(data,error,status);
+        }
+      });
+    }
+
+    var checkValideFieldsInDb = function(msg,data,tagname,duration_time,duration_in,index){
+      var valide = true; 
+      for (var i = 0; i < data.length; i++) {
+        if(index && i == index){
+          console.log("tesd");
+        }else{
+          if(msg == "subscription" && data[i].subscription_tag == tagname && data[i].duration_time == duration_time && data[i].duration_in == duration_in){
+            $.unblockUI();
+            newAlert("danger",msg+" Plan Already Exits");
+            valide = false;
+            break;
+          }
+          if(msg == "additional" && data[i].additional_tag == tagname && data[i].duration_time == duration_time && data[i].duration_in == duration_in){
+            $.unblockUI();
+            newAlert("danger",msg+" Plan Already Exits");
+            valide = false;
+            break;
+          }
+        }
+        
+      };
+      if(valide){
+        return true;
+      }else{
+        return false;
+      }
+    }
+    var deleteSubscriptionTag = function(index,tag){
+      $.couch.db(db).openDoc("subscription_list",{
+        success:function(data){
+          if(data){
+            if(tag == "subscription"){
+              if(data.subscription_plans){
+                console.log(index);
+                data.subscription_plans.splice(index,1);
+                saveNewPlansDocsSubscription(data);
+                $("#delete_subscription_modal").modal("hide");
+              }
+            }else{
+              if(data.additional_plans){
+                console.log(index);
+                data.additional_plans.splice(index,1);
+                saveNewPlansDocsSubscription(data);
+                $("#delete_subscription_modal").modal("hide");
+              }
+            }
+          }
+        },
+        error:function(data,error,status){
+          console.log(data,error,status);
+        }
+      });
+    }
+
+    var addSubscriptionsPlans = function(tagID,index,tagname,amount,duration_time,duration_in){
+      $.couch.db(db).openDoc("subscription_list",{
+        success:function(data){
+          if(tagID == "additional"){
             if(data.additional_plans){
-              data.additional_plans.push({
-                additional_tag : tagname,
-                additional_amount : amount,
-                duration_time : duration_time,
-                duration_in : duration_in
-              });
-              saveNewPlansDocsSubscription(data);
+              if(checkValideFieldsInDb(tagID,data.additional_plans,tagname,duration_time,duration_in)){
+                data.additional_plans.push({
+                  additional_tag : tagname,
+                  additional_amount : amount,
+                  duration_time : duration_time,
+                  duration_in : duration_in
+                });
+                saveNewPlansDocsSubscription(data);
+                $("#edit_additional_modal").modal("hide");
+              }
             }else{
               data.additional_plans = [{
                 additional_tag : tagname,
@@ -2466,16 +2639,20 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
                 duration_in : duration_in
               }];
               saveNewPlansDocsSubscription(data);
+              $("#edit_additional_modal").modal("hide");
             }
           }else{
             if(data.subscription_plans){
-              data.subscription_plans.push({
-                subscription_tag : tagname,
-                subscription_amount : amount,
-                duration_time : duration_time,
-                duration_in : duration_in
-              });
-              saveNewPlansDocsSubscription(data);
+              if(checkValideFieldsInDb(tagID,data.subscription_plans,tagname,duration_time,duration_in)){
+                data.subscription_plans.push({
+                  subscription_tag : tagname,
+                  subscription_amount : amount,
+                  duration_time : duration_time,
+                  duration_in : duration_in
+                });
+                saveNewPlansDocsSubscription(data);
+                $("#edit_subscription_modal").modal("hide");
+              }
             }else{
               data.subscription_plans = [{
                 subscription_tag : tagname,
@@ -2484,6 +2661,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
                 duration_in : duration_in
               }];
               saveNewPlansDocsSubscription(data);
+              $("#edit_subscription_modal").modal("hide");
             }
           }
         },
@@ -2493,7 +2671,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       });
     };
     var saveNewSubscriptionsPlans = function(tagId,tagname,amount,duration_time,duration_in){
-      if(tagId == "add_additional_plan"){
+      if(tagId == "additional"){
         var docSave = {
           _id:"subscription_list",
           dhp_code:pd_data.dhp_code,
@@ -2505,6 +2683,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             duration_in : duration_in
           }]
         };
+        $("#edit_additional_modal").modal("hide");
       }else{
         var docSave = {
           _id:"subscription_list",
@@ -2517,6 +2696,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             duration_in : duration_in
           }]
         };
+        $("#edit_subscription_modal").modal("hide");
       }
       if(docSave){
         saveNewPlansDocsSubscription(docSave);
@@ -2526,6 +2706,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       $.couch.db(db).saveDoc(data,{
         success:function(data){
           getAllSubscriptionPlan();
+          $.unblockUI();
         },
         error:function(data,error,status){
           console.log(data,error,status);
@@ -2538,6 +2719,8 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
           if(data){
             $("#add_subscription_plan").attr("index",data._id);
             $("#add_additional_plan").attr("index",data._id);
+            $("#add_subscription_plan_modal").attr("index",data._id);
+            $("#add_additional_plan_modal").attr("index",data._id);
             if(data.subscription_plans){
               $scope.subscription_data = data.subscription_plans;
             }
@@ -2545,11 +2728,13 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
               $scope.additional_data = data.additional_plans;
             }
             $scope.$apply();
+            $.unblockUI();
           }else{
 
           }
         },
         error:function(data,error,status){
+          $.unblockUI();
           console.log(data,error,status);
         }
       })
