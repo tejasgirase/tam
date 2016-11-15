@@ -247,7 +247,15 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
       }
     });
-
+    
+    $("#agreement_flag").click(function(){
+      if($(this).prop("checked")) {
+        $("#next_from_agreement_plan").removeAttr("disabled");
+      }else {
+        $("#next_from_agreement_plan").attr("disabled","disabled");
+      }
+    });
+    
     $("#dhp_code").on("keydown",function(e){
       var charCode = e.charCode || e.keyCode || e.which;
       if (charCode == 27){
@@ -400,6 +408,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $("#signup_subscription_plan_link").addClass("CategTextActive");
       $("#signup_agreement_tab, #signup_account_info_tab, #signup_billing_info_tab, #signup_practice_info_tab").addClass("no-display");
       $("#signup_subscription_plan_tab").removeClass("no-display");
+      getSubscriptionPlans();
     }
   }
 
@@ -417,6 +426,48 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $("#signup_agreement_tab, #signup_subscription_plan_tab, #signup_billing_info_tab, #signup_account_info_tab").addClass("no-display");
       $("#signup_practice_info_tab").removeClass("no-display");  
     }
+  }
+
+  function getSubscriptionPlans() {
+    $("#subscription_plan_list_parent, #additional_plan_list_parent").find(".plan-list").remove();
+    $.couch.db(db).view("tamsa/getSubscriptionList", {
+      success:function(data) {
+        if(data.rows.length > 0) {
+          $("#additional_plan_list_parent").removeClass("no-display");
+          var sub_str=[],add_str=[];
+          for(var i=0;i<data.rows.length;i++){
+            if(data.rows[i].key[0] === "default") {
+              sub_str.push('<div class="row plan-list">');
+                sub_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
+                  sub_str.push('<label>');
+                  sub_str.push('<input class="checkshow" id="" checked="true" type="checkbox">'+data.rows[i].value.subscription_tag);
+                  sub_str.push('</label>');
+                sub_str.push('</div>');
+              sub_str.push('</div>');
+            }else {
+              add_str.push('<div class="row plan-list">');
+                add_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
+                  add_str.push('<label>');
+                  add_str.push('<input class="checkshow" id="" checked="true" type="checkbox">'+data.rows[i].value.subscription_tag);
+                  add_str.push('</label>');
+                add_str.push('</div>');
+              add_str.push('</div>');
+            }
+          }
+          $("#subscription_plan_list_parent").append(sub_str.join(''));
+          $("#additional_plan_list_parent").append(add_str.join(''));
+        }else {
+          console.log("There is no subscription plan configured.Contact Admin.");
+          $("#subscription_plan_list_parent").html("There is no subscription plan configured.Contact Admin.");
+          $("#additional_plan_list_parent").addClass("no-display");
+        }
+      },
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
+      }
+    });
   }
 
   function getStates(){
@@ -625,6 +676,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function validateSignUp() {
+    return true;
     var email_filter       = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     var phone_filter       = /^(\+\d{1,3}[- ]?)?\d{10}$|^(\+\d{1,3}[- ]?)?\d{11}$/;
     var pwd = $("#Password").val();
