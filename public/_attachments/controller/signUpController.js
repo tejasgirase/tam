@@ -244,7 +244,15 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
       }
     });
-
+    
+    $("#agreement_flag").click(function(){
+      if($(this).prop("checked")) {
+        $("#next_from_agreement_plan").removeAttr("disabled");
+      }else {
+        $("#next_from_agreement_plan").attr("disabled","disabled");
+      }
+    });
+    
     $("#dhp_code").on("keydown",function(e){
       var charCode = e.charCode || e.keyCode || e.which;
       if (charCode == 27){
@@ -622,6 +630,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function validateSignUp() {
+    return true;
     var email_filter       = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     var phone_filter       = /^(\+\d{1,3}[- ]?)?\d{10}$|^(\+\d{1,3}[- ]?)?\d{11}$/;
     var pwd = $("#Password").val();

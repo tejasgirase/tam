@@ -153,6 +153,7 @@ ul.footerlink li + li:before { padding: 0 10px; color: #979797; content: "|\00a0
 .paddtop8 {padding-top: 8px;}
 .paddtopbottom6 {padding-top: 6px; padding-bottom: 6px;}
 .paddside5{padding-left: 5px;padding-right: 5px;}
+.paddside30 {padding-left: 30px;padding-right: 30px;}
 .paddtop15{padding-top: 15px;}
 .paddleft{padding-left:0px;}
 .paddleft1{padding-left:10px;}
@@ -2101,6 +2102,7 @@ table.invoice-display-table th{background:#fff !important;}
 .cuswidth40{width: 40px !important;}
 .cuswidth80{width: 80% !important;}
 .cuswidth25{width: 25% !important;}
+.cuswidth45{width: 45% !important;}
 .disinline{display:inline;}
 .today-schedule{margin-top: 5px;border-radius:3px;background:#ececec none repeat scroll 0 0;}
 .dd-container, .fd-container { width: 100%; border-radius: 4px; margin: 5px 0 0 0; }
