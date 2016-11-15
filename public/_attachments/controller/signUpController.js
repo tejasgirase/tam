@@ -13,7 +13,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
          $("#hospital_name").addClass('myloader');
       },
       source: function( request, response ) {
-        $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+        $.couch.db(replicated_db).view("tamsa/getDhpCodeSearch", {
           success: function(data) {
             $("#hospital_name").removeClass('myloader');
             response(data.rows);
