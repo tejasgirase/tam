@@ -30,7 +30,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
           group:true
         });
       },
-      minLength: 3,
+      minLength: 1,
       focus: function(event, ui) {
         return false;
       },
@@ -38,6 +38,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         if(ui.item.key[1].substring(0,12) == "Add as a new"){
           $("#hospital_type, #City, #State").removeAttr("disabled");
           $("#hospital_phone, #hospital_email").removeAttr("readonly");
+          $("#dhp_code").val("");
         }else{
           $(this).val(ui.item.key[8]);
           $("#hospital_type").val(ui.item.key[0]);
