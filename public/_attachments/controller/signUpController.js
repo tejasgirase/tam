@@ -13,7 +13,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
          $("#hospital_name").addClass('myloader');
       },
       source: function( request, response ) {
-        $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+        $.couch.db(replicated_db).view("tamsa/getDhpCodeSearch", {
           success: function(data) {
             $("#hospital_name").removeClass('myloader');
             response(data.rows);
@@ -39,12 +39,15 @@ app.controller("signUpController",function($scope,$state,$stateParams){
           $("#hospital_type, #City, #State").removeAttr("disabled");
           $("#hospital_phone, #hospital_email").removeAttr("readonly");
         }else{
-          $(this).val(ui.item.key[1]);
+          $(this).val(ui.item.key[8]);
           $("#hospital_type").val(ui.item.key[0]);
           $("#State").val(ui.item.key[4]).attr("disabled","disabled");
           $("#Country").val(ui.item.key[5]).attr("readonly","readonly");
-          $("#hospital_phone").attr("readonly","readonly");
-          $("#hospital_email").attr("readonly","readonly");
+          // $("#hospital_phone").attr("readonly","readonly");
+          // $("#hospital_email").attr("readonly","readonly");
+          $("#dhp_code").val(ui.item.key[9]).attr("readonly","readonly");
+          $("#hospital_phone").val(ui.item.key[6]).attr("readonly","readonly");
+          $("#hospital_email").val(ui.item.key[7]).attr("readonly","readonly");
           //setTimeout(function(){
           $.couch.db(db).view("tamsa/getCitiesByState", {
             success:function(data){
@@ -76,7 +79,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     data("uiAutocomplete")._renderItem = function(ul, item) {
       return $("<li></li>")
         .data("item.autocomplete", item)
-        .append("<a>" + item.key[1] + "</a>")
+        .append("<a><span style=''> "+item.key[1]+"</span><span style='float:right'> "+item.key[2]+"</span></a>")
         .appendTo(ul);
     };
 
@@ -324,8 +327,8 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         error: function(status) {
           console.log(status);
         },
-        startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
-        endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{},{},{}],
+        startkey: [$("#hospital_name").val(),$("#hospital_type").val()],
+        endkey: [$("#hospital_name").val(),$("#hospital_type").val(),{},{},{},{},{},{}],
         limit: 5,
         reduce:true,
         group:true
