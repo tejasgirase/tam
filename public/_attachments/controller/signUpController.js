@@ -506,9 +506,10 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function signupNewUser(){
+    var specialization_value;
     if($("#Specialization").val() == "Select Specialization"){
       if($("#new_specialization").val !== ""){
-      var specialization_value = $("#new_specialization").val();
+      specialization_value = $("#new_specialization").val();
         $.couch.db(db).view("tamsa/getSpecializationList", {
           success:function(data){
             if(data.rows.length > 0){
@@ -543,7 +544,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         });  
       }
     }else{
-     var specialization_value = $("#Specialization").val();
+      specialization_value = $("#Specialization").val();
     }
     var userDoc = {
       name:                   $("#Email").val(),
