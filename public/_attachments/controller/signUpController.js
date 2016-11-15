@@ -8,75 +8,77 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   $(document).ready(function(){
     // $("#hospital_display").hide();
 
-    // $("#hospital_name").autocomplete({
-    //   search: function(event, ui) { 
-    //      $("#hospital_name").addClass('myloader');
-    //   },
-    //   source: function( request, response ) {
-    //     $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-    //       success: function(data) {
-    //         $("#hospital_name").removeClass('myloader');
-    //         response(data.rows);
-    //       },
-    //       error: function(status) {
-    //           console.log(status);
-    //       },
-    //       startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
-    //       endkey: [$("#hospital_type").val(),$("#hospital_name").val() + "\u9999",{},{},{},{},{},{}],
-    //       limit: 5,
-    //       reduce:true,
-    //       group:true
-    //     });
-    //   },
-    //   minLength: 3,
-    //   focus: function(event, ui) {
-    //     return false;
-    //   },
-    //   select: function( event, ui ) {
-    //     if(ui.item.key[1].substring(0,12) == "Add as a new"){
-    //       $("#hospital_type, #City, #State").removeAttr("disabled");
-    //       $("#hospital_phone, #hospital_email").removeAttr("readonly");
-    //     }else{
-    //       $(this).val(ui.item.key[1]);
-    //       $("#hospital_type").val(ui.item.key[0]);
-    //       $("#State").val(ui.item.key[4]).attr("disabled","disabled");
-    //       $("#Country").val(ui.item.key[5]).attr("readonly","readonly");
-    //       $("#hospital_phone").attr("readonly","readonly");
-    //       $("#hospital_email").attr("readonly","readonly");
-    //       //setTimeout(function(){
-    //       $.couch.db(db).view("tamsa/getCitiesByState", {
-    //         success:function(data){
-    //           if(data.rows.length > 0){
-    //             for(var i = 0; i<data.rows[0].value.length; i++){
-    //               $("#City").append("<option>"+data.rows[0].value[i]+"</option>");  
-    //             } 
-    //             $("#City").val(ui.item.key[3]).attr("disabled","disabled"); 
-    //           }
-    //         },
-    //         error:function(data,error,reason){
-    //           console.log(reason);
-    //         },
-    //         key:ui.item.key[4],
-    //         reduce:false,
-    //         group:false
-    //       });
-    //     }
-    //     return false;
-    //   },
-    //   response: function(event, ui) {
-    //     if (!ui.content.length) {
-    //       var noResult = { key:['','Add as a new ' +$("#hospital_type").val(),'','','',''],label:"Add as a new Hospital" };
-    //       ui.content.push(noResult);
-    //       //$("#message").text("No results found");
-    //     }
-    //   }
-    // }).
-    // data("uiAutocomplete")._renderItem = function(ul, item) {
-    //   return $("<li></li>")
-    //     .data("item.autocomplete", item)
-    //     .append("<a>" + item.key[1] + "</a>")
-    //     .appendTo(ul);
-    // };
+    $("#hospital_name").autocomplete({
+      search: function(event, ui) { 
+         $("#hospital_name").addClass('myloader');
+      },
+      source: function( request, response ) {
+        $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+          success: function(data) {
+            $("#hospital_name").removeClass('myloader');
+            response(data.rows);
+          },
+          error:function(data,error,reason){
+            newAlert("danger",reason);
+            $("html, body").animate({scrollTop: 0}, 'slow');
+            return false;
+          },
+          startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
+          endkey: [$("#hospital_type").val(),$("#hospital_name").val() + "\u9999",{},{},{},{},{},{}],
+          limit: 5,
+          reduce:true,
+          group:true
+        });
+      },
+      minLength: 3,
+      focus: function(event, ui) {
+        return false;
+      },
+      select: function( event, ui ) {
+        if(ui.item.key[1].substring(0,12) == "Add as a new"){
+          $("#hospital_type, #City, #State").removeAttr("disabled");
+          $("#hospital_phone, #hospital_email").removeAttr("readonly");
+        }else{
+          $(this).val(ui.item.key[1]);
+          $("#hospital_type").val(ui.item.key[0]);
+          $("#State").val(ui.item.key[4]).attr("disabled","disabled");
+          $("#Country").val(ui.item.key[5]).attr("readonly","readonly");
+          $("#hospital_phone").attr("readonly","readonly");
+          $("#hospital_email").attr("readonly","readonly");
+          //setTimeout(function(){
+          $.couch.db(db).view("tamsa/getCitiesByState", {
+            success:function(data){
+              if(data.rows.length > 0){
+                for(var i = 0; i<data.rows[0].value.length; i++){
+                  $("#City").append("<option>"+data.rows[0].value[i]+"</option>");  
+                } 
+                $("#City").val(ui.item.key[3]).attr("disabled","disabled"); 
+              }
+            },
+            error:function(data,error,reason){
+              console.log(reason);
+            },
+            key:ui.item.key[4],
+            reduce:false,
+            group:false
+          });
+        }
+        return false;
+      },
+      response: function(event, ui) {
+        if (!ui.content.length) {
+          var noResult = { key:['','Add as a new ' +$("#hospital_type").val(),'','','',''],label:"Add as a new Hospital" };
+          ui.content.push(noResult);
+          //$("#message").text("No results found");
+        }
+      }
+    }).
+    data("uiAutocomplete")._renderItem = function(ul, item) {
+      return $("<li></li>")
+        .data("item.autocomplete", item)
+        .append("<a>" + item.key[1] + "</a>")
+        .appendTo(ul);
+    };
 
     getExistingSpecializationList("Specialization");
 
@@ -100,11 +102,11 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       if($("#click_toggle_label").html() == "to add new specialization"){
         $("#new_specialization").show().val("");
         $("#Specialization").hide();
-        $("#click_toggle_label").html("select form list");
+        $("#click_toggle_label").html("select specialization form list");
       }else{
         $("#Specialization").show();
         $("#new_specialization").hide().val("");
-        $("#click_toggle_label").html("add new");
+        $("#click_toggle_label").html("to add new specialization");
       }
     });
 
@@ -112,131 +114,134 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       return allowOnlyTenNumbersSignUp(e,$(this));
     });
       
-    // $("#dhp_code").autocomplete({
-    //   search: function(event, ui) { 
-    //      $(this).addClass('myloader');
-    //   },
-    //   source: function( request, response ) {
-    //     $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-    //       success: function(data) {
-    //         $("#dhp_code").removeClass('myloader');
-    //         response(data.rows);
-    //       },
-    //       error: function(status) {
-    //         console.log(status);
-    //       },
-    //       startkey: [request.term],
-    //       endkey: [request.term + "\u9999",{},{},{},{},{},{},{}],
-    //       limit: 5,
-    //       reduce:true,
-    //       group:true
-    //     });
-    //   },
-    //   minLength: 2,
-    //   focus: function(event, ui) {
-    //     return false;
-    //   },
-    //   select: function( event, ui ) {
-    //     if(ui.item.key[0] == "DHP Code not found"){
-    //       $(this).val("");
-    //       $("#hospital_name").removeAttr("readonly").val("");
-    //     }else{
-    //       $(this).val(ui.item.key[0]);
-    //       $("#hospital_type, #City, #State").removeAttr("disabled");
-    //       $("#hospital_type").val(ui.item.key[2]).attr("disabled","disabled");
-    //       $("#hospital_name").val(ui.item.key[1]).attr("readonly","readonly");
-    //       $("#State").val(ui.item.key[4]).attr("disabled","disabled");
-    //       $("#Country").val(ui.item.key[5]);
-    //       $("#hospital_phone").val(ui.item.key[6]).attr("readonly","readonly");
-    //       $("#hospital_email").val(ui.item.key[7]).attr("readonly","readonly");
-    //       $("#hospital_display").show();
-    //       $("#hospital_link_parent").hide();
-    //       $.couch.db(db).view("tamsa/getCitiesByState", {
-    //         success:function(data){
-    //           if(data.rows.length > 0){
-    //             for(var i = 0; i<data.rows[0].value.length; i++){
-    //               $("#City").append("<option>"+data.rows[0].value[i]+"</option>");  
-    //             }
-    //             $("#City").val(ui.item.key[3]).attr("disabled","disabled"); 
-    //           }
-    //         },
-    //         error:function(data,error,reason){
-    //           console.log(reason);
-    //         },
-    //         key:ui.item.key[4],
-    //         reduce:false,
-    //         group:false
-    //       });
-    //     }
-    //     return false;
-    //   },
-    //   response: function(event, ui) {
-    //     if (!ui.content.length) {
-    //       var noResult = { key:['DHP Code not found','','','','',''],label:"DHP Code not found" };
-    //       ui.content.push(noResult);
-    //       $("#hospital_name").removeAttr('readonly');
-    //       //$("#message").text("No results found");
-    //     }
-    //   }
-    // }).
-    // data("uiAutocomplete")._renderItem = function(ul, item) {
-    //   return $("<li></li>")
-    //     .data("item.autocomplete", item)
-    //     .append("<a>" + item.key[0] + "</a>")
-    //     .appendTo(ul);
-    // };
+    $("#dhp_code").autocomplete({
+      search: function(event, ui) { 
+         $(this).addClass('myloader');
+      },
+      source: function( request, response ) {
+        $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+          success: function(data) {
+            $("#dhp_code").removeClass('myloader');
+            response(data.rows);
+          },
+          error: function(status) {
+            console.log(status);
+          },
+          startkey: [request.term],
+          endkey: [request.term + "\u9999",{},{},{},{},{},{},{}],
+          limit: 5,
+          reduce:true,
+          group:true
+        });
+      },
+      minLength: 2,
+      focus: function(event, ui) {
+        return false;
+      },
+      select: function( event, ui ) {
+        if(ui.item.key[0] == "DHP Code not found"){
+          $(this).val("");
+          $("#hospital_name").removeAttr("readonly").val("");
+        }else{
+          $(this).val(ui.item.key[0]);
+          $("#hospital_type, #City, #State").removeAttr("disabled");
+          $("#hospital_type").val(ui.item.key[2]).attr("disabled","disabled");
+          $("#hospital_name").val(ui.item.key[1]).attr("readonly","readonly");
+          $("#State").val(ui.item.key[4]).attr("disabled","disabled");
+          $("#Country").val(ui.item.key[5]);
+          $("#hospital_phone").val(ui.item.key[6]).attr("readonly","readonly");
+          $("#hospital_email").val(ui.item.key[7]).attr("readonly","readonly");
+          $("#hospital_display").show();
+          $("#hospital_link_parent").hide();
+          $.couch.db(db).view("tamsa/getCitiesByState", {
+            success:function(data){
+              if(data.rows.length > 0){
+                for(var i = 0; i<data.rows[0].value.length; i++){
+                  $("#City").append("<option>"+data.rows[0].value[i]+"</option>");  
+                }
+                $("#City").val(ui.item.key[3]).attr("disabled","disabled"); 
+              }
+            },
+            error:function(data,error,reason){
+              console.log(reason);
+            },
+            key:ui.item.key[4],
+            reduce:false,
+            group:false
+          });
+        }
+        return false;
+      },
+      response: function(event, ui) {
+        if (!ui.content.length) {
+          var noResult = { key:['DHP Code not found','','','','',''],label:"DHP Code not found" };
+          ui.content.push(noResult);
+          $("#hospital_name").removeAttr('readonly');
+          //$("#message").text("No results found");
+        }
+      }
+    }).
+    data("uiAutocomplete")._renderItem = function(ul, item) {
+      return $("<li></li>")
+        .data("item.autocomplete", item)
+        .append("<a>" + item.key[0] + "</a>")
+        .appendTo(ul);
+    };
 
     $("#Signup").click(function(){
       if (validateSignUp()) {
-        var admin;
-        if($("#dhp_display").css("display") == "none"){
-            $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-              success: function(data) {
-                $("#hospital_name").removeClass('myloader');
-                if($("#Email").val() == "dhpadmin@sensoryhealth.com") {
-                  $("#dhp_code").val("H-0000000000");
-                }else {
-                  if(data.rows.length > 0){
-                    $("#dhp_code").val(data.rows[0].key[2]);  
-                  }else{
-                    $("#dhp_code").val("H-"+getPcode(10,"alphabetic"));
-                  }  
-                }
-                signupNewUser();
-              },
-              error: function(status) {
-                console.log(status);
-              },
-              startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
-              endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{}],
-              limit: 5,
-              reduce:true,
-              group:true
-            });
-        }else{
-              $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-                success: function(data) {
-                  if(data.rows.length > 0){
-                    $("#dhp_code").removeClass('myloader');
-                    signupNewUser();
-                  }else{
-                    $("#validationtext").text("Invalid DHP Code...!!!");
-                    $('html, body').animate({scrollTop: 0}, 'slow');
-                    return;
-                  }
+        activateAgreementTab();
+        // var admin;
+        // if($("#dhp_display").css("display") == "none"){
+        //     $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+        //       success: function(data) {
+        //         $("#hospital_name").removeClass('myloader');
+        //         if($("#Email").val() == "dhpadmin@sensoryhealth.com") {
+        //           $("#dhp_code").val("H-0000000000");
+        //         }else {
+        //           if(data.rows.length > 0){
+        //             $("#dhp_code").val(data.rows[0].key[2]);  
+        //           }else{
+        //             $("#dhp_code").val("H-"+getPcode(10,"alphabetic"));
+        //           }  
+        //         }
+        //         signupNewUser();
+        //       },
+        //       error: function(status) {
+        //         console.log(status);
+        //       },
+        //       startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
+        //       endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{}],
+        //       limit: 5,
+        //       reduce:true,
+        //       group:true
+        //     });
+        // }else{
+        //       $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+        //         success: function(data) {
+        //           if(data.rows.length > 0){
+        //             $("#dhp_code").removeClass('myloader');
+        //             signupNewUser();
+        //           }else{
+        //             $("#validationtext").text("Invalid DHP Code...!!!");
+        //             $('html, body').animate({scrollTop: 0}, 'slow');
+        //             return;
+        //           }
                   
-                },
-                error: function(status) {
-                  console.log(status);
-                },
-                startkey: [$("#dhp_code").val()],
-                endkey: [$("#dhp_code").val(),{},{},{},{},{}],
-                limit: 5,
-                reduce:true,
-                group:true
-              });
-        }
-        return;
+        //         },
+        //         error: function(status) {
+        //           console.log(status);
+        //         },
+        //         startkey: [$("#dhp_code").val()],
+        //         endkey: [$("#dhp_code").val(),{},{},{},{},{}],
+        //         limit: 5,
+        //         reduce:true,
+        //         group:true
+        //       });
+        // }
+        // return;
+      }else {
+
       }
     });
 
@@ -249,55 +254,53 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     });
 
     $("#dhp_code").on("keyup",function(e){
-        if($(this).val() == ""){
-          $("#hospital_name").val('');
-          $("#State").removeAttr('disabled').val("Select State");
-          $("#City").removeAttr('disabled').val("Select City");
-          $("#hospital_display").hide("slow");
-          $("#hospital_type").removeAttr('disabled');
-          $("#hospital_link_parent").show("slow");
-        };
+      if($(this).val() === ""){
+        $("#hospital_name").val('').removeAttr("readonly");
+        $("#State").removeAttr('disabled').val("Select State");
+        $("#City").removeAttr('disabled').val("Select City");
+        $("#hospital_display").hide("slow");
+        $("#hospital_type").removeAttr('disabled');
+        $("#hospital_link_parent").show("slow");
+      }
     });
 
     $("#hospital_name").on("keyup",function(e){
-      if($(this).val() == ""){
+      if($(this).val() === ""){
         $("#dhp_code").val('');
         $("#State").removeAttr('disabled').val("Select State");
         $("#City").removeAttr('disabled').val("Select City");
         $("#hospital_phone, #hospital_email").val("").removeAttr("readonly");
         $("#hospital_type").removeAttr('disabled');
-      };
+      }
     });
 
     $("#hospital_link").on("click",function(){
-      $("#dhp_display").hide();
-      $("#dhp_link_parent").show();
-      $("#hospital_link_parent").hide();
+      $(".dhp-link-parent").removeClass("no-display");
+      $(".hospital-link-parent").addClass("no-display");
       $("#hospital_name").val('').removeAttr('readonly');
       $("#State").removeAttr('disabled').val('Select State');
       $("#City").removeAttr('disabled').val('Select City');
       $("#hospital_phone").removeAttr("readonly");
       $("#hospital_email").removeAttr("readonly");
       $("#hospital_type").removeAttr('disabled');
-      $("#hospital_display").show("slow");
       $("#dhp_code").val("");
       //$("#hospital_name").autocomplete("destroy");
     });
 
     $("#dhp_link").on("click", function(){
       $("#dhp_code").val("");
-      $("#dhp_display").show();
-      $("#hospital_link_parent").show();
-      $("#dhp_link_parent").hide();
+      $(".hospital-link-parent").removeClass("no-display");
+      $(".dhp-link-parent").addClass("no-display");
       $("#hospital_name").val('').attr('readonly', 'readonly');
-      $("#hospital_display").hide("slow");
     });
     
     $("body").on("change","#State",function(){
       var selected_state = $(this).val();
       getCities(selected_state);
     });
+
     getStates();
+
     $("#hospital_name").on("focusout",function(){
       $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
         success: function(data) {
@@ -379,17 +382,22 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function activateAgreementTab() {
-    $("#signup_agreement_link").parent().find("div").removeClass("CategTextActive");
-    $("#signup_agreement_link").addClass("CategTextActive");
-    $("#signup_account_info_tab, #signup_subscription_plan_tab, #signup_billing_info_tab, #signup_practice_info_tab").addClass("no-display");
-    $("#signup_agreement_tab").removeClass("no-display");
+    if(validateSignUp()) {
+      $("#signup_agreement_link").parent().find("div").removeClass("CategTextActive");
+      $("#signup_agreement_link").addClass("CategTextActive");
+      $("#signup_account_info_tab, #signup_subscription_plan_tab, #signup_billing_info_tab, #signup_practice_info_tab").addClass("no-display");
+      $("#signup_agreement_tab").removeClass("no-display");
+    }
   }
 
   function activateSubscriptionTab() {
-    $("#signup_subscription_plan_link").parent().find("div").removeClass("CategTextActive");
-    $("#signup_subscription_plan_link").addClass("CategTextActive");
-    $("#signup_agreement_tab, #signup_account_info_tab, #signup_billing_info_tab, #signup_practice_info_tab").addClass("no-display");
-    $("#signup_subscription_plan_tab").removeClass("no-display");
+    // if(validateSignUp() && validateAgreementAtSignUP() && validateSubscriptionTabAtSignUP()) {
+    if(validateSignUp() && validateAgreementAtSignUP()) {
+      $("#signup_subscription_plan_link").parent().find("div").removeClass("CategTextActive");
+      $("#signup_subscription_plan_link").addClass("CategTextActive");
+      $("#signup_agreement_tab, #signup_account_info_tab, #signup_billing_info_tab, #signup_practice_info_tab").addClass("no-display");
+      $("#signup_subscription_plan_tab").removeClass("no-display");
+    }
   }
 
   function activateBillingTab() {
@@ -400,10 +408,12 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function activatePracticeInfoTab() {
-    $("#signup_practice_info_link").parent().find("div").removeClass("CategTextActive");
-    $("#signup_practice_info_link").addClass("CategTextActive");
-    $("#signup_agreement_tab, #signup_subscription_plan_tab, #signup_billing_info_tab, #signup_account_info_tab").addClass("no-display");
-    $("#signup_practice_info_tab").removeClass("no-display");
+    if(validateSignUp() && validateAgreementAtSignUP() && validateSubscriptionTabAtSignUP()) {
+      $("#signup_practice_info_link").parent().find("div").removeClass("CategTextActive");
+      $("#signup_practice_info_link").addClass("CategTextActive");
+      $("#signup_agreement_tab, #signup_subscription_plan_tab, #signup_billing_info_tab, #signup_account_info_tab").addClass("no-display");
+      $("#signup_practice_info_tab").removeClass("no-display");  
+    }
   }
 
   function getStates(){
@@ -414,7 +424,9 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         }
       },
       error:function(data,error,reason){
-        console.log(reason);
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       reduce:true,
       group:true
@@ -432,7 +444,9 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         }
       },
       error:function(data,error,reason){
-        console.log(reason);
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
       },
       key:selectedstate,
       reduce:false,
@@ -442,7 +456,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
   function signupNewUser(){
     if($("#Specialization").val() == "Select Specialization"){
-      if($("#new_specialization").val != ""){
+      if($("#new_specialization").val !== ""){
       var specialization_value = $("#new_specialization").val();
         $.couch.db(db).view("tamsa/getSpecializationList", {
           success:function(data){
@@ -455,7 +469,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
                   _rev:           data.rows[0].value._rev,
                   doctype:        data.rows[0].value.doctype,
                   specialization: new_list
-                }
+                };
                 $.couch.db(db).saveDoc(doc,{
                   success:function(data){
                   },
@@ -612,17 +626,22 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     var phone_filter       = /^(\+\d{1,3}[- ]?)?\d{10}$|^(\+\d{1,3}[- ]?)?\d{11}$/;
     var pwd = $("#Password").val();
 
-    if($("#first_name").val().trim() == ""){
+    if($("#first_name").val().trim() === "") {
       $("#validationtext").text("First Name can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#first_name").focus();
       return false;
-    }else if($("#last_name").val().trim() == ""){
+    }else if($("#first_name").val().trim() === "") {
+      $("#validationtext").text("First Name can not be empty.");
+      $('html, body').animate({scrollTop: 0}, 'slow');
+      $("#first_name").focus();
+      return false;
+    }else if($("#last_name").val().trim() === "") {
       $("#validationtext").text("Last Name can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#last_name").focus();
       return false;
-    }else if (pwd.trim().length == 0) {
+    }else if (pwd.trim().length === 0) {
       $("#validationtext").text("Password Can not be blank");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Password").focus();
@@ -632,7 +651,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Password").focus();
       return false;
-    }else if($("#Email").val().trim() == "") {
+    }else if($("#Email").val().trim() === "") {
       $("#validationtext").text("Email can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Email").focus();
@@ -642,32 +661,32 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Email").focus();
       return false;
-    }else if ($("#Emailalerts").val().trim() == "") {
-      $("#validationtext").text("Alert Email can not be empty.");
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      $("#Emailalerts").focus();
-      return false;
-    }else if (!email_filter.test($("#Emailalerts").val().trim())) {
-      $("#validationtext").text("Alert email address is not valid.");
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      $("#Emailalerts").focus();
-      return false;
-    }else if (!$("#qualification").val() && $("#qualification").val().trim() == "" ) {
+    // }else if ($("#Emailalerts").val().trim() === "") {
+    //   $("#validationtext").text("Alert Email can not be empty.");
+    //   $('html, body').animate({scrollTop: 0}, 'slow');
+    //   $("#Emailalerts").focus();
+    //   return false;
+    // }else if (!email_filter.test($("#Emailalerts").val().trim())) {
+    //   $("#validationtext").text("Alert email address is not valid.");
+    //   $('html, body').animate({scrollTop: 0}, 'slow');
+    //   $("#Emailalerts").focus();
+    //   return false;
+    }else if (!$("#qualification").val() && $("#qualification").val().trim() === "" ) {
       $("#validationtext").text("Qualification can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#qualification").focus();
       return false;
-    }else if ($("#Specialization").val() == "Select Specialization" && $("#new_specialization").val().trim() == "" ) {
+    }else if ($("#Specialization").val() === "Select Specialization" && $("#new_specialization").val().trim() === "" ) {
       $("#validationtext").text("Specialization can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Specialization").focus();
       return false;
-    }else if (!$("#experience").val() && $("#experience").val().trim() == "" ) {
+    }else if (!$("#experience").val() && $("#experience").val().trim() === "" ) {
       $("#validationtext").text("Experience can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#experience").focus();
       return false;
-    }else if ($("#Phone").val().trim() == "") {
+    }else if ($("#Phone").val().trim() === "") {
       $("#validationtext").text("Phone can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Phone").focus();
@@ -677,17 +696,24 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Phone").focus();
       return false;
-    }else if ($("#Phonealerts").val().trim() == "") {
-      $("#validationtext").text("Alert phone can not be empty.");
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      $("#Phonealerts").focus();
-      return false;
-    }else if (!phone_filter.test($("#Phonealerts").val().trim())) {
-      $("#validationtext").text("Alert phone number is not valid.");
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      $("#Phonealerts").focus();
-      return false;
-    }else if ($("#State").val() == "Select State") {
+    // }else if ($("#Phonealerts").val().trim() === "") {
+    //   $("#validationtext").text("Alert phone can not be empty.");
+    //   $('html, body').animate({scrollTop: 0}, 'slow');
+    //   $("#Phonealerts").focus();
+    //   return false;
+    // }else if (!phone_filter.test($("#Phonealerts").val().trim())) {
+    //   $("#validationtext").text("Alert phone number is not valid.");
+    //   $('html, body').animate({scrollTop: 0}, 'slow');
+    //   $("#Phonealerts").focus();
+    //   return false;
+    }else {
+      $("#validationtext").text("");
+      return true; 
+    }
+  }
+
+  function validatePracticeInfoTabAtSignUP() {
+    if ($("#State").val() == "Select State") {
       $("#validationtext").text("Please Select State.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#State").focus();
@@ -707,7 +733,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#City").focus();
       return false;
-    }else if ($("#Country").val().trim() == "") {
+    }else if ($("#Country").val().trim() === "") {
       $("#validationtext").text("Country can not be empty.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Country").focus();
@@ -717,20 +743,28 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Country").focus();
       return false;
-    }else if (!phone_filter.test($("#hospital_phone").val().trim()) && $("#hospital_phone").val().trim() != "") {
+    }else if (!phone_filter.test($("#hospital_phone").val().trim()) && $("#hospital_phone").val().trim() !== "") {
       $("#validationtext").text("Please enter valid phone number.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#hospital_email").focus();
       return false;
-    }else if (!email_filter.test($("#hospital_email").val().trim()) && $("#hospital_email").val().trim() != "") {
+    }else if (!email_filter.test($("#hospital_email").val().trim()) && $("#hospital_email").val().trim() !== "") {
       $("#validationtext").text("Please enter valid email address.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#hospital_email").focus();
       return false;
     }else {
       $("#validationtext").text("");
-      return true; 
+      return true;
     }
+  }
+
+  function validateAgreementAtSignUP() {
+    return true;
+  }
+
+  function validateSubscriptionTabAtSignUP() {
+    return true;
   }
 
   function allowOnlyTenNumbersSignUp(e,$obj){

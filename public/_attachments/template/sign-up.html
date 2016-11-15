@@ -16,6 +16,41 @@
       <div class="col-lg-12 col-sm-12 col-xs-12" id="signup_account_info_tab">
         <div class="tab-heading-section signup_content_header">Account Details</div>
         <div class="col-lg-12 signup_content_parent accinfo_height">
+          
+          <div class="dhp-link-parent form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Hospital Name<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="hospital_name" class="form-control placeholder-no-fix" placeholder="Hospital Name">
+            </div>
+          </div>
+
+          <div class="dhp-link-parent form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Hospital Type</label>
+            <div class="login_input">
+              <select type="text" id="hospital_type" class="form-control placeholder-no-fix sltpdt">
+                <option>Hospital</option>
+                <option>Clinic</option>
+                <option>Center</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dhp-link-parent form-group_login col-lg-12 col-sm-12" id="dhp_link_parent" style="margin-top: 0px;">
+            <div class="login_input pull-right">
+              <span id="dhp_link" class="hospital-dhp-link-span">having DHP Code ?</span>
+            </div>
+          </div>
+
+          <div class="hospital-link-parent form-group_login col-lg-12 col-sm-12 no-display">
+            <label class="control-label visible-ie8 visible-ie9">Hospital DHP ID<span class="vld">*</span></label>
+            <div class="login_input cuswidth80">
+              <input type="text" id="dhp_code" class="form-control placeholder-no-fix" placeholder="e.g. H-10 digit alphabetic code.">
+            </div>
+            <div class="login_input">
+              <span id="hospital_link" class="hospital-dhp-link-span">not having DHP Code?</span>
+            </div>
+          </div>
+
           <div class="form-group_login col-lg-6 col-sm-6">
             <label class="control-label visible-ie8 visible-ie9">First Name<span class="vld">*</span></label>
             <div class="login_input">
@@ -126,7 +161,7 @@
               <button class="btn btn-warning btnwidth" id="Signup" type="button">Next</button>
             </div>
 
-            <div class="login_btn1">  
+            <div class="login_btn1">
             </div>
 
             <div class="col-lg-6 col-sm-6">  
@@ -271,7 +306,7 @@
         </div>
         <div class="col-lg-12 col-sm-12 col-xs-12">
           <div class="login_btn1 mrgrgt">
-            <button id="back_from_subscription_plan" class="btn btn-warning btnwidth" id="Signup" type="button">Back</button>
+            <button id="back_from_subscription_plan" class="btn btn-warning btnwidth" type="button">Back</button>
             <a href="/" id="next_from_subscription_plan" class="btn btn-warning btnwidth" type="button">Next</a>
           </div>
           <div class="login_btn1">  
@@ -318,22 +353,14 @@
             </div>    
           </div>
         </div>
-        <div class="form-group_login col-lg-6 col-sm-6">
-          <div class="row paddleft1">
-            <label class="control-label visible-ie8 visible-ie9">Phone:<span class="vld">*</span></label>
-            <div class="login_input">
-              <input id="first_name" class="form-control placeholder-no-fix" type="text">
-            </div>    
-          </div>
-        </div>
-        <div class="form-group_login col-lg-6 col-sm-6">
+        <!-- <div class="form-group_login col-lg-6 col-sm-6">
           <div class="row paddright1">
             <label class="control-label visible-ie8 visible-ie9">Fax:<span class="vld">*</span></label>
             <div class="login_input">
               <input id="first_name" class="form-control placeholder-no-fix" type="text">
             </div>    
           </div>
-        </div>
+        </div> -->
         <div class="form-group_login col-lg-6 col-sm-6">
           <div class="row paddleft1">
             <label class="control-label visible-ie8 visible-ie9">Street Address:<span class="vld">*</span></label>
@@ -344,17 +371,17 @@
         </div>
         <div class="form-group_login col-lg-6 col-sm-6">
           <div class="row paddright1">
-            <label class="control-label visible-ie8 visible-ie9">Apt./Suit:<span class="vld">*</span></label>
+            <label class="control-label visible-ie8 visible-ie9">Phone:<span class="vld">*</span></label>
             <div class="login_input">
-              <input id="first_name" class="form-control placeholder-no-fix" type="text">
+              <input id="hospital_phone" class="form-control placeholder-no-fix" type="text">
             </div>    
           </div>
         </div>
         <div class="form-group_login col-lg-6 col-sm-6">
           <div class="row paddleft1">
-            <label class="control-label visible-ie8 visible-ie9">City:<span class="vld">*</span></label>
+            <label class="control-label visible-ie8 visible-ie9">Email:<span class="vld">*</span></label>
             <div class="login_input">
-              <input id="first_name" class="form-control placeholder-no-fix" type="text">
+              <input id="hospital_email" class="form-control placeholder-no-fix" type="text">
             </div>    
           </div>
         </div>
@@ -362,14 +389,34 @@
           <div class="row paddright1">
             <label class="control-label visible-ie8 visible-ie9">State:<span class="vld">*</span></label>
             <div class="login_input">
-              <input id="first_name" class="form-control placeholder-no-fix" type="text">
+              <select id="State" class="form-control" type="text">
+                <option  selected="selected" value="Select State">Select State</option>
+              </select>
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddleft1">
+            <label class="control-label visible-ie8 visible-ie9">City:<span class="vld">*</span></label>
+            <div class="login_input">
+              <select id="City" class="form-control" type="text">
+                <option selected="selected" value="Select City">Select City</option>
+              </select>
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddright1">
+            <label class="control-label visible-ie8 visible-ie9">Country<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="Country" class="form-control placeholder-no-fix" value="India" readonly="readonly" type="text">
             </div>    
           </div>
         </div>
         <div class="col-lg-12 col-sm-12 col-xs-12">
           <div class="login_btn1 mrgrgt">
             <a href="/" class="btn btn-warning btnwidth" type="button">Back</a>
-            <button class="btn btn-warning btnwidth" id="Signup" type="button">SignUp</button>
+            <button class="btn btn-warning btnwidth" type="button">SignUp</button>
             
           </div>
         </div>

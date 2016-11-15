@@ -59,7 +59,6 @@ function FSConfiguration() {
 			SECRET_KEY:'sterceSllAfOterceSehT',
 		}
   });
-  console.log(process.env.APP_ENVIRONMENT);
 }
 
 gulp.task('couchpush_db5', function() {
