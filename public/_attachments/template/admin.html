@@ -549,7 +549,7 @@
                   <td class="text-align  subscription_name">{{v.subscription_tag}}</td>
                   <td class="text-align  subscription_amount">{{v.subscription_amount}}</td>
                   <td class="text-align"><span class="subscription_duration_time">{{v.duration_time}}</span><span class="subscription_duration_option">{{v.duration_in}}</span></td>
-                  <td class="text-align">{{v.plan_type}}</td>
+                  <td class="text-align subscription_plan_type">{{v.plan_type}}</td>
                   <td class="text-align"><span class="glyphicon glyphicon-pencil edit_subscription_tag" data-target="#edit_subscription_modal" role="button" class="dropdown-toggle" data-toggle="modal" title="Edit User" index="{{x}}"></span><span class="glyphicon glyphicon-trash delete_subscription_tag" data-target="#delete_subscription_modal" role="button" class="dropdown-toggle" tag="subscription" data-toggle="modal" index="{{x}}" title="Delete User"></span></td>
                 </tr>
                 <tr ng-show="!(subscription_data.length)">

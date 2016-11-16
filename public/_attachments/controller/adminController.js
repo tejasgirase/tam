@@ -2423,6 +2423,7 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
         $("#edit_subscription_amount").val($(this).parent().parent().find("td.subscription_amount").html());
         $("#edit_subscription_duration_option").val($(this).parent().parent().find("span.subscription_duration_option").html());
         $("#edit_subscription_duration_time").val($(this).parent().parent().find("span.subscription_duration_time").html());
+        $("#edit_subscription_plan_type").val($(this).parent().parent().find("td.subscription_plan_type").html());
         $("#save_edit_subscription").attr("index",$(this).attr("index"));
         $("#save_edit_subscription").attr("tag","");
       });
