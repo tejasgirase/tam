@@ -476,7 +476,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
               sub_str.push('<div class="row plan-list">');
                 sub_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
                   sub_str.push('<label>');
-                  sub_str.push('<input class="checkshow plan-list-checkbox" data-sname="'+data.rows[i].value.subscription_tag+'" data-stype="Default" checked="'+(data.rows[i].value.default_val ? data.rows[i].value.default_val : false)+'" type="checkbox">'+data.rows[i].value.subscription_tag);
+                  sub_str.push('<input class="checkshow plan-list-checkbox" data-sname="'+data.rows[i].value.subscription_tag+'" data-stime="'+data.rows[i].value.duration_time+'" data-stime_interval="'+data.rows[i].value.duration_in+'" data-stype="Default" checked="'+(data.rows[i].value.default_val ? data.rows[i].value.default_val : false)+'" type="checkbox">'+data.rows[i].value.subscription_tag);
                   sub_str.push('</label>');
                 sub_str.push('</div>');
               sub_str.push('</div>');
@@ -485,7 +485,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
               add_str.push('<div class="row plan-list">');
                 add_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
                   add_str.push('<label>');
-                  add_str.push('<input class="checkshow plan-list-checkbox" data-sname="'+data.rows[i].value.subscription_tag+'" data-stype="Additional" type="checkbox">'+data.rows[i].value.subscription_tag);
+                  add_str.push('<input class="checkshow plan-list-checkbox" data-stime="'+data.rows[i].value.duration_time+'" data-stime_interval="'+data.rows[i].value.duration_in+'" data-sname="'+data.rows[i].value.subscription_tag+'" data-stype="Additional" type="checkbox">'+data.rows[i].value.subscription_tag);
                   add_str.push('</label>');
                 add_str.push('</div>');
               add_str.push('</div>');
@@ -549,69 +549,81 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
   function signupNewUser(){
     var specialization_value;
-    // if($("#Specialization").val() == "Select Specialization"){
-    //   if($("#new_specialization").val !== ""){
-    //   specialization_value = $("#new_specialization").val();
-    //     $.couch.db(db).view("tamsa/getSpecializationList", {
-    //       success:function(data){
-    //         if(data.rows.length > 0){
-    //           var new_list = data.rows[0].value.specialization;
-    //           if($.inArray(specialization_value, new_list) == -1){
-    //               new_list.push(specialization_value);
-    //             var doc = {
-    //               _id:            data.rows[0].value._id,
-    //               _rev:           data.rows[0].value._rev,
-    //               doctype:        data.rows[0].value.doctype,
-    //               specialization: new_list
-    //             };
-    //             $.couch.db(db).saveDoc(doc,{
-    //               success:function(data){
-    //               },
-    //               error:function(status){
-    //                 console.log(status);
-    //               }
-    //             });
-    //           }else{
-    //             $("#validationtext").text("Specialization name already exist");
-    //             $('html, body').animate({scrollTop: 0}, 'slow');
-    //             $("#new_specialization").focus();
-    //           }    
-    //         }
-    //       },
-    //       error:function(status){
-    //         console.log(status);
-    //       },
-    //       key:"specialization_list",
-    //       include_docs:true 
-    //     });  
-    //   }
-    // }else{
+    if($("#Specialization").val() == "Select Specialization"){
+      if($("#new_specialization").val !== ""){
+      specialization_value = $("#new_specialization").val();
+        $.couch.db(db).view("tamsa/getSpecializationList", {
+          success:function(data){
+            if(data.rows.length > 0){
+              var new_list = data.rows[0].value.specialization;
+              if($.inArray(specialization_value, new_list) == -1){
+                  new_list.push(specialization_value);
+                var doc = {
+                  _id:            data.rows[0].value._id,
+                  _rev:           data.rows[0].value._rev,
+                  doctype:        data.rows[0].value.doctype,
+                  specialization: new_list
+                };
+                $.couch.db(db).saveDoc(doc,{
+                  success:function(data){
+                  },
+                  error:function(status){
+                    console.log(status);
+                  }
+                });
+              }else{
+                $("#validationtext").text("Specialization name already exist");
+                $('html, body').animate({scrollTop: 0}, 'slow');
+                $("#new_specialization").focus();
+              }    
+            }
+          },
+          error:function(status){
+            console.log(status);
+          },
+          key:"specialization_list",
+          include_docs:true 
+        });  
+      }
+    }else{
       specialization_value = $("#Specialization").val();
-    // }
+    }
+    var subscription_plan = [];
+    $(".plan-list-checkbox:checked").each(function() {
+      subscription_plan.push({
+        "subscription_tag": $(this).data("sname"),
+        "subscription_type": $(this).data("stype"),
+        "duration_time": $(this).data("stime"),
+        "duration_in": $(this).data("stime_interval")
+      });
+    });
+    
     var userDoc = {
-      name:                   $("#Email").val(),
-      first_name:             $("#first_name").val(),
-      last_name:              $("#last_name").val(),
-      email:                  $("#Email").val(),
-      alert_email:            $("#Emailalerts").val(),
-      phone:                  $("#Phone").val(),
-      alert_phone:            $("#Phonealerts").val(),
-      specialization:         specialization_value,
-      qualification:          $("#qualification").val(),
-      experience:             $("#experience").val(),
-      city:                   $("#City").val(),
-      state:                  $("#State").val(),
-      country:                $("#Country").val(),
-      dhp_code:               $("#dhp_code").val(),
-      hospital_affiliated:    $("#hospital_name").val(),
-      hospital_type:          $("#hospital_type").val(),
-      hospital_phone:         $("#hospital_phone").val(),
-      hospital_email:         $("#hospital_email").val(),
-      doctors_network:        $('#Network').is(':checked'),
-      critical_alerts_medium: $('#critical_alerts_medium').val(),
-      reports_medium:         $('#reports_medium').val(),
-      random_code:            getPcode(6,"alphabetic"),
-      level:                  "Doctor"
+      name:                      $("#Email").val(),
+      first_name:                $("#first_name").val(),
+      last_name:                 $("#last_name").val(),
+      email:                     $("#Email").val(),
+      alert_email:               $("#Emailalerts").val(),
+      phone:                     $("#Phone").val(),
+      alert_phone:               $("#Phonealerts").val(),
+      specialization:            specialization_value,
+      qualification:             $("#qualification").val(),
+      experience:                $("#experience").val(),
+      city:                      $("#City").val(),
+      state:                     $("#State").val(),
+      country:                   $("#Country").val(),
+      dhp_code:                  $("#dhp_code").val(),
+      hospital_affiliated:       $("#hospital_name").val(),
+      hospital_type:             $("#hospital_type").val(),
+      hospital_phone:            $("#hospital_phone").val(),
+      hospital_email:            $("#hospital_email").val(),
+      doctors_network:           $('#Network').is(':checked'),
+      critical_alerts_medium:    $('#critical_alerts_medium').val(),
+      reports_medium:            $('#reports_medium').val(),
+      random_code:               getPcode(6,"alphabetic"),
+      level:                     "Doctor",
+      subscription_plan_details: subscription_plan,
+      subscription_amount:       $("#subscription_total").text()
     };
     // console.log($("#dhp_code").val());
     $.couch.db(replicated_db).view("tamsa/getDhpHospital",{
