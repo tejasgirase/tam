@@ -35,6 +35,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         return false;
       },
       select: function( event, ui ) {
+        $("#dhp_code").data("htype","HOSPITAL");
         if(ui.item.key[1].substring(0,12) == "Add as a new"){
           $("#hospital_type, #City, #State").removeAttr("disabled");
           $("#hospital_phone, #hospital_email").removeAttr("readonly");
@@ -147,6 +148,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
           $(this).val("");
           $("#hospital_name").removeAttr("readonly").val("");
         }else{
+          $("#dhp_code").data("htype","DHP_CODE");
           $(this).val(ui.item.key[0]);
           $("#hospital_type, #City, #State").removeAttr("disabled");
           $("#hospital_type").val(ui.item.key[2]).attr("disabled","disabled");
@@ -217,7 +219,8 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     });
 
     $("#signup").click(function() {
-      signUp();
+      console.log("called click");
+      generateRequestForsignUp();
       //Actual SignUP
     });
 
@@ -363,54 +366,58 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     // });
   });
 
-  function signUp() {
+  function generateRequestForsignUp() {
     var admin;
     if($("#Email").val() == "dhpadmin@sensoryhealth.com") {
       $("#dhp_code").val("H-0000000000");
+      signupNewUser();
     }else {
-    }
-    if($("#dhp_display").css("display") == "none") {
-      $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-        success: function(data) {
-          $("#hospital_name").removeClass('myloader');
-          if(data.rows.length > 0){
-            $("#dhp_code").val(data.rows[0].key[2]);  
-          }else{
-            $("#dhp_code").val("H-"+getPcode(10,"alphabetic"));
-          }  
-          signupNewUser();
-        },
-        error: function(status) {
-          console.log(status);
-        },
-        startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
-        endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{}],
-        limit: 5,
-        reduce:true,
-        group:true
-      });      
-    }else {
-      $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-        success: function(data) {
-          if(data.rows.length > 0){
-            $("#dhp_code").removeClass('myloader');
+      console.log("in 1");
+      if($("#dhp_code").data("htype") === "HOSPITAL") {
+        $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+          success: function(data) {
+            $("#hospital_name").removeClass('myloader');
+            if(data.rows.length > 0){
+              $("#dhp_code").val(data.rows[0].key[2]);  
+            }else{
+              $("#dhp_code").val("H-"+getPcode(10,"alphabetic"));
+            }  
             signupNewUser();
-          }else{
-            $("#validationtext").text("Invalid DHP Code...!!!");
-            $('html, body').animate({scrollTop: 0}, 'slow');
-            return;
-          }
-          
-        },
-        error: function(status) {
-          console.log(status);
-        },
-        startkey: [$("#dhp_code").val()],
-        endkey: [$("#dhp_code").val(),{},{},{},{},{}],
-        limit: 5,
-        reduce:true,
-        group:true
-      });
+          },
+          error: function(status) {
+            console.log(status);
+          },
+          startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
+          endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{}],
+          limit: 5,
+          reduce:true,
+          group:true
+        });      
+      }else if($("#dhp_code").data("htype") === "DHP_CODE") {
+        $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+          success: function(data) {
+            if(data.rows.length > 0){
+              $("#dhp_code").removeClass('myloader');
+              signupNewUser();
+            }else{
+              $("#validationtext").text("Invalid DHP Code...!!!");
+              $('html, body').animate({scrollTop: 0}, 'slow');
+              return;
+            }
+            
+          },
+          error: function(status) {
+            console.log(status);
+          },
+          startkey: [$("#dhp_code").val()],
+          endkey: [$("#dhp_code").val(),{},{},{},{},{}],
+          limit: 5,
+          reduce:true,
+          group:true
+        });
+      }else {
+        console.log("Neither Hospital name nor DHP Code is provided.");
+      }
     }
   }
 
@@ -542,45 +549,45 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
   function signupNewUser(){
     var specialization_value;
-    if($("#Specialization").val() == "Select Specialization"){
-      if($("#new_specialization").val !== ""){
-      specialization_value = $("#new_specialization").val();
-        $.couch.db(db).view("tamsa/getSpecializationList", {
-          success:function(data){
-            if(data.rows.length > 0){
-              var new_list = data.rows[0].value.specialization;
-              if($.inArray(specialization_value, new_list) == -1){
-                  new_list.push(specialization_value);
-                var doc = {
-                  _id:            data.rows[0].value._id,
-                  _rev:           data.rows[0].value._rev,
-                  doctype:        data.rows[0].value.doctype,
-                  specialization: new_list
-                };
-                $.couch.db(db).saveDoc(doc,{
-                  success:function(data){
-                  },
-                  error:function(status){
-                    console.log(status);
-                  }
-                });
-              }else{
-                $("#validationtext").text("Specialization name already exist");
-                $('html, body').animate({scrollTop: 0}, 'slow');
-                $("#new_specialization").focus();
-              }    
-            }
-          },
-          error:function(status){
-            console.log(status);
-          },
-          key:"specialization_list",
-          include_docs:true 
-        });  
-      }
-    }else{
+    // if($("#Specialization").val() == "Select Specialization"){
+    //   if($("#new_specialization").val !== ""){
+    //   specialization_value = $("#new_specialization").val();
+    //     $.couch.db(db).view("tamsa/getSpecializationList", {
+    //       success:function(data){
+    //         if(data.rows.length > 0){
+    //           var new_list = data.rows[0].value.specialization;
+    //           if($.inArray(specialization_value, new_list) == -1){
+    //               new_list.push(specialization_value);
+    //             var doc = {
+    //               _id:            data.rows[0].value._id,
+    //               _rev:           data.rows[0].value._rev,
+    //               doctype:        data.rows[0].value.doctype,
+    //               specialization: new_list
+    //             };
+    //             $.couch.db(db).saveDoc(doc,{
+    //               success:function(data){
+    //               },
+    //               error:function(status){
+    //                 console.log(status);
+    //               }
+    //             });
+    //           }else{
+    //             $("#validationtext").text("Specialization name already exist");
+    //             $('html, body').animate({scrollTop: 0}, 'slow');
+    //             $("#new_specialization").focus();
+    //           }    
+    //         }
+    //       },
+    //       error:function(status){
+    //         console.log(status);
+    //       },
+    //       key:"specialization_list",
+    //       include_docs:true 
+    //     });  
+    //   }
+    // }else{
       specialization_value = $("#Specialization").val();
-    }
+    // }
     var userDoc = {
       name:                   $("#Email").val(),
       first_name:             $("#first_name").val(),
@@ -590,7 +597,6 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       phone:                  $("#Phone").val(),
       alert_phone:            $("#Phonealerts").val(),
       specialization:         specialization_value,
-      document_added_from:    "test",
       qualification:          $("#qualification").val(),
       experience:             $("#experience").val(),
       city:                   $("#City").val(),
@@ -604,8 +610,10 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       doctors_network:        $('#Network').is(':checked'),
       critical_alerts_medium: $('#critical_alerts_medium').val(),
       reports_medium:         $('#reports_medium').val(),
-      random_code:            getPcode(6,"alphabetic")
+      random_code:            getPcode(6,"alphabetic"),
+      level:                  "Doctor"
     };
+    // console.log($("#dhp_code").val());
     $.couch.db(replicated_db).view("tamsa/getDhpHospital",{
       success:function(data){
         if(data.rows.length > 0){
@@ -613,12 +621,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         }else{
           userDoc.admin = "Yes";
         }
-
         userDoc.password       = $("#Password").val();
-        userDoc.doctype        = "cronRecords";
-        userDoc.operation_case = "21";
-        userDoc.processed      = 'No';
-
         // $.couch.signup(userDoc, $("#Password").val(), {
         //   success: function(data) {
         //     $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
@@ -652,6 +655,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
                 },
                 error: function(data, error, reason) {
                   if(data == 500){
+                    console.log(userDoc);
                     $.couch.signup(userDoc,$("#Password").val(), {
                       success: function(data) {
                         $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
