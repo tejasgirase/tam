@@ -1,52 +1,55 @@
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Sensory Health System</title>
-<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
-<link rel="icon" href="images/favi_icon.png" />
-<link href="css/jquery.multiselect.filter.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-migrate-1.0.0.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src='js/jquery-ui-1.10.2.custom.min.js'></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script src="js/jquery.multiselect.min.js" type="text/javascript"></script>
-<script src="js/jquery.multiselect.filter.js"></script>
-<script type="text/javascript" src="js/json2.js"></script>
-<script type="text/javascript" src="js/sha1.js"></script>
-<script type="text/javascript" src="js/jquery.couch.js"></script>
-<script type="text/javascript" src="js/jquery.dialog.js"></script>
-<script type="text/javascript" src="js/jquery.cookie.js"></script> -->
-<!-- </head> -->
 <div class="login_bg">
 <div id = "boomr_div" style = "display:none;"></div>
-<!-- <noscript>
-  <div class="jumbotron">
-    <h3 class = "theme-color">Javascript is Disabled</h3>
-    <p>For full functionality of this site it is necessary to enable JavaScript.
- Here are the <a href="//www.enable-javascript.com/" target="_blank" class = "noscript-msg">
- instructions how to enable JavaScript in your web browser</a>.</p>
-  </div>
- <style type="text/css">
-    .login_main, #footer_login { display:none; }
-    .ui-multiselect-menu, .ui-widget, .ui-widget-content, .ui-corner-all{ width: 310px !important}
-    .ui-multiselect, .ui-widget, .ui-state-default, .ui-corner-all { width: 310px !important}
-  </style>
-</noscript> -->
   <div class="login_main">
     <div class="logo"><img src="images/login_logo.png" alt="logo" /></div>
-    <div class="login_in">
-      <h2>Signup Form for Doctors</h2>
+    <div class="login_in" style="margin-top: 15px; padding-top: 15px;">
+      <h2 style="padding-bottom: 0px; padding-left: 10px; padding-right: 10px;">Signup Form for Doctors</h2>
       <h5 align="center" class="text-danger" id="validationtext"></h5>
-      <form>
-        <div class="col-lg-12 col-sm-12">
-          <div class="tab-heading-section">User Details</div>
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div id="signup_account_info_link" class="col-md-2 signup-CategText signup-inner-tab-left CategTextActive" style="border-bottom-left-radius:none !important">Account Info</div>
+        <div id="signup_agreement_link" class="col-md-1 signup-CategText signup-inner-tab-mid">Agreement</div>
+        <div id="signup_subscription_plan_link" class="col-md-2 signup-CategText signup-inner-tab-mid">Subscription Plan</div>
+        <!-- <div id="signup_billing_info_link" class="col-md-2 CategText inner-tab-mid">Billing Info</div> -->
+        <div id="signup_practice_info_link" class="col-md-2 signup-CategText signup-inner-tab-right" style="border-bottom-right-radius:none !important">Practice Info</div>
+      </div>
+
+      <div class="col-lg-12 col-sm-12 col-xs-12" id="signup_account_info_tab">
+        <div class="tab-heading-section signup_content_header">Account Details</div>
+        <div class="col-lg-12 signup_content_parent accinfo_height">
+          
+          <div class="dhp-link-parent form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Hospital Type</label>
+            <div class="login_input">
+              <select type="text" id="hospital_type" class="form-control placeholder-no-fix sltpdt">
+                <option>Hospital</option>
+                <option>Clinic</option>
+                <option>Center</option>
+              </select>
+            </div>
+          </div>
+          <div class="dhp-link-parent form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Hospital Name<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="hospital_name" class="form-control placeholder-no-fix" placeholder="Search Hospital DhpCode or hospital name">
+            </div>
+          </div>
+
+          <div class="dhp-link-parent form-group_login col-lg-12 col-sm-12" id="dhp_link_parent" style="margin-top: 0px;">
+            <!-- <div class="login_input pull-right">
+              <span id="dhp_link" class="hospital-dhp-link-span">having DHP Code ?</span>
+            </div> -->
+          </div>
+
+          <div class="hospital-link-parent form-group_login col-lg-12 col-sm-12 no-display">
+            <label class="control-label visible-ie8 visible-ie9">Hospital DHP ID<span class="vld">*</span></label>
+            <div class="login_input cuswidth80">
+              <input type="text" id="dhp_code" class="form-control placeholder-no-fix" placeholder="e.g. H-10 digit alphabetic code.">
+            </div>
+            <div class="login_input">
+              <span id="hospital_link" class="hospital-dhp-link-span">not having DHP Code?</span>
+            </div>
+          </div>
+
           <div class="form-group_login col-lg-6 col-sm-6">
             <label class="control-label visible-ie8 visible-ie9">First Name<span class="vld">*</span></label>
             <div class="login_input">
@@ -98,9 +101,9 @@
 
           <div class="form-group_login col-lg-6 col-sm-6">
             <label class="control-label visible-ie8 visible-ie9">Specialization<span class="vld">*</span><small style="font-size:10px;float:right"><span id = "toggle_click" class ="theme-color pointer" style="
-            ">Click here </span><span id="click_toggle_label">add new</span></small></label>
+            ">Click here </span><span id="click_toggle_label">to add new specialization</span></small></label>
             <div class="login_input">
-              <select id="Specialization"  class="form-control placeholder-no-fix" style="width:308px !important;"></select>
+              <select id="Specialization"  class="form-control placeholder-no-fix"></select>
               <input type="text" style="display:none;" class="form-control placeholder-no-fix" id="new_specialization">
             </div>
           </div>
@@ -145,119 +148,343 @@
               </select>
             </div>
           </div>
+
+          <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="checkbox">
+              <label>
+                <input class="checkshow" type="checkbox" id="Network" checked="true">
+                Join SHS doctors network</label>
+            </div>
+
+            <div class="login_btn1 mrgrgt">
+              <button class="btn btn-warning btnwidth" id="next_from_account_info" type="button">Next</button>
+            </div>
+
+            <div class="login_btn1">
+            </div>
+
+            <div class="col-lg-6 col-sm-6">  
+            </div>
+          </div>            
         </div>
+      </div>
 
-        <div class="col-lg-12 col-sm-12">
-          <div class="tab-heading-section">Hospital Details</div>
-
-          <div class="form-group_login col-lg-12 col-sm-12" id="dhp_link_parent" style="display:none">
-            <div class="login_input">
-              <span id="dhp_link" class="hospital-dhp-link-span">having DHP Code ?</span>
-            </div>
+      <div class="col-lg-12 col-sm-12 col-xs-12 no-display" id="signup_agreement_tab">
+        <div class="tab-heading-section signup_content_header">Agreement Plan</div>
+        <div class="form-group_login col-lg-12 col-sm-12 signup_content_parent aggr_height" style="overflow:auto;">
+          <div class="trems">
+            <p>
+              <strong>TERMS AND CONDITIONS</strong><br>
+              PLEASE READ THESE TERMS AND CONDITIONS OF USE CAREFULLY BEFORE USING THIS SITE.
+            </p>
+            <p>
+              By using this site, you signify your assent to these Terms and Conditions. If you do not agree to all of these Terms and Conditions of use, do not use this site!<br>
+              Sensory Health Systems Inc. may revise and update these Terms and Conditions at any time. Your continued usage of the Sensory Health Systems Inc. website (“the Site”) will mean you accept those changes.
+            </p>
+            <p>
+              <strong>The Site Does Not Provide Medical Advice</strong><br>
+              The contents of the Site, such as text, graphics, images, information and other material contained on the Site (“Content”) are for informational purposes only. The Content is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.<br>
+              If you think you may have a medical emergency, call your doctor or 911 or your local emergency number immediately. Reliance on any information provided by Sensory Health Systems Inc. and its products is solely at your own risk.
+            </p>
+            <p>
+              <strong>Children’s Privacy</strong><br>
+              We are committed to protecting the privacy of children. You should be aware that this Site is not intended or designed to attract children under the age of 13.
+            </p>
+            <p>
+              <strong>Use of Content</strong><br>
+              Sensory Health Systems Inc. authorizes you to view the material on the Site solely for your personal, non-commercial use. Any special rules for the use of certain software and other items accessible on the Site may be included elsewhere within the Site and are incorporated into these Terms and Conditions by reference. The Content is protected by intellectual property rights, including but not limited to patent, trademark, trade secret and copyright under both United States and foreign laws. Title to the Content remains with Sensory Health Systems Inc. or its licensors. Any use of the Content not expressly permitted by these Terms and Conditions is a breach of these Terms and Conditions and may violate patent. copyright, trademark, and other laws. Content and features are subject to change or termination without notice in the editorial discretion of Sensory Health Systems Inc.. All rights not expressly granted herein are reserved to Sensory Health Systems Inc. and its licensors.<br>
+              If you violate any of these Terms and Conditions, your permission to use the Content automatically terminates
+            </p>
+            <p>
+              <strong>Liability of Sensory Health Systems Inc. and Its Licensors</strong><br>
+              The use of the Site and the Content is at your own risk.<br>
+              Accordingly, Sensory Health Systems Inc. assumes no liability for or relating to the delay, failure, interruption, or corruption of any data or other information transmitted in connection with use of the Site.
+            </p>
+            <p>
+              The Site and the content are provided on an “as is” basis. Sensory Health Systems Inc. ITS LICENSORS, AND ITS SUPPLIERS, TO THE FULLEST EXTENT PERMITTED BY LAW, DISCLAIM ALL WARRANTIES, EITHER EXPRESS OR IMPLIED, STATUTORY OR OTHERWISE, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT OF THIRD PARTIES’ RIGHTS, AND FITNESS FOR PARTICULAR PURPOSE. Without limiting the foregoing, Sensory Health Systems Inc., its licensors, and its suppliers make no representations or warranties about the following:
+            </p>
+            <p>
+              1.1 The accuracy, reliability, completeness, or timeliness of the Content, software, text, graphics, links, or communications provided on or through the use of the Site or Sensory Health Systems Inc..
+            </p>
+            <p>
+              2.2 In no event shall Sensory Health Systems Inc., its licensors, its suppliers, or any third parties mentioned on the Site be liable for any damages (including, without limitation, incidental and consequential damages, personal injury/wrongful death, lost profits, or damages resulting from lost data or business interruption) resulting from the use of or inability to use the Site or the Content, whether based on warranty, contract, tort, or any other legal theory, and whether or not Sensory Health Systems Inc., its licensors, its suppliers, or any third parties mentioned on the Site are advised of the possibility of such damages. Sensory Health Systems Inc., its licensors, its suppliers, or any third parties mentioned on the Site are not liable for any personal injury, including death, caused by your use or misuse of the Site or Content use of the Site, Remedies under these Terms and Conditions are exclusive and are limited to those expressly provided for in these Terms and Conditions.
+            </p>
+            <p>
+              <strong>Indemnity</strong><br>
+              You agree to defend, indemnify, and hold Sensory Health Systems Inc., its officers, directors, employees, agents, licensors, and suppliers, harmless from and against any claims, actions or demands, liabilities and settlements including without limitation, reasonable legal and accounting fees, resulting from, or alleged to result from, your violation of these Terms and Conditions.
+            </p>
+            <p>
+              <strong>General</strong><br>
+              Sensory Health Systems Inc. is based in Santa Clara, California in the United States of America with principal offices in Santa Clara,US and Hyderabad,India.<br>
+              The following provisions survive the expiration or termination of this Agreement for any reason whatsoever: Liability, Indemnity, Jurisdiction, and Complete Agreement.
+            </p>
+            <p>
+              <strong>Jurisdiction</strong><br>
+              You expressly agree that exclusive jurisdiction for any dispute with Sensory Health Systems Inc., or in any way relating to your use of the Site, resides in the courts of the State of California and you further agree and expressly consent to the exercise of personal jurisdiction in the courts of the State of California in connection with any such dispute including any claim involving Sensory Health Systems Inc. or its affiliates, subsidiaries, employees, contractors, officers, directors, and content providers.<br>
+              These Terms and Conditions are governed by the internal substantive laws of the State of California, without respect to its conflict of laws principles. If any provision of these Terms and Conditions is found to be invalid by any court having competent jurisdiction, the invalidity of such provision shall not affect the validity of the remaining provisions of these Terms and Conditions, which shall remain in full force and effect. No waiver of any of these Terms and Conditions shall be deemed a further or continuing waiver of such term or condition or any other term or condition.
+            </p>
+            <p>
+              <strong>Complete Agreement</strong><br>
+              Except as expressly provided in a particular “legal notice” on the Site, these Terms and Conditions constitute the entire agreement between you and Sensory Health Systems Inc. with respect to the use of the Site and Content.
+            </p>
           </div>
-
-          <div class="form-group_login col-lg-8 col-sm-8" id="dhp_display">
-            <label class="control-label visible-ie8 visible-ie9">DHP Code</label>
-            <div class="login_input">
-              <input type="text" id="dhp_code" class="form-control placeholder-no-fix" placeholder="e.g. H-10 digit alphabetic code.">
-            </div>
-          </div>
-
-          <div class="form-group_login col-lg-4 col-sm-4 hospital-dhp-link-parent" id="hospital_link_parent">
-            <div class="login_input">
-              <span id="hospital_link" class="hospital-dhp-link-span">not having DHP Code ?</span>
-            </div>
-          </div>
-          
-          <div id = "hospital_display">
-
-            <div class="form-group_login col-lg-6 col-sm-6">
-              <label class="control-label visible-ie8 visible-ie9">Hospital Type</label>
-              <div class="login_input">
-                <select type="text" id="hospital_type" class="form-control placeholder-no-fix sltpdt">
-                  <option>Hospital</option>
-                  <option>Clinic</option>
-                  <option>Center</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
-              <label class="control-label visible-ie8 visible-ie9">Hospital Name</label>
-              <div class="login_input">
-                <input type="text" id="hospital_name" class="form-control placeholder-no-fix">
-              </div>
-            </div>
-
-            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
-              <label class="control-label visible-ie8 visible-ie9">Country<span class="vld">*</span></label>
-              <div class="login_input">
-                <input type="text" id="Country" value="India" readonly="readonly" class="form-control placeholder-no-fix">
-              </div>
-            </div>
-
-            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
-              <label class="control-label visible-ie8 visible-ie9">State<span class="vld">*</span></label>
-              <div class="login_input">
-                <!-- <input type="text" id="State" class="form-control placeholder-no-fix"> -->
-                <select id="State" class="form-control placeholder-no-fix">
-                  <option  selected="selected" value="Select State">Select State</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
-              <label class="control-label visible-ie8 visible-ie9">City<span class="vld">*</span></label>
-              <div class="login_input">
-                <!-- <input type="text" id="City" class="form-control placeholder-no-fix"> -->
-                <select id="City" class="form-control placeholder-no-fix">
-                  <option selected="selected" value="Select City">Select City</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
-              <label class="control-label visible-ie8 visible-ie9">Phone<span class="vld"></span></label>
-              <div class="login_input">
-                <input type="text" id="hospital_phone" class="form-control placeholder-no-fix">
-              </div>
-            </div>
-
-            <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
-              <label class="control-label visible-ie8 visible-ie9">Email<span class="vld"></span></label>
-              <div class="login_input">
-                <input type="text" id="hospital_email" class="form-control placeholder-no-fix">
-              </div>
-            </div>
-
-          </div> 
         </div>
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+          <div class="checkbox">
+            <label>
+              <input class="checkshow" type="checkbox" id="agreement_flag">
+              I have read and agree to the Terms</label>
+          </div>
+          <div class="login_btn1 mrgrgt">
+            <button class="btn btn-warning btnwidth" id="back_from_agreement_plan" type="button">Back</button>
+            <a id="next_from_agreement_plan" class="btn btn-warning btnwidth" type="button" disabled="disabled">Next</a>
+          </div>
+        </div>
+      </div>
 
-        <div class="col-lg-12 col-sm-12">
+      <div class="col-lg-12 col-sm-12 col-xs-12 no-display" id="signup_subscription_plan_tab">
+        <div class="tab-heading-section signup_content_header">Select your Subscription Plan</div>
+        <div class="col-lg-12 signup_content_parent subscr_height">
+          <div class="form-group_login col-lg-5 col-sm-6 paddside cuswidth45" id="subscription_plan_list_parent" style="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15); margin-right: 39px;">
+            <div class="row">
+              <div class="col-lg-12 col-sm-12">
+                <h4 style="text-align:center; background-color: rgb(146, 180, 133); color: white; border-top-right-radius: 5px; border-top-left-radius: 5px; padding: 5px; margin: 0px;">DHP Subscription Package</h4>
+              </div>            
+            </div>
+            <div class="row plan-list">
+              <div class="col-lg-12 col-sm-12 paddside30">
+                <label>
+                <input class="checkshow" id="" checked="true" type="checkbox">
+                Cloud based PMS
+                </label>
+              </div>            
+            </div>
+          </div>
+          <div class="form-group_login col-lg-5 col-sm-6 paddside  cuswidth45" id="additional_plan_list_parent" style="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);">
+            <div class="row">
+              <div class="col-lg-12 col-sm-12">
+                <h4 style="text-align:center;background-color: rgb(146, 180, 133); color: white; border-top-right-radius: 5px; border-top-left-radius: 5px; padding: 5px; margin: 0px;">Additional Package</h4>
+              </div>            
+            </div>
+            <div class="row plan-list">
+              <div class="col-lg-12 col-sm-12 paddside30">
+                <label>
+                <input class="checkshow" id="" checked="true" type="checkbox">
+                Cloud based PMS
+                </label>
+              </div>            
+            </div>
+          </div>
+          <div class="col-lg-12 mrgtop1">
+            <div class="pull-right">
+              <label class="text-success theme-bold">
+                Total Price:: <span class="text-danger">&#8377;&nbsp;<span id="subscription_total" class="text-danger">0</span> /Site</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+          <div class="login_btn1 mrgrgt">
+            <button id="back_from_subscription_plan" class="btn btn-warning btnwidth" type="button">Back</button>
+            <a id="next_from_subscription_plan" class="btn btn-warning btnwidth" type="button">Next</a>
+          </div>
+          <div class="login_btn1">  
+          </div>
+          <div class="col-lg-6 col-sm-6">  
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-12 col-sm-12 col-xs-12 no-display" id ="signup_billing_info_tab">
+        <div class="tab-heading-section">Billing Information</div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <label class="control-label visible-ie8 visible-ie9">First Name<span class="vld">*</span></label>
+          <div class="login_input">
+            <input type="text" id="first_name" class="form-control placeholder-no-fix">
+          </div>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-xs-12">
           <div class="checkbox">
             <label>
               <input class="checkshow" type="checkbox" id="Network" checked="true">
               Join SHS doctors network</label>
           </div>
-
           <div class="login_btn1 mrgrgt">
             <button class="btn btn-warning btnwidth" id="Signup" type="button">Sign Up</button>
             <a href="/" class="btn btn-warning btnwidth" type="button">Cancel</a>
           </div>
-
           <div class="login_btn1">  
           </div>
-
           <div class="col-lg-6 col-sm-6">  
           </div>
         </div>
-      </form>
+      </div> -->
+
+      <div class="col-lg-12 col-sm-12 col-xs-12 no-display" id="signup_practice_info_tab">
+        <div class="tab-heading-section signup_content_header">Practice Information</div>
+        <div class="col-lg-12 signup_content_parent prac_height">
+        
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddright1">
+            <label class="control-label visible-ie8 visible-ie9">Location Name:<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="first_name" class="form-control placeholder-no-fix" type="text">
+            </div>    
+          </div>
+        </div>
+        <!-- <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddright1">
+            <label class="control-label visible-ie8 visible-ie9">Fax:<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="first_name" class="form-control placeholder-no-fix" type="text">
+            </div>    
+          </div>
+        </div> -->
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddleft1">
+            <label class="control-label visible-ie8 visible-ie9">Street Address:<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="first_name" class="form-control placeholder-no-fix" type="text">
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddright1">
+            <label class="control-label visible-ie8 visible-ie9">Phone:<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="hospital_phone" class="form-control placeholder-no-fix" type="text">
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddleft1">
+            <label class="control-label visible-ie8 visible-ie9">Email:<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="hospital_email" class="form-control placeholder-no-fix" type="text">
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddright1">
+            <label class="control-label visible-ie8 visible-ie9">State:<span class="vld">*</span></label>
+            <div class="login_input">
+              <select id="State" class="form-control" type="text">
+                <option  selected="selected" value="Select State">Select State</option>
+              </select>
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddleft1">
+            <label class="control-label visible-ie8 visible-ie9">City:<span class="vld">*</span></label>
+            <div class="login_input">
+              <select id="City" class="form-control" type="text">
+                <option selected="selected" value="Select City">Select City</option>
+              </select>
+            </div>    
+          </div>
+        </div>
+        <div class="form-group_login col-lg-6 col-sm-6">
+          <div class="row paddright1">
+            <label class="control-label visible-ie8 visible-ie9">Country<span class="vld">*</span></label>
+            <div class="login_input">
+              <input id="Country" class="form-control placeholder-no-fix" value="India" readonly="readonly" type="text">
+            </div>    
+          </div>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+          <div class="login_btn1 mrgrgt">
+            <button class="btn btn-warning btnwidth" id="back_from_practice_info" type="button">Back</button>
+            <button class="btn btn-warning btnwidth" id="signup" type="button">SignUp</button>
+            
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-
-
-<!-- End code insertion by Kiran  -->
-
 </div>
 
 
+<!--       <div class="col-lg-12 col-sm-12 col-xs-12" id ="signup_account_info_tab">
+        <div class="tab-heading-section">Hospital Details</div>
+
+        <div class="form-group_login col-lg-12 col-sm-12" id="dhp_link_parent" style="display:none">
+          <div class="login_input">
+            <span id="dhp_link" class="hospital-dhp-link-span">having DHP Code ?</span>
+          </div>
+        </div>
+
+        <div class="form-group_login col-lg-8 col-sm-8" id="dhp_display">
+          <label class="control-label visible-ie8 visible-ie9">DHP Code</label>
+          <div class="login_input">
+            <input type="text" id="dhp_code" class="form-control placeholder-no-fix" placeholder="e.g. H-10 digit alphabetic code.">
+          </div>
+        </div>
+
+        <div class="form-group_login col-lg-4 col-sm-4 hospital-dhp-link-parent" id="hospital_link_parent">
+          <div class="login_input">
+            <span id="hospital_link" class="hospital-dhp-link-span">not having DHP Code ?</span>
+          </div>
+        </div>
+        
+        <div id = "hospital_display">
+          <div class="form-group_login col-lg-6 col-sm-6">
+            <label class="control-label visible-ie8 visible-ie9">Hospital Type</label>
+            <div class="login_input">
+              <select type="text" id="hospital_type" class="form-control placeholder-no-fix sltpdt">
+                <option>Hospital</option>
+                <option>Clinic</option>
+                <option>Center</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+            <label class="control-label visible-ie8 visible-ie9">Hospital Name</label>
+            <div class="login_input">
+              <input type="text" id="hospital_name" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+            <label class="control-label visible-ie8 visible-ie9">Country<span class="vld">*</span></label>
+            <div class="login_input">
+              <input type="text" id="Country" value="India" readonly="readonly" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+            <label class="control-label visible-ie8 visible-ie9">State<span class="vld">*</span></label>
+            <div class="login_input">
+              <select id="State" class="form-control placeholder-no-fix">
+                <option  selected="selected" value="Select State">Select State</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+            <label class="control-label visible-ie8 visible-ie9">City<span class="vld">*</span></label>
+            <div class="login_input">
+              <select id="City" class="form-control placeholder-no-fix">
+                <option selected="selected" value="Select City">Select City</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+            <label class="control-label visible-ie8 visible-ie9">Phone<span class="vld"></span></label>
+            <div class="login_input">
+              <input type="text" id="hospital_phone" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+
+          <div class="form-group_login col-lg-6 col-sm-6 hospital-name-signup">
+            <label class="control-label visible-ie8 visible-ie9">Email<span class="vld"></span></label>
+            <div class="login_input">
+              <input type="text" id="hospital_email" class="form-control placeholder-no-fix">
+            </div>
+          </div>
+        </div> 
+      </div>
+ -->
