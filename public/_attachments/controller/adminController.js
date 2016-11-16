@@ -2601,7 +2601,8 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
                   subscription_tag : tagname,
                   subscription_amount : amount,
                   duration_time : duration_time,
-                  duration_in : duration_in
+                  duration_in : duration_in,
+                  subscription_id:"SP-"+getPcode(5,"numeric")
                   });
                 saveNewPlansDocsSubscription(data);
                 $("#edit_subscription_modal").modal("hide");
@@ -2612,7 +2613,8 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
                 subscription_tag : tagname,
                 subscription_amount : amount,
                 duration_time : duration_time,
-                duration_in : duration_in
+                duration_in : duration_in,
+                subscription_id:"SP-"+getPcode(5,"numeric")
               }
               data.subscription_plans = doc;
               saveNewPlansDocsSubscription(data);
@@ -2634,7 +2636,8 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
             subscription_tag : tagname,
             subscription_amount : amount,
             duration_time : duration_time,
-            duration_in : duration_in
+            duration_in : duration_in,
+            subscription_id:"SP-"+getPcode(5,"numeric")
             }]
         };
         $("#edit_subscription_modal").modal("hide");
