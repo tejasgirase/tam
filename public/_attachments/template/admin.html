@@ -536,17 +536,20 @@
             <table class="table tbl-border" id="admin_subscription_list">
               <thead>
                 <tr>
-                  <th class="text-align" width="30%">Subscription Tag</th>
-                  <th class="text-align" width="30%">Price</th>
-                  <th class="text-align" width="30%">Duration</th>
-                  <th class="text-align" width="30%"></th>
+                  <th class="text-align" width="20%">Subscription Tag</th>
+                  <th class="text-align" width="20%">Price</th>
+                  <th class="text-align" width="20%">Duration</th>
+                  <th class="text-align" width="20%">Plan Type</th>
+                  <th class="text-align" width="20%"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate = "(x,v) in subscription_data | itemsPerPage: 5" ng-show="(subscription_data.length)">
+              <!-- ng-class="{'success' : v.plan_type == 'Default','info' : v.plan_type == 'Additional',}" -->
+                <tr dir-paginate = "(x,v) in subscription_data | orderBy:'-plan_type' | itemsPerPage: 5"  ng-show="(subscription_data.length)" >
                   <td class="text-align  subscription_name">{{v.subscription_tag}}</td>
                   <td class="text-align  subscription_amount">{{v.subscription_amount}}</td>
                   <td class="text-align"><span class="subscription_duration_time">{{v.duration_time}}</span><span class="subscription_duration_option">{{v.duration_in}}</span></td>
+                  <td class="text-align">{{v.plan_type}}</td>
                   <td class="text-align"><span class="glyphicon glyphicon-pencil edit_subscription_tag" data-target="#edit_subscription_modal" role="button" class="dropdown-toggle" data-toggle="modal" title="Edit User" index="{{x}}"></span><span class="glyphicon glyphicon-trash delete_subscription_tag" data-target="#delete_subscription_modal" role="button" class="dropdown-toggle" tag="subscription" data-toggle="modal" index="{{x}}" title="Delete User"></span></td>
                 </tr>
                 <tr ng-show="!(subscription_data.length)">
@@ -559,7 +562,7 @@
             </div>
           </div>
         </div>
-        <div class="mrgtop15">
+        <!-- <div class="mrgtop15">
           <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
             <span class="glyphicon glyphicon-th-list"></span>
             <span id="settingmain_title">Additional Plan Tags</span>
@@ -591,7 +594,7 @@
               <dir-pagination-controls></dir-pagination-controls>
             </div>
           </div>
-        </div>
+        </div> -->
         </div>
       </div> 
     </div>
@@ -650,6 +653,12 @@
                 <select id="edit_subscription_duration_option" class="form-control"><option>Month</option><option>Year</option></select>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Duration</label>
+              <div class="col-sm-4">
+                <select id="edit_subscription_plan_type" class="form-control"><option>Default</option><option>Additional</option></select>
+              </div>
+            </div>
           </form>
           <!-- *It will take some time to process account creation. -->
         </div>
@@ -659,7 +668,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="edit_additional_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="edit_additional_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -691,14 +700,14 @@
               </div>
             </div>
           </form>
-          <!-- *It will take some time to process account creation. -->
+           *It will take some time to process account creation.
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-warning" id="save_edit_additional" index="" rev="">Save</button>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="modal fade" id="delete_subscription_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
