@@ -122,8 +122,8 @@ ul.footerlink li + li:before { padding: 0 10px; color: #979797; content: "|\00a0
 /*login*/
 
 .logo { text-align: center; }
-.login_main { margin: 0 auto; width: 714px; }
-.login_in { border: #c5c5c5 solid 1px; display: inline-block; width: 104%; background: #fff; border-radius: 6px; margin: 35px 0 35px 0; padding: 2%; }
+.login_main { margin: 0 auto; width: 90%; }
+.login_in { border: #c5c5c5 solid 1px; display: inline-block; background: #fff; border-radius: 6px; margin: 35px 0 35px 0; padding: 2%; }
 .login_in h2 { border-bottom: #999 dashed 2px; text-align: center; font-size: 30px; font-family: 'open_sanssemibold'; text-transform: uppercase; background: #fff; padding: 0 2% 2% 2%; margin-top: 0px; color: #eb8613; }
 .login_check { float: left; }
 .login_check label { padding-left: 0px; font-weight: normal; margin-right: 5px; }
@@ -153,6 +153,7 @@ ul.footerlink li + li:before { padding: 0 10px; color: #979797; content: "|\00a0
 .paddtop8 {padding-top: 8px;}
 .paddtopbottom6 {padding-top: 6px; padding-bottom: 6px;}
 .paddside5{padding-left: 5px;padding-right: 5px;}
+.paddside30 {padding-left: 30px;padding-right: 30px;}
 .paddtop15{padding-top: 15px;}
 .paddleft{padding-left:0px;}
 .paddleft1{padding-left:10px;}
@@ -366,7 +367,6 @@ ul.footerlink { text-align: center; padding-bottom: 10px; }
 .my_account_arrow { display: none; }
 .main_div1 { width: auto !important; overflow: inherit; }
 .main_div_in1 { width: auto !important; }
-.login_main { width: 100%; }
 #footer { position: relative; }
 }
  @media (max-width: 320px) {
@@ -2102,6 +2102,7 @@ table.invoice-display-table th{background:#fff !important;}
 .cuswidth40{width: 40px !important;}
 .cuswidth80{width: 80% !important;}
 .cuswidth25{width: 25% !important;}
+.cuswidth45{width: 45% !important;}
 .disinline{display:inline;}
 .today-schedule{margin-top: 5px;border-radius:3px;background:#ececec none repeat scroll 0 0;}
 .dd-container, .fd-container { width: 100%; border-radius: 4px; margin: 5px 0 0 0; }
@@ -2376,6 +2377,26 @@ table.invoice-display-table th{background:#fff !important;}
 .border-top-radius{
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
+}
+.signup-CategText {
+  font-size: 14px;
+  /*width: 14.28%;*/
+  padding: 0px 5px;
+  /*text-transform: uppercase;*/
+  max-height: 35px;
+  line-height: 28px;
+  text-align: center;
+  color: #FFFFFF;
+  border: 0px solid #92b485;
+  border-right-width: 2px;
+  background-color: #92b485;
+  -webkit-transition: background-color 0.3s;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  transition: 0.3s;
+}
+.signup-CategText:last-child {
+  border-right-width: 0px;
 }
 .CategText {
   font-size: 14px;
@@ -2701,7 +2722,7 @@ table.invoice-display-table th{background:#fff !important;}
 .round-image{ border-radius: 35px; width: 76px !important;height: 92px !important;}
 .search-patients{position: absolute; right: 10px; top: 10px; color: rgb(242, 187, 92);}
 .hovercolorchange:hover{cursor: pointer;	color: #f2bb5c;	text-decoration: underline;}
-.theme-bold {font-weight: bold;}
+.theme-bold {font-weight: bold !important;}
 .hoverchange:hover{color:#f2bb5c;text-decoration: underline; }
 .canvas-toolbar-parent span {cursor: pointer;margin-right: 5px;}
 .canvas-toolbar-parent span:hover {background-color: #777;}
@@ -2975,3 +2996,25 @@ span.sticky-nav-active { color: #ccc; }
 .height130 {height: 130px !important;}
 .font12{font-size: 12px}
 .colorred{color: red}
+.subscr_height, .prac_height {min-height: 200px;}
+.accinfo_height {min-height: 500px;}
+.aggr_height {height:300px;}
+.signup_content_parent {margin-top: 0px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-bottom: 2px solid #92b485; border-left: 2px solid #92b485; border-right: 2px solid #92b485;}
+.signup_content_header{margin-bottom: 0px;margin-top: 0px !important; border: 2px solid #92b485;}
+.signup-inner-tab-left {
+  border-top-left-radius: 4px !important;
+  border-left: 2px solid rgb(146, 180, 133) !important;
+  border-top: 2px solid rgb(146, 180, 133) !important;
+  /*border-bottom: 1px solid rgb(146, 180, 133) !important;*/
+}
+.signup-inner-tab-mid {
+	border-left: 2px solid rgb(146, 180, 133) !important;
+	border-top: 2px solid rgb(146, 180, 133) !important;
+	/*border-bottom: 1px solid rgb(146, 180, 133) !important;*/
+}
+.signup-inner-tab-right {
+	border-right: 2px solid rgb(146, 180, 133) !important;
+	border-top-right-radius: 4px !important;
+	border-top: 2px solid rgb(146, 180, 133) !important;
+	/*border-bottom: 1px solid rgb(146, 180, 133) !important;*/
+}
