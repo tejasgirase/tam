@@ -2378,6 +2378,26 @@ table.invoice-display-table th{background:#fff !important;}
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 }
+.signup-CategText {
+  font-size: 14px;
+  /*width: 14.28%;*/
+  padding: 0px 5px;
+  /*text-transform: uppercase;*/
+  max-height: 35px;
+  line-height: 28px;
+  text-align: center;
+  color: #FFFFFF;
+  border: 0px solid #92b485;
+  border-right-width: 2px;
+  background-color: #92b485;
+  -webkit-transition: background-color 0.3s;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  transition: 0.3s;
+}
+.signup-CategText:last-child {
+  border-right-width: 0px;
+}
 .CategText {
   font-size: 14px;
   /*width: 14.28%;*/
@@ -2702,7 +2722,7 @@ table.invoice-display-table th{background:#fff !important;}
 .round-image{ border-radius: 35px; width: 76px !important;height: 92px !important;}
 .search-patients{position: absolute; right: 10px; top: 10px; color: rgb(242, 187, 92);}
 .hovercolorchange:hover{cursor: pointer;	color: #f2bb5c;	text-decoration: underline;}
-.theme-bold {font-weight: bold;}
+.theme-bold {font-weight: bold !important;}
 .hoverchange:hover{color:#f2bb5c;text-decoration: underline; }
 .canvas-toolbar-parent span {cursor: pointer;margin-right: 5px;}
 .canvas-toolbar-parent span:hover {background-color: #777;}

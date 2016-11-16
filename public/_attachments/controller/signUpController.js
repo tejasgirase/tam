@@ -192,63 +192,35 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         .appendTo(ul);
     };
 
-    $("#Signup").click(function(){
-      if (validateSignUp()) {
-        activateAgreementTab();
-        // var admin;
-        // if($("#dhp_display").css("display") == "none"){
-        //     $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-        //       success: function(data) {
-        //         $("#hospital_name").removeClass('myloader');
-        //         if($("#Email").val() == "dhpadmin@sensoryhealth.com") {
-        //           $("#dhp_code").val("H-0000000000");
-        //         }else {
-        //           if(data.rows.length > 0){
-        //             $("#dhp_code").val(data.rows[0].key[2]);  
-        //           }else{
-        //             $("#dhp_code").val("H-"+getPcode(10,"alphabetic"));
-        //           }  
-        //         }
-        //         signupNewUser();
-        //       },
-        //       error: function(status) {
-        //         console.log(status);
-        //       },
-        //       startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
-        //       endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{}],
-        //       limit: 5,
-        //       reduce:true,
-        //       group:true
-        //     });
-        // }else{
-        //       $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-        //         success: function(data) {
-        //           if(data.rows.length > 0){
-        //             $("#dhp_code").removeClass('myloader');
-        //             signupNewUser();
-        //           }else{
-        //             $("#validationtext").text("Invalid DHP Code...!!!");
-        //             $('html, body').animate({scrollTop: 0}, 'slow');
-        //             return;
-        //           }
-                  
-        //         },
-        //         error: function(status) {
-        //           console.log(status);
-        //         },
-        //         startkey: [$("#dhp_code").val()],
-        //         endkey: [$("#dhp_code").val(),{},{},{},{},{}],
-        //         limit: 5,
-        //         reduce:true,
-        //         group:true
-        //       });
-        // }
-        // return;
-      }else {
-
-      }
+    $("#next_from_account_info").click(function(){
+      activateAgreementTab();
     });
     
+    $("#back_from_agreement_plan").click(function() {
+      activateAccountInfoTab();
+    });
+
+    $("#next_from_agreement_plan").click(function() {
+      activateSubscriptionTab();
+    });
+
+    $("#back_from_subscription_plan").click(function() {
+      activateAgreementTab();
+    });
+
+    $("#next_from_subscription_plan").click(function() {
+      activatePracticeInfoTab();
+    });
+
+    $("#back_from_practice_info").click(function() {
+      activateSubscriptionTab();
+    });
+
+    $("#signup").click(function() {
+      signUp();
+      //Actual SignUP
+    });
+
     $("#agreement_flag").click(function(){
       if($(this).prop("checked")) {
         $("#next_from_agreement_plan").removeAttr("disabled");
@@ -257,6 +229,10 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       }
     });
     
+    $("#signup_subscription_plan_tab").on("click",".plan-list-checkbox",function(){
+      togglePlanList($(this));
+    });
+
     $("#dhp_code").on("keydown",function(e){
       var charCode = e.charCode || e.keyCode || e.which;
       if (charCode == 27){
@@ -365,26 +341,78 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $("#City").empty().removeAttr('disabled');
     });
 
-    $("#signup_account_info_link").on("click",function(){
-      activateAccountInfoTab();
-    });
 
-    $("#signup_agreement_link").on("click",function(){
-      activateAgreementTab();
-    });
+    // $("#signup_account_info_link").on("click",function(){
+    //   activateAccountInfoTab();
+    // });
 
-    $("#signup_subscription_plan_link").on("click",function(){
-      activateSubscriptionTab();
-    });
+    // $("#signup_agreement_link").on("click",function(){
+    //   activateAgreementTab();
+    // });
 
-    $("#signup_billing_info_link").on("click",function(){
-      activateBillingTab();
-    });
+    // $("#signup_subscription_plan_link").on("click",function(){
+    //   activateSubscriptionTab();
+    // });
 
-    $("#signup_practice_info_link").on("click",function(){
-      activatePracticeInfoTab();
-    });
+    // $("#signup_billing_info_link").on("click",function(){
+    //   activateBillingTab();
+    // });
+
+    // $("#signup_practice_info_link").on("click",function(){
+    //   activatePracticeInfoTab();
+    // });
   });
+
+  function signUp() {
+    var admin;
+    if($("#Email").val() == "dhpadmin@sensoryhealth.com") {
+      $("#dhp_code").val("H-0000000000");
+    }else {
+    }
+    if($("#dhp_display").css("display") == "none") {
+      $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+        success: function(data) {
+          $("#hospital_name").removeClass('myloader');
+          if(data.rows.length > 0){
+            $("#dhp_code").val(data.rows[0].key[2]);  
+          }else{
+            $("#dhp_code").val("H-"+getPcode(10,"alphabetic"));
+          }  
+          signupNewUser();
+        },
+        error: function(status) {
+          console.log(status);
+        },
+        startkey: [$("#hospital_type").val(),$("#hospital_name").val()],
+        endkey: [$("#hospital_type").val(),$("#hospital_name").val(),{},{},{},{}],
+        limit: 5,
+        reduce:true,
+        group:true
+      });      
+    }else {
+      $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+        success: function(data) {
+          if(data.rows.length > 0){
+            $("#dhp_code").removeClass('myloader');
+            signupNewUser();
+          }else{
+            $("#validationtext").text("Invalid DHP Code...!!!");
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            return;
+          }
+          
+        },
+        error: function(status) {
+          console.log(status);
+        },
+        startkey: [$("#dhp_code").val()],
+        endkey: [$("#dhp_code").val(),{},{},{},{},{}],
+        limit: 5,
+        reduce:true,
+        group:true
+      });
+    }
+  }
 
   function activateAccountInfoTab() {
     $("#signup_account_info_link").parent().find("div").removeClass("CategTextActive");
@@ -435,21 +463,22 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       success:function(data) {
         if(data.rows.length > 0) {
           $("#additional_plan_list_parent").removeClass("no-display");
-          var sub_str=[],add_str=[];
+          var sub_str=[],add_str=[],total=0;
           for(var i=0;i<data.rows.length;i++){
-            if(data.rows[i].key[0] === "default") {
+            if(data.rows[i].key[0] === "Default") {
               sub_str.push('<div class="row plan-list">');
                 sub_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
                   sub_str.push('<label>');
-                  sub_str.push('<input class="checkshow" id="" checked="true" type="checkbox">'+data.rows[i].value.subscription_tag);
+                  sub_str.push('<input class="checkshow plan-list-checkbox" data-sname="'+data.rows[i].value.subscription_tag+'" data-stype="Default" checked="'+(data.rows[i].value.default_val ? data.rows[i].value.default_val : false)+'" type="checkbox">'+data.rows[i].value.subscription_tag);
                   sub_str.push('</label>');
                 sub_str.push('</div>');
               sub_str.push('</div>');
+              total += Number(data.rows[i].value.subscription_amount);
             }else {
               add_str.push('<div class="row plan-list">');
                 add_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
                   add_str.push('<label>');
-                  add_str.push('<input class="checkshow" id="" checked="true" type="checkbox">'+data.rows[i].value.subscription_tag);
+                  add_str.push('<input class="checkshow plan-list-checkbox" data-sname="'+data.rows[i].value.subscription_tag+'" data-stype="Additional" type="checkbox">'+data.rows[i].value.subscription_tag);
                   add_str.push('</label>');
                 add_str.push('</div>');
               add_str.push('</div>');
@@ -457,6 +486,8 @@ app.controller("signUpController",function($scope,$state,$stateParams){
           }
           $("#subscription_plan_list_parent").append(sub_str.join(''));
           $("#additional_plan_list_parent").append(add_str.join(''));
+
+          $("#subscription_total").text(total);
         }else {
           console.log("There is no subscription plan configured.Contact Admin.");
           $("#subscription_plan_list_parent").html("There is no subscription plan configured.Contact Admin.");
@@ -767,6 +798,30 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $("#validationtext").text("");
       return true; 
     }
+  }
+
+  function togglePlanList($obj) {
+    $.couch.db(db).view("tamsa/getSubscriptionList", {
+      success:function(data) {
+        if(data.rows.length > 0) {
+          var update_price;
+          if($obj.prop("checked")) {
+            update_price = Number($("#subscription_total").text()) + Number(data.rows[0].value.subscription_amount);
+          }else {
+            update_price = Number($("#subscription_total").text()) - Number(data.rows[0].value.subscription_amount);
+          }
+          $("#subscription_total").text(update_price);
+        }else {
+          console.log("no subscription found.something wrong.");
+        }
+      },
+      error:function(data,error,reason){
+        newAlert("danger",reason);
+        $("html, body").animate({scrollTop: 0}, 'slow');
+        return false;
+      },
+      key:[$obj.data("stype"),$obj.data("sname")]
+    });
   }
 
   function validatePracticeInfoTabAtSignUP() {
