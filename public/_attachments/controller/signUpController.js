@@ -465,48 +465,49 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function getSubscriptionPlans() {
-    $("#subscription_plan_list_parent, #additional_plan_list_parent").find(".plan-list").remove();
-    $.couch.db(db).view("tamsa/getSubscriptionList", {
-      success:function(data) {
-        if(data.rows.length > 0) {
-          $("#additional_plan_list_parent").removeClass("no-display");
-          var sub_str=[],add_str=[],total=0;
-          for(var i=0;i<data.rows.length;i++){
-            if(data.rows[i].key[0] === "Default") {
-              sub_str.push('<div class="row plan-list">');
-                sub_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
-                  sub_str.push('<label>');
-                  sub_str.push('<input class="checkshow plan-list-checkbox" data-sname="'+data.rows[i].value.subscription_tag+'" data-stime="'+data.rows[i].value.duration_time+'" data-stime_interval="'+data.rows[i].value.duration_in+'" data-stype="Default" checked="'+(data.rows[i].value.default_val ? data.rows[i].value.default_val : false)+'" type="checkbox">'+data.rows[i].value.subscription_tag);
-                  sub_str.push('</label>');
-                sub_str.push('</div>');
+    if(!($("#subscription_plan_list_parent .plan-list").length > 0)) {
+      $.couch.db(db).view("tamsa/getSubscriptionList", {
+        success:function(data) {
+          if(data.rows.length > 0) {
+            $("#additional_plan_list_parent").removeClass("no-display");
+            var sub_str=[],add_str=[],total=0;
+            sub_str.push('<div class="row plan-list">');
+            for(var i=0;i<data.rows.length;i++){
+              sub_str.push('<div class="col-lg-6 col-sm-12 paddside30">');
+                sub_str.push('<label>');
+                sub_str.push('<input class="checkshow plan-list-checkbox" data-pro_id="'+data.rows[i].value.product_plan_id+'" data-sname="'+data.rows[i].value.name+'" type="checkbox">'+data.rows[i].value.name);
+                sub_str.push('</label>');
               sub_str.push('</div>');
-              total += Number(data.rows[i].value.subscription_amount);
-            }else {
-              add_str.push('<div class="row plan-list">');
-                add_str.push('<div class="col-lg-12 col-sm-12 paddside30">');
-                  add_str.push('<label>');
-                  add_str.push('<input class="checkshow plan-list-checkbox" data-stime="'+data.rows[i].value.duration_time+'" data-stime_interval="'+data.rows[i].value.duration_in+'" data-sname="'+data.rows[i].value.subscription_tag+'" data-stype="Additional" type="checkbox">'+data.rows[i].value.subscription_tag);
-                  add_str.push('</label>');
-                add_str.push('</div>');
-              add_str.push('</div>');
             }
+            sub_str.push('</div>');
+            add_str.push('<div class="row">');
+              add_str.push('<div class="col-lg-12 col-sm-12" style="">');
+                add_str.push('<ul style="padding-left: 16px; list-style: outside none none;columns: 2; -webkit-columns: 2; -moz-columns: 2;">');
+                for(var i=0;i<data.rows[0].doc.premium_features.length;i++){
+                  add_str.push('<li class="theme-green plan-list"><span class="glyphicon glyphicon-ok theme-color"></span>'+data.rows[0].doc.premium_features[i]+'</li>');
+                }
+                add_str.push('</ul>');
+              add_str.push('</div>');
+            add_str.push('</div>');
+            $("#subscription_plan_list_parent").append(sub_str.join(''));
+            $("#additional_plan_list_parent").append(add_str.join(''));
+            // $("#subscription_total").text(total);
+          }else {
+            console.log("There is no subscription plan configured.Contact Admin.");
+            $("#subscription_plan_list_parent").html("There is no subscription plan configured.Contact Admin.");
+            $("#additional_plan_list_parent").addClass("no-display");
           }
-          $("#subscription_plan_list_parent").append(sub_str.join(''));
-          $("#additional_plan_list_parent").append(add_str.join(''));
-
-          $("#subscription_total").text(total);
-        }else {
-          console.log("There is no subscription plan configured.Contact Admin.");
-          $("#subscription_plan_list_parent").html("There is no subscription plan configured.Contact Admin.");
-          $("#additional_plan_list_parent").addClass("no-display");
-        }
-      },
-      error:function(data,error,reason){
-        newAlert("danger",reason);
-        $("html, body").animate({scrollTop: 0}, 'slow');
-        return false;
-      }
-    });
+        },
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
+        },
+        include_docs:true
+      });
+    }else {
+      console.log("in sub1");
+    }
   }
 
   function getStates(){
@@ -591,11 +592,10 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     var subscription_plan = [];
     $(".plan-list-checkbox:checked").each(function() {
       subscription_plan.push({
-        "subscription_tag": $(this).data("sname"),
-        "subscription_type": $(this).data("stype"),
-        "duration_time": $(this).data("stime"),
-        "duration_in": $(this).data("stime_interval")
+        name:$(this).data("sname"),
+        product_plan_id: $(this).data("pro_id")
       });
+
     });
     
     var userDoc = {
@@ -822,9 +822,11 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         if(data.rows.length > 0) {
           var update_price;
           if($obj.prop("checked")) {
-            update_price = Number($("#subscription_total").text()) + Number(data.rows[0].value.subscription_amount);
+            update_price = Number($("#subscription_total").text()) + Number(data.rows[0].value.charges);
+          }else if(!($obj.prop("checked"))){
+            update_price = Number($("#subscription_total").text()) - Number(data.rows[0].value.charges);
           }else {
-            update_price = Number($("#subscription_total").text()) - Number(data.rows[0].value.subscription_amount);
+            console.log("in else");
           }
           $("#subscription_total").text(update_price);
         }else {
@@ -836,7 +838,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         $("html, body").animate({scrollTop: 0}, 'slow');
         return false;
       },
-      key:[$obj.data("stype"),$obj.data("sname")]
+      key:$obj.data("sname")
     });
   }
 
