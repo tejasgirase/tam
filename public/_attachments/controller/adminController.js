@@ -2405,28 +2405,31 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       getAllSubscriptionPlan();
     };
     var subscriptionPlansBindings = function(){
-      $("#admin_subscription_tab").on("click","#add_additional_plan_modal",function(){
-        clearModalFields();
-        console.log($(this).attr("tag"));
-        $("#additional_title").html("Add Additional Plan");
-        $("#save_edit_additional").attr("tag",$(this).attr("tag"));
+      $("#admin_subscription_tab").on("click","#save_plans",function(){
+        addSubscriptionsPlans();
       });
-      $("#admin_subscription_tab").on("click","#add_subscription_plan_modal",function(){
-        clearModalFields();
-        console.log($(this).attr("tag"));
-        $("#subscription_title").html("Add Subscription Plan");
-        $("#save_edit_subscription").attr("tag",$(this).attr("tag"));
-      });
+      // $("#admin_subscription_tab").on("click","#add_additional_plan_modal",function(){
+      //   clearModalFields();
+      //   console.log($(this).attr("tag"));
+      //   $("#additional_title").html("Add Additional Plan");
+      //   $("#save_edit_additional").attr("tag",$(this).attr("tag"));
+      // });
+      // $("#admin_subscription_tab").on("click","#add_subscription_plan_modal",function(){
+      //   clearModalFields();
+      //   console.log($(this).attr("tag"));
+      //   $("#subscription_title").html("Add Subscription Plan");
+      //   $("#save_edit_subscription").attr("tag",$(this).attr("tag"));
+      // });
 
-      $("#admin_subscription_tab").on("click",".edit_subscription_tag",function(){
-        $("#edit_subscription_name").val($(this).parent().parent().find("td.subscription_name").html());
-        $("#edit_subscription_amount").val($(this).parent().parent().find("td.subscription_amount").html());
-        $("#edit_subscription_duration_option").val($(this).parent().parent().find("span.subscription_duration_option").html());
-        $("#edit_subscription_duration_time").val($(this).parent().parent().find("span.subscription_duration_time").html());
-        $("#edit_subscription_plan_type").val($(this).parent().parent().find("td.subscription_plan_type").html());
-        $("#save_edit_subscription").attr("index",$(this).attr("index"));
-        $("#save_edit_subscription").attr("tag","");
-      });
+      // $("#admin_subscription_tab").on("click",".edit_subscription_tag",function(){
+      //   $("#edit_subscription_name").val($(this).parent().parent().find("td.subscription_name").html());
+      //   $("#edit_subscription_amount").val($(this).parent().parent().find("td.subscription_amount").html());
+      //   $("#edit_subscription_duration_option").val($(this).parent().parent().find("span.subscription_duration_option").html());
+      //   $("#edit_subscription_duration_time").val($(this).parent().parent().find("span.subscription_duration_time").html());
+      //   $("#edit_subscription_plan_type").val($(this).parent().parent().find("td.subscription_plan_type").html());
+      //   $("#save_edit_subscription").attr("index",$(this).attr("index"));
+      //   $("#save_edit_subscription").attr("tag","");
+      // });
       // $("#admin_subscription_tab").on("click",".edit_additional_tag",function(){
       //   $("#additional_title").html("Edit Additional Plan");
       //   $("#edit_additional_tag").val($(this).parent().parent().find("td.additional_name").html());
@@ -2436,38 +2439,38 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       //   $("#save_edit_additional").attr("index",$(this).attr("index"));
       //   $("#save_edit_additional").attr("tag","");
       // });
-      $("#admin_subscription_tab").on("click",".delete_subscription_tag",function(){
-          $("#delete_subscription_confirm").attr("index",$(this).attr("index"));
-          $("#delete_subscription_confirm").attr("tag",$(this).attr("tag"));
-      });
-      $("#delete_subscription_modal").on("click","#delete_subscription_confirm",function(){
-          var index = $(this).attr("index"),
-              tag = $(this).attr("tag");
-          deleteSubscriptionTag(index,tag);
-      });
-      $("#edit_subscription_modal").on("click","#save_edit_subscription",function(){
-        var edit_subscription_name = $("#edit_subscription_name").val(),
-            edit_subscription_amount = $("#edit_subscription_amount").val(),
-            edit_subscription_duration_option = $("#edit_subscription_duration_option").val(),
-            edit_subscription_duration_time = $("#edit_subscription_duration_time").val(),
-            edit_subscription_plan_type = $("#edit_subscription_plan_type").val(),
-            msg   = "subscription",
-            tag   = $(this).attr("tag"),
-            index = $(this).attr("index");
-        if(validationOnSave(msg,edit_subscription_amount,edit_subscription_name,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type)){
-          $.blockUI();
-          if(tag == "subscription"){
-            if($("#add_subscription_plan_modal").attr("index")){
-              var index = $("#add_subscription_plan_modal").attr("index");
-              addSubscriptionsPlans(tag,index,edit_subscription_name,edit_subscription_amount,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type);
-            }else{
-              saveNewSubscriptionsPlans(tag,edit_subscription_name,edit_subscription_amount,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type);
-            }
-          }else{
-            saveEditSubscriptionTags(index,msg,edit_subscription_amount,edit_subscription_name,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type);
-          }
-        }
-      });
+      // $("#admin_subscription_tab").on("click",".delete_subscription_tag",function(){
+      //     $("#delete_subscription_confirm").attr("index",$(this).attr("index"));
+      //     $("#delete_subscription_confirm").attr("tag",$(this).attr("tag"));
+      // });
+      // $("#delete_subscription_modal").on("click","#delete_subscription_confirm",function(){
+      //     var index = $(this).attr("index"),
+      //         tag = $(this).attr("tag");
+      //     deleteSubscriptionTag(index,tag);
+      // });
+      // $("#edit_subscription_modal").on("click","#save_edit_subscription",function(){
+      //   var edit_subscription_name = $("#edit_subscription_name").val(),
+      //       edit_subscription_amount = $("#edit_subscription_amount").val(),
+      //       edit_subscription_duration_option = $("#edit_subscription_duration_option").val(),
+      //       edit_subscription_duration_time = $("#edit_subscription_duration_time").val(),
+      //       edit_subscription_plan_type = $("#edit_subscription_plan_type").val(),
+      //       msg   = "subscription",
+      //       tag   = $(this).attr("tag"),
+      //       index = $(this).attr("index");
+      //   if(validationOnSave(msg,edit_subscription_amount,edit_subscription_name,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type)){
+      //     $.blockUI();
+      //     if(tag == "subscription"){
+      //       if($("#add_subscription_plan_modal").attr("index")){
+      //         var index = $("#add_subscription_plan_modal").attr("index");
+      //         addSubscriptionsPlans(tag,index,edit_subscription_name,edit_subscription_amount,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type);
+      //       }else{
+      //         saveNewSubscriptionsPlans(tag,edit_subscription_name,edit_subscription_amount,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type);
+      //       }
+      //     }else{
+      //       saveEditSubscriptionTags(index,msg,edit_subscription_amount,edit_subscription_name,edit_subscription_duration_time,edit_subscription_duration_option,edit_subscription_plan_type);
+      //     }
+      //   }
+      // });
       // $("#edit_additional_modal").on("click","#save_edit_additional",function(){
       //   var edit_additional_tag = $("#edit_additional_tag").val(),
       //       edit_additional_amount = $("#edit_additional_amount").val(),
@@ -2591,38 +2594,68 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
       });
     }
 
-    var addSubscriptionsPlans = function(tagID,index,tagname,amount,duration_time,duration_in,plan_type){
+    var addSubscriptionsPlans = function(){
       $.couch.db(db).openDoc("subscription_list",{
         success:function(data){
-            if(data.subscription_plans){
-              if(checkValideFieldsInDb(tagID,data.subscription_plans,tagname,duration_time,duration_in,null,plan_type)){
-                data.subscription_plans.push({
-                  plan_type:plan_type,
-                  subscription_tag : tagname,
-                  subscription_amount : amount,
-                  duration_time : duration_time,
-                  duration_in : duration_in,
-                  subscription_id:"SP-"+getPcode(5,"numeric")
-                  });
-                saveNewPlansDocsSubscription(data);
-                $("#edit_subscription_modal").modal("hide");
+          if(data.premium_features){
+            var premium_features = [];
+            $(".admin_chk_primium").each(function(){
+              if($(this).is(":checked")){
+                console.log($(this).attr("name"));
+                premium_features.push($(this).attr("name"))
               }
-            }else{
-              var doc ={
-                plan_type:plan_type,
-                subscription_tag : tagname,
-                subscription_amount : amount,
-                duration_time : duration_time,
-                duration_in : duration_in,
-                subscription_id:"SP-"+getPcode(5,"numeric")
+            });
+            data.premium_features = premium_features;
+            saveNewPlansDocsSubscription(data);
+          }else{
+            var premium_features = [];
+            $(".admin_chk_primium").each(function(){
+              if($(this).is(":checked")){
+                console.log($(this).attr("name"));
+                premium_features.push($(this).attr("name"))
               }
-              data.subscription_plans = doc;
-              saveNewPlansDocsSubscription(data);
-              $("#edit_subscription_modal").modal("hide");
-            }
+            });
+            data.premium_features = premium_features;
+            saveNewPlansDocsSubscription(data);
+          }
         },
         error:function(data,status,error){
           console.log(data,error,status);
+          // var docSave = {
+          //   _id:"subscription_list",
+          //   dhp_code:pd_data.dhp_code,
+          //   doctype: "subscription_list",
+          //   subscription_products:[{
+          //     name:"DHP Basic PMS- Cloud",
+          //     charges:0,
+          //     premium:false,
+          //     "product_plan_id": "PRO-123" 
+          //   },{
+          //     name:"DHP Full PMS- Cloud",
+          //     charges:200000,
+          //     premium:true,
+          //     product_plan_id: "PRO-124" 
+          //   },{
+          //     name:"DHP Full PMS- Cloud",
+          //     charges:200000,
+          //     premium:true,
+          //     product_plan_id: "PRO-125" 
+          //   },{
+          //     name:"DHP Full PMS- Cloud",
+          //     charges:200000,
+          //     premium:true,
+          //     product_plan_id: "PRO-126" 
+          //   },{
+          //     name:"DHP Full PMS- Cloud",
+          //     charges:200000,
+          //     premium:true,
+          //     product_plan_id: "PRO-127" 
+          //   }],
+          //   premium_features:[],
+          // };
+          // if(docSave){
+          //   saveNewPlansDocsSubscription(docSave);
+          // }
         }
       });
     };
@@ -2662,6 +2695,15 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
           if(data){
             $("#add_subscription_plan").attr("index",data._id);
             $("#add_subscription_plan_modal").attr("index",data._id);
+            if(data.premium_features){
+              $(".admin_chk_primium").each(function(e,v){
+                if(data.premium_features.indexOf($(this).attr("name")) == -1){
+                  console.log($(this).attr("name"));
+                  $(this).attr("checked",true);
+                }
+              });
+
+            }
             if(data.subscription_plans){
               $scope.subscription_data = data.subscription_plans;
             }
