@@ -506,7 +506,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         include_docs:true
       });
     }else {
-      console.log("in sub1");
+      console.log("Subscription List is already available");
     }
   }
 
