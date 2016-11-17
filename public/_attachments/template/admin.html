@@ -530,27 +530,19 @@
           <div class="col-md-12 OtherExamsTitle" style="margin-bottom: 10px;">
             <span class="glyphicon glyphicon-th-list"></span>
             <span id="settingmain_title">Subscription Plans</span>
-            <button id="add_subscription_plan_modal" class="btn btn-warning" data-toggle="modal" role="button" data-target="#edit_subscription_modal" tag="subscription" type="button" style="float:right">Add</button>
           </div>
           <div class="col-md-12 mrgtop15">
             <table class="table tbl-border" id="admin_subscription_list">
               <thead>
                 <tr>
-                  <th class="text-align" width="20%">Subscription Tag</th>
-                  <th class="text-align" width="20%">Price</th>
-                  <th class="text-align" width="20%">Duration</th>
-                  <th class="text-align" width="20%">Plan Type</th>
-                  <th class="text-align" width="20%"></th>
+                  <th class="text-align" width="20%">Product Name</th>
+                  <th class="text-align" width="20%">Charges</th>
                 </tr>
               </thead>
               <tbody>
-              <!-- ng-class="{'success' : v.plan_type == 'Default','info' : v.plan_type == 'Additional',}" -->
-                <tr dir-paginate = "(x,v) in subscription_data | orderBy:'-plan_type' | itemsPerPage: 5"  ng-show="(subscription_data.length)" >
-                  <td class="text-align  subscription_name">{{v.subscription_tag}}</td>
-                  <td class="text-align  subscription_amount">{{v.subscription_amount}}</td>
-                  <td class="text-align"><span class="subscription_duration_time">{{v.duration_time}}</span><span class="subscription_duration_option">{{v.duration_in}}</span></td>
-                  <td class="text-align subscription_plan_type">{{v.plan_type}}</td>
-                  <td class="text-align"><span class="glyphicon glyphicon-pencil edit_subscription_tag" data-target="#edit_subscription_modal" role="button" class="dropdown-toggle" data-toggle="modal" title="Edit User" index="{{x}}"></span><span class="glyphicon glyphicon-trash delete_subscription_tag" data-target="#delete_subscription_modal" role="button" class="dropdown-toggle" tag="subscription" data-toggle="modal" index="{{x}}" title="Delete User"></span></td>
+                <tr dir-paginate = "(x,v) in subscription_data | orderBy:'name' | itemsPerPage: 10"  ng-show="(subscription_data.length)" >
+                  <td class="text-align  subscription_name">{{v.name}}</td>
+                  <td class="text-align  subscription_amount">{{v.charges}}</td>
                 </tr>
                 <tr ng-show="!(subscription_data.length)">
                   <td class="text-align" colspan="4">No Subscription Plans Found.</td>
@@ -560,6 +552,25 @@
             <div class="col-lg-12 text-center" style="background:white none repeat scroll 0 0">
               <dir-pagination-controls></dir-pagination-controls>
             </div>
+          </div>
+          <div class="col-md-12 mrgtop15">
+            <table class="table tbl-responsive" id="admin_premium_table">
+              <thead>
+                <tr>
+                <th colspan="4">List Premium Features</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="success"><td><input type="checkbox" class="checkshow admin_chk_primium" name="Daily Dashboard"><span style="margin-left:5px;font-size:14px;">Daily Dashboard</b></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Front Desk View"><span style="margin-left:5px;font-size:14px;">Front Desk View</b></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Population Health Management"><span style="margin-left:5px;font-size:14px;">Population Health Management</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Charting"><span style="margin-left:5px;font-size:14px;">Charting</span></td></tr><tr class="success"><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Task Manager"><span style="margin-left:5px;font-size:14px;">Task Manager</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="TeleHealth"><span style="margin-left:5px;font-size:14px;">TeleHealth</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Inventory Management"><span style="margin-left:5px;font-size:14px;">Inventory Management</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="DICOM"><span style="margin-left:5px;font-size:14px;">DICOM</span></td></tr><tr class="success"><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Clinical Risk Calculator"><span style="margin-left:5px;font-size:14px;">Clinical Risk Calculator</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Upload Files"><span style="margin-left:5px;font-size:14px;">Upload Files</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Care Plans"><span style="margin-left:5px;font-size:14px;">Care Plans</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Prepare Referral"><span style="margin-left:5px;font-size:14px;">Prepare Referral</span></td></tr><tr class="success"><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Appointment"><span style="margin-left:5px;font-size:14px;">Appointment</span></td><td><input type="checkbox"  class="checkshow admin_chk_primium" name="Billing"><span style="margin-left:5px;font-size:14px;">Billing</span></td><td></td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-12 mrgtop15">
+           <div class="col-lg-5"></div>
+            <div class="col-lg-2">
+              <button class="btn btn-warning" type="button" id="save_plans">Assign</button>
+            </div>
+            <div class="col-lg-5"></div>
           </div>
         </div>
         <!-- <div class="mrgtop15">
