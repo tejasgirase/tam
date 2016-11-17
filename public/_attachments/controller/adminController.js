@@ -2695,17 +2695,17 @@ app.controller("adminController",function($scope,$state,$stateParams,tamsaFactor
           if(data){
             $("#add_subscription_plan").attr("index",data._id);
             $("#add_subscription_plan_modal").attr("index",data._id);
-            if(data.premium_features){
-              $(".admin_chk_primium").each(function(e,v){
-                if(data.premium_features.indexOf($(this).attr("name")) == -1){
-                  console.log($(this).attr("name"));
-                  $(this).attr("checked",true);
-                }
-              });
-
-            }
             if(data.subscription_plans){
               $scope.subscription_data = data.subscription_plans;
+            }
+            if(data.premium_features){
+              $(".admin_chk_primium").each(function(){
+                if(data.premium_features.indexOf($(this).attr("name")) > -1){
+                  $(this).prop("checked",true);
+                }else {
+                  $(this).prop("checked",false);
+                }
+              });
             }
             $scope.$apply();
             $.unblockUI();
