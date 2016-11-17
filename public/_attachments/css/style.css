@@ -2099,7 +2099,8 @@ table.invoice-display-table th{background:#fff !important;}
 .cuswidth5{width: 5% !important;}
 .cuswidth100{width: 100%}
 .cuswidth65{width: 65% !important;}
-.cuswidth40{width: 40px !important;}
+.cuswidth40px{width: 40px !important;}
+.cuswidth40{width: 40% !important;}
 .cuswidth80{width: 80% !important;}
 .cuswidth25{width: 25% !important;}
 .cuswidth45{width: 45% !important;}
