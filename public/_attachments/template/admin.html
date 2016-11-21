@@ -537,12 +537,14 @@
                 <tr>
                   <th class="text-align" width="20%">Product Name</th>
                   <th class="text-align" width="20%">Charges</th>
+                  <th class="text-align" width="20%"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr dir-paginate = "(x,v) in subscription_data | orderBy:'name' | itemsPerPage: 10"  ng-show="(subscription_data.length)" >
+                <tr dir-paginate = "(x,v) in subscription_data | itemsPerPage: 10"  ng-show="(subscription_data.length)" >
                   <td class="text-align  subscription_name">{{v.name}}</td>
                   <td class="text-align  subscription_amount">{{v.charges}}</td>
+                  <td class="text-align"><span class="glyphicon glyphicon-pencil subscription_plans" index="{{x}}"></span><span style="display:none" class="glyphicon glyphicon-saved subscription_plans_save" index="{{x}}"></span></td>
                 </tr>
                 <tr ng-show="!(subscription_data.length)">
                   <td class="text-align" colspan="4">No Subscription Plans Found.</td>
