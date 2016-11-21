@@ -228,8 +228,6 @@ app.post("/api/change_password",function(req,res) {
 });
 
 app.put("/api/signup",function(req,res) {
-
-	
 	var updatedb = cloudant.db.use(req.body.db);
 	var data     = JSON.parse(req.body.doc);
 	if(data.password){

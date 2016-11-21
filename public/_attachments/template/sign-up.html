@@ -1,7 +1,27 @@
 <div class="login_bg">
 <div id = "boomr_div" style = "display:none;"></div>
   <div class="login_main">
-    <div class="logo"><img src="images/login_logo.png" alt="logo" /></div>
+    <!-- <div class="logo"><img src="images/login_logo.png" alt="logo" /></div> -->
+    <div id="header">
+      <div class="row">
+        <div class="col-lg-3 col-xs-12 col-sm-3 logo"><img src="images/logo.png" alt="Logo" title="Logo"></div>
+        <div class="col-lg-4 col-xs-12 col-sm-7 pull-right nav-top-mar padd">
+          <nav role="navigation" class="navbar navbar-default navbar-static" id="navbar-example">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button data-target=".bs-example-js-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                <a href="#" class="navbar-brand">Menu</a>
+              </div>
+              <div class="navbar-collapse bs-example-js-navbar-collapse collapse" style="height: 1px;">
+                <ul class="nav navbar-nav pull-right">
+                  <li class="dropdown"><a role="button" href="#/">Back to Login Page</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
     <div class="login_in" style="margin-top: 15px; padding-top: 15px;">
       <h2 style="padding-bottom: 0px; padding-left: 10px; padding-right: 10px;">Signup Form for Doctors</h2>
       <h5 align="center" class="text-danger" id="validationtext"></h5>
