@@ -21,7 +21,8 @@ Cloudant          = require(nconf.APP_MODULE),
 cloudant          = Cloudant(nconf.DB_PROTOCOL+"://"+CLOUDANT_API_KEY+":"+CLOUDANT_PASSWORD+"@"+nconf.DB_URL),
 Port              = nconf.PORT,
 multer            = require('multer'),
-upload            = multer();	
+stripe            = require('stripe')("sk_test_R7BL5InlXFCx3W76QzkG4OSi"),
+upload            = multer();
 //password encryption
 var cryptLib = require('cryptlib'),
 iv = nconf.IV, //16 bytes = 128 bit 
@@ -228,19 +229,32 @@ app.post("/api/change_password",function(req,res) {
 });
 
 app.put("/api/signup",function(req,res) {
-	var updatedb = cloudant.db.use(req.body.db);
-	var data     = JSON.parse(req.body.doc);
-	if(data.password){
-		var new_password = data.password;
-		var password     = cryptLib.encrypt(data.password, key, iv);
-		data.password    = password;
-	}
-	updatedb.insert(data,function(err, body) {
-		if(!err) {
-			service.sendMail(res,body,nconf.MAIL_ID,(data.alert_email ? data.alert_email : data.email),"Account Created","text","Hello "+data.first_name+" "+data.last_name+" \nWelcome to Sensory Health System. \n Your password for this account is : "+new_password+"\n To Log in go to following link http://www.digitalhealthpulse.com"	);
-		}else {
-			res.status(500).json({ error: err.error, reason:err.reason});
-		}
+	// var updatedb = cloudant.db.use(req.body.db);
+	// var data     = JSON.parse(req.body.doc);
+	stripe.charges.create({
+	  amount: 20,
+	  currency: "usd",
+	  description: "Charge for testing purpose"
+	},{
+	  idempotency_key: "GZ47FOAqwYU1uoA1"
+	}, function(err, charge) {
+	  if(!err) {
+	  	res.send({"success":"charge"});
+			// if(data.password){
+			// 	var new_password = data.password;
+			// 	var password     = cryptLib.encrypt(data.password, key, iv);
+			// 	data.password    = password;
+			// }
+			// updatedb.insert(data,function(err, body) {
+			// 	if(!err) {
+			// 		service.sendMail(res,body,nconf.MAIL_ID,(data.alert_email ? data.alert_email : data.email),"Account Created","text","Hello "+data.first_name+" "+data.last_name+" \nWelcome to Sensory Health System. \n Your password for this account is : "+new_password+"\n To Log in go to following link http://www.digitalhealthpulse.com"	);
+			// 	}else {
+			// 		res.status(500).json({ error: err.error, reason:err.reason});
+			// 	}
+			// });
+		}else{
+			res.status(err.code).json({ error: err.error, reason:err.reason});
+	  }
 	});
 });
 

@@ -668,22 +668,22 @@ app.controller("signUpController",function($scope,$state,$stateParams){
                 error: function(data, error, reason) {
                   if(data == 500){
                     console.log(userDoc);
-                    // $.couch.signup(userDoc,$("#Password").val(), {
-                    //   success: function(data) {
-                    //     $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
-                    //     window.location = "/";
-                    //   },
-                    //   error: function(data, error, reason) {
-                    //     if (data == '409') {
-                    //       $("#validationtext").text("User already exist");
-                    //       $('html, body').animate({scrollTop: 0}, 'slow');
-                    //     }
-                    //     else {
-                    //       $("#validationtext").text(reason);
-                    //       $('html, body').animate({scrollTop: 0}, 'slow');
-                    //     }
-                    //   }
-                    // });
+                    $.couch.signup(userDoc,$("#Password").val(), {
+                      success: function(data) {
+                        $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
+                        window.location = "/";
+                      },
+                      error: function(data, error, reason) {
+                        if (data == '409') {
+                          $("#validationtext").text("User already exist");
+                          $('html, body').animate({scrollTop: 0}, 'slow');
+                        }
+                        else {
+                          $("#validationtext").text(reason);
+                          $('html, body').animate({scrollTop: 0}, 'slow');
+                        }
+                      }
+                    });
                   }
                   // if(data == "404"){
                   //   $.couch.db(db).saveDoc(userDoc, {
