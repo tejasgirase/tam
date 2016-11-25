@@ -110,7 +110,7 @@ app.get("/api/forgot",function(req,res) {
 	opendb.get("org.couchdb.user:"+req.query.emailid,function(err, body) {
 		if(!err) {
 			var original_pass = service.getPcode(6, "alphabetic");
-			console.log(original_pass);
+			// console.log(original_pass);
 			body.password = cryptLib.encrypt(original_pass, key, iv);
 			opendb.insert(body,function(err,data) {
 				if(!err) {
@@ -136,7 +136,6 @@ app.get("/api/logout",function(req,res) {
 });
 
 app.get("/myaccount",ensureAuthenticated,function(req,res) {
-
 	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
 	res.render("my-account.html");
 });

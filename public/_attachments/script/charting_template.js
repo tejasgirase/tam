@@ -2637,8 +2637,11 @@ function cTemplateSaveFieldArray($obj){
 			var field_name = $(this).find(".ctemplate-display-fieldname").html();
 			var response_format_pair = [];
 			$(this).find(".ctemplate-display-response-value").each(function(){
+				var $frmt = $(this).attr("restype"),
+						frmt_type = getFormatFromResponseType($frmt,$(this));
 				response_format_pair.push({
 					response: $(this).attr("restype"),
+					format:   frmt_type,
 					values:   getValueFromResponseType($(this),sect_name,field_name)
 				});
 			});
@@ -2660,74 +2663,13 @@ function cTemplatePartialSaveFieldArray($obj){
 	$obj.find(".ctemplate-display-sectionlist").each(function(){
 		var sect_name = $(this).find(".ctemplate-display-section-name").html();
 		if(sect_name != "History of Presenting Illness" && sect_name != "Past Medical History" && sect_name != "Family History" && sect_name != "") {
-			console.log(sect_name);
 			var fields = [];
 			$(this).find(".ctemplate-display-fieldlist").each(function(){
 				var field_name = $(this).find(".ctemplate-display-fieldname").html();
 				var response_format_pair = [];
 				$(this).find(".ctemplate-display-response-value").each(function(){
 					var $frmt = $(this).attr("restype"),
-							frmt_type = [];
-					if($frmt == "Text" || $frmt == "paragraph" || $frmt == "soapnote" || $frmt == "date" || $frmt == "image" ){
-						frmt_type.push($frmt);
-					}else if($frmt == "combobox") {
-						$(this).find(".multiple-value").each(function() {
-							frmt_type.push($(this).val());
-						});
-					}else if($frmt == "multiple") {
-						$(this).find("input[type='radio']").each(function() {
-							frmt_type.push($(this).attr("myval"));
-						});
-					}else if($frmt == "table") {
-						var table_columns = [],
-						    table_rows = [],
-						    trlen = Number($(this).attr("trlen")),
-						    tclen = Number($(this).attr("tclen"));
-						if(trlen > 0) {
-							$(this).find(".tbl-rows").each(function() {
-								table_rows.push($(this).html());
-							});
-						}
-						if(tclen > 0) {
-							$(this).find(".tbl-head").each(function() {
-								table_columns.push($(this).html());
-							});
-						}
-						frmt_type.push({
-							table_columns : table_columns,
-							table_rows : table_rows
-						});
-					}
-					else if($frmt == "grid") {
-						var grid_columns = [],
-						    grid_rows = [],
-						    trlen = Number($(this).attr("trlen")),
-						    tclen = Number($(this).attr("gridlen"));
-						if(trlen > 0) {
-							$(this).find(".grid-rows").each(function() {
-								grid_rows.push($(this).html());
-							});
-						}
-
-						if(tclen > 0) {
-							$(this).find(".grid-head").each(function() {
-								grid_columns.push($(this).html());
-							});
-						}
-						
-						frmt_type.push({
-							grid_columns : grid_columns,
-							grid_rows : grid_rows
-						})					    
-					}
-					else if($frmt == "scale") {
-						var smin = $(this).find(".scale-radio").first().attr("value"),
-						    smax = $(this).find(".scale-radio").last().attr("value");
-						frmt_type.push({
-							min : smin,
-							max : smax
-						});
-					}
+							frmt_type = getFormatFromResponseType($frmt,$(this));
 					response_format_pair.push({
 						response: $(this).attr("restype"),
 						format: frmt_type,
@@ -2746,6 +2688,71 @@ function cTemplatePartialSaveFieldArray($obj){
 		}
 	});
 	return section;
+}
+
+function getFormatFromResponseType($frmt,$obj) {
+	var frmt_type = [];
+	if($frmt == "Text" || $frmt == "paragraph" || $frmt == "soapnote" || $frmt == "date" || $frmt == "image" ){
+		frmt_type.push($frmt);
+	}else if($frmt == "combobox") {
+		$obj.find(".multiple-value").each(function() {
+			frmt_type.push($obj.val());
+		});
+	}else if($frmt == "multiple") {
+		$obj.find("input[type='radio']").each(function() {
+			frmt_type.push($obj.attr("myval"));
+		});
+	}else if($frmt == "table") {
+		var table_columns = [],
+		    table_rows = [],
+		    trlen = Number($obj.attr("trlen")),
+		    tclen = Number($obj.attr("tclen"));
+		if(trlen > 0) {
+			$obj.find(".tbl-rows").each(function() {
+				table_rows.push($obj.html());
+			});
+		}
+		if(tclen > 0) {
+			$obj.find(".tbl-head").each(function() {
+				table_columns.push($obj.html());
+			});
+		}
+		frmt_type.push({
+			table_columns : table_columns,
+			table_rows : table_rows
+		});
+	}
+	else if($frmt == "grid") {
+		var grid_columns = [],
+		    grid_rows = [],
+		    trlen = Number($obj.attr("trlen")),
+		    tclen = Number($obj.attr("gridlen"));
+		if(trlen > 0) {
+			$obj.find(".grid-rows").each(function() {
+				grid_rows.push($obj.html());
+			});
+		}
+
+		if(tclen > 0) {
+			$obj.find(".grid-head").each(function() {
+				grid_columns.push($obj.html());
+			});
+		}
+		
+		frmt_type.push({
+			grid_columns : grid_columns,
+			grid_rows : grid_rows
+		})					    
+	}
+	else if($frmt == "scale") {
+		var smin = $obj.find(".scale-radio").first().attr("value"),
+		    smax = $obj.find(".scale-radio").last().attr("value");
+		frmt_type.push({
+			min : smin,
+			max : smax
+		});
+	}
+	return frmt_type;
 }
 
 function getValueFromResponseType($obj,section_name,field_name){

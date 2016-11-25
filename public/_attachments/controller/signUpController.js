@@ -484,7 +484,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
               add_str.push('<div class="col-lg-12 col-sm-12" style="">');
                 add_str.push('<ul style="padding-left: 16px; list-style: outside none none;columns: 2; -webkit-columns: 2; -moz-columns: 2;">');
                 for(var i=0;i<data.rows[0].doc.premium_features.length;i++){
-                  add_str.push('<li class="theme-green plan-list"><span class="glyphicon glyphicon-ok theme-color"></span>'+data.rows[0].doc.premium_features[i]+'</li>');
+                  add_str.push('<li class="theme-green plan-list"><span class="glyphicon glyphicon-star-empty theme-color"></span>'+data.rows[0].doc.premium_features[i]+'</li>');
                 }
                 add_str.push('</ul>');
               add_str.push('</div>');
@@ -668,22 +668,22 @@ app.controller("signUpController",function($scope,$state,$stateParams){
                 error: function(data, error, reason) {
                   if(data == 500){
                     console.log(userDoc);
-                    $.couch.signup(userDoc,$("#Password").val(), {
-                      success: function(data) {
-                        $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
-                        window.location = "/";
-                      },
-                      error: function(data, error, reason) {
-                        if (data == '409') {
-                          $("#validationtext").text("User already exist");
-                          $('html, body').animate({scrollTop: 0}, 'slow');
-                        }
-                        else {
-                          $("#validationtext").text(reason);
-                          $('html, body').animate({scrollTop: 0}, 'slow');
-                        }
-                      }
-                    });
+                    // $.couch.signup(userDoc,$("#Password").val(), {
+                    //   success: function(data) {
+                    //     $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
+                    //     window.location = "/";
+                    //   },
+                    //   error: function(data, error, reason) {
+                    //     if (data == '409') {
+                    //       $("#validationtext").text("User already exist");
+                    //       $('html, body').animate({scrollTop: 0}, 'slow');
+                    //     }
+                    //     else {
+                    //       $("#validationtext").text(reason);
+                    //       $('html, body').animate({scrollTop: 0}, 'slow');
+                    //     }
+                    //   }
+                    // });
                   }
                   // if(data == "404"){
                   //   $.couch.db(db).saveDoc(userDoc, {
@@ -817,29 +817,119 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function togglePlanList($obj) {
-    $.couch.db(db).view("tamsa/getSubscriptionList", {
-      success:function(data) {
-        if(data.rows.length > 0) {
-          var update_price;
-          if($obj.prop("checked")) {
-            update_price = Number($("#subscription_total").text()) + Number(data.rows[0].value.charges);
-          }else if(!($obj.prop("checked"))){
-            update_price = Number($("#subscription_total").text()) - Number(data.rows[0].value.charges);
-          }else {
-            console.log("in else");
+    $("#signup_subscription_plan_tab").block({"msg":"Updating.... Please Wait..."});
+    if($obj.prop("checked")) {
+      switch($obj.data("pro_id")) {
+        case "PRO-FS":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").removeAttr("disabled").prop("checked",true);
+          if(!$(".plan-list-checkbox").filter("[data-pro_id='PRO-Full']").prop("checked")) {
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-Full']").removeAttr("disabled").prop("checked",true);
           }
-          $("#subscription_total").text(update_price);
-        }else {
-          console.log("no subscription found.something wrong.");
-        }
-      },
-      error:function(data,error,reason){
-        newAlert("danger",reason);
-        $("html, body").animate({scrollTop: 0}, 'slow');
-        return false;
-      },
-      key:$obj.data("sname")
+        break;
+        case "PRO-Full":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Full']").prop("checked",true).removeAttr("disabled");
+        break;
+        case "PRO-Basic":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Basic']").prop("checked",true).removeAttr("disabled");
+        break;
+        case "PRO-BB":
+          var flagbb;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked")) flagbb=true;
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          if(flagbb) $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",true).removeAttr("disabled");
+          else $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",true).removeAttr("disabled");
+          break;
+        case "PRO-NS":
+        var flagns;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked")) flagns=true;
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          if(flagns) $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",true).removeAttr("disabled");
+          else $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",false).removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",true).removeAttr("disabled");
+        break;
+        case "PRO-Well":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Well']").prop("checked",true).removeAttr("disabled");
+        break;
+      }
+      //update_price = Number($("#subscription_total").text()) + Number(data.rows[0].value.charges);
+    }else if(!($obj.prop("checked"))){
+      switch($obj.data("pro_id")) {
+        case "PRO-FS":
+          // $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled");
+          // $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-Full":
+          $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-Basic":
+          $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Basic']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-BB":
+          var flag;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked")) flag=true;
+          if(flag) {
+            $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",true).removeAttr("disabled");
+          }
+          else {
+            $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled");
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+          }
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-NS":
+          var flag2;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked")) flag2=true;
+          if(flag2) {
+            $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled"); 
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",true).removeAttr("disabled");
+          }else {
+            $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled"); 
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",false).removeAttr("disabled"); 
+          }
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-Well":
+          $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+        break;
+      }
+      //update_price = Number($("#subscription_total").text()) - Number(data.rows[0].value.charges);
+    }else {
+      console.log("in else");
+    }
+    var product_ids='';
+    $(".plan-list-checkbox:checked").each(function (i) {
+      if(i > 0) product_ids+="|";
+      product_ids+=$(this).data("pro_id");
     });
+    $.couch.db(db).list("tamsa/getChargesForSubscriptionList", "getSubscriptionList", {
+    product_ids:product_ids,
+    include_docs:true
+    }).success(function(data){
+      $("#subscription_total").text(data.total);
+      $("#signup_subscription_plan_tab").unblock();
+    }).error(function(reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    });
+  }
+
+  function removeIndexFromArrayByName(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
   }
 
   function validatePracticeInfoTabAtSignUP() {
