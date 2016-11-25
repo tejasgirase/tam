@@ -3099,13 +3099,12 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
               output.push('<td class="ct-image-name">'+data.rows[0].doc.image_details[i].image_name+'</td>');
               var url="";
               if(data.rows[0].doc._attachments){
-                for (var j = 0; j < Object.keys(data.rows[0].doc._attachments).length; j++) {
-                  console.log(Object.keys(data.rows[0].doc._attachments)[j],data.rows[0].doc.image_details[i].doc_id+"."+data.rows[0].doc.image_details[i].image_type);
-                  if(Object.keys(data.rows[0].doc._attachments)[j] == data.rows[0].doc.image_details[i].doc_id+"."+data.rows[0].doc.image_details[i].image_type){
-                    url ="/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[j]+"&db="+db+"&id="+data.rows[0].doc._id;
-                    break;
-                  }
-                };
+                var file_name = data.rows[0].doc.image_details[i].doc_id+"."+data.rows[0].doc.image_details[i].image_type.split("/").pop();
+                if(data.rows[0].doc._attachments[file_name]){
+                  url ="/api/attachment?attachment_name="+file_name+"&db="+db+"&id="+data.rows[0].doc._id;
+                }else{
+                  console.log("not found image name in _attachments");
+                }
               }
               // output.push('<td class="ct-image-width">'+data.rows[0].doc.image_details[i].image_width+'</td>');
               // output.push('<td class="ct-image-height">'+data.rows[0].doc.image_details[i].image_height+'</td>');
@@ -3486,7 +3485,9 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
             if(data.image_details){
               for (var i = 0; i < data.image_details.length; i++) {
                 if(i == indexId){
-                   data.image_details.splice(indexId, 1);
+                  delete data._attachments[data.image_details[i].doc_id+"."+data.image_details[i].image_type.split("/").pop()];
+                  data.image_details.splice(indexId, 1);
+                  console.log(data);
                   break;
                 }
               };
