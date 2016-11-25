@@ -2234,7 +2234,7 @@ function getUserpicAndInfo(data) {
     if(data.rows[i].value.imgblob){
       $(".userpic").attr("src", data.rows[i].value.imgblob);
     }else if(data.rows[i].value._attachments){
-      var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].doc._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[i].id;
+      var url = "/api/attachment?attachment_name="+Object.keys(data.rows[i].value._attachments)[0]+"&db="+personal_details_db+"&id="+data.rows[i].id;
       // url = $.couch.urlPrefix+'/'+personal_details_db+'/'+data.rows[i].id+'/'+Object.keys(data.rows[i].value._attachments)[0];
       $(".userpic").attr("src",url);
     }else{

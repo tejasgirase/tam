@@ -703,10 +703,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
       removeChartingImageConfiguration($(this));
     });
 
-    $("#personal_details_tab").on("click","#save_charting_template_setting",function(e){
-      e.preventDefault();
-      saveChartingTemplateSetting();
-    });
+    // $("#personal_details_tab").on("click","#save_charting_template_setting",function(e){
+    //   e.preventDefault();
+    //   saveChartingTemplateSetting();
+    // });
 
     $("#personal_details_tab").on("change","#charting_template_image_file",function(){
       getImageDataURIForChartingTemplateImage(this);
@@ -2454,7 +2454,10 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
           $("#authorised_signatory").val(data.rows[0].doc.authorised_signatory);
           $("#invoice_footer").val(data.rows[0].doc.footer);
           $("#invoice_standard_memo").val(data.rows[0].doc.standard_memo);
-          $("#preview_image").show().attr("src",data.rows[0].doc.invoice_image);
+          if(data.rows[0].doc._attachments){
+            var url = "/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[0]+"&db="+db+"&id="+data.rows[0].id
+            $("#preview_image").show().attr("src",url);
+          }
           $("#invoice_hospital_website").val(data.rows[0].doc.hospital_website);
           $("#invoice_hospital_email").val(data.rows[0].doc.hospital_email);
           $("#invoice_hospital_phone").val(data.rows[0].doc.hospital_phone ? data.rows[0].doc.hospital_phone : "");
@@ -2600,7 +2603,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         dhp_code:                   pd_data.dhp_code,
         last_change_username:       pd_data.first_name  + " " + pd_data.last_name,
         last_change_userid:         pd_data._id,
-        invoice_image:              $("#preview_image").attr("src"),
+        // invoice_image:              $("#preview_image").attr("src"),
         hospital_website:           $("#invoice_hospital_website").val(),
         hospital_phone:             $("#invoice_hospital_phone").val(),
         hospital_email:             $("#invoice_hospital_email").val(),
@@ -2626,6 +2629,12 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         $("#is_save_print").removeClass("ajax-loader-large");
         $("#is_save_print").removeAttr("disabled");
         newAlert('success', "Print Setting Successfully saved.");
+        var file = "WebFile";
+        var fname = "upload_"+moment().format("YYYY-MM-DD_hh:mm");
+        var img = new Image();
+        img.src = $("#preview_image").attr("src");
+        
+        saveDataUri(img,db,data.id,data.rev,fname,file);
         $('html, body').animate({scrollTop: 0}, 'slow');
         return false;
       },
@@ -2636,6 +2645,35 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         return false;
       }
     });
+  }
+
+  function saveDataUri (img,db_name,doc_id,doc_rev,filename,file){
+    if(file =="WebFile") {
+      console.log(img);
+      var canvas = document.createElement("canvas");
+      canvas.width  = "800";
+      canvas.height = "600";
+      var ctx       = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0,600,600);
+      canvas.toBlob(function(blob) {
+        var form    = new FormData(),
+            request = new XMLHttpRequest();
+        form.append("_rev",doc_rev);
+        form.append("_id",doc_id);
+        form.append("_attachments", blob, filename);
+        form.append("db",db_name);
+        request.onreadystatechange = function() {
+          console.log(request);
+          if (request.readyState == 4 && request.status == 201) {
+            //getUserInfoPic(); 
+            printSetting();
+          }
+        };
+        // request.open("POST", "/"+db_name+"/"+doc_id, true);
+        request.open("POST", "/api/upload", true);
+        request.send(form);
+      }, "image/png");
+    }
   }
 
   function getAuditRecords(limit,skip) {
@@ -3037,7 +3075,6 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     $("#health_risk_factor_val").val('');
   }
 
-
   function getChartingTemplateSetting(){
     tamsaFactories.blockScreen("Please wait...");
     $.couch.db(db).view("tamsa/getChartingTemplateSettings",{
@@ -3060,10 +3097,20 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
               output.push('<tr class="ct-image-configuration">');
               output.push('<td class="ct-image-specialization">'+data.rows[0].doc.image_details[i].specialization+'</td>');
               output.push('<td class="ct-image-name">'+data.rows[0].doc.image_details[i].image_name+'</td>');
+              var url="";
+              if(data.rows[0].doc._attachments){
+                for (var j = 0; j < Object.keys(data.rows[0].doc._attachments).length; j++) {
+                  console.log(Object.keys(data.rows[0].doc._attachments)[j],data.rows[0].doc.image_details[i].doc_id+"."+data.rows[0].doc.image_details[i].image_type);
+                  if(Object.keys(data.rows[0].doc._attachments)[j] == data.rows[0].doc.image_details[i].doc_id+"."+data.rows[0].doc.image_details[i].image_type){
+                    url ="/api/attachment?attachment_name="+Object.keys(data.rows[0].doc._attachments)[j]+"&db="+db+"&id="+data.rows[0].doc._id;
+                    break;
+                  }
+                };
+              }
               // output.push('<td class="ct-image-width">'+data.rows[0].doc.image_details[i].image_width+'</td>');
               // output.push('<td class="ct-image-height">'+data.rows[0].doc.image_details[i].image_height+'</td>');
-              output.push('<td data-image-height="'+data.rows[0].doc.image_details[i].image_height+'" data-image-width="'+data.rows[0].doc.image_details[i].image_width+'" class="ct-image-data"><img width="100" height="100" src='+data.rows[0].doc.image_details[i].image_data+'></td>');
-              output.push('<td><span class="label label-warning mrgright1 edit-charting-image pointer">Edit</span><span class="label label-warning remove-charting-image pointer">Remove</span></td>');
+              output.push('<td data-image_name="'+data.rows[0].doc.image_details[i].doc_id+'" data-image_type="'+data.rows[0].doc.image_details[i].image_type+'" class="ct-image-data"><img width="100" height="100" src='+encodeURI(url)+'></td>');
+              output.push('<td><span class="label label-warning mrgright1 edit-charting-image pointer" data-index-edit="'+i+'">Edit</span><span class="label label-warning remove-charting-image pointer" data-index-delete="'+i+'">Remove</span></td>');
               output.push('</tr>');
             }
             $("#charting_template_images_configuration tbody").html(output.join(''));
@@ -3087,54 +3134,95 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     });
   }
 
-  function saveChartingTemplateSetting(){
-    tamsaFactories.blockScreen("Please wait...");
-    var image_details = [];
-    $(".ct-image-configuration").each(function(){
-      var img_data = {
-        specialization: $(this).find(".ct-image-specialization").html(),
-        image_name:     $(this).find(".ct-image-name").html(),
-        image_width:    600,
-        image_height:   430,
-        // image_width:    $(this).find(".ct-image-data").data("image-width"),
-        // image_height:   $(this).find(".ct-image-data").data("image-height"),
-        image_data:     $(this).find(".ct-image-data img").attr("src")
-      }
-      image_details.push(img_data);
-    });
-
-    var save_charting_template_data = {
-      doctype:               "charting_template_settings",
-      update_ts:             new Date(),
-      dhp_code:              pd_data.dhp_code,
-      doctor_id:             pd_data._id,
-      chartnote_checked:     $("#show_template").is(":checked"),
-      chartnote_doctor_list: $("#doctor_list_template").val(),
-      one_day_preference:    $("#charting_template_24").val(),
-      two_days_preference:   $("#charting_template_48").val(),
-      image_details:         image_details
-    };
-
-    if($("#save_charting_template_setting").data("index")){
-      save_charting_template_data._id = $("#save_charting_template_setting").data("index");
-      save_charting_template_data._rev = $("#save_charting_template_setting").data("rev");
-    }
-    $.couch.db(db).saveDoc(save_charting_template_data,{
-      success:function(data){
-        $("#save_charting_template_setting").data("index",data.id);
-        $("#save_charting_template_setting").data("rev",data.rev);
-        newAlert("success", "Charting Template Settings saved Successfully.");
-        $('body,html').animate({scrollTop: 0}, 'slow');
-        getSpecializationDocStore();
-        tamsaFactories.unblockScreen();
-      },
-      error:function(data,error,reason){
-        newAlert("danger", reason);
-        $('body,html').animate({scrollTop: 0}, 'slow');
-        return false;
-      }
-    });
+  function saveFileChartingSetting (img,db_name,doc_id,doc_rev,filename) {
+      var form = new FormData(),
+      request = new XMLHttpRequest();
+      form.append("_id",doc_id);
+      form.append("_rev",doc_rev);
+      form.append("db",db_name);
+      form.append("_attachments", img, filename);
+      request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 201) {
+          getChartingTemplateSetting();
+        }
+      };
+      // request.open("POST", "/"+db_name+"/"+doc_id, true);
+      request.open("POST", "/api/upload", true);
+      request.send(form);
   }
+
+
+  // function saveChartingTemplateSetting(){
+  //   tamsaFactories.blockScreen("Please wait...");
+  //   // var image_details = [];
+  //   // var attachment_   = [];
+  //   // $(".ct-image-configuration").each(function(){
+  //   //   var img_data = {
+  //   //     specialization: $(this).find(".ct-image-specialization").html(),
+  //   //     image_name:     $(this).find(".ct-image-name").html(),
+  //   //     image_width:    600,
+  //   //     doc_id:         $(this).find(".ct-image-data").data("image_name"),
+  //   //     image_type:     $(this).find(".ct-image-data").data("image_type"),
+  //   //     image_height:   430
+  //   //   }
+  //   //   attachment_array = {
+  //   //     content_type: "image/"+$(this).find(".ct-image-data").data("image_type"),
+  //   //     name:         $(this).find(".ct-image-data").data("image_name"),
+  //   //     data:         $("#charting_template_image_file").get(0).files[0]
+  //   //   }
+  //   //   image_details.push(img_data);
+  //   //   attachment_.push(attachment_array);
+  //   // });
+  //   // console.log(image_details);
+  //   // console.log(attachment_);
+
+  //   // var save_charting_template_data = {
+  //   //   doctype:               "charting_template_settings",
+  //   //   update_ts:             new Date(),
+  //   //   dhp_code:              pd_data.dhp_code,
+  //   //   doctor_id:             pd_data._id,
+  //   //   chartnote_checked:     $("#show_template").is(":checked"),
+  //   //   chartnote_doctor_list: $("#doctor_list_template").val(),
+  //   //   one_day_preference:    $("#charting_template_24").val(),
+  //   //   two_days_preference:   $("#charting_template_48").val(),
+  //   //   image_details:         image_details
+  //   // };
+
+  //   if($("#save_charting_template_setting").data("index")){
+  //     save_charting_template_data._id = $("#save_charting_template_setting").data("index");
+  //     save_charting_template_data._rev = $("#save_charting_template_setting").data("rev");
+  //   }
+  //   $.unblockUI();
+  //   // db_name,doc_id,doc_rev,filename,patient_user_id,file
+  //   // saveTest(save_charting_template_data,attachment_,db);
+  //   // $.couch.db(db).saveDoc(save_charting_template_data,{
+  //   //   success:function(data){
+  //   //     $("#save_charting_template_setting").data("index",data.id);
+  //   //     $("#save_charting_template_setting").data("rev",data.rev);
+  //   //     newAlert("success", "Charting Template Settings saved Successfully.");
+  //   //     $('body,html').animate({scrollTop: 0}, 'slow');
+  //   //     $(".ct-image-configuration").each(function(){
+  //   //       var img_data = {
+  //   //         specialization: $(this).find(".ct-image-specialization").html(),
+  //   //         image_name:     $(this).find(".ct-image-name").html(),
+  //   //         image_width:    600,
+  //   //         image_height:   430,
+  //   //         // image_width:    $(this).find(".ct-image-data").data("image-width"),
+  //   //         // image_height:   $(this).find(".ct-image-data").data("image-height"),
+  //   //         image_data:     $(this).find(".ct-image-data img").attr("src")
+  //   //       }
+  //   //       image_details.push(img_data);
+  //   //     });
+  //   //     getSpecializationDocStore();
+  //   //     tamsaFactories.unblockScreen();
+  //   //   },
+  //   //   error:function(data,error,reason){
+  //   //     newAlert("danger", reason);
+  //   //     $('body,html').animate({scrollTop: 0}, 'slow');
+  //   //     return false;
+  //   //   }
+  //   // });
+  // }
 
   function getSpecializationDocStore(){
     $.couch.db(db).view("tamsa/getSpecializationList", {
@@ -3179,6 +3267,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
 
   function addChartingTemplateImage(){
     if(validateChartingTemplateImage()) {
+      tamsaFactories.blockScreen("Please wait...");
       if($("#save_charting_template_images").data("rowObj")) {
         var $ele = $("#save_charting_template_images").data("rowObj");
         if(!$("#charting_template_image_specialization").val()){
@@ -3190,26 +3279,39 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         }
         $ele.closest("tr").find(".ct-image-name").html($("#charting_template_image_name").val());
         $ele.closest("tr").find(".ct-image-data").find("img").attr("src",$("#charting_template_image_file").data("img-data"));
-        $ele.closest("tr").find(".ct-image-data").data("image-width",$("#charting_template_image_width").val());
-        $ele.closest("tr").find(".ct-image-data").data("image-height",$("#charting_template_image_height").val());
+        // $ele.closest("tr").find(".ct-image-data").data("image-width",$("#charting_template_image_width").val());
+        $ele.closest("tr").find(".ct-image-data").data("image_name",$("#charting_template_image_file").val());
+        $ele.closest("tr").find(".ct-image-data").data("image_type",$("#charting_template_image_file").val());
+        // $ele.closest("tr").find(".ct-image-data").data("image-height",$("#charting_template_image_height").val());
+        if($("#charting_template_image_file").val().split('.')[0] != ""){
+          name = $("#charting_template_image_file").val().split('.')[0];
+        }else{
+          name = $("#charting_template_image_file").val();
+        }
+        indexId = $ele.data("index-edit");
+        saveEditChartingSettingOneByOne(specialization,$("#charting_template_image_file").get(0).files[0],$("#charting_template_image_file").val().split('.')[0],$("#charting_template_image_file").val().split('.').pop(),$("#charting_template_image_name").val(),indexId);
         $("#add_charting_template_images_modal").modal("hide");
       }else {
         var output = [];
         output.push('<tr class="ct-image-configuration">');
         if(!$("#charting_template_image_specialization").val()){
           if($("#charting_template_image_specialization_by_text").val().trim() != ""){
+            var specialization = $("#charting_template_image_specialization_by_text").val();
           output.push('<td class="ct-image-specialization">'+$("#charting_template_image_specialization_by_text").val()+'</td>');
             var aryy = $("#save_charting_template_setting").data("special_name") || [];
             aryy.push($("#charting_template_image_specialization_by_text").val());
             $("#save_charting_template_setting").data("special_name",aryy);
           }
         }else{
+
+          var specialization = $("#charting_template_image_specialization").val();
           output.push('<td class="ct-image-specialization">'+$("#charting_template_image_specialization").val()+'</td>');
         }
         output.push('<td class="ct-image-name">'+$("#charting_template_image_name").val()+'</td>');
         // output.push('<td class="ct-image-width">'+$("#charting_template_image_width").val()+'</td>');
         // output.push('<td class="ct-image-height">'+$("#charting_template_image_height").val()+'</td>');
-        output.push('<td data-image-width="'+$("#charting_template_image_width").val()+'" data-image-height="'+$("#charting_template_image_height").val()+'" class="ct-image-data"><img src="'+$("#charting_template_image_file").data("img-data")+'" width="100" height="100"></td>');
+
+        output.push('<td data-image_name="'+$("#charting_template_image_file").val().split('.')[0]+'" data-image_type="'+$("#charting_template_image_file").val().split('.').pop()+'" data-image-width="'+$("#charting_template_image_width").val()+'" data-image-height="'+$("#charting_template_image_height").val()+'" class="ct-image-data"><img src="'+$("#charting_template_image_file").data("img-data")+'" width="100" height="100"></td>');
         output.push('<td><span class="label label-warning mrgright1 edit-charting-image pointer">Edit</span><span class="label label-warning remove-charting-image pointer">Remove</span></td>');
         output.push('</tr>');
         $("#add_charting_template_images_modal").modal("hide");
@@ -3219,7 +3321,192 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         }else{
           $("#charting_template_images_configuration tbody").append(output.join(''));
         }  
+        saveChartingSettingOneByOne(specialization,$("#charting_template_image_file").get(0).files[0],$("#charting_template_image_file").val().split('.')[0],$("#charting_template_image_file").val().split('.').pop(),$("#charting_template_image_name").val());
       }
+    }
+  }
+
+  function saveChartingSettingOneByOne(specialization,img_src,doc_id,img_type,img_name,img_width,img_height) {
+    var img_data = {
+      specialization: specialization,
+      image_name:     img_name,
+      doc_id:         doc_id,
+      image_type:     "Image/"+img_type,
+      image_width:    600,
+      image_height:   400
+    }
+    if($("#save_charting_template_setting").data("index")){
+      id = $("#save_charting_template_setting").data("index");
+      $.couch.db(db).openDoc(id,{
+        success:function(data){
+          if(data){
+            if(data.image_details){
+              console.log(data.image_details);
+              data.image_details.push(img_data);
+              data.doctor_id             = pd_data._id;
+              data.update_ts             = new Date();
+              data.chartnote_checked     = $("#show_template").is(":checked");
+              data.chartnote_doctor_list = $("#doctor_list_template").val();
+              data.one_day_preference    = $("#charting_template_24").val();
+              data.two_days_preference   = $("#charting_template_48").val();
+              $.couch.db(db).saveDoc(data,{
+                success:function(data){
+                  if(data && img_src){
+                    saveFileChartingSetting(img_src,db,data.id,data.rev,doc_id+"."+img_type);
+                  }else{
+                    getChartingTemplateSetting();
+                  }
+                  getSpecializationDocStore();
+                },
+                error:function(data,error,status) {
+                  console.log(data,error,status);
+                }
+              });
+            }
+          }
+        },
+        error:function(data,error,status) {
+          console.log(data,error,status);
+        }
+      });
+
+    }else{
+      var save_charting_template_data = {
+        doctype:               "charting_template_settings",
+        dhp_code:              pd_data.dhp_code,
+        doctor_id:             pd_data._id,
+        update_ts:             new Date(),
+        chartnote_checked:     $("#show_template").is(":checked"),
+        chartnote_doctor_list: $("#doctor_list_template").val(),
+        one_day_preference:    $("#charting_template_24").val(),
+        two_days_preference:   $("#charting_template_48").val(),
+        image_details:         img_data
+      };
+      $.couch.db(db).saveDoc(save_charting_template_data,{
+        success:function(data){
+          if(data && img_src){
+            saveFileChartingSetting(img_src,db,data.id,data.rev,doc_id+"."+img_type)
+          }else{
+            getChartingTemplateSetting();
+          }
+        },
+        error:function(data,error,status) {
+          console.log(data,error,status);
+        }
+      });
+   }
+  }
+  function saveEditChartingSettingOneByOne(specialization,img_src,doc_id,img_type,img_name,img_width,img_height,indexId) {
+    if(img_src){
+      id = $("#save_charting_template_setting").data("index");
+      $.couch.db(db).openDoc(id,{
+        success:function(data){
+          if(data){
+            if(data.image_details){
+              data.doctor_id             = pd_data._id;
+              data.update_ts             = new Date();
+              data.chartnote_checked     = $("#show_template").is(":checked");
+              data.chartnote_doctor_list = $("#doctor_list_template").val();
+              data.one_day_preference    = $("#charting_template_24").val();
+              data.two_days_preference   = $("#charting_template_48").val();
+              for (var i = 0; i < data.image_details.length; i++) {
+                if(i == indexId){
+                  data.image_details[i].specialization = specialization;
+                  data.image_details[i].image_name     = img_name;
+                  data.image_details[i].doc_id         = doc_id;
+                  data.image_details[i].image_type     = "Image/"+img_type;
+                  break;
+                }
+              };
+              console.log(data.image_details);
+              $.couch.db(db).saveDoc(data,{
+                success:function(tdata){
+                  if(tdata && img_src){
+                    saveFileChartingSetting(img_src,db,tdata.id,tdata.rev,doc_id+"."+img_type)
+                  }else{
+                    getChartingTemplateSetting();
+                  }
+                  getSpecializationDocStore();
+                },
+                error:function(data,error,status) {
+                  console.log(data,error,status);
+                }
+              });
+            }
+          }
+        },
+        error:function(data,error,status) {
+          console.log(data,error,status);
+        }
+      });
+    }else{
+      id = $("#save_charting_template_setting").data("index");
+      $.couch.db(db).openDoc(id,{
+        success:function(data){
+          if(data){
+            if(data.image_details){
+              data.doctor_id             = pd_data._id;
+              data.update_ts             = new Date();
+              data.chartnote_checked     = $("#show_template").is(":checked");
+              data.chartnote_doctor_list = $("#doctor_list_template").val();
+              data.one_day_preference    = $("#charting_template_24").val();
+              data.two_days_preference   = $("#charting_template_48").val();
+              for (var i = 0; i < data.image_details.length; i++) {
+                if(i == indexId){
+                  data.image_details[i].specialization = specialization;
+                  data.image_details[i].image_name     = img_name;
+                  break;
+                }
+              };
+              console.log(data.image_details);
+              $.couch.db(db).saveDoc(data,{
+                success:function(tdata){
+                  getChartingTemplateSetting();
+                  getSpecializationDocStore();
+                },
+                error:function(data,error,status) {
+                  console.log(data,error,status);
+                }
+              });
+            }
+          }
+        },
+        error:function(data,error,status) {
+          console.log(data,error,status);
+        }
+      });
+    }
+  }
+  function deleteChartingSettingImage(indexId){
+    if($("#save_charting_template_setting").data("index")){
+      id = $("#save_charting_template_setting").data("index");
+      $.couch.db(db).openDoc(id,{
+        success:function(data){
+          if(data){
+            if(data.image_details){
+              for (var i = 0; i < data.image_details.length; i++) {
+                if(i == indexId){
+                   data.image_details.splice(indexId, 1);
+                  break;
+                }
+              };
+              $.couch.db(db).saveDoc(data,{
+                success:function(data){
+                  if(data){
+                    getChartingTemplateSetting();
+                  }
+                },
+                error:function(data,error,status) {
+                  console.log(data,error,status);
+                }
+              });
+            }
+          }
+        },
+        error:function(data,error,status) {
+          console.log(data,error,status);
+        }
+      });
     }
   }
 
@@ -3269,18 +3556,21 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     $("#charting_template_image_width").val($obj.closest("tr").find(".ct-image-data").data("image-width"));
     $("#charting_template_image_height").val($obj.closest("tr").find(".ct-image-data").data("image-height"));
     $("#charting_template_image_file").data("img-data", $obj.closest("tr").find(".ct-image-data img").attr("src"));
+    $("#charting_template_image_file").data("image_name", $obj.closest("tr").find(".ct-image-data").data("image_name"));
+    $("#charting_template_image_file").data("image_name", $obj.closest("tr").find(".ct-image-data").data("image_type"));
     var src = $("#charting_template_image_file").data("img-data");
     $("#charting_template_image_file").parent().find("img").remove();
     $("#charting_template_image_file").parent().append("<img height='100' width='100' src='"+src+"'>");
   }
 
   function removeChartingImageConfiguration($obj) {
-    if($obj.closest("#charting_template_images_configuration").find("tr").length == 1) { 
-      newAlert("danger","Atleast One Prepopulated image is required. You can not remove prepopulated images.");
-      return false;
-    }else {
-      $obj.closest("tr").remove();
-    }
+    // if($obj.closest("#charting_template_images_configuration").find("tr").length == 1) { 
+    //   newAlert("danger","Atleast One Prepopulated image is required. You can not remove prepopulated images.");
+    //   return false;
+    // }else {
+    //   $obj.closest("tr").remove();
+    // }
+    deleteChartingSettingImage($obj.data("index-delete"));
   }
 
   function clearAddChartingTemplateImagesModal() {

@@ -1864,15 +1864,17 @@ function validateChartingTemplateImage() {
     newAlertForModal('danger', 'Please provide Image Name.', 'add_charting_template_images_modal');
     $("#charting_template_image_name").focus();
     return false;
-  }else if($("#charting_template_image_width").val().trim() == ""){
-    newAlertForModal('danger', 'Please select Image.', 'add_charting_template_images_modal');
-    $("#charting_template_image_width").focus();
-    return false;
-  }else if($("#charting_template_image_height").val().trim() == ""){
-    newAlertForModal('danger', 'Please provide Image Height.', 'add_charting_template_images_modal');
-    $("#charting_template_image_height").focus();
-    return false;
-  }else if($("#charting_template_image_file").val() == "" && $("#charting_template_image_file").data("img-data") == ""){
+  }
+  // else if($("#charting_template_image_width").val().trim() == ""){
+  //   newAlertForModal('danger', 'Please select Image.', 'add_charting_template_images_modal');
+  //   $("#charting_template_image_width").focus();
+  //   return false;
+  // }else if($("#charting_template_image_height").val().trim() == ""){
+  //   newAlertForModal('danger', 'Please provide Image Height.', 'add_charting_template_images_modal');
+  //   $("#charting_template_image_height").focus();
+  //   return false;
+  // }
+  else if($("#charting_template_image_file").val() == "" && $("#charting_template_image_file").data("img-data") == ""){
     newAlertForModal('danger', 'Please Choose Image File.', 'add_charting_template_images_modal');
     $("#charting_template_image_name").focus();
     return false;
