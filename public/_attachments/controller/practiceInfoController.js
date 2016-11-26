@@ -3330,7 +3330,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
       specialization: specialization,
       image_name:     img_name,
       doc_id:         doc_id,
-      image_type:     "Image/"+img_type,
+      image_type:     "image/"+img_type,
       image_width:    600,
       image_height:   400
     }
@@ -3340,7 +3340,6 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         success:function(data){
           if(data){
             if(data.image_details){
-              console.log(data.image_details);
               data.image_details.push(img_data);
               data.doctor_id             = pd_data._id;
               data.update_ts             = new Date();
@@ -3413,7 +3412,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
                   data.image_details[i].specialization = specialization;
                   data.image_details[i].image_name     = img_name;
                   data.image_details[i].doc_id         = doc_id;
-                  data.image_details[i].image_type     = "Image/"+img_type;
+                  data.image_details[i].image_type     = "image/"+img_type;
                   break;
                 }
               };
@@ -3485,7 +3484,9 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
             if(data.image_details){
               for (var i = 0; i < data.image_details.length; i++) {
                 if(i == indexId){
-                  delete data._attachments[data.image_details[i].doc_id+"."+data.image_details[i].image_type.split("/").pop()];
+                  if(data._attachments){
+                    delete data._attachments[data.image_details[i].doc_id+"."+data.image_details[i].image_type.split("/").pop()];
+                  }
                   data.image_details.splice(indexId, 1);
                   console.log(data);
                   break;

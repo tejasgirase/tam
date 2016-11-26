@@ -4683,7 +4683,27 @@ function setImagesForAnnotation(partialdata){
 				$(".canvas_images option").remove();
 				$(".canvas_images").append('<option>Select Image</option>');
 				for(var i=0;i<data.rows[0].doc.image_details.length;i++){
-					$(".canvas_images").append('<option data-height="'+data.rows[0].doc.image_details[i].image_height+'" data-type="dental-image" data-width="'+data.rows[0].doc.image_details[i].image_width+'" value="'+data.rows[0].doc.image_details[i].image_data+'">'+data.rows[0].doc.image_details[i].image_name+'</option>');
+					var file_name = data.rows[0].doc.image_details[i].doc_id+"."+data.rows[0].doc.image_details[i].image_type.split("/").pop();
+					if(data.rows[0].doc._attachments[file_name]){
+						var url ="/api/attachment?attachment_name="+file_name+"&db="+db+"&id="+data.rows[0].doc._id,
+							type = data.rows[0].doc.image_details[i].image_type,
+							height = data.rows[0].doc.image_details[i].image_height,
+							width = data.rows[0].doc.image_details[i].image_width,
+							name = data.rows[0].doc.image_details[i].image_name,
+							image = new Image(),
+							data_urls;
+						image.onload = function () {
+					    var canvas = document.createElement('canvas');
+					    canvas.width = this.naturalWidth;
+					    canvas.height = this.naturalHeight;
+							canvas.getContext('2d').drawImage(this, 0, 0);
+							data_urls = canvas.toDataURL(type);
+							if(data_urls){
+								$(".canvas_images").append('<option data-height="'+height+'" data-type="dental-image" data-width="'+width+'" value="'+data_urls+'">'+name+'</option>');
+							}
+						};
+						image.src = url;
+					}
 				}
 			}else{
 				$(".canvas_images").html('<option>No Images availabel.</option>');
@@ -4698,7 +4718,6 @@ function setImagesForAnnotation(partialdata){
 		include_docs:true
 	});
 }
-
 function addMoreFMHInChartingTemplate(){
 	var add_more_soapnote_fmh_data = '<div style="padding-left: 0px;" class="soapnote-fmh-parent col-md-12"><div class="col-lg-5 col-md-4 col-sm-4 col-xs-12"><div class="row"><div class="col-md-12"><div class="form-group full-input"><select class="form-control soapnote-fmh-relation"><option selected="selected">Select Condition</option><option>Sister</option><option>Brother</option><option>Father</option><option>Mother</option><option>Paternal Grand Father</option><option>Paternal Grand Mother</option><option>Maternal Grand Father</option><option>Maternal Grand Mother</option><option>Uncle</option><option>Aunt</option></select></div></div></div></div><div class="col-lg-5 col-md-4 col-sm-4 col-xs-12"><div class="row"><div class="col-md-12"><div class="form-group full-input"><select class="form-control soapnote-fmh-condition"><option selected="selected">Select Condition</option><option>Cancer</option><option>Clotting Disorder</option><option>Diabetes</option><option>Dementia/Alzheimers</option><option>Heart Disease</option><option>Gastro Intestinal Disorders</option><option>High Cholesterol</option><option>Hypertension</option><option>Kidney Disease</option><option>Lung Disease</option><option>Osteoporosis</option><option>Psychological Disorders</option><option>Stroke/Brain attack</option><option>Sudden Death Infant Syndrome (SIDS)</option><option>Unknown Disease</option></select></div></div></div></div><div style="padding-left: 15px; padding-top: 0px;" class="col-lg-2 col-md-4 col-sm-4 col-xs-12"><div class="row"><div style="padding-top: 0px;" class="col-md-12"><div style="margin-bottom: 0px;" class="form-group full-input"><label class="label label-warning remove-soapnote-fmh pointer">Remove</label></div></div></div></div></div>';
 
