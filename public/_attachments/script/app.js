@@ -1315,6 +1315,7 @@ function getAnalyticsRangeForCharting(userid){
 
           vital_sign_data.push('<td class="text-align">'+(data.rows[i].value.Fasting_Glucose ? data.rows[i].value.Fasting_Glucose : "NA")+'</td>');
           vital_sign_data.push('<td class="text-align">'+(data.rows[i].value.O2 ? data.rows[i].value.O2 : "NA")+'</td>');
+          console.log(data.rows[i].value.OutOfRange);
           vital_sign_data.push('<td class="text-align">'+(data.rows[i].value.OutOfRange ? data.rows[i].value.OutOfRange : "NA")+'</td>');
           // vital_sign_data.push('<td class="text-align">'+(data.rows[i].value.Value_weight ? data.rows[i].value.Value_weight : "NA")+'</td>');
 
@@ -6025,7 +6026,9 @@ function getPatientAllergies (obj) {
         patient_allergies.push('<table class="table"><thead><tr><th>Allergies Name</th><th>Severe:</th><th>Reaction:</th></tr></thead><tbody>');
         for(var i=0;i<userinfo_medical.Allergies.length;i++){
           var element = userinfo_medical.Allergies[i];
-          patient_allergies.push("<tr><td>"+element.allergies+"</td><td>"+(element.severe ? element.severe : "NA")+"</td><td>"+(element.reaction ? element.reaction : "NA")+"</td></tr>");
+          if(userinfo_medical.Allergies[i].allergies){
+            patient_allergies.push("<tr><td>"+element.allergies+"</td><td>"+(element.severe ? element.severe : "NA")+"</td><td>"+(element.reaction ? element.reaction : "NA")+"</td></tr>");
+          }
         }
         patient_allergies.push('</tbody></table>');
       }else{
@@ -6040,8 +6043,9 @@ function getPatientAllergies (obj) {
         patient_allergies.push('');
         for(var i=0;i<userinfo_medical.Allergies.length;i++){
           var element = userinfo_medical.Allergies[i];
-          // var arry =element.split(",");
-          patient_allergies.push("<li>Allergies name:"+element.allergies+"</li><li>Severe:"+(element.severe ? element.severe : "NA")+"</li><li>Reaction:"+(element.reaction ? element.reaction : "NA")+"</li>");
+          if(element && element.allergies){
+            patient_allergies.push("<li>Allergies name:"+element.allergies+"</li><li>Severe:"+(element.severe ? element.severe : "NA")+"</li><li>Reaction:"+(element.reaction ? element.reaction : "NA")+"</li>");
+          }
         }
       }else{
         patient_allergies.push("No Allergies are found.");

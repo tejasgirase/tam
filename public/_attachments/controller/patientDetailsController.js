@@ -1274,18 +1274,20 @@ function saveAllergies() {
   var allr2 = [];
   if(validatioOnAllergies()){
     $(".add-allergies").each( function(){
-      var allergies_list = '';
       if(userinfo_medical.Allergies){
         if(userinfo_medical.Allergies.String){
         }else if(userinfo_medical.Allergies.length > 0){
           for (var i = 0; i < userinfo_medical.Allergies.length; i++) {
+            if(userinfo_medical.Allergies[i].allergies){
               var element = userinfo_medical.Allergies[i];
-              var allergis_arrya = userinfo_medical.Allergies[i].split(",");
-              if(allergis_arrya[0] == $(this).find(".add_padf_item_allergies").val()){
-                if(allergis_arrya[2] == $(this).find(".add_padf_item_reaction").  val()){
-                  
-                  var allr = $(this).find(".add_padf_item_allergies").val()+","+$(this).find(".add_padf_item_severity").val()+","+$(this).find(".add_padf_item_reaction").val();
-                  userinfo_medical.Allergies[i] = allr;
+              var sever = userinfo_medical.Allergies[i].sever;
+              var allergies = userinfo_medical.Allergies[i].allergies;
+              var reaction = userinfo_medical.Allergies[i].reaction;
+              if(allergies == $(this).find(".add_padf_item_allergies").val()){
+                if(reaction == $(this).find(".add_padf_item_reaction").  val()){
+                  userinfo_medical.Allergies[i].allergies = $(this).find(".add_padf_item_allergies").val();
+                  userinfo_medical.Allergies[i].severe = $(this).find(".add_padf_item_severity").val();
+                  userinfo_medical.Allergies[i].reaction = $(this).find(".add_padf_item_reaction").val();
                   duplicacy = true;
                   break;
                 }else{
@@ -1294,19 +1296,27 @@ function saveAllergies() {
               }else{
                 duplicacy = false;
               }
+            }else{
+              userinfo_medical.Allergies.splice(i,1);
+              duplicacy = false;
+            }
           }
           if(duplicacy){
           }else {
-            allr2.push($(this).find(".add_padf_item_allergies").val()+","+$(this).find(".add_padf_item_severity").val()+","+$(this).find(".add_padf_item_reaction").val());
+            var allr = {
+              allergies: $(this).find(".add_padf_item_allergies").val(),
+              severe:     $(this).find(".add_padf_item_severity").val(),
+              reaction:  $(this).find(".add_padf_item_reaction").val()
+            }
+            allr2.push(allr);
           }
         }
       }
-      bulk_allergies.push(allergies_list);
     });
     $.merge(userinfo_medical.Allergies,allr2);
   return userinfo_medical;
   }else{
-  return bulk_allergies;  
+    return bulk_allergies;  
   }
 }  
 

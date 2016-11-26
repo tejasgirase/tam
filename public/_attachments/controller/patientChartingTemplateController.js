@@ -1608,7 +1608,9 @@ function getPastAllegies(id){
 function displayPastAllegies(start,end,data){
   $("#charting_current_allergies_list tbody").html('');
   for(var i=start;i<end;i++){
-    getPastAllegiesArray(data.rows[i]);
+    if(data.rows[i].allergies){
+      getPastAllegiesArray(data.rows[i]);
+    }
   }
 }
 

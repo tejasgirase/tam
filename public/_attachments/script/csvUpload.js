@@ -537,10 +537,12 @@ function saveSinglePatient($obj,print,fpage){
     $(".save-allergies").each( function(){
       if($(this).find(".issu_name_allergies").val() != "Select Allergies" && $(this).find(".issu_name_severe").val() != "Select Severe" && $(this).find(".issu_name_reaction").val() != "Select Reaction"){
         var bulk_allergies = "";
-        bulk_allergies += $(this).find(".issu_name_allergies").val()+","; 
-        bulk_allergies += $(this).find(".issu_name_severe").val()+","; 
-        bulk_allergies += $(this).find(".issu_name_reaction").val(); 
-        allergies_array.push(bulk_allergies);
+        var allr = {
+          allergies: $(this).find(".issu_name_allergies").val(),
+          sever:     $(this).find(".issu_name_severe").val(), 
+          reaction:  $(this).find(".issu_name_reaction").val() 
+        }
+        allergies_array.push(allr);
       }
     });
     

@@ -3369,6 +3369,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
       });
 
     }else{
+      console.log("Insert new doc");
       var save_charting_template_data = {
         doctype:               "charting_template_settings",
         dhp_code:              pd_data.dhp_code,
