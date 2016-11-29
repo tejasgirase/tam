@@ -118,6 +118,9 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     $("body").on("keypress" , "#Phonealerts",function(e){
       return allowOnlyTenNumbersSignUp(e,$(this));
     });
+    $("body").on("keypress" , ".numberOnly",function(e){
+      return allowOnlyNumbers(e,$(this));
+    });
       
     $("#dhp_code").autocomplete({
       search: function(event, ui) { 
@@ -203,6 +206,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     });
 
     $("#next_from_agreement_plan").click(function() {
+      $("#next_from_subscription_plan").attr("disabled","disabled");
       activateSubscriptionTab();
     });
 
@@ -220,7 +224,9 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
     $("#signup").click(function() {
       console.log("called click");
-      generateRequestForsignUp();
+      // if(validateSignUp() && validateAgreementAtSignUP() && validateSubscriptionTabAtSignUP() && validatePracticeInfoTabAtSignUP()){
+        generateRequestForsignUp();
+      // }
       //Actual SignUP
     });
 
@@ -235,6 +241,21 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     $("#signup_subscription_plan_tab").on("click",".plan-list-checkbox",function(){
       togglePlanList($(this));
     });
+
+    $("#signup_subscription_plan_tab").on("focusout","#duration_years",function(){
+      if($(this).data("value")){
+        var plan_value = $(this).data("value");
+        if(Number($(this).val()) > 0 ){
+          var total = Number(plan_value) * Number($(this).val());
+          $("#subscription_total").text(total);
+        }else{
+          $("#subscription_total").text(plan_value);
+        }
+      }else{
+
+      }
+    });
+
 
     $("#dhp_code").on("keydown",function(e){
       var charCode = e.charCode || e.keyCode || e.which;
@@ -292,28 +313,28 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
     getStates();
 
-    $("#hospital_name").on("focusout",function(){
-      $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
-        success: function(data) {
-          $("#hospital_name").removeClass('myloader');
-          if(data.rows.length > 0){
-            $("#State, #City").attr("disabled","disabled");
-            $("#hospital_phone, #hospital_email").attr('readonly', 'readonly');
-          }else{
-            $("#State, #City").removeAttr("disabled");
-            $("#hospital_phone, #hospital_email").val("").removeAttr('readonly');
-          }
-        },
-        error: function(status) {
-          console.log(status);
-        },
-        startkey: [$("#hospital_name").val(),$("#hospital_type").val()],
-        endkey: [$("#hospital_name").val(),$("#hospital_type").val(),{},{},{},{},{},{}],
-        limit: 5,
-        reduce:true,
-        group:true
-      });
-    });
+    // $("#hospital_name").on("focusout",function(){
+    //   $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
+    //     success: function(data) {
+    //       $("#hospital_name").removeClass('myloader');
+    //       if(data.rows.length > 0){
+    //         $("#State, #City").attr("disabled","disabled");
+    //         $("#hospital_phone, #hospital_email").attr('readonly', 'readonly');
+    //       }else{
+    //         $("#State, #City").removeAttr("disabled");
+    //         $("#hospital_phone, #hospital_email").val("").removeAttr('readonly');
+    //       }
+    //     },
+    //     error: function(status) {
+    //       console.log(status);
+    //     },
+    //     startkey: [$("#hospital_name").val(),$("#hospital_type").val()],
+    //     endkey: [$("#hospital_name").val(),$("#hospital_type").val(),{},{},{},{},{},{}],
+    //     limit: 5,
+    //     reduce:true,
+    //     group:true
+    //   });
+    // });
 
     $("#dhp_code").on("focusout",function(){
       $.couch.db(replicated_db).view("tamsa/getDhpHospital", {
@@ -549,6 +570,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function signupNewUser(){
+    $.blockUI();
     var specialization_value;
     if($("#Specialization").val() == "Select Specialization"){
       if($("#new_specialization").val !== ""){
@@ -597,7 +619,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       });
 
     });
-    
+    var d = new Date();
     var userDoc = {
       name:                      $("#Email").val(),
       first_name:                $("#first_name").val(),
@@ -615,6 +637,8 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       dhp_code:                  $("#dhp_code").val(),
       hospital_affiliated:       $("#hospital_name").val(),
       hospital_type:             $("#hospital_type").val(),
+      location:                  $("#location_name").val(),
+      address:                   $("#street_address").val(),
       hospital_phone:            $("#hospital_phone").val(),
       hospital_email:            $("#hospital_email").val(),
       doctors_network:           $('#Network').is(':checked'),
@@ -623,6 +647,10 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       random_code:               getPcode(6,"alphabetic"),
       level:                     "Doctor",
       subscription_plan_details: subscription_plan,
+      subscription_start_date:   moment(d).format("YYYY-MM-DD"),
+      subscription_end_date:     moment(d).add(Number($("#duration_years").val()),"year").format("YYYY-MM-DD"),
+      subscription_duration:     $("#duration_years").val(),
+      subscription_amount:       "INR",
       subscription_amount:       $("#subscription_total").text()
     };
     // console.log($("#dhp_code").val());
@@ -653,6 +681,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         $.couch.db(replicated_db).view("tamsa/getUserPhone",{
           success: function (data){
             if(data.rows.length > 0){
+              $.unblockUI();
               $("#validationtext").text("User with given Phone number is already exist.");
               $('html, body').animate({scrollTop: 0}, 'slow');
               $("#Phone").focus();
@@ -661,29 +690,56 @@ app.controller("signUpController",function($scope,$state,$stateParams){
               var tempdocid = "org.couchdb.user:"+$("#Email").val().trim();
               $.couch.db(replicated_db).openDoc(tempdocid, {
                 success: function(data){
+                  $.unblockUI();
                    $("#validationtext").text("User with given email is already exist.");
                    $('html, body').animate({scrollTop: 0}, 'slow');
                    return false;
                 },
                 error: function(data, error, reason) {
                   if(data == 500){
-                    console.log(userDoc);
-                    $.couch.signup(userDoc,$("#Password").val(), {
-                      success: function(data) {
-                        $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
-                        window.location = "/";
-                      },
-                      error: function(data, error, reason) {
-                        if (data == '409') {
-                          $("#validationtext").text("User already exist");
-                          $('html, body').animate({scrollTop: 0}, 'slow');
+                    if($("#subscription_total").text() != "0"){
+                      $.blockUI();
+                      var handler = StripeCheckout.configure({
+                        key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+                        image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+                        locale: 'auto',
+                        token: function(token) {
+                          if(token.id){
+                            var payment_details = {
+                              token_id : token.id,
+                              token_email : token.email,
+                              token_type : token.type,
+                              token_card_details:token.card
+                            }
+                            userDoc.payment_details_card = payment_details;
+                            saveSignupDoc(userDoc);
+                          }else{
+                            newAlertForModal('danger','Payment Card details are invalide');
+                            $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
+                            return false;
+                          }
                         }
-                        else {
-                          $("#validationtext").text(reason);
-                          $('html, body').animate({scrollTop: 0}, 'slow');
-                        }
-                      }
-                    });
+                      });
+                      document.getElementById('customButton').addEventListener('click', function(e) {
+                        // Open Checkout with further options:
+                        handler.open({
+                          name: 'Stripe.com',
+                          description: '2 widgets',
+                          zipCode: true,
+                          amount: Number($("#subscription_total").text())
+                        });
+                        e.preventDefault();
+                      });
+
+                      // Close Checkout on page navigation:
+                      window.addEventListener('popstate', function() {
+                        handler.close();
+                        $.unblockUI();
+                      });
+                      $("#customButton").trigger("click");
+                    }else{
+                      saveSignupDoc(userDoc);
+                    }
                   }
                   // if(data == "404"){
                   //   $.couch.db(db).saveDoc(userDoc, {
@@ -721,6 +777,27 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       endkey:[$("#dhp_code").val(),{},{},{},{},{}],
       reduce:true,
       group:true
+    });
+  }
+
+  function saveSignupDoc(userDoc){
+    console.log(userDoc);
+    $.couch.signup(userDoc,$("#Password").val(), {
+      success: function(data) {
+        $.unblockUI();
+        $.cookie('pm[message]', "Signed Up successfully. Please Log in.");
+        window.location = "/";
+      },
+      error: function(data, error, reason) {
+        if (data == '409') {
+          $("#validationtext").text("User already exist");
+          $('html, body').animate({scrollTop: 0}, 'slow');
+        }
+        else {
+          $("#validationtext").text(reason);
+          $('html, body').animate({scrollTop: 0}, 'slow');
+        }
+      }
     });
   }
 
@@ -906,6 +983,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     }else {
       console.log("in else");
     }
+    $("#next_from_subscription_plan").removeAttr("disabled");
     var product_ids='';
     $(".plan-list-checkbox:checked").each(function (i) {
       if(i > 0) product_ids+="|";
@@ -916,6 +994,11 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     include_docs:true
     }).success(function(data){
       $("#subscription_total").text(data.total);
+      $("#duration_years").data("value",data.total);
+      $("#")
+      if(Number($("#duration_years").val()) > 1){
+        $("#subscription_total").text(data.total*Number($("#duration_years").val()));
+      }
       $("#signup_subscription_plan_tab").unblock();
     }).error(function(reason){
       newAlert("danger",reason);
@@ -933,7 +1016,27 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function validatePracticeInfoTabAtSignUP() {
-    if ($("#State").val() == "Select State") {
+    if ($("#location_name").val().trim() !== "") {
+      $("#validationtext").text("Please enter valid location name.");
+      $('html, body').animate({scrollTop: 0}, 'slow');
+      $("#location_name").focus();
+      return false;
+    }else if ($("#street_address").val().trim() !== "") {
+      $("#validationtext").text("Please enter valid street address.");
+      $('html, body').animate({scrollTop: 0}, 'slow');
+      $("#street_address").focus();
+      return false;
+    }else if (!phone_filter.test($("#hospital_phone").val().trim()) && $("#hospital_phone").val().trim() !== "") {
+      $("#validationtext").text("Please enter valid phone number.");
+      $('html, body').animate({scrollTop: 0}, 'slow');
+      $("#hospital_email").focus();
+      return false;
+    }else if (!email_filter.test($("#hospital_email").val().trim()) && $("#hospital_email").val().trim() !== "") {
+      $("#validationtext").text("Please enter valid email address.");
+      $('html, body').animate({scrollTop: 0}, 'slow');
+      $("#hospital_email").focus();
+      return false;
+    }else if ($("#State").val() == "Select State") {
       $("#validationtext").text("Please Select State.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#State").focus();
@@ -963,16 +1066,6 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#Country").focus();
       return false;
-    }else if (!phone_filter.test($("#hospital_phone").val().trim()) && $("#hospital_phone").val().trim() !== "") {
-      $("#validationtext").text("Please enter valid phone number.");
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      $("#hospital_email").focus();
-      return false;
-    }else if (!email_filter.test($("#hospital_email").val().trim()) && $("#hospital_email").val().trim() !== "") {
-      $("#validationtext").text("Please enter valid email address.");
-      $('html, body').animate({scrollTop: 0}, 'slow');
-      $("#hospital_email").focus();
-      return false;
     }else {
       $("#validationtext").text("");
       return true;
@@ -984,7 +1077,21 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function validateSubscriptionTabAtSignUP() {
-    return true;
+    var valide;
+    $(".plan-list-checkbox").each(function(){
+      if($(this).is(":checked")){
+        valide = true;
+        return false;
+      }else{
+        valide = false;
+      }
+    });
+    console.log(valide);
+    if(valide){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   function allowOnlyTenNumbersSignUp(e,$obj){
@@ -1000,6 +1107,13 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       }else{
         return true;    
       }
+    }
+  }
+  function allowOnlyNumbers(e){
+    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+      return false;
+    }else{
+      return true;
     }
   }
 });
