@@ -139,7 +139,7 @@ ul.footerlink li + li:before { padding: 0 10px; color: #979797; content: "|\00a0
 .mrgtop100 {margin-top:100px;}
 .mrgbtm20 {margin-bottom:20px;}
 .mrgupdown1 { margin-top: 10px; margin-bottom: 10px;}
-.mrgbottom { margin-bottom: 0px;}
+.mrgbottom { margin-bottom: 0px !important;}
 .mrgbottom1 { margin-bottom: 10px;}
 .mrgupdown { margin-top: 0px; margin-bottom: 0px;}
 .mrgright {margin-right: 0px;}
@@ -701,6 +701,7 @@ input[class ^= 'chk'],input[class ^= 'patient_chk']{visibility: visible !importa
 .theme-background{background-color:#f2bb5c !important;}
 .hovercolor:hover{color: #eb8613 !important;}
 .theme-green {color: #92b485;}
+.theme-bold {font-weight: bold !important;}
 .theme-brown {color: #993300;}
 .theme-border{border:1px solid #f2bb5c;}
 .no-display{display: none !important;}
@@ -2723,7 +2724,6 @@ table.invoice-display-table th{background:#fff !important;}
 .round-image{ border-radius: 35px; width: 76px !important;height: 92px !important;}
 .search-patients{position: absolute; right: 10px; top: 10px; color: rgb(242, 187, 92);}
 .hovercolorchange:hover{cursor: pointer;	color: #f2bb5c;	text-decoration: underline;}
-.theme-bold {font-weight: bold !important;}
 .hoverchange:hover{color:#f2bb5c;text-decoration: underline; }
 .canvas-toolbar-parent span {cursor: pointer;margin-right: 5px;}
 .canvas-toolbar-parent span:hover {background-color: #777;}
