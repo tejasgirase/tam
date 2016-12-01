@@ -1,6 +1,7 @@
 var db              = "meluha_db5",
 personal_details_db = db+"_pi",
-replicated_db       = "yhsqizvkmp";
+replicated_db       = "yhsqizvkmp",
+admin_email       = "info@sensoryhealth.com";
 
 /* 
 While working on local environment, Please comment the live urls and uncomment your local urls.

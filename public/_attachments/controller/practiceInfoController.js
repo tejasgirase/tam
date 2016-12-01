@@ -58,6 +58,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
   }
 
   function activatePersonalDetails(){
+    $.blockUI();
     $(".tab-pane").removeClass("active");
     $("#personal_details_tab").addClass("active");
     $("#personal_details_in_link").parent().find("div").removeClass("ChoiceTextActive");
@@ -89,20 +90,489 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     $("#pdnetwork").prop("checked",pd_data.doctors_network);
     $("#pdsave").data("index",pd_data._id);
     $("#pdsave").data("rev",pd_data._rev);
-    var html = [];
+    var html = [],basic,cancel = false;
     console.log(pd_data.subscription_plan_details.length);
+
+    html.push('<div class="tab-heading-section mrgbottom">Subscripation Plan Details</div>');
     if(pd_data.subscription_plan_details){
+      html.push('<div class="form-group_login col-lg-3 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">Plan Name</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_names" index="" >');
       for (var i = 0; i < pd_data.subscription_plan_details.length; i++) {
-        html.push('<div class="form-group_login col-lg-4 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">Plan Name</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_names" index="'+pd_data.subscription_plan_details[i].product_plan_id+'" >'+pd_data.subscription_plan_details[i].name+'</label></div>');
+        if(pd_data.subscription_plan_details[i].product_plan_id =="PRO-Basic"){
+          basic = true;
+        }else if(pd_data.subscription_plan_details[i].product_plan_id =="PRO-BB"){ 
+          if(pd_data.subscription_plan_details[i].product_plan_id =="PRO-BB" && pd_data.subscription_plan_details[i+1] && pd_data.subscription_plan_details[i+1].product_plan_id =="PRO-Full"){
+            basic = false;
+          }else{
+            basic = true;
+            cancel = true;
+          }
+        }else if(pd_data.subscription_plan_details[i].product_plan_id =="PRO-Full"){
+          if(pd_data.subscription_plan_details[i].product_plan_id =="PRO-Full" && pd_data.subscription_plan_details[i+1] && pd_data.subscription_plan_details[i+1].product_plan_id =="PRO-FS"){
+            basic = false;
+          }else{
+            basic = true;
+            cancel = true;
+          }
+        }else{
+          basic = true;
+          cancel = false;
+        }
+        if(pd_data.subscription_plan_details.length == 1 ) html.push(pd_data.subscription_plan_details[i].name);
+        else html.push(pd_data.subscription_plan_details[i].name+" , ");
       }
+      html.push('</label></div>');
     }
     if(pd_data.subscription_duration){
-      html.push('<div class="form-group_login col-lg-4 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">License type</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_amount" index="">'+pd_data.subscription_duration+' Years</label></div>');
+      html.push('<div class="form-group_login col-lg-3 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">License type</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_amount" index="">'+pd_data.subscription_duration+' Years</label></div>');
     }
     if(pd_data.subscription_end_date){
-      html.push('<div class="form-group_login col-lg-4 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">License valid till</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_amount" index="">'+pd_data.subscription_end_date+'</label></div>');
+      html.push('<div class="form-group_login col-lg-3 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">License valid till</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_amount" index="">'+pd_data.subscription_end_date+'</label></div>');
     }
-    $("#subscripation_plan_details").append(html.join(""));
+    html.push('<div class="form-group_login col-lg-3 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">Options</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_amount" index="">');
+    var d = new Date();
+    console.log(pd_data.subscription_end_date,moment(pd_data.subscription_end_date).subtract(1,'month').format("YYYY-MM-DD"),moment(d).format("YYYY-MM-DD"));
+    if(pd_data.subscription_end_date && moment(pd_data.subscription_end_date).subtract(1,'month').format("YYYY-MM-DD") <= moment(d).format("YYYY-MM-DD")){
+      html.push('<span id="renew_exits_plan" class="theme-color glyphicon glyphicon-repeat" title="Re-new Plan"></span>');
+    }
+    if(basic){
+      html.push('<span id="upgraded_new_plan" class="theme-color glyphicon glyphicon-open" title="Upgraded Plan"></span>'); 
+      if(cancel){
+        html.push('<span id="cancel_plan" class="theme-color glyphicon glyphicon-remove" title="Cancel Plan"></span>');   
+      }
+    }else{
+      html.push('<span id="cancel_plan" class="theme-color glyphicon glyphicon-remove" title="Cancel Plan"></span>'); 
+    }
+    html.push('</label></div>');
+    $("#subscripation_plan_details").html(html.join(""));
+    $.unblockUI();
+  }
+
+  function validationSaveSubscription() {
+    var valide;
+    $(".plan-list-checkbox").each(function(){
+      if($(this).is(":checked")){
+        valide = true;
+        return false;
+      }else{
+        valide = false;
+      }
+    });
+    console.log(valide);
+    if(valide){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  function saveSubscripationPlan(){
+    var d = new Date();
+    var subscription_plan = [];
+    $(".plan-list-checkbox:checked").each(function() {
+      subscription_plan.push({
+        name:$(this).data("sname"),
+        product_plan_id: $(this).data("pro_id")
+      }); 
+    });
+    if(Number($("#subscription_total").text()) > 0){
+      $.blockUI();
+      openStripeModel(saveUpgradedSubscripationData,Number($("#subscription_total").text()),subscription_plan);
+    }else{
+      saveUpgradedSubscripationData(subscription_plan);
+    }
+  }
+
+  function openStripeModel(functionName,price,subscription_data){
+    var handler = StripeCheckout.configure({
+        key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+        image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+        locale: 'auto',
+        token: function(token) {
+          if(token.id){
+            var payment_details = {
+              token_id : token.id,
+              token_email : token.email,
+              token_type : token.type,
+              token_card_details:token.card
+            }
+            functionName(subscription_data,payment_details);
+          }else{
+            newAlertForModal('danger','Payment Card details are invalide');
+            $('html, body, #add_sub_user_modal').animate({scrollTop: 0}, 'slow');
+            return false;
+          }
+        }
+      });
+      document.getElementById('customButton').addEventListener('click', function(e) {
+        // Open Checkout with further options:
+        handler.open({
+          name: 'Stripe.com',
+          description: '2 widgets',
+          zipCode: true,
+          amount: price
+        });
+        e.preventDefault();
+      });
+
+      // Close Checkout on page navigation:
+      window.addEventListener('popstate', function() {
+        handler.close();
+        $.unblockUI();
+      });
+      $("#customButton").trigger("click");
+  }
+
+  function saveUpgradedSubscripationData(subscription_plan,payment_details){
+    $.blockUI();
+    $.couch.db(replicated_db).openDoc(pd_data._id,{
+      success:function(data){
+        console.log(data);
+        if(data){
+          if(payment_details){
+            data.payment_details_card = payment_details;
+          }
+          data.subscription_plan_details = subscription_plan;
+          data.update_ts                 = d;
+          data.subscription_start_date   = moment(d).format("YYYY-MM-DD");
+          data.subscription_end_date     = moment(d).add(Number($("#duration_years").val()),"year").format("YYYY-MM-DD");
+          data.subscription_duration     = $("#duration_years").val();
+          data.subscription_amount_type  = "INR";
+          data.subscription_amount       = $("#subscription_total").text();
+          $.couch.db(replicated_db).saveDoc(data,{
+            success:function(dataa){
+              console.log(dataa);
+              $("#upgraded_subscription_modal").modal("hide");
+              getDoctorInformationDetails();
+              sendEmailToUser(data.alert_email,"Subscription Plan Upgraded","text","Hello "+data.first_name+" "+data.last_name+",\nYour Subscription plan upgraded successfully.\nYour new Subscripation plan is:\nPlan name: "+data.subscription_plan_details[0].name+(data.subscription_plan_details[1] ? " and "+data.subscription_plan_details[1].name : "")+"\nDuration: "+data.subscription_duration+" year/s,\nAmount: "+data.subscription_amount+"\nValid From: "+data.subscription_start_date+" To "+data.subscription_start_date+".");
+            },
+            error:function(data,error,status){
+
+            }
+          });
+        }
+      },
+      error:function(data,error,status){
+        console.log(data,error,reason);
+      }
+    });
+  }
+
+  function saveRenewPlanData(subscription_plan,payment_details){
+    $.blockUI();
+    $.couch.db(replicated_db).openDoc(pd_data._id,{
+      success:function(data){
+        console.log(data);
+        if(data){
+          if(payment_details){
+            data.payment_details_card = payment_details;
+          }
+          data.update_ts                 = d;
+          data.subscription_start_date   = moment(d).format("YYYY-MM-DD");
+          data.subscription_end_date     = moment(d).add(Number($("#duration_years").val()),"year").format("YYYY-MM-DD");
+          data.subscription_duration     = $("#renew_duration_years").val();
+          data.subscription_amount_type  = "INR";
+          data.subscription_amount       = $("#renew_subscription_total").text();
+          $.couch.db(replicated_db).saveDoc(data,{
+            success:function(dataa){
+              console.log(data);
+              $("#renew_subscription_plan_modal").modal("hide");
+              getDoctorInformationDetails();
+              sendEmailToUser(data.alert_email,"Subscription Plan Re-new","text","Hello "+data.first_name+" "+data.last_name+",\nYour Subscription plan re-new successfully.\nYour new Subscripation plan is: \nPlan name: "+data.subscription_plan_details[0].name+(data.subscription_plan_details[1] ? " and "+data.subscription_plan_details[1].name : "")+"\nDuration: "+data.subscription_duration+" year/s,\nAmount: "+data.subscription_amount+"\nValid From: "+data.subscription_start_date+" To "+data.subscription_start_date+".");
+            },
+            error:function(data,error,status){  
+              console.log(data,error,status);
+            }
+          });
+        }
+      },
+      error:function(data,error,status){
+        console.log(data,error,reason);
+      }
+    });
+  }
+
+  function getDoctorInformationDetails(){
+    $.couch.db(replicated_db).openDoc(pd_data._id,{
+      success:function(data){
+        if(data){
+          pd_data = data;
+          activatePersonalDetails(); 
+          $.unblockUI();
+        }
+      },
+      error:function(data,error,status){
+        console.log(status,error,data);
+      }
+    });
+  }
+
+  function deletePlanData(){
+    $.couch.db(replicated_db).openDoc(pd_data._id,{
+      success:function(data){
+        $.couch.db(db).view("tamsa/getSubscriptionList",{
+          success:function(pladata){
+            var subscription_plan = [],amount;
+            for (var i = 0; i < pladata.rows.length; i++) {
+              if(!pladata.rows[i].value.premium){
+                amount = pladata.rows[i].value.charges;
+                subscription_plan.push({name:pladata.rows[i].value.name,product_plan_id:pladata.rows[i].value.product_plan_id});
+              }
+            };
+            data.subscription_plan_details = subscription_plan;
+            data.update_ts                = d;
+            data.subscription_start_date  = moment(d).format("YYYY-MM-DD");
+            data.subscription_end_date    = moment(d).add(Number($("#duration_years").val()),"year").format("YYYY-MM-DD");
+            data.subscription_duration    = "1";
+            data.subscription_amount_type = "INR";
+            data.subscription_amount      = amount;
+            data.payment_details_card     = "";
+            if($("#delete_hospital_data").prop("checked")){
+              data.remove_hospital_data = true;
+            }     
+            $.couch.db(replicated_db).saveDoc(data,{
+              success:function(dataa){
+                console.log(data);
+                $("#delete_subscription_plan_modal").modal("hide");
+                getDoctorInformationDetails();
+                sendEmailToUser(data.alert_email,"Subscription Plan Canceled","text","Hello "+data.first_name+" "+data.last_name+",\nYour Subscription plan canceled successfully.\nYour Subscripation plan is: \nPlan name: "+pd_data.subscription_plan_details[0].name+(pd_data.subscription_plan_details[1] ? " and "+pd_data.subscription_plan_details[1].name : "")+"\nDuration: "+pd_data.subscription_duration+" year/s,\nAmount: "+pd_data.subscription_amount+"\nValid From: "+pd_data.subscription_start_date+" To "+pd_data.subscription_start_date+". \nBasic Subscription plan activate.");
+                if(data.remove_hospital_data){
+                  sendEmailToUser(admin_email,"Subscription Plan Canceled","text","Hello,\nFollowing user opted to cancel his/her subscription plan.\nUsername:"+data.first_name+" "+data.last_name+".\nUser email id: "+data.alert_email+"\nPhone no: "+data.alert_phone+".\nDHP Code: "+data.dhp_code+"\n\n\nPlan name: "+pd_data.subscription_plan_details[0].name+(pd_data.subscription_plan_details[1] ? " and "+pd_data.subscription_plan_details[1].name : "")+"\nDuration: "+pd_data.subscription_duration+" year/s,\nAmount: "+pd_data.subscription_amount+"\nValid From: "+pd_data.subscription_start_date+" To "+pd_data.subscription_start_date+"\nDhp Code: "+pd_data.dhp_code+".\n\n\nThe User also requested to remove all Hospital Data (Non-Patient). Please do the needful.\n\n\nUser Name: "+pd_data.first_name+" "+pd_data.last_name+"\nUser(Doctor) id: "+pd_data._id+"\nDhp Code: "+pd_data.dhp_code+".");
+                }
+                $.unblockUI();
+              },
+              error:function(data,error,status){  
+                console.log(data,error,status);
+              }
+            });
+          },
+          error:function(data,error,status){
+            console.log(data,error,status);
+          }
+        });
+      },
+      error:function(data,error,status){
+        console.log(data,error,reason);
+      }
+    });
+  }
+
+  function getSubscriptionPlans() {
+    $("#subscription_plan_list_parent").html('<div class="row"><div class="col-lg-12 col-sm-12"><h4 style="text-align:center; background-color: rgb(146, 180, 133); color: white; border-top-right-radius: 5px; border-top-left-radius: 5px; padding: 5px; margin: 0px;">Subscription Package</h4></div></div>');
+    $("#additional_plan_list_parent").html('<div class="row"><div class="col-lg-12 col-sm-12"><h4 style="text-align:center;background-color: rgb(146, 180, 133); color: white; border-top-right-radius: 5px; border-top-left-radius: 5px; padding: 5px; margin: 0px;">Premium Features</h4></div></div>')
+    if(!($("#subscription_plan_list_parent .plan-list").length > 0)) {
+      $.couch.db(db).view("tamsa/getSubscriptionList", {
+        success:function(data) {
+          if(data.rows.length > 0) {
+            $("#additional_plan_list_parent").removeClass("no-display");
+            var sub_str=[],add_str=[],total=0;
+            sub_str.push('<div class="row plan-list">');
+            for(var i=0;i<data.rows.length;i++){
+              sub_str.push('<div class="col-lg-6 col-sm-12 paddside30" style="height:30px;">');
+                sub_str.push('<label>');
+                sub_str.push('<input class="checkshow plan-list-checkbox" data-pro_id="'+data.rows[i].value.product_plan_id+'" data-sname="'+data.rows[i].value.name+'" type="checkbox"');
+                for (var j = 0; j< pd_data.subscription_plan_details.length; j++) {
+                    if(data.rows[i].value.product_plan_id == pd_data.subscription_plan_details[j].product_plan_id){
+                      sub_str.push('checked="checked"');      
+                    }
+                  }
+                sub_str.push('>'+data.rows[i].value.name);
+                sub_str.push('</label>');
+              sub_str.push('</div>');
+            }
+            sub_str.push('</div>');
+            add_str.push('<div class="row">');
+              add_str.push('<div class="col-lg-12 col-sm-12" style="">');
+                add_str.push('<ul style="padding-left: 16px; list-style: outside none none;columns: 2; -webkit-columns: 2; -moz-columns: 2;">');
+                for(var i=0;i<data.rows[0].doc.premium_features.length;i++){
+                  add_str.push('<li class="theme-green plan-list"><span class="glyphicon glyphicon-star-empty theme-color"></span>'+data.rows[0].doc.premium_features[i]+'</li>');
+                }
+                add_str.push('</ul>');
+              add_str.push('</div>');
+            add_str.push('</div>');
+            $("#subscription_plan_list_parent").append(sub_str.join(''));
+            $("#additional_plan_list_parent").append(add_str.join(''));
+            // $("#subscription_total").text(total);
+            togglePlanList()
+          }else {
+            console.log("There is no subscription plan configured.Contact Admin.");
+            $("#subscription_plan_list_parent").html("There is no subscription plan configured.Contact Admin.");
+            $("#additional_plan_list_parent").addClass("no-display");
+          }
+        },
+        error:function(data,error,reason){
+          newAlert("danger",reason);
+          $("html, body").animate({scrollTop: 0}, 'slow');
+          return false;
+        },
+        include_docs:true
+      });
+    }else {
+      console.log("Subscription List is already available");
+    }
+  }
+
+  function togglePlanList($obj) {
+    $("#signup_subscription_plan_tab").block({"msg":"Updating.... Please Wait..."});
+    if($obj && $obj.prop("checked")) {
+      switch($obj.data("pro_id")) {
+        case "PRO-FS":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").removeAttr("disabled").prop("checked",true);
+          if(!$(".plan-list-checkbox").filter("[data-pro_id='PRO-Full']").prop("checked")) {
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-Full']").removeAttr("disabled").prop("checked",true);
+          }
+        break;
+        case "PRO-Full":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Full']").prop("checked",true).removeAttr("disabled");
+        break;
+        case "PRO-Basic":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Basic']").prop("checked",true).removeAttr("disabled");
+        break;
+        case "PRO-BB":
+          var flagbb;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked")) flagbb=true;
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          if(flagbb) $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",true).removeAttr("disabled");
+          else $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",true).removeAttr("disabled");
+          break;
+        case "PRO-NS":
+        var flagns;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked")) flagns=true;
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          if(flagns) $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",true).removeAttr("disabled");
+          else $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",false).removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",true).removeAttr("disabled");
+        break;
+        case "PRO-Well":
+          $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Well']").prop("checked",true).removeAttr("disabled");
+        break;
+      }
+      //update_price = Number($("#subscription_total").text()) + Number(data.rows[0].value.charges);
+    }else if($obj && !($obj.prop("checked"))){
+      switch($obj.data("pro_id")) {
+        case "PRO-FS":
+          // $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled");
+          // $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-Full":
+          $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-FS']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-Basic":
+          $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-Basic']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-BB":
+          var flag;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked")) flag=true;
+          if(flag) {
+            $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled");
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",true).removeAttr("disabled");
+          }
+          else {
+            $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled");
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+          }
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-NS":
+          var flag2;
+          if($(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked")) flag2=true;
+          if(flag2) {
+            $(".plan-list-checkbox").prop("checked",false).attr("disabled","disabled"); 
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",true).removeAttr("disabled");
+          }else {
+            $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled"); 
+            $(".plan-list-checkbox").filter("[data-pro_id='PRO-BB']").prop("checked",false).removeAttr("disabled"); 
+          }
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+        break;
+        case "PRO-Well":
+          $(".plan-list-checkbox").prop("checked",false).removeAttr("disabled","disabled");
+          $(".plan-list-checkbox").filter("[data-pro_id='PRO-NS']").prop("checked",false).removeAttr("disabled");
+        break;
+      }
+      //update_price = Number($("#subscription_total").text()) - Number(data.rows[0].value.charges);
+    }else {
+      console.log("in else");
+    }
+    $("#next_from_subscription_plan").removeAttr("disabled");
+    var product_ids='';
+    $(".plan-list-checkbox:checked").each(function (i) {
+      if(i > 0) product_ids+="|";
+      product_ids+=$(this).data("pro_id");
+    });
+    $.couch.db(db).list("tamsa/getChargesForSubscriptionList", "getSubscriptionList", {
+    product_ids:product_ids,
+    include_docs:true
+    }).success(function(data){
+      $("#subscription_total").text(data.total);
+      $("#duration_years").data("value",data.total);
+      if(Number($("#duration_years").val()) > 1){
+        $("#subscription_total").text(data.total*Number($("#duration_years").val()));
+      }
+      $("#signup_subscription_plan_tab").unblock();
+    }).error(function(reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    });
+  }
+
+  function getSubscriberPlanPrice(){
+    var product_ids='';
+    for (var i = 0; i < pd_data.subscription_plan_details.length; i++) {
+      if(i > 0) product_ids+="|";
+      product_ids+=pd_data.subscription_plan_details[i].product_plan_id;
+    };
+    $.couch.db(db).list("tamsa/getChargesForSubscriptionList", "getSubscriptionList", {
+    product_ids:product_ids,
+    include_docs:true
+    }).success(function(data){
+      $("#renew_subscription_total").text(data.total);
+      $("#renew_duration_years").data("value",data.total);
+      if(Number($("#renew_duration_years").val()) > 1){
+        $("#renew_subscription_total").text(data.total*Number($("#renew_duration_years").val()));
+      }
+    }).error(function(reason){
+      newAlert("danger",reason);
+      $("html, body").animate({scrollTop: 0}, 'slow');
+      return false;
+    });
+  }
+
+  function saveRenewSubscriberPlan(){
+    $.blockUI();
+    if($("#renew_duration_years").val() != "" && $("#renew_subscription_total").text() != "" && Number($("#renew_subscription_total").text()) > 0){
+      console.log("tejas");
+      openStripeModel(saveRenewPlanData,Number($("#renew_subscription_total").text()));
+    }else{
+
+    }
+  }
+
+  function sendEmailToUser(email,subject,type,msg){
+    // service.sendMail(res,body,nconf.MAIL_ID,(data.alert_email ? data.alert_email : data.email),"Account Created","text","Hello "+data.first_name+" "+data.last_name+" \nWelcome to Sensory Health System. \n Your password for this account is : "+new_password+"\n To Log in go to following link http://www.digitalhealthpulse.com" )
+    var data = {
+      email:   email,
+      subject: subject,
+      type:    type,
+      msg:      msg
+    }
+    $.ajax({
+      url:"/api/email",
+      data:data,
+      type:"POST",
+      dataType:"json",
+      success:function(data){
+        console.log(data);
+      }
+    });
   }
 
   function activateSubUserDetails(){
@@ -248,6 +718,73 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
 
     $("#personal_details_tab").on("click","#documents_link",function(){
       activateDocumentsList();
+    });
+    
+    $("#personal_details_tab").on("click","#upgraded_new_plan",function(){
+      $("#upgraded_subscription_modal").modal("show");
+      getSubscriptionPlans();
+    });
+    
+    $("#renew_subscription_plan_modal").on("hide.bs.modal",function(){
+      $.unblockUI();
+    });
+    $("#upgraded_subscription_modal").on("hide.bs.modal",function(){
+      $.unblockUI();
+    });
+    $("#delete_subscription_plan_modal").on("hide.bs.modal",function(){
+      $.unblockUI();
+    });
+ 
+    $("#personal_details_tab").on("click","#renew_exits_plan",function(){
+      $("#renew_subscription_plan_modal").modal("show");
+      getSubscriberPlanPrice();
+    });
+    $("#personal_details_tab").on("click","#renew_subscription_plan",function(){
+      console.log("tejas");
+      saveRenewSubscriberPlan();
+    });
+
+    $("#personal_details_tab").on("click","#cancel_plan",function(){
+      console.log($(this));
+      $("#delete_subscription_plan_modal").modal("show");
+    });
+
+    $("#personal_details_tab").on("click","#delete_subscription_plan",function(){
+      console.log($(this));
+      deletePlanData();
+    });
+
+    $("#personal_details_tab").on("click","#save_new_subscripation_plans",function(){
+      if(validationSaveSubscription()){
+        saveSubscripationPlan();
+      }
+    });
+
+    $("#personal_details_tab").on("click",".plan-list-checkbox",function(){
+      togglePlanList($(this));
+    });
+
+    $("#personal_details_tab").on("focusout","#duration_years",function(){
+      if($(this).data("value")){
+        var plan_value = $(this).data("value");
+        if(Number($(this).val()) > 0 ){
+          var total = Number(plan_value) * Number($(this).val());
+          $("#subscription_total").text(total);
+        }else{
+          $("#subscription_total").text(plan_value);
+        }
+      }
+    });
+    $("#personal_details_tab").on("focusout","#renew_duration_years",function(){
+      if($(this).data("value")){
+        var plan_value = $(this).data("value");
+        if(Number($(this).val()) > 0 ){
+          var total = Number(plan_value) * Number($(this).val());
+          $("#renew_subscription_total").text(total);
+        }else{
+          $("#renew_subscription_total").text(plan_value);
+        }
+      }
     });
 
     $("#personal_details_tab").on("click","#pdsave",function(){

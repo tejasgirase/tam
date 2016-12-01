@@ -228,6 +228,11 @@ app.post("/api/change_password",function(req,res) {
 	}
 });
 
+app.post("/api/email",function(req,res) {
+	console.log(req.body);
+	service.sendMail(res,"true",nconf.MAIL_ID,req.body.email,req.body.subject,req.body.type,req.body.msg);
+});
+
 app.put("/api/signup",function(req,res) {
 	var updatedb = cloudant.db.use(req.body.db);
 	var data     = JSON.parse(req.body.doc);

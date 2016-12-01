@@ -636,7 +636,7 @@
           if (doc._id ===  undefined) {
             var method = "POST";
             var uri = "/api/save";
-          }else if(doc.type == "user"){
+          }else if(doc.type == "user" && !doc.update_ts){
             var method = "PUT";
             var uri = "/api/signup";
           }else{

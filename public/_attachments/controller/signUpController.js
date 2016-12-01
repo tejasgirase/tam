@@ -224,9 +224,9 @@ app.controller("signUpController",function($scope,$state,$stateParams){
 
     $("#signup").click(function() {
       console.log("called click");
-      // if(validateSignUp() && validateAgreementAtSignUP() && validateSubscriptionTabAtSignUP() && validatePracticeInfoTabAtSignUP()){
+      if(validateSignUp() && validateAgreementAtSignUP() && validateSubscriptionTabAtSignUP() && validatePracticeInfoTabAtSignUP()){
         generateRequestForsignUp();
-      // }
+      }
       //Actual SignUP
     });
 
@@ -650,7 +650,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       subscription_start_date:   moment(d).format("YYYY-MM-DD"),
       subscription_end_date:     moment(d).add(Number($("#duration_years").val()),"year").format("YYYY-MM-DD"),
       subscription_duration:     $("#duration_years").val(),
-      subscription_amount:       "INR",
+      subscription_amount_type:       "INR",
       subscription_amount:       $("#subscription_total").text()
     };
     // console.log($("#dhp_code").val());
