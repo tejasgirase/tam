@@ -796,38 +796,6 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
         }else{
           specialization = $("#pdspecializationatext").val();
         }
-        var doc = {
-          doc_id:                 pd_data._id,
-          alert_email:            $("#pdemailalert").val(),
-          alert_phone:            $("#pdphonealert").val(),
-          city:                   $("#pdcity").val(),
-          country:                $("#pdcountry").val(),
-          doctors_network:        $("#pdnetwork").is(':checked'),
-          email:                  $("#pdemail").val(),
-          dhp_code:               $("#dhp_code").val(),
-          hospital_affiliated:    $("#pdhospital").val(),
-          hospital_type:          $("#pdhospitaltype").val(),
-          hospital_phone:         $("#pdhospital_phone").val(),
-          hospital_email:         $("#pdhospital_email").val(),
-          name:                   $("#pdemail").val(),
-          first_name:             $("#first_name").val(),
-          last_name:              $("#last_name").val(),
-          derived_key:            pd_data.derived_key,
-          phone:                  $("#pdphone").val(),
-          roles:                  [],
-          password_scheme:        pd_data.password_scheme,
-          specialization:         specialization,
-          qualification:          $("#pdqualification").val(),
-          experience:             $("#pdexperience").val(),
-          state:                  $("#pdstate").val(),
-          salt:                   pd_data.salt,
-          iterations:             pd_data.iterations,
-          type:                   'user',
-          critical_alerts_medium: $("#critical_alerts_medium").val(),
-          reports_medium:         $("#reports_medium").val(),
-          random_code:            pd_data.random_code
-        };
-
         if($("#pdphone").val() != $("#pdphone").data("userphoneval")){
           $.couch.db(replicated_db).view("tamsa/getUserPhone",{
             success: function (data){
@@ -838,7 +806,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
                 return false;
               }else{
                 $("#pdsave").removeAttr("disabled");
-                saveAccountDetails(doc);
+                saveAccountDetails(specialization);
               }
             },
             error: function (data,error,reason){
@@ -850,7 +818,7 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
             key:$("#pdphone").val().trim()
           });
         }else{
-          saveAccountDetails(doc);
+          saveAccountDetails(specialization);
           $("#pdsave").removeAttr("disabled");
         }
       }
@@ -1713,35 +1681,47 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     return false;
   }
 
-  function saveAccountDetails(doc){
-    doc.operation_case = "22";
-    doc.processed      = "No";
-    doc.doctype        = "cronRecords";
-   
-    $.couch.db(db).saveDoc(doc, {
-      success: function(data) {
-        if($("#pdspecialization") == "Select Specialization" && $("#pdspecializationatext").val().trim() != ""){
-          updateSpecializationList($("#pdspecializationatext").val().trim());
-        }
-        newAlert('success', 'Details Saved Successfully');
-        $('html, body').animate({scrollTop: 0}, 'slow');
-        $("#Logedin").text(pd_data.first_name);
-        //setPD(pd_data.name);
+  function saveAccountDetails(specialization){
+    $.couch.db(replicated_db).openDoc(pd_data._id,{
+      success:function(data){
+        data.update_ts      = d;
+        data.alert_email    = $("#pdemailalert").val();
+        data.phone          = $("#pdphone").val();
+        data.specialization = specialization;
+        data.alert_phone    = $("#pdphonealert").val();
+        data.qualification  = $("#pdqualification").val();
+        data.experience     = $("#pdexperience").val();
+        data.reports_medium = $("#reports_medium").val();
+        $.couch.db(replicated_db).saveDoc(data, {
+          success:function(pddata) {
+            pd_data =pddata;
+            if($("#pdspecialization") == "Select Specialization" && $("#pdspecializationatext").val().trim() != ""){
+              updateSpecializationList($("#pdspecializationatext").val().trim());
+            }
+            newAlert('success', 'Details Saved Successfully');
+            $('html, body').animate({scrollTop: 0}, 'slow');
+            $("#Logedin").text(pd_data.first_name);
+            //setPD(pd_data.name);
+          },
+          error: function(data, error, reason) {
+            if (data == '409') {
+              newAlert('danger', 'Details were updated already on other device.');
+              $('html, body').animate({scrollTop: 0}, 'slow');
+            }else if (data == '403'){
+              backafter();
+              window.location = "index.html";
+              setPD(pd_data.name);
+            }
+            else {
+              newAlert('danger', reason);
+              $('html, body').animate({scrollTop: 0}, 'slow');
+              setPD(pd_data.name);
+            }
+          }
+        });
       },
-      error: function(data, error, reason) {
-        if (data == '409') {
-          newAlert('danger', 'Details were updated already on other device.');
-          $('html, body').animate({scrollTop: 0}, 'slow');
-        }else if (data == '403'){
-          backafter();
-          window.location = "index.html";
-          setPD(pd_data.name);
-        }
-        else {
-          newAlert('danger', reason);
-          $('html, body').animate({scrollTop: 0}, 'slow');
-          setPD(pd_data.name);
-        }
+      error:function(data,status,error){
+        console.log(data,status,error);
       }
     });
   }
