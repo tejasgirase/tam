@@ -49,13 +49,9 @@
     </div>
     <div class="col-sm-9 right-sec-box" style="min-height:450px;">
       <div class="row">
-        <div class="col-sm-8 right-pending-0">
-          <div class="center-con-box">
-            center
-
-          </div>
+        <div class="col-sm-8 right-pending-0" ui-view="main-content">
         </div>
-        <div class="col-sm-4 no-display" id="patient_medical_information">
+        <div class="col-sm-4 no-display" ui-view="right-sidebar" id="patient_medical_information">
           <div class="right-con-box">
             <div class="box-panel">
               <div class="title"><h5>Alerts (From all patients notification)</h5></div>

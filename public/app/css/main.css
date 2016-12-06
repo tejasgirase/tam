@@ -110,3 +110,32 @@
     width: 20px;
 }
 .box-panel > .body > span.plus-icon-box > a {text-decoration: none; color: #fff;}
+.welcome_msg { background: #f2bb5c none repeat scroll 0 0;
+    color: #fff;
+    font-family: "geoslab703_md_btmedium";
+    font-size: 15px;
+    font-weight: bold;
+    padding: 7px 7px 15px 14px;}
+.welcome_msg span { color: #383838; }
+.slow{display: block !important;}
+.signmenu{  background: #f2bb5c none repeat scroll 0 0;
+    border-radius: 0 0 10px 10px;
+    float: left;
+    padding: 8px;
+    width: 97%;
+}
+.signmenu li{ float: left;
+    font-size:14px;
+    list-style: outside none none;
+    margin-left:8px;
+    padding:5px;}
+   /* .signmenu li:hover{#86AA7C;*/
+.signmenu ul{width:100%; padding-left: 0px;}
+.signmenu li a span:hover{color:#fff !important;}
+#header { border-bottom: 5px solid #F2BB5C; display: inline-block; width: 100%; padding-bottom: 10px; }
+.userpic-align{
+    height:68px;
+}
+.userpic{
+    width: 68px !important;height: 73px !important;
+}

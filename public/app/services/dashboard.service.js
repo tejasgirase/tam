@@ -7,6 +7,7 @@
 			getMsg :getMsg,
 			getDataWithList :getDataWithList,
 			getUserSession :getUserSession,
+			openDocument :openDocument,
 			getDataWithView :getDataWithView
 		};
 		return service;
@@ -22,8 +23,8 @@
 		function getUserSession(){
 			return $http.get("/api/session");
 		}
-		function signupUser(data){
-			return $http.get("/api/list",{params:data});
+		function openDocument(data){
+			return $http.get("/api/open",{params:data});
 		}
 	}
 })();

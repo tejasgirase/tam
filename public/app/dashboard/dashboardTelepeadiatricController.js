@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('tamsa_pediatric').
 	controller("dashboardTelepeadiatricController",dashboardTelepeadiatricController);
-	dashboardTelepeadiatricController.$inject = ['dashboardServices'];
-	function dashboardTelepeadiatricController(dashboardServices){
+	dashboardTelepeadiatricController.$inject = ['dashboardServices',"$state"];
+	function dashboardTelepeadiatricController(dashboardServices,$state){
 		var vm = this;
 		vm.telemedicineLength="";
 		vm.elabsLength;
@@ -36,6 +36,9 @@
 			};
 			var getdata = dashboardServices.getDataWithList(vm.telehealth_data).then(function(response){
 				vm.telemedicineLength = response.data.rowlen;
+			}).catch( function(err){
+				vm.telemedicineLength = "NA";
+				console.log(err);
 			});
 		}
 		function getAllLabCount(){
@@ -50,11 +53,32 @@
 				"db": "meluha_db5",
 			};
 			var getdata = dashboardServices.getDataWithView(vm.telehealth_data).then(function(response){
-				vm.elabsLength = response.data.rows[0].value;
+				if(response.data.rows && response.data.rows.length > 0){
+					vm.elabsLength = response.data.rows[0].value;	
+				}else{
+					vm.elabsLength = "0";
+				}
+			}).catch(function(err){
+				vm.elabsLength = "NA";
+				console.log(err);
 			});
 		}
-		function getPatientAllDetails(){
-			console.log("tejas");
+		function getPatientAllDetails(ui,search_id){
+			var send_data = {
+				"design_doc": "tamsa",
+				"view":       "getPatientInformation",
+				"view_data":  {"option_list":{
+							key:ui.item.key[2],
+			        limit:1
+						}},
+				"db": "meluha_db5_pi"
+			};
+			dashboardServices.getDataWithView(send_data).then(function(response){
+				var data2 = response.data;
+				if (data2.rows.length > 0) {
+					$state.go("patientinfo",{user_id:data2.rows[0].value.user_id});
+				}
+			});
 		}
 		function searchPatientsByNameOrDHPIdAutocompleter(search_id,selectEvent,include_image,doctor_id,dhpcode,_view,_viewDHP){
 			  $("#"+search_id).autocomplete({
@@ -136,46 +160,29 @@
 			  };
 		}
 		function getAutoCompleteImages(uvalue,source) {
-		  	var send_data = {
-					"design_doc": "tamsa",
-					"view":       "getPatientInformation",
-					"view_data":  {"option_list":{
-								key:uvalue,
-				        limit:1
-							}},
-					"db": "meluha_db5_pi"
-				};
-				dashboardServices.getDataWithView(send_data).then(function(response){
-					var data2 = response.data;
-					if (data2.rows.length > 0) {
-		        $("#phone_"+uvalue).html(data2.rows[0].value.phone);
-		        if(data2.rows[0].value._attachments){
-		          var url = "/api/attachment?attachment_name="+Object.keys(data2.rows[0].value._attachments)[0]+"&db="+personal_details_db+"&id="+data2.rows[0].id;
-		          $("#"+source+uvalue).attr("src", url);
-		        }else if(data2.rows[0].value.imgblob){
-		          $("#"+source+uvalue).attr("src",data2.rows[0].value.imgblob);
-		        }else{
-		          
-		        }
-		      }
-				});
+	  	var send_data = {
+				"design_doc": "tamsa",
+				"view":       "getPatientInformation",
+				"view_data":  {"option_list":{
+							key:uvalue,
+			        limit:1
+						}},
+				"db": "meluha_db5_pi"
+			};
+			dashboardServices.getDataWithView(send_data).then(function(response){
+				var data2 = response.data;
+				if (data2.rows.length > 0) {
+	        $("#phone_"+uvalue).html(data2.rows[0].value.phone);
+	        if(data2.rows[0].value._attachments){
+	          var url = "/api/attachment?attachment_name="+Object.keys(data2.rows[0].value._attachments)[0]+"&db="+personal_details_db+"&id="+data2.rows[0].id;
+	          $("#"+source+uvalue).attr("src", url);
+	        }else if(data2.rows[0].value.imgblob){
+	          $("#"+source+uvalue).attr("src",data2.rows[0].value.imgblob);
+	        }else{
+	          
+	        }
+	      }
+			});
 		}
 	}
 })();
-// app.controller("dashboardTelepeadiatricController",function ($state,$stateParams,$http) {
-	
-// 	// $http({
-// 	// 	method:"GET",
-// 	// 	url:"/api/list",
-// 	// 	params:vm.telehealth_data
-// 	// }).success(function(response){
-// 	// 	console.log(response);
-// 	// });
-// 	console.log(vm.telehealth_data);
-// 	$http.get("/api/list",{params:vm.telehealth_data}).then(function(response) {
-// 	   console.log(response);
-// 	 }, function(error) {
-// 	 	console.log(error);
-// 	});
-
-// });sssss
