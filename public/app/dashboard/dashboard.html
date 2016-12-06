@@ -11,13 +11,38 @@
     <div class="col-sm-3 left-sec-box">
       <div class="left-con-box">
         <form action="">
-          <div class="search-box"><input type="text"><a href=""><span></span></a></div>
+          <div class="search-box"><input type="text" id="search_patient" placeholder="Patient Search"><a href=""><span></span></a></div>
         </form>
         <div class="box-panel">
           <div class="title"><h5>Alerts (From all patients notification)</h5></div>
-          <div class="body">
-            <h6>Telemedication Questions<span class="pull-right" id="telemedicin_count">{{vm.telemedicineLength}}</span></h6>
-            <h6>Elabs Reports<span id="telemedicin_count" class="pull-right">{{vm.elabsLength}}</span></h6>
+          <div class="body" style="border: groove;border-width:1px">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="col-lg-4">Sam</div>
+                <div class="col-lg-3">Temp</div>
+                <div class="col-lg-4">199deg.F</div>
+              </div>
+              <div class="col-lg-12">
+                <div class="col-lg-4">Sam</div>
+                <div class="col-lg-3">Temp</div>
+                <div class="col-lg-4">199deg.F</div>
+              </div>
+              <div class="col-lg-12">
+                <div class="col-lg-4">Sam</div>
+                <div class="col-lg-3">Temp</div>
+                <div class="col-lg-4">199deg.F</div>
+              </div>
+            </div>
+          </div>
+					<div class="body" style="border: groove;border-width:1px">
+            <div>
+              <div class="text-success">
+                <h5>Telemedication Questions<span id="telemedicin_count" class="pull-right ng-binding">1</span></h5>
+              </div>
+              <div class="text-success">
+                <h5>Elabs Reports<span class="pull-right ng-binding" id="telemedicin_count">176</span></h5>
+              </div>
+            </div>
           </div>
         </div>
       </div>
