@@ -67,7 +67,9 @@
     border: 1px solid #dfdfdf;
     margin: 0 0 15px;
 }
-
+.add-patient-title {
+    position: relative;
+}
  .box-panel > .title {
     background: #ed7d31 none repeat scroll 0 0;
     padding: 5px;
@@ -94,7 +96,7 @@
     padding-left: 0;
 }
 .right-pending-0 {padding-right: 0;}
-.box-panel > .body > span.plus-icon-box {
+.plus-icon-box {
     background: #70ad47 none repeat scroll 0 0;
     border-radius: 50%;
     bottom: 0;
@@ -109,4 +111,45 @@
     text-align: center;
     width: 20px;
 }
-.box-panel > .body > span.plus-icon-box > a {text-decoration: none; color: #fff;}
+.plus-icon-box > a {text-decoration: none; color: #fff;}
+#footer { padding: 12px 0; bottom: 0px; width: 100%; background: #FFF; }
+.mrgtop { margin-top: 0px !important; }
+.mrgtop5 { margin-top: 5px; }
+.mrgtop1 { margin-top: 10px; }
+.mrgtop2 { margin-top: 1%; }
+.mrgtop100 {margin-top:100px;}
+.mrgbtm20 {margin-bottom:20px;}
+.mrgupdown1 { margin-top: 10px; margin-bottom: 10px;}
+.mrgbottom { margin-bottom: 0px !important;}
+.mrgbottom1 { margin-bottom: 10px;}
+.mrgupdown { margin-top: 0px; margin-bottom: 0px;}
+.mrgright {margin-right: 0px;}
+.mrgright5 {margin-right: 5px;}
+.mrgright1 {margin-right: 10px; }
+.mrg-left5 {margin-left: 5px;}
+.mrgleft1 {margin-left: 10px;}
+.mrgside {margin-right: 0px;margin-left: 0px;}
+.paddtop {padding-top: 0px;}
+.paddtop1 {padding-top: 10px;}
+.paddtop8 {padding-top: 8px;}
+.paddtopbottom6 {padding-top: 6px; padding-bottom: 6px;}
+.paddside5{padding-left: 5px;padding-right: 5px;}
+.paddside30 {padding-left: 30px;padding-right: 30px;}
+.paddtop15{padding-top: 15px;}
+.paddleft{padding-left:0px;}
+.paddleft1{padding-left:10px;}
+.paddleft3{padding-left:3px;}
+.paddleft30{padding-left:30px;}
+.paddright{padding-right: 0px;}
+.paddright1{padding-right: 10px;}
+.paddside{padding-left:0px;padding-right:0px;}
+.paddside1{padding-left:10px;padding-right:10px;}
+.paddside25{padding-left:25px;padding-right:25px;}
+.paddside140{padding-left:140px;padding-right: 0px;}
+.paddtop6{padding-top: 6px !important;}
+.paddbtm5{padding-bottom: 5px;}
+.padding0{padding: 0 !important;}
+.padding5{padding: 5px};
+.padding10{padding: 10px !important;}
+.vld { color: #f00; font-size: 14px; }
+.text-center { text-align: center; }
