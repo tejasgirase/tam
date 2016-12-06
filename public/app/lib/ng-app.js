@@ -9,22 +9,15 @@ app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvid
     url: '/',
     views: {
       'index-view': {
-        templateUrl: 'template/login.html',
-        // controller: 'indexAppController'
-      },
-      'footer':{
-        templateUrl: 'template/footer.html',
+        templateUrl: 'dashboard/dashboard.html',
+        controller: 'dashboardTelepeadiatricController as vm'
       }
     }
   }).state('/signup', {
     url: '/signup',
     views: {
       'index-view': {
-        templateUrl: 'template/sign-up.html',
-        controller: 'signUpController'
-      },
-      'footer':{
-        templateUrl: 'template/footer.html',
+        templateUrl: 'partials/header.html'
       }
     }
   });

@@ -1,0 +1,105 @@
+.topnav {
+    background: #70ad47;
+    float: left;
+    width: 100%;
+    margin: 0 0 15px;
+}
+.topnav > ul {
+    padding: 0 20px;
+}
+.topnav > ul > li {
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    float: left;
+    list-style: outside none none;
+    margin: 0 -1px 0 0;
+    text-align: center;
+    width: 25%;
+}
+
+.topnav > ul > li > a {
+    color: #fff;
+    float: left;
+    padding: 5px 0;
+    text-decoration: none;
+    width: 100%;
+}
+.topnav > ul > li > a:hover, .topnav > ul > li > a.active  {
+    background: #f2bb5c;
+}
+
+.left-con-box {
+    background: #eee none repeat scroll 0 0;
+    padding: 15px;
+}
+
+.left-con-box form > .search-box {
+    margin: 0 0 15px;
+    position: relative;
+}
+.left-con-box form > .search-box span{width: 20px; height: 20px; float: right; background: #555;}
+
+.left-con-box form > .search-box input[type="text"] {
+    border: 1px solid #dfdfdf;
+    color: #666;
+    padding: 5px 40px 5px 10px;
+    width: 100%;
+}
+
+.left-con-box form > .search-box a span {
+    background: rgba(0, 0, 0, 0) url("../images/search-icon.png") repeat scroll 0 0;
+    border-left: 1px solid #eee;
+    float: right;
+    height: 31px;
+    position: absolute;
+    right: 0;
+    width: 31px;
+}
+.box-panel {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #dfdfdf;
+    margin: 0 0 15px;
+}
+
+ .box-panel > .title {
+    background: #ed7d31 none repeat scroll 0 0;
+    padding: 5px;
+}
+
+.box-panel > .title > h5 {
+    color: #fff;
+    margin: 3px 5px;
+}
+.box-panel > .body {
+    padding: 10px;
+    position: relative;
+}
+.center-con-box {
+    border: 1px solid #eee;
+    padding: 15px;
+    background: #fff;
+}
+.right-sec-box {
+    background: #eee none repeat scroll 0 0;
+    padding: 15px;
+}
+.left-sec-box {
+    padding-left: 0;
+}
+.right-pending-0 {padding-right: 0;}
+.box-panel > .body > span.plus-icon-box {
+    background: #70ad47 none repeat scroll 0 0;
+    border-radius: 50%;
+    bottom: 0;
+    color: #fff;
+    float: right;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 6px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 20px;
+}
+.box-panel > .body > span.plus-icon-box > a {text-decoration: none; color: #fff;}

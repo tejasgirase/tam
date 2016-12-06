@@ -91,8 +91,6 @@ app.controller("practiceInfoController",function($scope,$state,$stateParams,$loc
     $("#pdsave").data("index",pd_data._id);
     $("#pdsave").data("rev",pd_data._rev);
     var html = [],basic,cancel = false;
-    console.log(pd_data.subscription_plan_details.length);
-
     html.push('<div class="tab-heading-section mrgbottom">Subscripation Plan Details</div>');
     if(pd_data.subscription_plan_details){
       html.push('<div class="form-group_login col-lg-3 col-sm-3"><label class="control-label visible-ie8 visible-ie9 theme-bold theme-green">Plan Name</label><label class="control-label visible-ie8 visible-ie9" id="subcripation_plan_names" index="" >');

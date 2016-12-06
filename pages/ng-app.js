@@ -2,6 +2,7 @@ var app = angular.module('tamsa_pedi', ['ui.router','angularUtils.directives.dir
 
 app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvider,$locationProvider){
   paginationTemplateProvider.setPath('template/dirPagination.tpl.html');
+  console.log("tejas");
   // $locationProvider.html5Mode(true).hashPrefix('!');
   $urlRouterProvider.otherwise('/');
   $stateProvider
@@ -9,11 +10,7 @@ app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvid
     url: '/',
     views: {
       'index-view': {
-        templateUrl: 'template/login.html',
-        controller: 'indexAppController'
-      },
-      'footer':{
-        templateUrl: 'template/footer.html',
+        templateUrl: 'template/header.html',
       }
     }
   }).state('/signup', {

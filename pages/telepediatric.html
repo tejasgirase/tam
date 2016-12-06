@@ -20,6 +20,7 @@
 <link href="css/tab-vertical.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="images/favi_icon.png" />
+<link rel="stylesheet" href="css/main.css">
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap-tagsinput.css" />
@@ -36,7 +37,7 @@
 <script type="text/javascript" src="script/autocompleter.js"></script>
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 <script type="text/javascript" src="js/canvas-to-blob.min.js" ></script>
-<script src="https://checkout.stripe.com/checkout.js"></script>
+<!-- <script src="https://checkout.stripe.com/checkout.js"></script> -->
 <script type="text/javascript" src="js/pnotify.custom.min.js"></script>
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script type="text/javascript" src="js/moment-timezone.min.js"></script>
@@ -76,9 +77,11 @@
 <script type="text/javascript" src="library/angular.min.js"></script>
 <script type="text/javascript" src="library/angular-ui-router.min.js"></script>
 <script type="text/javascript" src="lib/ng-app.js"></script>
+<script type="text/javascript" src="services/dashboard.service.js"></script>
 <script type="text/javascript" src="js/dirPagination.js"></script>
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 <script type="text/javascript" src="js/canvas-to-blob.min.js" ></script>
+<script type="text/javascript" src="dashboard/dashboardTelepeadiatricController.js"></script>
 </head>
 <body ng-app="tamsa_pediatric">
 <noscript>
@@ -90,12 +93,9 @@
  instructions how to enable JavaScript in your web browser</a>.
   </p>
 </div>
-<style type="text/css">
-  .modal, .container-parent, #footer {display:none;}
-  .main{position:relative;background:#f2f2f2 !important;}
-</style>
 </noscript>
-<div>tasdfdfsdffsdfsdfasdafsdfsdf</div>
+<div class="common-ui-view" ui-view="index-view"></div>
+<div class="common-ui-view" ui-view="footer-view"></div>
 <!-- inserted by Kiran -->
 <!--inserted by Kiran for liveagent -->
 <script type="text/javascript">

@@ -607,6 +607,7 @@
               }
             });
           }
+          console.log(options);
           return ajax(
             // {url: this.uri + encodeDocId(docId) + encodeOptions(options),data:{openDocID:docId}},
             {url: "/api/open"+encodeOptions(options),data:{_id:docId,db:name}},

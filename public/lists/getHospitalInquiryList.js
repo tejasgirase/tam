@@ -10,5 +10,5 @@ function(head, req) {
 			rows.push(row);
 		}
 	}
-	send(JSON.stringify({"rows" : rows}));
+	send(JSON.stringify({"rows" : rows,"rowlen" : rows.length}));
 }
