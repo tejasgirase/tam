@@ -20,7 +20,7 @@
 <link href="css/tab-vertical.css" rel="stylesheet" type="text/css" />
 <link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="images/favi_icon.png" />
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/main.css" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="css/daterangepicker.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap-tagsinput.css" />
@@ -78,10 +78,12 @@
 <script type="text/javascript" src="library/angular-ui-router.min.js"></script>
 <script type="text/javascript" src="lib/ng-app.js"></script>
 <script type="text/javascript" src="services/dashboard.service.js"></script>
+<script type="text/javascript" src="services/header.service.js"></script>
 <script type="text/javascript" src="js/dirPagination.js"></script>
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 <script type="text/javascript" src="js/canvas-to-blob.min.js" ></script>
 <script type="text/javascript" src="dashboard/dashboardTelepeadiatricController.js"></script>
+<script type="text/javascript" src="partials/headerController.js"></script>
 </head>
 <body ng-app="tamsa_pediatric">
 <noscript>
@@ -94,6 +96,7 @@
   </p>
 </div>
 </noscript>
+<div class="common-ui-view" ui-view="header-view"></div>
 <div class="common-ui-view" ui-view="index-view"></div>
 <div class="common-ui-view" ui-view="footer-view"></div>
 <!-- inserted by Kiran -->

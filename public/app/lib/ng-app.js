@@ -8,9 +8,15 @@ app.config(function($stateProvider, $urlRouterProvider, paginationTemplateProvid
   .state('/', {
     url: '/',
     views: {
+      'header-view':{
+        templateUrl: 'partials/header.html',
+        controller: 'headerController as vm'
+      },
       'index-view': {
         templateUrl: 'dashboard/dashboard.html',
         controller: 'dashboardTelepeadiatricController as vm'
+      },'footer-view':{
+        templateUrl: 'partials/footer.html'
       }
     }
   }).state('/signup', {

@@ -1,3 +1,26 @@
-<div>
-	This is babby beeps Home HTML.
+<div id="header" class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-3 col-xs-12 col-sm-3 logo" style="width:19%;"> <a href="/"><img src="images/logo.png" alt="Logo" title="Logo" style="height:100px;"> </a></div>
+    <div style="float: right; padding: 0px; width: 552px;" class="col-md-3 col-sm-12 col-xs-12">
+      <div id="signmenu" class="signmenu slow welcome_msg">
+        <ul>
+          <li style="width: auto; padding: 5px;"> Welcome, <span id="Logedin">{{vm.doctor_name
+}}</span></li>
+          <li style="width: auto; padding: 5px;"> Practice Code : <span class="random_code_span" id="random_code_span">{{vm.practice_id}}</span></li>
+          <li style="width: auto; padding: 5px;"> <a href="/api/logout" class="pointer txt-underline" role="button" id="Logout1">Sign Out</a> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12" style="float:left;width:57%;">
+      <div class="patient_details pd" style="">
+        <div class="patitent-container">
+          <div class="" style="padding:0px;width:13.667%;float:left;">
+            <div>
+              <img id="userpic_edit" class="userpic userpic-align" alt="userpic" src="images/userpic.png">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

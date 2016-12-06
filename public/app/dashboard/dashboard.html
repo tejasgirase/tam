@@ -4,10 +4,10 @@
       <li><a href="#" class="active">Dr.Dashboard</a></li>
       <li><a href="#">Billing</a></li>
       <li><a href="#">Telemedicine</a></li>
-      <li><a href="#">Appointments</a></li>
+      <li><a href="#">Settings</a></li>
     </ul>
   </div>
-  <div class="col-sm-12">
+  <div class="col-sm-12 paddside">
     <div class="col-sm-3 left-sec-box">
       <div class="left-con-box">
         <form action="">
@@ -16,13 +16,13 @@
         <div class="box-panel">
           <div class="title"><h5>Alerts (From all patients notification)</h5></div>
           <div class="body">
-            <h6>Telemedication Questions<span class="pull-right" id="telemedicin_count">{{vm.telemedicineLength}}</span></h6>
+            <h6>Telemedicine Questions<span class="pull-right" id="telemedicin_count">{{vm.telemedicineLength}}</span></h6>
             <h6>Elabs Reports<span id="telemedicin_count" class="pull-right">{{vm.elabsLength}}</span></h6>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-9 right-sec-box">
+    <div class="col-sm-9 right-sec-box" style="min-height:450px;">
       <div class="row">
         <div class="col-sm-8 right-pending-0">
           <div class="center-con-box">
@@ -30,7 +30,7 @@
 
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 no-display" id="patient_medical_information">
           <div class="right-con-box">
             <div class="box-panel">
               <div class="title"><h5>Alerts (From all patients notification)</h5></div>

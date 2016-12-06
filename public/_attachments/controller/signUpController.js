@@ -223,7 +223,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     });
 
     $("#signup").click(function() {
-      console.log("called click");
+      // console.log("called click");
       if(validateSignUp() && validateAgreementAtSignUP() && validateSubscriptionTabAtSignUP() && validatePracticeInfoTabAtSignUP()){
         generateRequestForsignUp();
       }
@@ -611,8 +611,10 @@ app.controller("signUpController",function($scope,$state,$stateParams){
     }else{
       specialization_value = $("#Specialization").val();
     }
-    var subscription_plan = [];
+    var subscription_plan = [],
+    plan_name;
     $(".plan-list-checkbox:checked").each(function() {
+      plan_name = $(this).data("sname");
       subscription_plan.push({
         name:$(this).data("sname"),
         product_plan_id: $(this).data("pro_id")
@@ -646,11 +648,12 @@ app.controller("signUpController",function($scope,$state,$stateParams){
       reports_medium:            $('#reports_medium').val(),
       random_code:               getPcode(6,"alphabetic"),
       level:                     "Doctor",
+      subscription_plan_name:    plan_name,
       subscription_plan_details: subscription_plan,
       subscription_start_date:   moment(d).format("YYYY-MM-DD"),
       subscription_end_date:     moment(d).add(Number($("#duration_years").val()),"year").format("YYYY-MM-DD"),
       subscription_duration:     $("#duration_years").val(),
-      subscription_amount_type:       "INR",
+      subscription_amount_type:  "INR",
       subscription_amount:       $("#subscription_total").text()
     };
     // console.log($("#dhp_code").val());
@@ -710,7 +713,7 @@ app.controller("signUpController",function($scope,$state,$stateParams){
                               token_email : token.email,
                               token_type : token.type,
                               token_card_details:token.card
-                            }
+                            };
                             userDoc.payment_details_card = payment_details;
                             saveSignupDoc(userDoc);
                           }else{
@@ -1016,12 +1019,15 @@ app.controller("signUpController",function($scope,$state,$stateParams){
   }
 
   function validatePracticeInfoTabAtSignUP() {
-    if ($("#location_name").val().trim() !== "") {
+    var email_filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    var phone_filter = /^[789]\d{9}$/;
+    var nospace      = /\s/g;
+    if ($("#location_name").val().trim() === "") {
       $("#validationtext").text("Please enter valid location name.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#location_name").focus();
       return false;
-    }else if ($("#street_address").val().trim() !== "") {
+    }else if ($("#street_address").val().trim() === "") {
       $("#validationtext").text("Please enter valid street address.");
       $('html, body').animate({scrollTop: 0}, 'slow');
       $("#street_address").focus();
@@ -1086,7 +1092,6 @@ app.controller("signUpController",function($scope,$state,$stateParams){
         valide = false;
       }
     });
-    console.log(valide);
     if(valide){
       return true;
     }else{

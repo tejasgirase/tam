@@ -31,6 +31,7 @@ var service = require("./src/services/common.service");
 
 // app.use(express.static('public/'));
 app.use(express.static("public/_attachments"));
+app.use(express.static("public/app"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -138,7 +139,13 @@ app.get("/api/logout",function(req,res) {
 
 app.get("/myaccount",ensureAuthenticated,function(req,res) {
 	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-	res.render("my-account.html");
+	console.log(req.user.plan_id);
+	console.log(req.user.plan_name);
+	if(req.user.plan_id == "PRO-BB" || req.user.plan_name == "Babybeeps") {
+		res.render("telepediatric.html");
+	}else {
+		res.render("my-account.html");
+	}
 });
 
 app.get("/api/session",ensureAPIAuthenticated,function(req,res) {
