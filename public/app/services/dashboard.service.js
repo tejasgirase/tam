@@ -6,6 +6,7 @@
 		var service = {
 			getMsg :getMsg,
 			getDataWithList :getDataWithList,
+			getUserSession :getUserSession,
 			getDataWithView :getDataWithView
 		};
 		return service;
@@ -18,8 +19,8 @@
 		function getDataWithView(data){
 			return $http.get("/api/view",{params:data});
 		}
-		function getDataWithId(data){
-			return $http.get("/api/list",{params:data});
+		function getUserSession(){
+			return $http.get("/api/session");
 		}
 		function signupUser(data){
 			return $http.get("/api/list",{params:data});
